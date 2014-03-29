@@ -18,6 +18,55 @@ provisioner:
   require_chef_omnibus: latest
 
 platforms:
+- name: amazon-2013.09
+  driver_plugin: ec2
+  driver_config:
+    image_id: ami-3be4bc52
+    username: ec2-user
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+
+- name: amazon-2014.03
+  driver_plugin: ec2
+  driver_config:
+    image_id: ami-6b726502
+    username: ec2-user
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+
+- name: debian-7.2
+  driver_plugin: gce
+  driver_config:
+    image_name: debian-7-wheezy-v20131120
+    zone: <%= ENV['GCE_ZONE'] %>
+    area: <%= ENV['GCE_AREA'] %>
+    network: <%= ENV['GCE_NETWORK'] %>
+    username: <%= ENV['GCE_USERNAME'] %>
+    public_key_path: <%= ENV['GCE_PUBLIC_KEY_PATH'] %>
+    ssh_key: <%= ENV['GCE_SSH_KEY_PATH'] %>
+  run_list:
+  - recipe[apt]
+
+- name: fedora-19
+  driver_plugin: digitalocean
+  driver_config:
+    image_id: 696598
+    flavor_id: 63
+    region_id: 4
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+
+- name: omnios-151006
+  driver_plugin: ec2
+  driver_config:
+    availability_zone: us-east-1d
+    image_id: ami-35eb835c
+    flavor_id: m3.medium
+    username: root
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+  provisioner:
+    name: chef_zero
+  run_list:
+  - recipe[ips-omniti]
+
 - name: centos-5.8
   driver_plugin: digitalocean
   driver_config:
@@ -36,41 +85,19 @@ platforms:
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 
-- name: amazon-2013.09
-  driver_plugin: ec2
+- name: smartos-13.4.0
+  driver_plugin: joyent
   driver_config:
-    image_id: ami-3be4bc52
-    username: ec2-user
-    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-
-- name: amazon-2014.03
-  driver_plugin: ec2
-  driver_config:
-    image_id: ami-6b726502
-    username: ec2-user
-    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-
-- name: fedora-19
-  driver_plugin: digitalocean
-  driver_config:
-    image_id: 696598
-    flavor_id: 63
-    region_id: 4
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
-
-- name: debian-7.2
-  driver_plugin: gce
-  driver_config:
-    image_name: debian-7-wheezy-v20131120
-    zone: <%= ENV['GCE_ZONE'] %>
-    area: <%= ENV['GCE_AREA'] %>
-    network: <%= ENV['GCE_NETWORK'] %>
-    username: <%= ENV['GCE_USERNAME'] %>
-    public_key_path: <%= ENV['GCE_PUBLIC_KEY_PATH'] %>
-    ssh_key: <%= ENV['GCE_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[apt]
+    joyent_image_id: ff86eb8a-a069-11e3-ae0e-4f3c8983a91c
+    joyent_flavor_id: g3-standard-4-smartos
+    username: root
+    ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
+  busser:
+    ruby_bindir: '/opt/local/bin/'
+  provisioner:
+    name: chef_zero
+    sudo: false
+    chef_omnibus_url: https://raw.github.com/test-kitchen/kitchen-joyent/master/scripts/install-smartos.sh
 
 - name: ubuntu-10.04
   driver_plugin: digitalocean
@@ -105,33 +132,6 @@ platforms:
   run_list:
   - recipe[apt]
 
-- name: smartos-13.4.0
-  driver_plugin: joyent
-  driver_config:
-    joyent_image_id: ff86eb8a-a069-11e3-ae0e-4f3c8983a91c
-    joyent_flavor_id: g3-standard-4-smartos
-    username: root
-    ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
-  busser:
-    ruby_bindir: '/opt/local/bin/'
-  provisioner:
-    name: chef_zero
-    sudo: false
-    chef_omnibus_url: https://raw.github.com/test-kitchen/kitchen-joyent/master/scripts/install-smartos.sh
-
-- name: omnios-151006
-  driver_plugin: ec2
-  driver_config:
-    availability_zone: us-east-1d
-    image_id: ami-35eb835c
-    flavor_id: m3.medium
-    username: root
-    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-  provisioner:
-    name: chef_zero
-  run_list:
-  - recipe[ips-omniti]
-
 suites:
   #
   # default
@@ -140,12 +140,16 @@ suites:
     run_list:
     - recipe[crossplat_test::default]
     includes: [
-      'centos-5.8',
-      'centos-6.4',
       'amazon-2013.09',
       'amazon-2014.03',
-      'fedora-19',
       'debian-7.2',
+      'fedora-19',
+      'omnios-151006',
+      'centos-5.8',
+      'centos-6.4',
+      'ubuntu-10.04',
+      'ubuntu-12.04',
+      'ubuntu-13.10',
     ]
     attributes:
       crossplat:
