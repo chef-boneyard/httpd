@@ -12,7 +12,7 @@ describe 'crossplat_test::thing on smartos-13.4.0' do
 
   context 'when using default parameters' do
     it 'creates crossplat_thing[smartos_13_4_0_default]' do
-      expect(amazon_2014_03_default_run).to create_crossplat_thing('smartos_13_4_0_default')
+      expect(smartos_13_4_0_default_run).to create_crossplat_thing('smartos_13_4_0_default')
     end
   end
 end
