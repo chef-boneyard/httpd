@@ -12,8 +12,11 @@ class Chef
 
         action :create do
           converge_by 'smartos pattern' do
-            ruby_block 'hello' do
-              puts "hello world\n"
+            ruby_block "message for #{node['platform']}-#{node['platform_version']}" do
+              block do
+                puts "Support for #{node['platform']}-#{node['platform_version']} has not yet been implemented"
+              end
+              action :run
             end
           end
         end
@@ -21,3 +24,5 @@ class Chef
     end
   end
 end
+
+Chef::Platform.set :platform => :smartos, :resource => :crossplat_thing, :provider => Chef::Provider::CrossplatThing::Smartos
