@@ -1,0 +1,19 @@
+DEPENDENCIES
+  apt
+  crossplat
+    path: .
+    metadata: true
+  crossplat_test
+    path: ./test/fixtures/cookbooks/crossplat_test
+  ips-omniti
+  selinux
+
+GRAPH
+  apt (2.3.8)
+  crossplat (0.0.1)
+  crossplat_test (0.0.1)
+    crossplat (>= 0.0.0)
+  ips (0.0.2)
+  ips-omniti (0.0.2)
+    ips (>= 0.0.0)
+  selinux (0.7.0)
