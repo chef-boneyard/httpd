@@ -17,7 +17,7 @@ describe 'crossplat_test::thing on fedora-19' do
     end
 
     it 'steps into crossplat_thing and runs ruby_block[message for fedora-19]' do
-      expect(fedora_19_default_stepinto_run).to run_ruby_block('message for fedora-19')
+      expect(fedora_19_default_stepinto_run).to write_log('Sorry, crossplat_thing support for fedora-19 has not yet been implemented.')
     end
   end
 end

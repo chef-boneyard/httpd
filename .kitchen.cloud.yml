@@ -32,18 +32,18 @@ platforms:
     username: ec2-user
     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
-- name: debian-7.2
-  driver_plugin: gce
-  driver_config:
-    image_name: debian-7-wheezy-v20131120
-    zone: <%= ENV['GCE_ZONE'] %>
-    area: <%= ENV['GCE_AREA'] %>
-    network: <%= ENV['GCE_NETWORK'] %>
-    username: <%= ENV['GCE_USERNAME'] %>
-    public_key_path: <%= ENV['GCE_PUBLIC_KEY_PATH'] %>
-    ssh_key: <%= ENV['GCE_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[apt]
+# - name: debian-7.2
+#   driver_plugin: gce
+#   driver_config:
+#     image_name: debian-7-wheezy-v20131120
+#     zone: <%= ENV['GCE_ZONE'] %>
+#     area: <%= ENV['GCE_AREA'] %>
+#     network: <%= ENV['GCE_NETWORK'] %>
+#     username: <%= ENV['GCE_USERNAME'] %>
+#     public_key_path: <%= ENV['GCE_PUBLIC_KEY_PATH'] %>
+#     ssh_key: <%= ENV['GCE_SSH_KEY_PATH'] %>
+#   run_list:
+#   - recipe[apt]
 
 - name: fedora-19
   driver_plugin: digitalocean
@@ -134,11 +134,11 @@ platforms:
 
 suites:
   #
-  # default
+  # thing
   #
-  - name: default
+  - name: thing
     run_list:
-    - recipe[crossplat_test::default]
+    - recipe[crossplat_test::thing]
     includes: [
       'amazon-2013.09',
       'amazon-2014.03',

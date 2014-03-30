@@ -15,11 +15,11 @@ platforms:
 
 suites:
   #
-  # default
+  # thing
   #
-  - name: default
+  - name: thing
     run_list:
-    - recipe[crossplat_test::default]
+    - recipe[crossplat_test::thing]
     includes: [
       'centos-5.8',
       'centos-6.4',
