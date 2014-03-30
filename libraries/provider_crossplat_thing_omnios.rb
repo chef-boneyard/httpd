@@ -12,12 +12,11 @@ class Chef
 
         action :create do
           converge_by 'omnios pattern' do
-            ruby_block "message for #{node['platform']}-#{node['platform_version']}" do
-              block do
-                puts "Support for #{node['platform']}-#{node['platform_version']} has not yet been implemented"
-              end
-              action :run
+
+            log "Sorry, crossplat_thing support for #{node['platform']}-#{node['platform_version']} has not yet been implemented." do
+              level :info
             end
+
           end
         end
       end

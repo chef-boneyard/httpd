@@ -16,8 +16,8 @@ describe 'crossplat_test::thing on omnios-151006' do
       expect(omnios_151006_default_stepinto_run).to create_crossplat_thing('omnios_151006_default_stepinto')
     end
 
-    it 'steps into crossplat_thing and runs ruby_block[message for omnios-151006]' do
-      expect(omnios_151006_default_stepinto_run).to run_ruby_block('message for omnios-151006')
+    it 'steps into crossplat_thing and writes log[message for omnios-151006]' do
+      expect(omnios_151006_default_stepinto_run).to write_log('Sorry, crossplat_thing support for omnios-151006 has not yet been implemented.')
     end
   end
 end

@@ -12,13 +12,11 @@ class Chef
 
         action :create do
           converge_by 'windows pattern' do
-            # FIXME: weird.. goes in as 2008R2, comes out as 6.1.7600
-            ruby_block 'message for windows-6.1.7600' do
-              block do
-                puts "Support for #{node['platform']}-#{node['platform_version']} has not yet been implemented"
-              end
-              action :run
+
+            log "Sorry, crossplat_thing support for #{node['platform']}-#{node['platform_version']} has not yet been implemented." do
+              level :info
             end
+
           end
         end
       end

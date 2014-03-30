@@ -16,8 +16,8 @@ describe 'crossplat_test::thing on centos-6.4' do
       expect(centos_6_4_default_stepinto_run).to create_crossplat_thing('centos_6_4_default_stepinto')
     end
 
-    it 'steps into crossplat_thing and runs ruby_block[message for centos-6.4]' do
-      expect(centos_6_4_default_stepinto_run).to run_ruby_block('message for centos-6.4')
+    it 'steps into crossplat_thing and writes log[message for centos-6.4]' do
+      expect(centos_6_4_default_stepinto_run).to write_log('Sorry, crossplat_thing support for centos-6.4 has not yet been implemented.')
     end
   end
 end

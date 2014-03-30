@@ -12,9 +12,11 @@ class Chef
 
         action :create do
           converge_by 'fedora pattern' do
+
             log "Sorry, crossplat_thing support for #{node['platform']}-#{node['platform_version']} has not yet been implemented." do
               level :info
             end
+
           end
         end
       end

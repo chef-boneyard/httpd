@@ -16,8 +16,8 @@ describe 'crossplat_test::thing on smartos-5_11' do
       expect(smartos_5_11_default_stepinto_run).to create_crossplat_thing('smartos_5_11_default_stepinto')
     end
 
-    it 'steps into crossplat_thing and runs ruby_block[message for smartos-5.11]' do
-      expect(smartos_5_11_default_stepinto_run).to run_ruby_block('message for smartos-5.11')
+    it 'steps into crossplat_thing and writes log[message for smartos-5.11]' do
+      expect(smartos_5_11_default_stepinto_run).to write_log('Sorry, crossplat_thing support for smartos-5.11 has not yet been implemented.')
     end
   end
 end

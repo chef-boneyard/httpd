@@ -16,8 +16,8 @@ describe 'crossplat_test::thing on ubuntu-10_04' do
       expect(ubuntu_10_04_default_stepinto_run).to create_crossplat_thing('ubuntu_10_04_default_stepinto')
     end
 
-    it 'steps into crossplat_thing and runs ruby_block[message for ubuntu-10.04]' do
-      expect(ubuntu_10_04_default_stepinto_run).to run_ruby_block('message for ubuntu-10.04')
+    it 'steps into crossplat_thing and writes log[message for ubuntu-10.04]' do
+      expect(ubuntu_10_04_default_stepinto_run).to write_log('Sorry, crossplat_thing support for ubuntu-10.04 has not yet been implemented.')
     end
   end
 end

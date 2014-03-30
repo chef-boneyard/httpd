@@ -17,8 +17,8 @@ describe 'crossplat_test::thing on windows-2008R2' do
     end
 
     # FIXME: weird.. goes in as 2008R2, comes out as 6.1.7600
-    it 'steps into crossplat_thing and runs ruby_block[message for windows-6.1.7600]' do
-      expect(windows_2008R2_default_stepinto_run).to run_ruby_block('message for windows-6.1.7600')
+    it 'steps into crossplat_thing and writes log[message for windows-6.1.7600]' do
+      expect(windows_2008R2_default_stepinto_run).to write_log('Sorry, crossplat_thing support for windows-6.1.7600 has not yet been implemented.')
     end
   end
 end
