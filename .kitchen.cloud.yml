@@ -147,6 +147,7 @@ suites:
       'omnios-151006',
       'centos-5.8',
       'centos-6.4',
+      'smartos-13.4.0',
       'ubuntu-10.04',
       'ubuntu-12.04',
       'ubuntu-13.10',
