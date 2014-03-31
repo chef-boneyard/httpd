@@ -166,6 +166,8 @@ GEM
       net-ssh-gateway (>= 0.99.0)
     nio4r (1.0.0)
     nokogiri (1.5.11)
+    nyan-cat-formatter (0.5.2)
+      rspec (>= 2.13)
     octokit (2.7.2)
       sawyer (~> 0.5.2)
     ohai (6.20.0)
@@ -277,6 +279,7 @@ DEPENDENCIES
   kitchen-gce
   kitchen-joyent
   kitchen-vagrant (~> 0.11)
+  nyan-cat-formatter
   pry-nav
   rainbow (< 2.0)
   rake

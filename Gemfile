@@ -38,4 +38,5 @@ group :development do
   gem 'rake'
   gem 'fauxhai'
   gem 'pry-nav'
+  gem 'nyan-cat-formatter'
 end
