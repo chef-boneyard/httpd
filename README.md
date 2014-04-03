@@ -1,7 +1,8 @@
-Cross Platform Cookbook
+HTTPD Cookbook
 =======================
 
-Making custom Chef resource cross platform.
+This is a placeholder cookbook for the HTTPD cookbook in the
+communituy site namespace
 
 Scope
 -----
