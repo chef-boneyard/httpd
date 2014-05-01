@@ -1,5 +1,5 @@
 if defined?(ChefSpec)
-  def create_crossplat_thing(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:crossplat_thing, :create, resource_name)
+  def create_httpd_service(resource_name)
+    ChefSpec::Matchers::ResourceMatcher.new(:httpd_service, :create, resource_name)
   end
 end

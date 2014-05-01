@@ -1,3 +1,3 @@
 # comments!
 
-# httpd_service node['httpd']['service']['resource_name']
+httpd_service node['httpd']['service']['resource_name']
