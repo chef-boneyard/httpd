@@ -1,0 +1,33 @@
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-5.10
+  - name: fedora-5.10
+  - name: omnios-151006
+  - name: ubuntu-10.04
+  - name: ubuntu-12.04
+  - name: ubuntu-13.10
+  - name: windows-2008R2
+
+suites:
+  #
+  # thing
+  #
+  - name: thing
+    run_list:
+    - recipe[crossplat_test::thing]
+    includes: [
+      'centos-5.8',
+      'centos-6.4',
+      'amazon-2013.09',
+      'amazon-2014.03',
+      'fedora-19',
+      'debian-7.2',
+    ]
+    attributes:
+      crossplat:
+        an_attribute: 'from attributes'
