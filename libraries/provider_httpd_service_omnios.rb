@@ -13,8 +13,8 @@ class Chef
         action :create do
           converge_by 'omnios pattern' do
 
-            log "Sorry, httpd_service support for #{node['platform']}-#{node['platform_version']} has not yet been implemented." do
-              level :info
+            package 'apache22' do
+              action :install
             end
 
           end

@@ -13,8 +13,8 @@ class Chef
         action :create do
           converge_by 'rhel pattern' do
 
-            log "Sorry, httpd_service support for #{node['platform']}-#{node['platform_version']} has not yet been implemented." do
-              level :info
+            package 'httpd' do
+              action :install
             end
 
           end

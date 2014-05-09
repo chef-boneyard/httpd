@@ -15,9 +15,5 @@ describe 'httpd_test::service on ubuntu-12_04' do
     it 'creates httpd_service[ubuntu_12_04_default_stepinto]' do
       expect(ubuntu_12_04_default_stepinto_run).to create_httpd_service('ubuntu_12_04_default_stepinto')
     end
-
-    it 'steps into httpd_service and writes log[message for ubuntu-12.04]' do
-      expect(ubuntu_12_04_default_stepinto_run).to write_log('Sorry, httpd_service support for ubuntu-12.04 has not yet been implemented.')
-    end
   end
 end
