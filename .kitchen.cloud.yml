@@ -158,9 +158,8 @@ suites:
   #
   - name: service
     run_list:
-    - recipe[httpd_test::service]
+    - recipe[httpd_test_default::service]
     includes: [
-      'amazon-2013.09',
       'amazon-2014.03',
       'debian-7.2',
       'fedora-20',
@@ -169,7 +168,6 @@ suites:
       'centos-6.4',
       'smartos-13.4.0',
       'ubuntu-10.04',
-      'ubuntu-12.04',    
-      'ubuntu-13.10',
+      'ubuntu-12.04',
       'ubuntu-14.04',
     ]

@@ -17,6 +17,15 @@ class Chef
               action :install
             end
 
+            template '/etc/apache2/apache2.conf' do
+              action :create
+              cookbook 'httpd'
+            end
+
+            service 'apache2' do
+              action [:start, :enable]
+            end
+            
           end
         end
       end
