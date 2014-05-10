@@ -154,20 +154,21 @@ platforms:
 
 suites:
   #
-  # httpd_service
+  # server22-default
   #
-  - name: service
+  - name: server22-default
     run_list:
-    - recipe[httpd_test_default::service]
+    - recipe[httpd_test_default::server]
     includes: [
       'amazon-2014.03',
       'debian-7.2',
-      'fedora-20',
       'omnios-151006',
       'centos-5.8',
       'centos-6.4',
       'smartos-13.4.0',
       'ubuntu-10.04',
       'ubuntu-12.04',
-      'ubuntu-14.04',
     ]
+    attributes:
+      httpd:
+        version: '2.2'

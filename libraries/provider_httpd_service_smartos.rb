@@ -12,11 +12,7 @@ class Chef
 
         action :create do
           converge_by 'smartos pattern' do
-
-            package 'apache' do
-              action :install
-            end
-
+            # wat
           end
         end
       end

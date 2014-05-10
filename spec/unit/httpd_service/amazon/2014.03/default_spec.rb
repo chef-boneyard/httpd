@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on amazon-2014.03' do
+describe 'httpd_test_default::server on amazon-2014.03' do
   let(:amazon_2014_03_default_run) do
     ChefSpec::Runner.new(
       :platform => 'amazon',
       :version => '2014.03'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'amazon_2014_03_default'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'amazon_2014_03_default'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do

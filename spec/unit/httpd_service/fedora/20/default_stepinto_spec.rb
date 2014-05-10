@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on fedora-20' do
+describe 'httpd_test_default::server on fedora-20' do
   let(:fedora_20_default_stepinto_run) do
     ChefSpec::Runner.new(
       :step_into => 'httpd_service',
       :platform => 'fedora',
       :version => '20'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'fedora_20_default_stepinto'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'fedora_20_default_stepinto'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do

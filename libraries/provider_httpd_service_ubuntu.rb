@@ -12,11 +12,7 @@ class Chef
 
         action :create do
           converge_by 'ubuntu pattern' do
-
-            package 'apache2' do
-              action :install
-            end
-
+            # wat
           end
         end
       end

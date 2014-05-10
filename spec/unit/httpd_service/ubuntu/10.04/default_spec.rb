@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on ubuntu-10.04' do
+describe 'httpd_test_default::server on ubuntu-10.04' do
   let(:ubuntu_10_04_default_run) do
     ChefSpec::Runner.new(
       :platform => 'ubuntu',
       :version => '10.04'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'ubuntu_10_04_default'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'ubuntu_10_04_default'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do

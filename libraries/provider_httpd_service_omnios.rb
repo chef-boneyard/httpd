@@ -12,11 +12,7 @@ class Chef
 
         action :create do
           converge_by 'omnios pattern' do
-
-            package 'apache22' do
-              action :install
-            end
-
+            # wat
           end
         end
       end

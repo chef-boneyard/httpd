@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on ubuntu-14.04' do
+describe 'httpd_test_default::server on ubuntu-14.04' do
   let(:ubuntu_14_04_default_stepinto_run) do
     ChefSpec::Runner.new(
       :platform => 'ubuntu',
       :version => '14.04'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'ubuntu_14_04_default_stepinto'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'ubuntu_14_04_default_stepinto'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do

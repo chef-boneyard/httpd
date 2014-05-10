@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on omnios-151006' do
+describe 'httpd_test_default::server on omnios-151006' do
   let(:omnios_151006_default_stepinto_run) do
     ChefSpec::Runner.new(
       :step_into => 'httpd_service',
       :platform => 'omnios',
       :version => '151006'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'omnios_151006_default_stepinto'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'omnios_151006_default_stepinto'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do

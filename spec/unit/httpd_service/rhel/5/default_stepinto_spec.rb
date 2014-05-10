@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on centos-5.8' do
+describe 'httpd_test_default::server on centos-5.8' do
   let(:centos_5_8_default_stepinto_run) do
     ChefSpec::Runner.new(
       :step_into => 'httpd_service',
       :platform => 'centos',
       :version => '5.8'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'centos_5_8_default_stepinto'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'centos_5_8_default_stepinto'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do

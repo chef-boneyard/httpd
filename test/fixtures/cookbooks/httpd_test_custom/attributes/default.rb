@@ -1,1 +1,1 @@
-default['httpd']['service']['resource_name'] = 'default'
+default['httpd']['service_name'] = 'default'

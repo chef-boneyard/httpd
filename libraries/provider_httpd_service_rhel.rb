@@ -12,11 +12,7 @@ class Chef
 
         action :create do
           converge_by 'rhel pattern' do
-
-            package 'httpd' do
-              action :install
-            end
-
+            # wat
           end
         end
       end

@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'httpd_test_custom::service on ubuntu-12.04' do
+describe 'httpd_test_custom::server on ubuntu-12.04' do
   let(:ubuntu_12_04_custom_stepinto_run) do
     ChefSpec::Runner.new(
       :step_into => 'httpd_service',
       :platform => 'ubuntu',
       :version => '12.04'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'ubuntu_12_04_custom_stepinto'
-    end.converge('httpd_test_custom::service')
+      node.set['httpd']['service_name'] = 'ubuntu_12_04_custom_stepinto'
+    end.converge('httpd_test_custom::server')
   end
 
   context 'when using custom parameters' do

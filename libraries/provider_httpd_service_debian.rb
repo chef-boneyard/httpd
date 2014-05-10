@@ -24,8 +24,28 @@ class Chef
 
             service 'apache2' do
               action [:start, :enable]
+              provider Chef::Provider::Service::Init::Debian
             end
-            
+          end
+        end
+
+        action :restart do
+          converge_by 'debian pattern' do
+            service 'apache2' do
+              provider Chef::Provider::Service::Init::Debian
+              supports :restart => true
+              action :restart
+            end
+          end
+        end
+
+        action :reload do
+          converge_by 'debian pattern' do
+            service 'apache2' do
+              provider Chef::Provider::Service::Init::Debian
+              supports :reload => true
+              action :reload
+            end
           end
         end
       end

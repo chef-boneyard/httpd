@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on smartos-13.4.0' do
+describe 'httpd_test_default::server on smartos-13.4.0' do
   let(:smartos_13_4_0_default_run) do
     ChefSpec::Runner.new(
       :platform => 'smartos',
       :version => '5.11'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'smartos_13_4_0_default'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'smartos_13_4_0_default'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do

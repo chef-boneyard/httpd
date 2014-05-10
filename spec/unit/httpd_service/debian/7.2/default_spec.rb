@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'httpd_test_default::service on debian-7.2' do
+describe 'httpd_test_default::server on debian-7.2' do
   let(:debian_7_2_default_run) do
     ChefSpec::Runner.new(
       :platform => 'debian',
       :version => '7.2'
       ) do |node|
-      node.set['httpd']['service']['resource_name'] = 'debian_7_2_default'
-    end.converge('httpd_test_default::service')
+      node.set['httpd']['service_name'] = 'debian_7_2_default'
+    end.converge('httpd_test_default::server')
   end
 
   context 'when using default parameters' do
