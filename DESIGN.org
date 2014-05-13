@@ -15,6 +15,9 @@
   installing an apache module package will oftem drop off configuration in
   specific locations, and have selinux or apparmor policies that will
   break if you deviate from them.
+
+  For bonus points, the configuration file formats, defaults, and
+  idioms change from Apache 2.2 to Apache 2.4.
   
   This document serves as a place to document the exploration of these
   idioms, and will be referenced during the implementation of the
