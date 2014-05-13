@@ -46,8 +46,7 @@
     action :enable
   end
 
-  httpd_module ssl' do
-    filename 'libphp5.so'
+  httpd_module 'dav' do
     action :disable
   end
 
