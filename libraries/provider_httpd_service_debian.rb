@@ -13,13 +13,17 @@ class Chef
         action :create do
           converge_by 'debian pattern' do
 
+            apache_version = new_resource.version
+
             package 'apache2' do
               action :install
             end
 
             template '/etc/apache2/apache2.conf' do
-              action :create
+              source "debian/#{apache_version}/apache2.conf.erb"
+              variables(:config => new_resource)
               cookbook 'httpd'
+              action :create
             end
 
             service 'apache2' do

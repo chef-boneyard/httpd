@@ -172,3 +172,19 @@ suites:
     attributes:
       httpd:
         version: '2.2'
+
+  #
+  # server24-default
+  #
+  - name: server24-default
+    run_list:
+    - recipe[httpd_test_default::server]
+    includes: [
+      'amazon-2014.03',
+      'fedora-20',
+      'smartos-13.4.0',
+      'ubuntu-14.04',
+    ]
+    attributes:
+      httpd:
+        version: '2.4'
