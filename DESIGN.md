@@ -51,17 +51,17 @@
   end
 
   httpd_vhost 'example.computers.biz' do
-    servername => 'example.computers.biz',
-    port       => '80',
-    docroot    => '/var/www/example.computers.biz',
+    servername 'example.computers.biz',
+    port '80',
+    docroot '/var/www/example.computers.biz',
     action :create
   end
 
   httpd_vhost 'example.computers.biz ssl' do
-    servername => 'example.computers.biz'
-    port       => '443'
-    docroot    => '/var/www/example.computers.biz'
-    ssl        => true
+    servername 'example.computers.biz'
+    port '443'
+    docroot '/var/www/example.computers.biz'
+    ssl true
     action :create
   end
   ```
