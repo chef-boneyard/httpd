@@ -6,8 +6,8 @@ provisioner:
 
 platforms:
   - name: centos-5.10
+  - name: centos-6.5
   - name: fedora-5.10
-  - name: omnios-151006
   - name: ubuntu-10.04
   - name: ubuntu-12.04
   - name: ubuntu-13.10
@@ -15,19 +15,38 @@ platforms:
 
 suites:
   #
-  # thing
+  # server22-default
   #
-  - name: thing
+  - name: server22-default
     run_list:
-    - recipe[crossplat_test::thing]
+    - recipe[httpd_test_default::server]
     includes: [
-      'centos-5.8',
-      'centos-6.4',
-      'amazon-2013.09',
       'amazon-2014.03',
-      'fedora-19',
       'debian-7.2',
+      'omnios-151006',
+      'centos-5.8',
+      'centos-6.5',
+      'centos-latest',
+      'smartos-13.4.0',
+      'ubuntu-10.04',
+      'ubuntu-12.04',
     ]
     attributes:
-      crossplat:
-        an_attribute: 'from attributes'
+      httpd:
+        version: '2.2'
+
+  #
+  # server24-default
+  #
+  - name: server24-default
+    run_list:
+    - recipe[httpd_test_default::server]
+    includes: [
+      'amazon-2014.03',
+      'fedora-20',
+      'smartos-13.4.0',
+      'ubuntu-14.04',
+    ]
+    attributes:
+      httpd:
+        version: '2.4'
