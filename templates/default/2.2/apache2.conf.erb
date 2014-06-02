@@ -28,13 +28,6 @@ HostnameLookups <%= @config.hostname_lookups %>
 ErrorLog /var/log/<%= @apache_name %>/error.log
 LogLevel <%= @config.log_level %>
 
-<Files ~ "^\.ht">
-    Order allow,deny
-    Deny from all
-    Satisfy all
-</Files>
-AccessFileName .htaccess
-
 Include mods-enabled/*.load
 Include mods-enabled/*.conf
 Include conf-enabled/

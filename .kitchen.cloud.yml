@@ -186,7 +186,7 @@ suites:
   #
   - name: server22-custom
     run_list:
-    - recipe[httpd_test_default::server]
+    - recipe[httpd_test_custom::server]
     includes: [
       'amazon-2014.03',
       'debian-7.2',
@@ -201,7 +201,9 @@ suites:
       httpd:
         version: '2.2'
         service_name: 'custom'
-        listen_ports: [ '81', '444' ]
+        listen_ports: ['81', '444']
+        run_user: 'bob'
+        run_group: 'bob'
         contact: 'alice@computers.biz'
         timeout: '1234'
         keepalive: '4321'
@@ -229,7 +231,7 @@ suites:
   #
   - name: server24-custom
     run_list:
-    - recipe[httpd_test_default::server]
+    - recipe[httpd_test_custom::server]
     includes: [
       'amazon-2014.03',
       'fedora-20',
@@ -241,6 +243,8 @@ suites:
         version: '2.4'
         service_name: 'custom'
         listen_ports: [ '81', '444' ]
+        run_user: 'bob'
+        run_group: 'bob'
         contact: 'alice@computers.biz'
         timeout: '1234'
         keepalive: '4321'

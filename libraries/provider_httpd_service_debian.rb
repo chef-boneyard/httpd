@@ -18,7 +18,7 @@ class Chef
             if new_resource.name == 'default'
               apache_name = 'apache2'
             else
-              apache_name = "apache2#{new_resource.name}"
+              apache_name = "apache2-#{new_resource.name}"
             end
 
             # software installation
