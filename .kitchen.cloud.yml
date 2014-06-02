@@ -201,12 +201,12 @@ suites:
       httpd:
         version: '2.2'
         service_name: 'custom'
-        listen_ports: ['81', '444']
+        listen_ports: [ '81', '443' ]
         run_user: 'bob'
         run_group: 'bob'
         contact: 'alice@computers.biz'
         timeout: '1234'
-        keepalive: '4321'
+        keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'
 
@@ -247,6 +247,6 @@ suites:
         run_group: 'bob'
         contact: 'alice@computers.biz'
         timeout: '1234'
-        keepalive: '4321'
+        keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'

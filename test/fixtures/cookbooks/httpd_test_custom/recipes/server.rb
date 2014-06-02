@@ -5,6 +5,7 @@ group node['httpd']['run_group'] do
 end
 
 user node['httpd']['run_user'] do
+  gid node['httpd']['run_group']
   action :create
 end
 
@@ -19,6 +20,11 @@ httpd_service node['httpd']['service_name'] do
   keepalive node['httpd']['keepalive']
   keepaliverequests node['httpd']['keepaliverequests']
   keepalivetimeout node['httpd']['keepalivetimeout']
+  action :create
+end
+
+httpd_service "#{node['httpd']['service_name']}-2" do
+  listen_ports ['8080', '4321']
   action :create
 end
 

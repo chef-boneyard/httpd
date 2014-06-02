@@ -1,3 +1,3 @@
 # comments!
 
-httpd_service node['httpd']['service_name']
+httpd_service 'default'

@@ -13,6 +13,7 @@ class Chef
         action :create do
           converge_by 'debian pattern' do
 
+            # FIXME move to helpers
             # local variables
             apache_version = new_resource.version
             if new_resource.name == 'default'
@@ -172,6 +173,15 @@ class Chef
         end
 
         action :restart do
+          # FIXME move to helpers
+          # local variables
+          apache_version = new_resource.version
+          if new_resource.name == 'default'
+            apache_name = 'apache2'
+          else
+            apache_name = "apache2-#{new_resource.name}"
+          end
+          
           converge_by 'debian pattern' do
             service apache_name do
               provider Chef::Provider::Service::Init::Debian
@@ -182,6 +192,15 @@ class Chef
         end
 
         action :reload do
+          # FIXME move to helpers
+          # local variables
+          apache_version = new_resource.version
+          if new_resource.name == 'default'
+            apache_name = 'apache2'
+          else
+            apache_name = "apache2-#{new_resource.name}"
+          end
+          
           converge_by 'debian pattern' do
             service apache_name do
               provider Chef::Provider::Service::Init::Debian

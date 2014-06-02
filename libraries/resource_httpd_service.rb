@@ -107,10 +107,13 @@
 
        # attribute :listen_ports, kind_of: String
        def listen_ports(arg = nil)
+         puts "arg: listen_ports.class: #{arg.class}"
          set_or_return(
            :listen_ports,
            arg,
-           :kind_of => [String]
+           #           :kind_of => [String]
+           # wtf?
+           :kind_of => Chef::Node::ImmutableArray
            )
        end
 
