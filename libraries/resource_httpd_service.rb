@@ -101,19 +101,16 @@
          set_or_return(
            :listen_addresses,
            arg,
-           :kind_of => [String]
+           :kind_of => [ String, Array ]
            )
        end
 
        # attribute :listen_ports, kind_of: String
        def listen_ports(arg = nil)
-         puts "arg: listen_ports.class: #{arg.class}"
          set_or_return(
            :listen_ports,
            arg,
-           #           :kind_of => [String]
-           # wtf?
-           :kind_of => Chef::Node::ImmutableArray
+           :kind_of => [ Chef::Node::ImmutableArray, String, Array ]
            )
        end
 
