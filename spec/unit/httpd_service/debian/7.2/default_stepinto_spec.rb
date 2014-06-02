@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'httpd_test_default::server on debian-7.2' do
+
+  let(:httpd_conf_content) do
+  end
+
   let(:debian_7_2_default_stepinto_run) do
     ChefSpec::Runner.new(
       :step_into => 'httpd_service',
@@ -27,6 +31,10 @@ describe 'httpd_test_default::server on debian-7.2' do
 
     it 'steps into httpd_service and installs package[apache2]' do
       expect(debian_7_2_default_stepinto_run).to install_package('apache2')
+    end
+
+    it 'steps into httpd_service and creates directory[/etc/apache2]' do
+      expect(debian_7_2_default_stepinto_run).to create_directory('/etc/apache2')
     end
 
     it 'steps into httpd_service and creates template[/etc/apache2/apache2.conf]' do

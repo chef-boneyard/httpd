@@ -3,7 +3,8 @@
 httpd_service node['httpd']['service_name'] do
   version node['httpd']['version']
   listen_addresses node['httpd']['listen_addresses']
-  listen_ports node['httpd']['listen_ports']
+  #  listen_ports node['httpd']['listen_ports']
+  listen_ports ['81','444']
   contact node['httpd']['contact']
   timeout node['httpd']['timeout']
   keepalive node['httpd']['keepalive']

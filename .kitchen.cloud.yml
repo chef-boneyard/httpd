@@ -15,7 +15,7 @@ driver_config:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 11.12.4
+  require_chef_omnibus: latest
 
 platforms:
 - name: amazon-2013.09
@@ -182,6 +182,33 @@ suites:
         version: '2.2'
 
   #
+  # server22-custom
+  #
+  - name: server22-custom
+    run_list:
+    - recipe[httpd_test_default::server]
+    includes: [
+      'amazon-2014.03',
+      'debian-7.2',
+      'omnios-151006',
+      'centos-5.8',
+      'centos-6.4',
+      'smartos-13.4.0',
+      'ubuntu-10.04',
+      'ubuntu-12.04',
+    ]
+    attributes:
+      httpd:
+        version: '2.2'
+        service_name: 'custom'
+        listen_ports: [ '81', '444' ]
+        contact: 'alice@computers.biz'
+        timeout: '1234'
+        keepalive: '4321'
+        keepaliverequests: '5678'
+        keepalivetimeout: '8765'
+
+  #
   # server24-default
   #
   - name: server24-default
@@ -196,3 +223,26 @@ suites:
     attributes:
       httpd:
         version: '2.4'
+
+  #
+  # server24-custom
+  #
+  - name: server24-custom
+    run_list:
+    - recipe[httpd_test_default::server]
+    includes: [
+      'amazon-2014.03',
+      'fedora-20',
+      'smartos-13.4.0',
+      'ubuntu-14.04',
+    ]
+    attributes:
+      httpd:
+        version: '2.4'
+        service_name: 'custom'
+        listen_ports: [ '81', '444' ]
+        contact: 'alice@computers.biz'
+        timeout: '1234'
+        keepalive: '4321'
+        keepaliverequests: '5678'
+        keepalivetimeout: '8765'

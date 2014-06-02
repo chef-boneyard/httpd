@@ -8,6 +8,20 @@ module Opscode
         nil
       end
 
+      def default_run_user_for(platform, platform_family, platform_version)
+        keyname = keyname_for(platform, platform_family, platform_version)
+        PlatformInfo.httpd_info[platform_family][keyname]['default_run_user']
+      rescue NoMethodError
+        nil
+      end
+
+      def default_run_group_for(platform, platform_family, platform_version)
+        keyname = keyname_for(platform, platform_family, platform_version)
+        PlatformInfo.httpd_info[platform_family][keyname]['default_run_group']
+      rescue NoMethodError
+        nil
+      end
+
       def package_name_for(platform, platform_family, platform_version, version)
         keyname = keyname_for(platform, platform_family, platform_version)
         PlatformInfo.httpd_info[platform_family][keyname][version]['package_name']
@@ -51,58 +65,72 @@ module Opscode
             'rhel' => {
               '5' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
                 '2.2' => {
                   'package_name' => 'httpd',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 }
               },
               '6' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
                 '2.2' => {
                   'package_name' => 'httpd',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 }
               },
               '7' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
                 '2.2' => {
                   'package_name' => 'httpd',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 },
                 '2.4' => {
                   'package_name' => 'httpd24',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 }
               },
               '2013.03' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
                 '2.2' => {
                   'package_name' => 'httpd',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 }
               },
               '2013.09' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
                 '2.2' => {
                   'package_name' => 'httpd',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 }
               },
               '2014.03' => {
                 'default_version' => '2.4',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
                 '2.2' => {
                   'package_name' => 'httpd',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 },
                 '2.4' => {
                   'package_name' => 'httpd24',
-                  'service_name' => 'httpd'
+                  'service_prefix' => 'httpd'
                 }
               }
             },
             'fedora' => {
               '20' => {
                 'default_version' => '2.4',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
                 '2.4' => {
                   'package_name' => 'httpd',
                   'service_name' => 'httpd'
@@ -112,6 +140,8 @@ module Opscode
             'debian' => {
               '7' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'www-data',
+                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2',
                   'service_name' => 'apache2'
@@ -119,6 +149,8 @@ module Opscode
               },
               'jessie/sid' => {
                 'default_version' => '2.4',
+                'default_run_user' => 'www-data',
+                'default_run_group' => 'www-data',
                 '2.4' => {
                   'package_name' => 'apache2',
                   'service_name' => 'apache2'
@@ -126,6 +158,8 @@ module Opscode
               },
               '10.04' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'www-data',
+                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2',
                   'service_name' => 'apache2'
@@ -133,6 +167,8 @@ module Opscode
               },
               '12.04' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'www-data',
+                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2',
                   'service_name' => 'apache2'
@@ -140,6 +176,8 @@ module Opscode
               },
               '13.04' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'www-data',
+                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2',
                   'service_name' => 'apache2'
@@ -147,6 +185,8 @@ module Opscode
               },
               '13.10' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'www-data',
+                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2',
                   'service_name' => 'apache2'
@@ -154,6 +194,8 @@ module Opscode
               },
               '14.04' => {
                 'default_version' => '2.4',
+                'default_run_user' => 'www-data',
+                'default_run_group' => 'www-data',
                 '2.4' => {
                   'package_name' => 'apache2',
                   'service_name' => 'apache2'
@@ -165,6 +207,8 @@ module Opscode
               # smartmachine vs global zone (base64 13.4.0) from /etc/product
               '5.11' => {
                 'default_version' => '2.4',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'apache',
                   'service_name' => 'apache'
@@ -178,6 +222,8 @@ module Opscode
             'omnios' => {
               '151006' => {
                 'default_version' => '2.2',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'apache22',
                   'service_name' => 'apache22'
