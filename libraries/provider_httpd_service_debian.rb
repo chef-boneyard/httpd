@@ -12,15 +12,15 @@ class Chef
 
         action :create do
           converge_by 'debian pattern' do
-
-            # FIXME move to helpers
             # local variables
             apache_version = new_resource.version
-            if new_resource.name == 'default'
-              apache_name = 'apache2'
-            else
-              apache_name = "apache2-#{new_resource.name}"
-            end
+
+            # support multiple instances
+            new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
+            new_resource.name == 'default' ? a2enmod_name = 'a2enmod' : a2enmod_name = "a2enmod-#{new_resource.name}"
+            new_resource.name == 'default' ? a2dismod_name = 'a2dismod' : a2dismod_name = "a2dismod-#{new_resource.name}"
+            new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
+            new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
 
             # software installation
             package new_resource.package_name do
@@ -121,21 +121,28 @@ class Chef
               action :create
             end
 
-            link '/usr/sbin/a2dismod' do
+            link "/usr/sbin/#{a2enmod_name}" do
               to '/usr/sbin/a2enmod'
               owner 'root'
               group 'root'
               action :create
             end
 
-            link '/usr/sbin/a2dissite' do
+            link "/usr/sbin/#{a2dismod_name}" do
               to '/usr/sbin/a2enmod'
               owner 'root'
               group 'root'
               action :create
             end
 
-            link '/usr/sbin/a2ensite' do
+            link "/usr/sbin/#{a2ensite_name}" do
+              to '/usr/sbin/a2enmod'
+              owner 'root'
+              group 'root'
+              action :create
+            end
+
+            link "/usr/sbin/#{a2dissite_name}" do
               to '/usr/sbin/a2enmod'
               owner 'root'
               group 'root'
@@ -153,7 +160,7 @@ class Chef
               action :create
             end
 
-            # configuration file
+            # main configuration file
             template "/etc/#{apache_name}/apache2.conf" do
               source "#{apache_version}/apache2.conf.erb"
               variables(
@@ -173,15 +180,7 @@ class Chef
         end
 
         action :restart do
-          # FIXME move to helpers
-          # local variables
-          apache_version = new_resource.version
-          if new_resource.name == 'default'
-            apache_name = 'apache2'
-          else
-            apache_name = "apache2-#{new_resource.name}"
-          end
-          
+          new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
           converge_by 'debian pattern' do
             service apache_name do
               provider Chef::Provider::Service::Init::Debian
@@ -192,15 +191,7 @@ class Chef
         end
 
         action :reload do
-          # FIXME move to helpers
-          # local variables
-          apache_version = new_resource.version
-          if new_resource.name == 'default'
-            apache_name = 'apache2'
-          else
-            apache_name = "apache2-#{new_resource.name}"
-          end
-          
+          new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
           converge_by 'debian pattern' do
             service apache_name do
               provider Chef::Provider::Service::Init::Debian
