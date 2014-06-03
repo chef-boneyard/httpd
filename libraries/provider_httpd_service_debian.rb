@@ -194,6 +194,81 @@ class Chef
           end
         end
 
+        action :delete do
+          # support multiple instances
+          new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
+          new_resource.name == 'default' ? a2enmod_name = 'a2enmod' : a2enmod_name = "a2enmod-#{new_resource.name}"
+          new_resource.name == 'default' ? a2dismod_name = 'a2dismod' : a2dismod_name = "a2dismod-#{new_resource.name}"
+          new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
+          new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
+
+          # service management
+          service apache_name do
+            action [:stop, :disable]
+            provider Chef::Provider::Service::Init::Debian
+            only_if { ::File.exist?("/etc/init.d/#{apache_name}") }
+          end
+
+          # support directories
+          directory "/var/cache/#{apache_name}" do
+            owner 'root'
+            group 'root'
+            mode '0755'
+            recursive true
+            action :delete
+          end
+
+          directory "/var/log/#{apache_name}" do
+            owner 'root'
+            group 'adm'
+            mode '0755'
+            recursive true
+            action :delete
+          end
+
+          directory "/var/run/#{apache_name}" do
+            owner 'root'
+            group 'adm'
+            mode '0755'
+            recursive true
+            action :delete
+          end
+
+          # configuration directories
+          directory "/etc/#{apache_name}" do
+            owner 'root'
+            group 'root'
+            mode '0755'
+            recursive true
+            action :delete
+          end
+
+          # utility scripts
+          file "/usr/sbin/#{a2enmod_name}" do
+            action :delete
+          end
+
+          link "/usr/sbin/#{a2dismod_name}" do
+            action :delete
+          end
+
+          link "/usr/sbin/#{a2ensite_name}" do
+            action :delete
+          end
+
+          link "/usr/sbin/#{a2dissite_name}" do
+            action :delete
+          end
+
+          # init script
+          file "/etc/init.d/#{apache_name}" do
+            owner 'root'
+            group 'root'
+            mode '0755'
+            action :delete
+          end
+        end
+
         action :restart do
           new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
           converge_by 'debian pattern' do
