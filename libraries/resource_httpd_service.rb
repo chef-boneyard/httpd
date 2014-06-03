@@ -101,7 +101,7 @@
          set_or_return(
            :listen_addresses,
            arg,
-           :kind_of => [ String, Array ]
+           :kind_of => [String, Array]
            )
        end
 
@@ -110,7 +110,7 @@
          set_or_return(
            :listen_ports,
            arg,
-           :kind_of => [ Chef::Node::ImmutableArray, String, Array ]
+           :kind_of => [Chef::Node::ImmutableArray, String, Array]
            )
        end
 

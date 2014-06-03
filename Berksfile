@@ -9,4 +9,6 @@ group :integration do
 end
 
 cookbook 'httpd_test_default', path: 'test/fixtures/cookbooks/httpd_test_default'
-cookbook 'httpd_test_custom', path: 'test/fixtures/cookbooks/httpd_test_custom'
+cookbook 'httpd_test_broken', path: 'test/fixtures/cookbooks/httpd_test_broken'
+cookbook 'httpd_test_multiple', path: 'test/fixtures/cookbooks/httpd_test_multiple'
+

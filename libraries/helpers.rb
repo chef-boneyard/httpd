@@ -104,12 +104,16 @@ module Opscode
                 }
               },
               '2013.09' => {
-                'default_version' => '2.2',
+                'default_version' => '2.4',
                 'default_run_user' => 'httpd',
                 'default_run_group' => 'httpd',
                 '2.2' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
+                },
+                '2.4' => {
+                  'package_name' => 'httpd24',
+                  'service_prefix' => 'httpd24'
                 }
               },
               '2014.03' => {
@@ -127,6 +131,15 @@ module Opscode
               }
             },
             'fedora' => {
+              '19' => {
+                'default_version' => '2.4',
+                'default_run_user' => 'httpd',
+                'default_run_group' => 'httpd',
+                '2.4' => {
+                  'package_name' => 'httpd',
+                  'service_name' => 'httpd'
+                }
+              },
               '20' => {
                 'default_version' => '2.4',
                 'default_run_user' => 'httpd',
@@ -209,6 +222,10 @@ module Opscode
                 'default_version' => '2.4',
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
+                '2.0' => {
+                  'package_name' => 'apache',
+                  'service_name' => 'apache'
+                },
                 '2.2' => {
                   'package_name' => 'apache',
                   'service_name' => 'apache'
