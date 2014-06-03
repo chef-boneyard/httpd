@@ -182,11 +182,11 @@ suites:
         version: '2.2'
 
   #
-  # server22-custom
+  # server22-multiple
   #
-  - name: server22-custom
+  - name: server22-multiple
     run_list:
-    - recipe[httpd_test_custom::server]
+    - recipe[httpd_test_multiple::server]
     includes: [
       'amazon-2014.03',
       'debian-7.2',
@@ -200,7 +200,7 @@ suites:
     attributes:
       httpd:
         version: '2.2'
-        service_name: 'custom'
+        service_name: 'multiple'
         listen_ports: [ '81', '443' ]
         run_user: 'bob'
         run_group: 'bob'
@@ -227,11 +227,11 @@ suites:
         version: '2.4'
 
   #
-  # server24-custom
+  # server24-multiple
   #
-  - name: server24-custom
+  - name: server24-multiple
     run_list:
-    - recipe[httpd_test_custom::server]
+    - recipe[httpd_test_multiple::server]
     includes: [
       'amazon-2014.03',
       'fedora-20',

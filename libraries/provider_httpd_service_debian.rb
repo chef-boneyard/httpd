@@ -31,18 +31,21 @@ class Chef
             directory "/var/cache/#{apache_name}" do
               owner 'root'
               group 'root'
+              mode '0755'
               action :create
             end
 
             directory "/var/log/#{apache_name}" do
               owner 'root'
               group 'adm'
+              mode '0755'
               action :create
             end
 
             directory "/var/run/#{apache_name}" do
               owner 'root'
               group 'adm'
+              mode '0755'
               action :create
             end
 
@@ -55,11 +58,27 @@ class Chef
               action :create
             end
 
-            directory "/etc/#{apache_name}/mods-enabled" do
-              owner 'root'
-              group 'root'
-              mode '0755'
-              action :create
+            if apache_version.to_f < 2.4
+              directory "/etc/#{apache_name}/conf.d" do
+                owner 'root'
+                group 'root'
+                mode '0755'
+                action :create
+              end
+            else
+              directory "/etc/#{apache_name}/conf-available" do
+                owner 'root'
+                group 'root'
+                mode '0755'
+                action :create
+              end
+
+              directory "/etc/#{apache_name}/conf-enabled" do
+                owner 'root'
+                group 'root'
+                mode '0755'
+                action :create
+              end
             end
 
             directory "/etc/#{apache_name}/mods-available" do
@@ -69,21 +88,7 @@ class Chef
               action :create
             end
 
-            directory "/etc/#{apache_name}/conf-enabled" do
-              owner 'root'
-              group 'root'
-              mode '0755'
-              action :create
-            end
-
-            directory "/etc/#{apache_name}/conf-available" do
-              owner 'root'
-              group 'root'
-              mode '0755'
-              action :create
-            end
-
-            directory "/etc/#{apache_name}/sites-enabled" do
+            directory "/etc/#{apache_name}/mods-enabled" do
               owner 'root'
               group 'root'
               mode '0755'
@@ -91,6 +96,13 @@ class Chef
             end
 
             directory "/etc/#{apache_name}/sites-available" do
+              owner 'root'
+              group 'root'
+              mode '0755'
+              action :create
+            end
+
+            directory "/etc/#{apache_name}/sites-enabled" do
               owner 'root'
               group 'root'
               mode '0755'
@@ -163,6 +175,9 @@ class Chef
             # main configuration file
             template "/etc/#{apache_name}/apache2.conf" do
               source "#{apache_version}/apache2.conf.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
               variables(
                 :config => new_resource,
                 :apache_name => apache_name

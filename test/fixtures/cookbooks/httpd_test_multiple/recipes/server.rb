@@ -9,31 +9,39 @@ user node['httpd']['run_user'] do
   action :create
 end
 
+httpd_service 'default' do
+  action :delete
+end
+
 httpd_service 'instance-1' do
-  version node['httpd']['version']
-  listen_addresses node['httpd']['listen_addresses']
-  listen_ports node['httpd']['listen_ports']
-  run_user node['httpd']['run_user']
-  run_group node['httpd']['run_group']
   contact node['httpd']['contact']
-  timeout node['httpd']['timeout']
+  hostname_lookups node['httpd']['hostname_lookups']
   keepalive node['httpd']['keepalive']
   keepaliverequests node['httpd']['keepaliverequests']
   keepalivetimeout node['httpd']['keepalivetimeout']
+  listen_addresses node['httpd']['listen_addresses']
+  listen_ports node['httpd']['listen_ports']
+  log_level node['httpd']['log_level']
+  version node['httpd']['version']
+  run_user node['httpd']['run_user']
+  run_group node['httpd']['run_group']
+  timeout node['httpd']['timeout']
   action :create
 end
 
 httpd_service 'instance-2' do
-  version node['httpd']['version']
-  listen_addresses node['httpd']['listen_addresses']
-  listen_ports node['httpd']['listen_ports']
-  run_user node['httpd']['run_user']
-  run_group node['httpd']['run_group']
   contact node['httpd']['contact']
-  timeout node['httpd']['timeout']
+  hostname_lookups node['httpd']['hostname_lookups']
   keepalive node['httpd']['keepalive']
   keepaliverequests node['httpd']['keepaliverequests']
   keepalivetimeout node['httpd']['keepalivetimeout']
+  listen_addresses node['httpd']['listen_addresses']
+  listen_ports node['httpd']['listen_ports']
+  log_level node['httpd']['log_level']
+  version node['httpd']['version']
+  run_user node['httpd']['run_user']
+  run_group node['httpd']['run_group']
+  timeout node['httpd']['timeout']
   action :create
 end
 
