@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'httpd_test_multi::server 2.2 on debian-7.2' do
   let(:debian_7_2_multi_stepinto_run) do
     ChefSpec::Runner.new(
-      #      :step_into => 'httpd_service',
+      :step_into => 'httpd_service',
       :platform => 'debian',
       :version => '7.2'
       ) do |node|
@@ -20,7 +20,9 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
     end.converge('httpd_test_multi::server')
   end
 
+  # top level recipe
   context 'when compiling the recipe' do
+
     it 'creates group alice' do
       expect(debian_7_2_multi_stepinto_run).to create_group('alice')
     end
@@ -88,5 +90,59 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
   it 'writes log[notify reload]' do
     expect(debian_7_2_multi_stepinto_run).to write_log('notify reload')
+  end
+
+  # step_into httpd_service[default]
+  context 'when stepping into the httpd_service[default] resource' do
+
+    it 'disables service[apache2]' do
+#      binding.pry
+#      expect(debian_7_2_multi_stepinto_run).to stop_service('apache2')
+      expect(debian_7_2_multi_stepinto_run).to disable_service('apache2')
+    end
+
+    it 'deletes directory[/var/cache/apache2]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_directory('/var/cache/apache2').with(
+        :recursive => true
+        )
+    end
+
+    it 'deletes directory[/var/log/apache2]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_directory('/var/log/apache2').with(
+        :recursive => true
+        )
+    end
+
+    it 'deletes directory[/var/run/apache2]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_directory('/var/run/apache2').with(
+        :recursive => true
+        )
+    end
+
+    it 'deletes directory[/etc/apache2]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_directory('/etc/apache2').with(
+        :recursive => true
+        )
+    end
+
+    it 'deletes file[/usr/sbin/a2enmod]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_file('/usr/sbin/a2enmod')
+    end
+
+    it 'deletes link[/usr/sbin/a2dismod]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_link('/usr/sbin/a2dismod')
+    end
+
+    it 'deletes link[/usr/sbin/a2ensite]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_link('/usr/sbin/a2ensite')
+    end
+
+    it 'deletes link[/usr/sbin/a2dissite]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_link('/usr/sbin/a2dissite')
+    end
+
+    it 'deletes file[/etc/init.d/apache2]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_file('/etc/init.d/apache2')
+    end
   end
 end

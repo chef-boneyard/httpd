@@ -211,34 +211,22 @@ class Chef
 
           # support directories
           directory "/var/cache/#{apache_name}" do
-            owner 'root'
-            group 'root'
-            mode '0755'
             recursive true
             action :delete
           end
 
           directory "/var/log/#{apache_name}" do
-            owner 'root'
-            group 'adm'
-            mode '0755'
             recursive true
             action :delete
           end
 
           directory "/var/run/#{apache_name}" do
-            owner 'root'
-            group 'adm'
-            mode '0755'
             recursive true
             action :delete
           end
 
           # configuration directories
           directory "/etc/#{apache_name}" do
-            owner 'root'
-            group 'root'
-            mode '0755'
             recursive true
             action :delete
           end
@@ -262,9 +250,6 @@ class Chef
 
           # init script
           file "/etc/init.d/#{apache_name}" do
-            owner 'root'
-            group 'root'
-            mode '0755'
             action :delete
           end
         end
