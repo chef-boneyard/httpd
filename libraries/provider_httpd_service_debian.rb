@@ -22,27 +22,35 @@ class Chef
             new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
             new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
 
+            # We need to dynamically render the resource name into the title in
+            # order to ensure uniqueness. This avoids cloning via
+            # CHEF-3694 and allows ChefSpec to work properly
+
             # software installation
-            package new_resource.package_name do
+            package "#{new_resource.name} #{new_resource.package_name}" do
+              package_name new_resource.package_name
               action :install
             end
 
             # support directories
-            directory "/var/cache/#{apache_name}" do
+            directory "#{new_resource.name} /var/cache/#{apache_name}" do
+              path "/var/cache/#{apache_name}"
               owner 'root'
               group 'root'
               mode '0755'
               action :create
             end
 
-            directory "/var/log/#{apache_name}" do
+            directory "#{new_resource.name} /var/log/#{apache_name}" do
+              path "/var/log/#{apache_name}"
               owner 'root'
               group 'adm'
               mode '0755'
               action :create
             end
 
-            directory "/var/run/#{apache_name}" do
+            directory "#{new_resource.name} /var/run/#{apache_name}" do
+              path "/var/run/#{apache_name}"
               owner 'root'
               group 'adm'
               mode '0755'
@@ -50,7 +58,8 @@ class Chef
             end
 
             # configuration directories
-            directory "/etc/#{apache_name}" do
+            directory "#{new_resource.name} /etc/#{apache_name}" do
+              path "/etc/#{apache_name}"
               owner 'root'
               group 'root'
               mode '0755'
@@ -59,21 +68,24 @@ class Chef
             end
 
             if apache_version.to_f < 2.4
-              directory "/etc/#{apache_name}/conf.d" do
+              directory "#{new_resource.name} /etc/#{apache_name}/conf.d" do
+                path "/etc/#{apache_name}/conf.d"
                 owner 'root'
                 group 'root'
                 mode '0755'
                 action :create
               end
             else
-              directory "/etc/#{apache_name}/conf-available" do
+              directory "#{new_resource.name} /etc/#{apache_name}/conf-available" do
+                path "/etc/#{apache_name}/conf-available"
                 owner 'root'
                 group 'root'
                 mode '0755'
                 action :create
               end
 
-              directory "/etc/#{apache_name}/conf-enabled" do
+              directory "#{new_resource.name} /etc/#{apache_name}/conf-enabled" do
+                path "/etc/#{apache_name}/conf-enabled"
                 owner 'root'
                 group 'root'
                 mode '0755'
@@ -81,28 +93,32 @@ class Chef
               end
             end
 
-            directory "/etc/#{apache_name}/mods-available" do
+            directory "#{new_resource.name} /etc/#{apache_name}/mods-available" do
+              path "/etc/#{apache_name}/mods-available"
               owner 'root'
               group 'root'
               mode '0755'
               action :create
             end
 
-            directory "/etc/#{apache_name}/mods-enabled" do
+            directory "#{new_resource.name} /etc/#{apache_name}/mods-enabled" do
+              path "/etc/#{apache_name}/mods-enabled"
               owner 'root'
               group 'root'
               mode '0755'
               action :create
             end
 
-            directory "/etc/#{apache_name}/sites-available" do
+            directory "#{new_resource.name} /etc/#{apache_name}/sites-available" do
+              path "/etc/#{apache_name}/sites-available"
               owner 'root'
               group 'root'
               mode '0755'
               action :create
             end
 
-            directory "/etc/#{apache_name}/sites-enabled" do
+            directory "#{new_resource.name} /etc/#{apache_name}/sites-enabled" do
+              path "/etc/#{apache_name}/sites-enabled"
               owner 'root'
               group 'root'
               mode '0755'
@@ -110,7 +126,8 @@ class Chef
             end
 
             # envvars
-            template "/etc/#{apache_name}/envvars" do
+            template "#{new_resource.name} /etc/#{apache_name}/envvars" do
+              path "/etc/#{apache_name}/envvars"
               source "#{apache_version}/envvars.erb"
               owner 'root'
               group 'root'
@@ -124,7 +141,8 @@ class Chef
             end
 
             # utility scripts
-            template '/usr/sbin/a2enmod' do
+            template "#{new_resource.name} /usr/sbin/a2enmod" do
+              path '/usr/sbin/a2enmod'
               source "#{apache_version}/scripts/a2enmod.erb"
               owner 'root'
               group 'root'
@@ -133,28 +151,32 @@ class Chef
               action :create
             end
 
-            link "/usr/sbin/#{a2enmod_name}" do
+            link "#{new_resource.name} /usr/sbin/#{a2enmod_name}" do
+              target_file "/usr/sbin/#{a2enmod_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
               group 'root'
               action :create
             end
 
-            link "/usr/sbin/#{a2dismod_name}" do
+            link "#{new_resource.name} /usr/sbin/#{a2dismod_name}" do
+              target_file "/usr/sbin/#{a2dismod_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
               group 'root'
               action :create
             end
 
-            link "/usr/sbin/#{a2ensite_name}" do
+            link "#{new_resource.name} /usr/sbin/#{a2ensite_name}" do
+              target_file "/usr/sbin/#{a2ensite_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
               group 'root'
               action :create
             end
 
-            link "/usr/sbin/#{a2dissite_name}" do
+            link "#{new_resource.name} /usr/sbin/#{a2dissite_name}" do
+              target_file "/usr/sbin/#{a2dissite_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
               group 'root'
@@ -162,7 +184,8 @@ class Chef
             end
 
             # init script
-            template "/etc/init.d/#{apache_name}" do
+            template "#{new_resource.name} /etc/init.d/#{apache_name}" do
+              path "/etc/init.d/#{apache_name}"
               source "#{apache_version}/sysvinit/apache2.erb"
               owner 'root'
               group 'root'
@@ -173,7 +196,8 @@ class Chef
             end
 
             # main configuration file
-            template "/etc/#{apache_name}/apache2.conf" do
+            template "#{new_resource.name} /etc/#{apache_name}/apache2.conf" do
+              path "/etc/#{apache_name}/apache2.conf"
               source "#{apache_version}/apache2.conf.erb"
               owner 'root'
               group 'root'
@@ -187,7 +211,8 @@ class Chef
             end
 
             # service management
-            service apache_name do
+            service "#{new_resource.name} #{apache_name}" do
+              service_name apache_name
               action [:start, :enable]
               provider Chef::Provider::Service::Init::Debian
             end
@@ -202,54 +227,70 @@ class Chef
           new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
           new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
 
+          # We need to dynamically render the resource name into the title in
+          # order to ensure uniqueness. In addition to this, we need
+          # to render the extra string 'delete' to isolate it from action
+          # :create This avoids cloning via CHEF-3694 and allows
+          # ChefSpec to work properly
+
           # service management
-          service apache_name do
+          service "#{new_resource.name} delete #{apache_name}" do
+            service_name apache_name
             action [:stop, :disable]
             provider Chef::Provider::Service::Init::Debian
-            only_if { ::File.exist?("/etc/init.d/#{apache_name}") }
+            only_if "test -f /etc/init.d/#{apache_name}"
           end
 
           # support directories
-          directory "/var/cache/#{apache_name}" do
+          directory "#{new_resource.name} delete /var/cache/#{apache_name}" do
+            path "/var/cache/#{apache_name}"
             recursive true
             action :delete
           end
 
-          directory "/var/log/#{apache_name}" do
+          directory "#{new_resource.name} delete /var/log/#{apache_name}" do
+            path "/var/log/#{apache_name}"
             recursive true
             action :delete
           end
 
-          directory "/var/run/#{apache_name}" do
+          directory "#{new_resource.name} delete /var/run/#{apache_name}" do
+            path "/var/run/#{apache_name}"
             recursive true
             action :delete
           end
 
           # configuration directories
-          directory "/etc/#{apache_name}" do
+          directory "#{new_resource.name} delete /etc/#{apache_name}" do
+            path "/etc/#{apache_name}"
             recursive true
             action :delete
           end
 
           # utility scripts
-          file "/usr/sbin/#{a2enmod_name}" do
+          file "#{new_resource.name} delete /usr/sbin/#{a2enmod_name}" do
+            path "/usr/sbin/#{a2enmod_name}"
             action :delete
           end
 
-          link "/usr/sbin/#{a2dismod_name}" do
+          link "#{new_resource.name} delete /usr/sbin/#{a2dismod_name}" do
+            target_file "/usr/sbin/#{a2dismod_name}"
             action :delete
           end
 
-          link "/usr/sbin/#{a2ensite_name}" do
+          link "#{new_resource.name} delete /usr/sbin/#{a2ensite_name}" do
+            target_file "/usr/sbin/#{a2ensite_name}"
             action :delete
           end
 
-          link "/usr/sbin/#{a2dissite_name}" do
+          link "#{new_resource.name} delete /usr/sbin/#{a2dissite_name}" do
+            target_file "/usr/sbin/#{a2dissite_name}"
             action :delete
           end
 
           # init script
-          file "/etc/init.d/#{apache_name}" do
+          file "#{new_resource.name} delete /etc/init.d/#{apache_name}" do
+            path "/etc/init.d/#{apache_name}"
             action :delete
           end
         end
