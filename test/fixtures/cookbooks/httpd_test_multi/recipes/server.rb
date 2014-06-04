@@ -56,10 +56,12 @@ end
 
 log 'notify restart' do
   level :info
+  action :write
   notifies :restart, 'httpd_service[instance-1]'
 end
 
 log 'notify reload' do
   level :info
+  action :write
   notifies :reload, 'httpd_service[instance-2]'
 end
