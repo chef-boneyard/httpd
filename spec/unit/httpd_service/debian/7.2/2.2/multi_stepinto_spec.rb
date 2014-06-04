@@ -158,72 +158,81 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/var/cache/apache2-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/var/cache/apache2-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /var/cache/apache2-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /var/cache/apache2-instance-1').with(
+        :path => '/var/cache/apache2-instance-1',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/var/log/apache2-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/var/log/apache2-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /var/log/apache2-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /var/log/apache2-instance-1').with(
+        :path => '/var/log/apache2-instance-1',
         :owner => 'root',
         :group => 'adm',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/var/run/apache2-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/var/run/apache2-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /var/run/apache2-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /var/run/apache2-instance-1').with(
+        :path => '/var/run/apache2-instance-1',
         :owner => 'root',
         :group => 'adm',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/etc/apache2-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /etc/apache2-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /etc/apache2-instance-1').with(
+        :path => '/etc/apache2-instance-1',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/etc/apache2-instance-1/conf.d]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-1/conf.d').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /etc/apache2-instance-1/conf.d]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /etc/apache2-instance-1/conf.d').with(
+        :path => '/etc/apache2-instance-1/conf.d',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/etc/apache2-instance-1/mods-available]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-1/mods-available').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /etc/apache2-instance-1/mods-available]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /etc/apache2-instance-1/mods-available').with(
+        :path => '/etc/apache2-instance-1/mods-available',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/etc/apache2-instance-1/mods-enabled]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-1/mods-enabled').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /etc/apache2-instance-1/mods-enabled]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /etc/apache2-instance-1/mods-enabled').with(
+        :path => '/etc/apache2-instance-1/mods-enabled',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/etc/apache2-instance-1/sites-available]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-1/sites-available').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /etc/apache2-instance-1/sites-available]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /etc/apache2-instance-1/sites-available').with(
+        :path => '/etc/apache2-instance-1/sites-available',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates directory[/etc/apache2-instance-1/sites-enabled]' do
-      expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-1/sites-enabled').with(
+    it 'steps into httpd_service[instance-1] and creates directory[instance-1 /etc/apache2-instance-1/sites-enabled]' do
+      expect(debian_7_2_multi_stepinto_run).to create_directory('instance-1 /etc/apache2-instance-1/sites-enabled').with(
+        :path => '/etc/apache2-instance-1/sites-enabled',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -232,8 +241,9 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     # FIXME: render tempalte
     # FIXME: variables?
-    it 'steps into httpd_service[instance-1] and creates template[/etc/apache2-instance-1/envvars]' do
-      expect(debian_7_2_multi_stepinto_run).to create_template('/etc/apache2-instance-1/envvars').with(
+    it 'steps into httpd_service[instance-1] and creates template[instance-1 /etc/apache2-instance-1/envvars]' do
+      expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 /etc/apache2-instance-1/envvars').with(
+        :path => '/etc/apache2-instance-1/envvars',
         :source => '2.2/envvars.erb',
         :owner => 'root',
         :group => 'root',
@@ -253,40 +263,45 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates link[/usr/sbin/a2enmod-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2enmod-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates link[instance-1 /usr/sbin/a2enmod-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_link('instance-1 /usr/sbin/a2enmod-instance-1').with(
+        :target_file => '/usr/sbin/a2enmod-instance-1',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates link[/usr/sbin/a2dismod-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2dismod-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates link[instance-1 /usr/sbin/a2dismod-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_link('instance-1 /usr/sbin/a2dismod-instance-1').with(
+        :target_file => '/usr/sbin/a2dismod-instance-1',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates link[/usr/sbin/a2ensite-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2ensite-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates link[instance-1 /usr/sbin/a2ensite-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_link('instance-1 /usr/sbin/a2ensite-instance-1').with(
+        :target_file => '/usr/sbin/a2ensite-instance-1',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates link[/usr/sbin/a2dissite-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2dissite-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates link[instance-1 /usr/sbin/a2dissite-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_link('instance-1 /usr/sbin/a2dissite-instance-1').with(
+        :target_file => '/usr/sbin/a2dissite-instance-1',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates template[/etc/init.d/apache2-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to create_template('/etc/init.d/apache2-instance-1').with(
+    it 'steps into httpd_service[instance-1] and creates template[instance-1 /etc/init.d/apache2-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 /etc/init.d/apache2-instance-1').with(
+        :path => '/etc/init.d/apache2-instance-1',
         :source => '2.2/sysvinit/apache2.erb',
         :owner => 'root',
         :group => 'root',
@@ -296,8 +311,9 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
     end
 
     # FIXME: render template
-    it 'steps into httpd_service[instance-1] and creates template[/etc/apache2-instance-1/apache2.conf]' do
-      expect(debian_7_2_multi_stepinto_run).to create_template('/etc/apache2-instance-1/apache2.conf').with(
+    it 'steps into httpd_service[instance-1] and creates template[instance-1 /etc/apache2-instance-1/apache2.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 /etc/apache2-instance-1/apache2.conf').with(
+        :path => '/etc/apache2-instance-1/apache2.conf',
         :source => '2.2/apache2.conf.erb',
         :owner => 'root',
         :group => 'root',
@@ -306,9 +322,9 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
         )
     end
 
-    it 'steps into httpd_service[instance-1] and manages service[apache2-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to start_service('apache2-instance-1')
-      expect(debian_7_2_multi_stepinto_run).to enable_service('apache2-instance-1')
+    it 'steps into httpd_service[instance-1] and manages service[instance-1 apache2-instance-1]' do
+      expect(debian_7_2_multi_stepinto_run).to start_service('instance-1 apache2-instance-1')
+      expect(debian_7_2_multi_stepinto_run).to enable_service('instance-1 apache2-instance-1')
     end
   end
 
@@ -322,6 +338,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/var/cache/apache2-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/var/cache/apache2-instance-2').with(
+        :path => '/var/cache/apache2-instance-2',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -330,6 +347,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/var/log/apache2-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/var/log/apache2-instance-2').with(
+        :path => '/var/log/apache2-instance-2',
         :owner => 'root',
         :group => 'adm',
         :mode => '0755'
@@ -338,6 +356,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/var/run/apache2-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/var/run/apache2-instance-2').with(
+        :path => '/var/run/apache2-instance-2',
         :owner => 'root',
         :group => 'adm',
         :mode => '0755'
@@ -346,6 +365,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/etc/apache2-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-2').with(
+        :path => '/etc/apache2-instance-2',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -354,6 +374,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/etc/apache2-instance-2/conf.d]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-2/conf.d').with(
+        :path => '/etc/apache2-instance-2/conf.d',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -362,6 +383,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/etc/apache2-instance-2/mods-available]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-2/mods-available').with(
+        :path => '/etc/apache2-instance-2/mods-available',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -370,6 +392,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/etc/apache2-instance-2/mods-enabled]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-2/mods-enabled').with(
+        :path => '/etc/apache2-instance-2/mods-enabled',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -378,6 +401,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/etc/apache2-instance-2/sites-available]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-2/sites-available').with(
+        :path => '/etc/apache2-instance-2/sites-available',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -386,6 +410,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates directory[/etc/apache2-instance-2/sites-enabled]' do
       expect(debian_7_2_multi_stepinto_run).to create_directory('/etc/apache2-instance-2/sites-enabled').with(
+        :path => '/etc/apache2-instance-2/sites-enabled',
         :owner => 'root',
         :group => 'root',
         :mode => '0755'
@@ -396,6 +421,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
     # FIXME: variables?
     it 'steps into httpd_service[instance-2] and creates template[/etc/apache2-instance-2/envvars]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('/etc/apache2-instance-2/envvars').with(
+        :path => '/etc/apache2-instance-2/envvars',
         :source => '2.2/envvars.erb',
         :owner => 'root',
         :group => 'root',
@@ -417,6 +443,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates link[/usr/sbin/a2enmod-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2enmod-instance-2').with(
+        :target_file => '/usr/sbin/a2enmod-instance-2',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
@@ -425,6 +452,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates link[/usr/sbin/a2dismod-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2dismod-instance-2').with(
+        :target_file => '/usr/sbin/a2dismod-instance-2',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
@@ -433,6 +461,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates link[/usr/sbin/a2ensite-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2ensite-instance-2').with(
+        :target_file => '/usr/sbin/a2ensite-instance-2',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
@@ -441,6 +470,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates link[/usr/sbin/a2dissite-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_link('/usr/sbin/a2dissite-instance-2').with(
+        :target_file => '/usr/sbin/a2dissite-instance-2',
         :to => '/usr/sbin/a2enmod',
         :owner => 'root',
         :group => 'root'
@@ -449,6 +479,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'steps into httpd_service[instance-2] and creates template[/etc/init.d/apache2-instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('/etc/init.d/apache2-instance-2').with(
+        :path => '/etc/init.d/apache2-instance-2',
         :source => '2.2/sysvinit/apache2.erb',
         :owner => 'root',
         :group => 'root',
@@ -460,6 +491,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
     # FIXME: render template
     it 'steps into httpd_service[instance-2] and creates template[/etc/apache2-instance-2/apache2.conf]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('/etc/apache2-instance-2/apache2.conf').with(
+        :path => '/etc/apache2-instance-2/apache2.conf',
         :source => '2.2/apache2.conf.erb',
         :owner => 'root',
         :group => 'root',
