@@ -29,15 +29,18 @@ class Chef
             # software installation
             package "#{new_resource.name} #{new_resource.package_name}" do
               package_name new_resource.package_name
-              notifies :run , "execute[#{new_resource.name} remove package config]"
+              notifies :run, "bash[#{new_resource.name} remove package config]", :immediately
               action :install
             end
 
-            execute "#{new_resource.name} remove package config" do
-              command 'ls /etc/apache2 | egrep -v "envvars|apache2.conf" | xargs rm -rf'
+            bash "#{new_resource.name} remove package config" do
+              user 'root'
+              code <<-EOH
+              for i in `ls /etc/apache2 | egrep -v "envvars|apache2.conf"` ; do rm -rf /etc/apache2/$i ; done
+              EOH
               action :nothing
             end
-            
+
             # support directories
             directory "#{new_resource.name} /var/cache/#{apache_name}" do
               path "/var/cache/#{apache_name}"
@@ -166,7 +169,7 @@ class Chef
               not_if "test -f /usr/sbin/#{a2enmod_name}"
               action :create
             end
-            
+
             link "#{new_resource.name} /usr/sbin/#{a2dismod_name}" do
               target_file "/usr/sbin/#{a2dismod_name}"
               to '/usr/sbin/a2enmod'
@@ -265,22 +268,24 @@ class Chef
           # script that powers the service facility.
           package "#{new_resource.name} #{new_resource.package_name}" do
             package_name new_resource.package_name
-            notifies :run, "execute[#{new_resource.name} delete remove package config]"
+            notifies :run, "bash[#{new_resource.name} delete remove package config]", :immediately
             action :install
           end
 
-          execute "#{new_resource.name} delete remove package config" do
-            command 'ls /etc/apache2 | egrep -v "envvars|apache2.conf" | xargs rm -rf'
+          bash "#{new_resource.name} delete remove package config" do
+            user 'root'
+            code <<-EOH
+              for i in `ls /etc/apache2 | egrep -v "envvars|apache2.conf"` ; do rm -rf /etc/apache2/$i ; done
+              EOH
             action :nothing
           end
-          
+
           # service management
           service "#{new_resource.name} delete #{apache_name}" do
             service_name apache_name
             pattern 'apache2'
             action [:disable, :stop]
             provider Chef::Provider::Service::Init::Debian
-#            only_if "test -f /etc/init.d/#{apache_name}"
           end
 
           # support directories
