@@ -207,6 +207,7 @@ class Chef
                 :apache_name => apache_name
                 )
               cookbook 'httpd'
+              notifies :restart, "service[#{new_resource.name} #{apache_name}]"
               action :create
             end
 
@@ -214,6 +215,7 @@ class Chef
             service "#{new_resource.name} #{apache_name}" do
               service_name apache_name
               action [:start, :enable]
+              supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Debian
             end
           end
