@@ -88,13 +88,13 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
     end
   end
 
-  it 'writes log[notify restart]' do
-    expect(debian_7_2_multi_stepinto_run).to write_log('notify restart')
-  end
+  # it 'writes log[notify restart]' do
+  #   expect(debian_7_2_multi_stepinto_run).to write_log('notify restart')
+  # end
 
-  it 'writes log[notify reload]' do
-    expect(debian_7_2_multi_stepinto_run).to write_log('notify reload')
-  end
+  # it 'writes log[notify reload]' do
+  #   expect(debian_7_2_multi_stepinto_run).to write_log('notify reload')
+  # end
 
   # step_into httpd_service[default]
   context 'when stepping into the httpd_service[default] resource' do

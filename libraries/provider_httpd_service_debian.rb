@@ -67,6 +67,7 @@ class Chef
               action :create
             end
 
+            # configuration directories
             if apache_version.to_f < 2.4
               directory "#{new_resource.name} /etc/#{apache_name}/conf.d" do
                 path "/etc/#{apache_name}/conf.d"
@@ -151,12 +152,14 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} /usr/sbin/#{a2enmod_name}" do
-              target_file "/usr/sbin/#{a2enmod_name}"
-              to '/usr/sbin/a2enmod'
-              owner 'root'
-              group 'root'
-              action :create
+            unless a2enmod_name == 'apache2'
+              link "#{new_resource.name} /usr/sbin/#{a2enmod_name}" do
+                target_file "/usr/sbin/#{a2enmod_name}"
+                to '/usr/sbin/a2enmod'
+                owner 'root'
+                group 'root'
+                action :create
+              end
             end
 
             link "#{new_resource.name} /usr/sbin/#{a2dismod_name}" do
@@ -183,19 +186,21 @@ class Chef
               action :create
             end
 
-            # init script
-            template "#{new_resource.name} /etc/init.d/#{apache_name}" do
-              path "/etc/init.d/#{apache_name}"
-              source "#{apache_version}/sysvinit/apache2.erb"
+            # configuration files
+            template "#{new_resource.name} /etc/#{apache_name}/magic" do
+              path "/etc/#{apache_name}/magic"
+              source "#{apache_version}/magic.erb"
               owner 'root'
               group 'root'
-              mode '0755'
-              variables(:apache_name => apache_name)
+              mode '0644'
               cookbook 'httpd'
               action :create
             end
 
-            # main configuration file
+            file "#{new_resource.name} /etc/#{apache_name}/ports.conf" do
+              action :delete
+            end
+
             template "#{new_resource.name} /etc/#{apache_name}/apache2.conf" do
               path "/etc/#{apache_name}/apache2.conf"
               source "#{apache_version}/apache2.conf.erb"
@@ -211,6 +216,18 @@ class Chef
               action :create
             end
 
+            # init script
+            template "#{new_resource.name} /etc/init.d/#{apache_name}" do
+              path "/etc/init.d/#{apache_name}"
+              source "#{apache_version}/sysvinit/apache2.erb"
+              owner 'root'
+              group 'root'
+              mode '0755'
+              variables(:apache_name => apache_name)
+              cookbook 'httpd'
+              action :create
+            end
+
             # service management
             service "#{new_resource.name} #{apache_name}" do
               service_name apache_name
@@ -222,6 +239,9 @@ class Chef
         end
 
         action :delete do
+          # local variables
+          apache_version = new_resource.version
+
           # support multiple instances
           new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
           new_resource.name == 'default' ? a2enmod_name = 'a2enmod' : a2enmod_name = "a2enmod-#{new_resource.name}"
@@ -235,12 +255,20 @@ class Chef
           # :create This avoids cloning via CHEF-3694 and allows
           # ChefSpec to work properly
 
+          # Software installation: This is needed to supply the init
+          # script that powers the service facility.
+          package "#{new_resource.name} #{new_resource.package_name}" do
+            package_name new_resource.package_name
+            action :install
+          end
+
           # service management
           service "#{new_resource.name} delete #{apache_name}" do
             service_name apache_name
-            action [:stop, :disable]
+            pattern 'apache2'
+            action [:disable, :stop]
             provider Chef::Provider::Service::Init::Debian
-            only_if "test -f /etc/init.d/#{apache_name}"
+#            only_if "test -f /etc/init.d/#{apache_name}"
           end
 
           # support directories
@@ -262,9 +290,49 @@ class Chef
             action :delete
           end
 
-          # configuration directories
-          directory "#{new_resource.name} delete /etc/#{apache_name}" do
-            path "/etc/#{apache_name}"
+          # configuation directories
+          if apache_version.to_f < 2.4
+            directory "#{new_resource.name} /etc/#{apache_name}/conf.d" do
+              path "/etc/#{apache_name}/conf.d"
+              recursive true
+              action :delete
+            end
+          else
+            directory "#{new_resource.name} /etc/#{apache_name}/conf-available" do
+              path "/etc/#{apache_name}/conf-available"
+              owner 'root'
+              group 'root'
+              mode '0755'
+              action :delete
+            end
+
+            directory "#{new_resource.name} /etc/#{apache_name}/conf-enabled" do
+              path "/etc/#{apache_name}/conf-enabled"
+              recursive true
+              action :delete
+            end
+          end
+
+          directory "#{new_resource.name} /etc/#{apache_name}/mods-available" do
+            path "/etc/#{apache_name}/mods-available"
+            recursive true
+            action :delete
+          end
+
+          directory "#{new_resource.name} /etc/#{apache_name}/mods-enabled" do
+            path "/etc/#{apache_name}/mods-enabled"
+            recursive true
+            action :delete
+          end
+
+          directory "#{new_resource.name} /etc/#{apache_name}/sites-available" do
+            path "/etc/#{apache_name}/sites-available"
+            recursive true
+            action :delete
+          end
+
+          directory "#{new_resource.name} /etc/#{apache_name}/sites-enabled" do
+            path "/etc/#{apache_name}/sites-enabled"
             recursive true
             action :delete
           end
@@ -290,9 +358,11 @@ class Chef
             action :delete
           end
 
-          # init script
-          file "#{new_resource.name} delete /etc/init.d/#{apache_name}" do
-            path "/etc/init.d/#{apache_name}"
+          file "#{new_resource.name} /etc/#{apache_name}/magic" do
+            action :delete
+          end
+
+          file "#{new_resource.name} /etc/#{apache_name}/ports.conf" do
             action :delete
           end
         end
