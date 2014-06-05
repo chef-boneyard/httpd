@@ -24,14 +24,20 @@ class Chef
 
             # We need to dynamically render the resource name into the title in
             # order to ensure uniqueness. This avoids cloning via
-            # CHEF-3694 and allows ChefSpec to work properly
+            # CHEF-3694 and allows ChefSpec and Chef 10 to work properly
 
             # software installation
             package "#{new_resource.name} #{new_resource.package_name}" do
               package_name new_resource.package_name
+              notifies :run , "execute[#{new_resource.name} remove package config]"
               action :install
             end
 
+            execute "#{new_resource.name} remove package config" do
+              command 'ls /etc/apache2 | egrep -v "envvars|apache2.conf" | xargs rm -rf'
+              action :nothing
+            end
+            
             # support directories
             directory "#{new_resource.name} /var/cache/#{apache_name}" do
               path "/var/cache/#{apache_name}"
@@ -152,16 +158,15 @@ class Chef
               action :create
             end
 
-            unless a2enmod_name == 'apache2'
-              link "#{new_resource.name} /usr/sbin/#{a2enmod_name}" do
-                target_file "/usr/sbin/#{a2enmod_name}"
-                to '/usr/sbin/a2enmod'
-                owner 'root'
-                group 'root'
-                action :create
-              end
+            link "#{new_resource.name} /usr/sbin/#{a2enmod_name}" do
+              target_file "/usr/sbin/#{a2enmod_name}"
+              to '/usr/sbin/a2enmod'
+              owner 'root'
+              group 'root'
+              not_if "test -f /usr/sbin/#{a2enmod_name}"
+              action :create
             end
-
+            
             link "#{new_resource.name} /usr/sbin/#{a2dismod_name}" do
               target_file "/usr/sbin/#{a2dismod_name}"
               to '/usr/sbin/a2enmod'
@@ -198,6 +203,7 @@ class Chef
             end
 
             file "#{new_resource.name} /etc/#{apache_name}/ports.conf" do
+              path "/etc/#{apache_name}/ports.conf"
               action :delete
             end
 
@@ -253,15 +259,21 @@ class Chef
           # order to ensure uniqueness. In addition to this, we need
           # to render the extra string 'delete' to isolate it from action
           # :create This avoids cloning via CHEF-3694 and allows
-          # ChefSpec to work properly
+          # ChefSpec and Chef 10 to work properly
 
           # Software installation: This is needed to supply the init
           # script that powers the service facility.
           package "#{new_resource.name} #{new_resource.package_name}" do
             package_name new_resource.package_name
+            notifies :run, "execute[#{new_resource.name} delete remove package config]"
             action :install
           end
 
+          execute "#{new_resource.name} delete remove package config" do
+            command 'ls /etc/apache2 | egrep -v "envvars|apache2.conf" | xargs rm -rf'
+            action :nothing
+          end
+          
           # service management
           service "#{new_resource.name} delete #{apache_name}" do
             service_name apache_name
@@ -359,10 +371,12 @@ class Chef
           end
 
           file "#{new_resource.name} /etc/#{apache_name}/magic" do
+            path "/etc/#{apache_name}/magic"
             action :delete
           end
 
           file "#{new_resource.name} /etc/#{apache_name}/ports.conf" do
+            path "/etc/#{apache_name}/ports.conf"
             action :delete
           end
         end
