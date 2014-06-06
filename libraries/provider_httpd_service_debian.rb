@@ -27,13 +27,13 @@ class Chef
             # CHEF-3694 and allows ChefSpec and Chef 10 to work properly
 
             # software installation
-            package "#{new_resource.name} #{new_resource.package_name}" do
+            package "#{new_resource.name} create #{new_resource.package_name}" do
               package_name new_resource.package_name
-              notifies :run, "bash[#{new_resource.name} remove package config]", :immediately
+              notifies :run, "bash[#{new_resource.name} create remove_package_config]", :immediately
               action :install
             end
 
-            bash "#{new_resource.name} remove package config" do
+            bash "#{new_resource.name} create remove_package_config" do
               user 'root'
               code <<-EOH
               for i in `ls /etc/apache2 | egrep -v "envvars|apache2.conf"` ; do rm -rf /etc/apache2/$i ; done
@@ -42,7 +42,7 @@ class Chef
             end
 
             # support directories
-            directory "#{new_resource.name} /var/cache/#{apache_name}" do
+            directory "#{new_resource.name} create /var/cache/#{apache_name}" do
               path "/var/cache/#{apache_name}"
               owner 'root'
               group 'root'
@@ -50,7 +50,7 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} /var/log/#{apache_name}" do
+            directory "#{new_resource.name} create /var/log/#{apache_name}" do
               path "/var/log/#{apache_name}"
               owner 'root'
               group 'adm'
@@ -58,7 +58,7 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} /var/run/#{apache_name}" do
+            directory "#{new_resource.name} create /var/run/#{apache_name}" do
               path "/var/run/#{apache_name}"
               owner 'root'
               group 'adm'
@@ -67,7 +67,7 @@ class Chef
             end
 
             # configuration directories
-            directory "#{new_resource.name} /etc/#{apache_name}" do
+            directory "#{new_resource.name} create /etc/#{apache_name}" do
               path "/etc/#{apache_name}"
               owner 'root'
               group 'root'
@@ -78,7 +78,7 @@ class Chef
 
             # configuration directories
             if apache_version.to_f < 2.4
-              directory "#{new_resource.name} /etc/#{apache_name}/conf.d" do
+              directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
                 path "/etc/#{apache_name}/conf.d"
                 owner 'root'
                 group 'root'
@@ -86,7 +86,7 @@ class Chef
                 action :create
               end
             else
-              directory "#{new_resource.name} /etc/#{apache_name}/conf-available" do
+              directory "#{new_resource.name} create /etc/#{apache_name}/conf-available" do
                 path "/etc/#{apache_name}/conf-available"
                 owner 'root'
                 group 'root'
@@ -94,7 +94,7 @@ class Chef
                 action :create
               end
 
-              directory "#{new_resource.name} /etc/#{apache_name}/conf-enabled" do
+              directory "#{new_resource.name} create /etc/#{apache_name}/conf-enabled" do
                 path "/etc/#{apache_name}/conf-enabled"
                 owner 'root'
                 group 'root'
@@ -103,7 +103,7 @@ class Chef
               end
             end
 
-            directory "#{new_resource.name} /etc/#{apache_name}/mods-available" do
+            directory "#{new_resource.name} create /etc/#{apache_name}/mods-available" do
               path "/etc/#{apache_name}/mods-available"
               owner 'root'
               group 'root'
@@ -111,7 +111,7 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} /etc/#{apache_name}/mods-enabled" do
+            directory "#{new_resource.name} create /etc/#{apache_name}/mods-enabled" do
               path "/etc/#{apache_name}/mods-enabled"
               owner 'root'
               group 'root'
@@ -119,7 +119,7 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} /etc/#{apache_name}/sites-available" do
+            directory "#{new_resource.name} create /etc/#{apache_name}/sites-available" do
               path "/etc/#{apache_name}/sites-available"
               owner 'root'
               group 'root'
@@ -127,7 +127,7 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} /etc/#{apache_name}/sites-enabled" do
+            directory "#{new_resource.name} create /etc/#{apache_name}/sites-enabled" do
               path "/etc/#{apache_name}/sites-enabled"
               owner 'root'
               group 'root'
@@ -136,7 +136,7 @@ class Chef
             end
 
             # envvars
-            template "#{new_resource.name} /etc/#{apache_name}/envvars" do
+            template "#{new_resource.name} create /etc/#{apache_name}/envvars" do
               path "/etc/#{apache_name}/envvars"
               source "#{apache_version}/envvars.erb"
               owner 'root'
@@ -151,7 +151,7 @@ class Chef
             end
 
             # utility scripts
-            template "#{new_resource.name} /usr/sbin/a2enmod" do
+            template "#{new_resource.name} create /usr/sbin/a2enmod" do
               path '/usr/sbin/a2enmod'
               source "#{apache_version}/scripts/a2enmod.erb"
               owner 'root'
@@ -161,7 +161,7 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} /usr/sbin/#{a2enmod_name}" do
+            link "#{new_resource.name} create /usr/sbin/#{a2enmod_name}" do
               target_file "/usr/sbin/#{a2enmod_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
@@ -170,7 +170,7 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} /usr/sbin/#{a2dismod_name}" do
+            link "#{new_resource.name} create /usr/sbin/#{a2dismod_name}" do
               target_file "/usr/sbin/#{a2dismod_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
@@ -178,7 +178,7 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} /usr/sbin/#{a2ensite_name}" do
+            link "#{new_resource.name} create /usr/sbin/#{a2ensite_name}" do
               target_file "/usr/sbin/#{a2ensite_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
@@ -186,7 +186,7 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} /usr/sbin/#{a2dissite_name}" do
+            link "#{new_resource.name} create /usr/sbin/#{a2dissite_name}" do
               target_file "/usr/sbin/#{a2dissite_name}"
               to '/usr/sbin/a2enmod'
               owner 'root'
@@ -195,7 +195,7 @@ class Chef
             end
 
             # configuration files
-            template "#{new_resource.name} /etc/#{apache_name}/magic" do
+            template "#{new_resource.name} create /etc/#{apache_name}/magic" do
               path "/etc/#{apache_name}/magic"
               source "#{apache_version}/magic.erb"
               owner 'root'
@@ -205,12 +205,12 @@ class Chef
               action :create
             end
 
-            file "#{new_resource.name} /etc/#{apache_name}/ports.conf" do
+            file "#{new_resource.name} create /etc/#{apache_name}/ports.conf" do
               path "/etc/#{apache_name}/ports.conf"
               action :delete
             end
 
-            template "#{new_resource.name} /etc/#{apache_name}/apache2.conf" do
+            template "#{new_resource.name} create /etc/#{apache_name}/apache2.conf" do
               path "/etc/#{apache_name}/apache2.conf"
               source "#{apache_version}/apache2.conf.erb"
               owner 'root'
@@ -221,12 +221,12 @@ class Chef
                 :apache_name => apache_name
                 )
               cookbook 'httpd'
-              notifies :restart, "service[#{new_resource.name} #{apache_name}]"
+              notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
               action :create
             end
 
             # init script
-            template "#{new_resource.name} /etc/init.d/#{apache_name}" do
+            template "#{new_resource.name} create /etc/init.d/#{apache_name}" do
               path "/etc/init.d/#{apache_name}"
               source "#{apache_version}/sysvinit/apache2.erb"
               owner 'root'
@@ -238,7 +238,7 @@ class Chef
             end
 
             # service management
-            service "#{new_resource.name} #{apache_name}" do
+            service "#{new_resource.name} create #{apache_name}" do
               service_name apache_name
               action [:start, :enable]
               supports :restart => true, :reload => true, :status => true
@@ -266,13 +266,13 @@ class Chef
 
           # Software installation: This is needed to supply the init
           # script that powers the service facility.
-          package "#{new_resource.name} #{new_resource.package_name}" do
+          package "#{new_resource.name} delete #{new_resource.package_name}" do
             package_name new_resource.package_name
-            notifies :run, "bash[#{new_resource.name} delete remove package config]", :immediately
+            notifies :run, "bash[#{new_resource.name} delete remove_package_config]", :immediately
             action :install
           end
 
-          bash "#{new_resource.name} delete remove package config" do
+          bash "#{new_resource.name} delete remove_package_config" do
             user 'root'
             code <<-EOH
               for i in `ls /etc/apache2 | egrep -v "envvars|apache2.conf"` ; do rm -rf /etc/apache2/$i ; done
@@ -309,13 +309,13 @@ class Chef
 
           # configuation directories
           if apache_version.to_f < 2.4
-            directory "#{new_resource.name} /etc/#{apache_name}/conf.d" do
+            directory "#{new_resource.name} delete /etc/#{apache_name}/conf.d" do
               path "/etc/#{apache_name}/conf.d"
               recursive true
               action :delete
             end
           else
-            directory "#{new_resource.name} /etc/#{apache_name}/conf-available" do
+            directory "#{new_resource.name} delete /etc/#{apache_name}/conf-available" do
               path "/etc/#{apache_name}/conf-available"
               owner 'root'
               group 'root'
@@ -323,32 +323,32 @@ class Chef
               action :delete
             end
 
-            directory "#{new_resource.name} /etc/#{apache_name}/conf-enabled" do
+            directory "#{new_resource.name} delete /etc/#{apache_name}/conf-enabled" do
               path "/etc/#{apache_name}/conf-enabled"
               recursive true
               action :delete
             end
           end
 
-          directory "#{new_resource.name} /etc/#{apache_name}/mods-available" do
+          directory "#{new_resource.name} delete /etc/#{apache_name}/mods-available" do
             path "/etc/#{apache_name}/mods-available"
             recursive true
             action :delete
           end
 
-          directory "#{new_resource.name} /etc/#{apache_name}/mods-enabled" do
+          directory "#{new_resource.name} delete /etc/#{apache_name}/mods-enabled" do
             path "/etc/#{apache_name}/mods-enabled"
             recursive true
             action :delete
           end
 
-          directory "#{new_resource.name} /etc/#{apache_name}/sites-available" do
+          directory "#{new_resource.name} delete /etc/#{apache_name}/sites-available" do
             path "/etc/#{apache_name}/sites-available"
             recursive true
             action :delete
           end
 
-          directory "#{new_resource.name} /etc/#{apache_name}/sites-enabled" do
+          directory "#{new_resource.name} delete /etc/#{apache_name}/sites-enabled" do
             path "/etc/#{apache_name}/sites-enabled"
             recursive true
             action :delete
@@ -375,12 +375,12 @@ class Chef
             action :delete
           end
 
-          file "#{new_resource.name} /etc/#{apache_name}/magic" do
+          file "#{new_resource.name} delete /etc/#{apache_name}/magic" do
             path "/etc/#{apache_name}/magic"
             action :delete
           end
 
-          file "#{new_resource.name} /etc/#{apache_name}/ports.conf" do
+          file "#{new_resource.name} delete /etc/#{apache_name}/ports.conf" do
             path "/etc/#{apache_name}/ports.conf"
             action :delete
           end
