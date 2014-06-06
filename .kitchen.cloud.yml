@@ -118,17 +118,6 @@ platforms:
     sudo: false
     chef_omnibus_url: https://raw.github.com/test-kitchen/kitchen-joyent/master/scripts/install-smartos.sh
 
-- name: ubuntu-10.04
-  driver_plugin: digitalocean
-  driver_config:
-    image_id: 14097
-    flavor_id: 63
-    region_id: 4
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[apt]
-
 - name: ubuntu-12.04
   driver_plugin: digitalocean
   driver_config:
@@ -176,8 +165,8 @@ suites:
       'centos-5.8',
       'centos-6.4',
       'smartos-13.4.0',
-      'ubuntu-10.04',
       'ubuntu-12.04',
+      'ubuntu-13.10',
     ]
     attributes:
       httpd:
@@ -196,7 +185,6 @@ suites:
       'centos-5.8',
       'centos-6.4',
       'smartos-13.4.0',
-      'ubuntu-10.04',
       'ubuntu-12.04',
     ]
     attributes:

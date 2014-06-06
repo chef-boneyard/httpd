@@ -22,6 +22,9 @@ class Chef
             new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
             new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
 
+            # calculate debian major version from node attributes
+            debian_major_version = "debian-#{node['platform_version'].to_i}"
+
             # We need to dynamically render the resource name into the title in
             # order to ensure uniqueness. This avoids cloning via
             # CHEF-3694 and allows ChefSpec and Chef 10 to work properly
@@ -228,7 +231,7 @@ class Chef
             # init script
             template "#{new_resource.name} create /etc/init.d/#{apache_name}" do
               path "/etc/init.d/#{apache_name}"
-              source "#{apache_version}/sysvinit/apache2.erb"
+              source "#{apache_version}/sysvinit/#{debian_major_version}/apache2.erb"
               owner 'root'
               group 'root'
               mode '0755'

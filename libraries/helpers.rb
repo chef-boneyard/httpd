@@ -169,15 +169,6 @@ module Opscode
                   'service_name' => 'apache2'
                 }
               },
-              '10.04' => {
-                'default_version' => '2.2',
-                'default_run_user' => 'www-data',
-                'default_run_group' => 'www-data',
-                '2.2' => {
-                  'package_name' => 'apache2',
-                  'service_name' => 'apache2'
-                }
-              },
               '12.04' => {
                 'default_version' => '2.2',
                 'default_run_user' => 'www-data',

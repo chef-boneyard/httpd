@@ -130,31 +130,6 @@ describe 'httpd_platform_map' do
     end
   end
 
-  # ubuntu-10.04
-  context 'for ubuntu-10.04' do
-    context 'when looking up default version' do
-      it 'returns the correct version' do
-        expect(
-          default_version_for('ubuntu', 'debian', '10.04')
-          ).to eq('2.2')
-      end
-    end
-
-    context 'when looking up package' do
-      it 'returns the correct package for httpd 2.2' do
-        expect(
-          package_name_for('ubuntu', 'debian', '10.04', '2.2')
-          ).to eq('apache2')
-      end
-
-      it 'returns the correct package for httpd 2.4' do
-        expect(
-          package_name_for('ubuntu', 'debian', '10.04', '2.4')
-          ).to eq(nil)
-      end
-    end
-  end
-
   # ubuntu-12.04
   context 'for ubuntu-12.04' do
     context 'when looking up default version' do
