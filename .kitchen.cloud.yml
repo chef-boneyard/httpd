@@ -165,8 +165,7 @@ suites:
       'centos-5.8',
       'centos-6.4',
       'smartos-13.4.0',
-      'ubuntu-12.04',
-      'ubuntu-13.10',
+      'ubuntu-12.04'
     ]
     attributes:
       httpd:
@@ -210,6 +209,7 @@ suites:
       'amazon-2014.03',
       'fedora-20',
       'smartos-13.4.0',
+      'ubuntu-13.10',
       'ubuntu-14.04',
     ]
     attributes:
@@ -226,6 +226,7 @@ suites:
       'amazon-2014.03',
       'fedora-20',
       'smartos-13.4.0',
+      'ubuntu-13.10',
       'ubuntu-14.04',
     ]
     attributes:

@@ -1,4 +1,4 @@
-LockFile /var/lock/<%= @apache_name %>/accept.lock
+Mutex file:/var/lock/<%= @apache_name %> default
 PidFile /var/run/<%= @apache_name %>.pid
 
 Timeout <%= @config.timeout %>
@@ -32,7 +32,7 @@ HostnameLookups <%= @config.hostname_lookups %>
 ErrorLog /var/log/<%= @apache_name %>/error.log
 LogLevel <%= @config.log_level %>
 
-Include conf.d/
-Include mods-enabled/*.load
-Include mods-enabled/*.conf
-Include sites-enabled/
+IncludeOptional mods-enabled/*.load
+IncludeOptional mods-enabled/*.conf
+IncludeOptional conf-enabled/*.conf
+IncludeOptional sites-enabled/*.conf

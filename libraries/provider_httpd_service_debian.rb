@@ -69,6 +69,67 @@ class Chef
               action :create
             end
 
+            # Apache version specific sub-patterns for mpm config
+            case apache_version.to_f
+            when 2.2
+              # Install apache-mpm-whatever package to "select" mpm
+              # type. Unfortunately this doesn't play well with
+              # instances set to different mpm types.
+              package "#{new_resource.name} create apache2-mpm-#{new_resource.mpm}" do
+                package_name "apache2-mpm-#{new_resource.mpm}"
+                action :install
+              end
+
+              # activate module
+              tempate "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf" do
+                path "/etc/#{apache_name}/mode-available/mpm_#{new_resource.mpm}.conf"
+                owner 'root'
+                group 'root'
+                mode '0644'
+                action :create
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf"
+                to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf"
+                action :create
+              end
+            when 2.4
+              # Apache 2.4 ships all three mpm types as modules in the
+              # main package, so the only thing to do is activate the module
+              #
+              # FIXME: something
+              tempate "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load" do
+                source "mpm_#{new_resource.mpm}.erb"
+                path "/etc/#{apache_name}/mode-available/mpm_#{new_resource.mpm}.load"
+                owner 'root'
+                group 'root'
+                mode '0644'
+                action :create
+              end
+
+              tempate "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf" do
+                source "mpm_#{new_resource.mpm}.erb"
+                path "/etc/#{apache_name}/mode-available/mpm_#{new_resource.mpm}.conf"
+                owner 'root'
+                group 'root'
+                mode '0644'
+                action :create
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.load" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.load"
+                to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load"
+                action :create
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf"
+                to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf"
+                action :create
+              end
+            end
+
             # configuration directories
             directory "#{new_resource.name} create /etc/#{apache_name}" do
               path "/etc/#{apache_name}"
@@ -79,7 +140,6 @@ class Chef
               action :create
             end
 
-            # configuration directories
             if apache_version.to_f < 2.4
               directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
                 path "/etc/#{apache_name}/conf.d"

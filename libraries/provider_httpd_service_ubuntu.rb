@@ -88,6 +88,15 @@ class Chef
                 mode '0755'
                 action :create
               end
+
+              directory "#{new_resource.name} create /var/locl/#{apache_name}" do
+                path "/var/lock/#{apache_name}"
+                owner new_resource.run_user
+                group new_resource.run_group
+                mode '0755'
+                action :create
+              end
+
             else
               directory "#{new_resource.name} create /etc/#{apache_name}/conf-available" do
                 path "/etc/#{apache_name}/conf-available"
@@ -419,4 +428,5 @@ class Chef
   end
 end
 
-Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Ubuntu
+# Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Ubuntu
+

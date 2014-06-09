@@ -15,6 +15,24 @@ class Chef
             # wat
           end
         end
+
+        action :delete do
+          converge_by 'fedora pattern' do
+            # wat
+          end
+        end
+
+        action :restart do
+          converge_by 'fedora pattern' do
+            # wat
+          end
+        end
+
+        action :reload do
+          converge_by 'fedora pattern' do
+            # wat
+          end
+        end
       end
     end
   end
