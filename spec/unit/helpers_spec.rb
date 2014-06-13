@@ -161,21 +161,21 @@ describe 'httpd_platform_map' do
       it 'returns the correct version' do
         expect(
           default_version_for('ubuntu', 'debian', '13.10')
-          ).to eq('2.4')
+          ).to eq('2.2')
       end
     end
 
     context 'when looking up package' do
-      it 'returns the correct package for httpd 2.4' do
+      it 'returns the correct package for httpd 2.2' do
         expect(
           package_name_for('ubuntu', 'debian', '13.10', '2.2')
-          ).to eq(nil)
+          ).to eq('apache2')
       end
 
       it 'returns the correct package for httpd 2.4' do
         expect(
           package_name_for('ubuntu', 'debian', '13.10', '2.4')
-          ).to eq('apache2')
+          ).to eq(nil)
       end
     end
   end

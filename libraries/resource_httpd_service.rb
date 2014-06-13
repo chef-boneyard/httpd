@@ -19,7 +19,6 @@ class Chef
         @listen_addresses = nil
         @listen_ports = %w(80 443)
         @log_level = 'warn'
-        @mpm = 'event'
 
         @version = default_version_for(
           node['platform'],
@@ -113,14 +112,6 @@ class Chef
           :log_level,
           arg,
           :equal_to => %w(emerg alert crit error warn notice info debug)
-          )
-      end
-
-      def mpm(arg = nil)
-        set_or_return(
-          :mpm,
-          arg,
-          :kind_of => %w(prefork worker event)
           )
       end
 

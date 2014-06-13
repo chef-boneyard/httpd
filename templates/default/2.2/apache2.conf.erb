@@ -2,11 +2,7 @@ LockFile /var/lock/<%= @apache_name %>/accept.lock
 PidFile /var/run/<%= @apache_name %>.pid
 
 Timeout <%= @config.timeout %>
-<% if @config.keepalive %>
-KeepAlive On
-<% else %>
-KeepAlive Off
-<% end %>
+KeepAlive <%= @config.keepalive %>
 
 MaxKeepAliveRequests <%= @config.keepaliverequests %>
 KeepAliveTimeout <%= @config.keepalivetimeout %>
