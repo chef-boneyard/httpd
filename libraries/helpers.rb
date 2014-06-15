@@ -1,6 +1,7 @@
 module Opscode
   module Httpd
     module Helpers
+      # package and service name information section
       def default_version_for(platform, platform_family, platform_version)
         keyname = keyname_for(platform, platform_family, platform_version)
         PlatformInfo.httpd_info[platform_family][keyname]['default_version']
@@ -242,10 +243,17 @@ module Opscode
         end
       end
 
+      ## MPM section
+      def default_value_for(version, mpm, parameter)
+        MPMinfo.mpm_info[version][mpm][parameter]
+      rescue NoMethodError
+        nil
+      end
+
       # http://httpd.apache.org/docs/2.2/mod/mpm_common.html
       # http://httpd.apache.org/docs/2.4/mod/mpm_common.html
       class MPMinfo
-        def mpm_info
+        def self.mpm_info
           @mpm_info ||= {
             '2.2' => {
               :prefork => {
@@ -259,7 +267,7 @@ module Opscode
                 :threadlimit => nil,
                 :threadsperchild => nil,
                 :maxrequestworkers => nil,
-                :maxconnectionsperchild => nil,
+                :maxconnectionsperchild => nil
               },
               :worker => {
                 :startservers => '2',
@@ -272,7 +280,7 @@ module Opscode
                 :threadlimit => '64',
                 :threadsperchild => '25',
                 :maxrequestworkers => nil,
-                :maxconnectionsperchild => nil,
+                :maxconnectionsperchild => nil
               },
               :event => {
                 :startservers => '2',
@@ -285,7 +293,7 @@ module Opscode
                 :threadlimit => '64',
                 :threadsperchild => '25',
                 :maxrequestworkers => nil,
-                :maxconnectionsperchild => nil,
+                :maxconnectionsperchild => nil
               }
             },
             '2.4' => {
@@ -300,7 +308,7 @@ module Opscode
                 :threadlimit => nil,
                 :threadsperchild => nil,
                 :maxrequestworkers => '150',
-                :maxconnectionsperchild => '0',
+                :maxconnectionsperchild => '0'
               },
               :worker => {
                 :startservers => '2',
@@ -313,7 +321,7 @@ module Opscode
                 :threadlimit => '64',
                 :threadsperchild => '25',
                 :maxrequestworkers => '150',
-                :maxconnectionsperchild => '0',
+                :maxconnectionsperchild => '0'
               },
               :event => {
                 :startservers => '2',
@@ -326,7 +334,7 @@ module Opscode
                 :threadlimit => '64',
                 :threadsperchild => '25',
                 :maxrequestworkers => '150',
-                :maxconnectionsperchild => '0',
+                :maxconnectionsperchild => '0'
               }
             }
           }
