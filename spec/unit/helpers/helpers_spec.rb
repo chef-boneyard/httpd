@@ -1,4 +1,4 @@
-require_relative '../../libraries/helpers.rb'
+require_relative '../../../libraries/helpers.rb'
 
 describe 'httpd_platform_map' do
   before do
