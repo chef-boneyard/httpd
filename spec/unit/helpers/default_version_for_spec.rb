@@ -1,6 +1,6 @@
-require_relative '../../../libraries/helpers.rb'
+require_relative '../../../libraries/default_version_for.rb'
 
-describe 'httpd_platform_map' do
+describe 'default_version_for' do
   before do
     extend Opscode::Httpd::Helpers
   end

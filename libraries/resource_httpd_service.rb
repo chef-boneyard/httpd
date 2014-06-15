@@ -1,5 +1,6 @@
 require 'chef/resource/lwrp_base'
-require_relative 'helpers'
+require_relative 'default_version_for'
+require_relative 'default_value_for'
 
 class Chef
   class Resource
