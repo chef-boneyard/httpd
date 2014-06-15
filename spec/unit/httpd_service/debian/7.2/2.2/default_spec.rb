@@ -19,11 +19,23 @@ describe 'httpd_test_default::server 2.2 on debian-7.2' do
         :listen_addresses => nil,
         :listen_ports => %w(80 443),
         :log_level => 'warn',
-        :version => '2.2',
         :package_name => 'apache2',
         :run_user => 'www-data',
         :run_group => 'www-data',
-        :timeout => '400'
+        :timeout => '400',
+        :version => '2.2',
+        :mpm => :worker,
+        :startservers => '2',
+        :minspareservers => nil,
+        :maxspareservers => nil,
+        :maxclients => '150',
+        :maxrequestsperchild => '0',
+        :minsparethreads => '25',
+        :maxsparethreads => '75',
+        :threadlimit => '64',
+        :threadsperchild => '25',
+        :maxrequestworkers => nil,
+        :maxconnectionsperchild => nil
         )
     end
   end

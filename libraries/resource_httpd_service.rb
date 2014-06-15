@@ -1,5 +1,6 @@
 require 'chef/resource/lwrp_base'
 require_relative 'default_version_for'
+require_relative 'default_mpm_for'
 require_relative 'default_value_for'
 
 class Chef
@@ -8,6 +9,8 @@ class Chef
       def initialize(name = nil, run_context = nil)
         super
         extend Opscode::Httpd::Helpers
+
+        @resource_name = :httpd_service
 
         @action = :create
         @allowed_actions = [:create, :delete, :restart, :reload]
@@ -34,7 +37,21 @@ class Chef
           @version
           )
 
-        @resource_name = :httpd_service
+        @mpm = default_mpm_for(
+          @version
+          )
+
+        @startservers = default_value_for(@version, @mpm, :startservers)
+        @minspareservers = default_value_for(@version, @mpm, :minspareservers)
+        @maxspareservers = default_value_for(@version, @mpm, :maxspareservers)
+        @maxclients = default_value_for(@version, @mpm, :maxclients)
+        @maxrequestsperchild = default_value_for(@version, @mpm, :maxrequestsperchild)
+        @minsparethreads = default_value_for(@version, @mpm, :minsparethreads)
+        @maxsparethreads = default_value_for(@version, @mpm, :maxsparethreads)
+        @threadlimit = default_value_for(@version, @mpm, :threadlimit)
+        @threadsperchild = default_value_for(@version, @mpm, :threadsperchild)
+        @maxrequestworkers = default_value_for(@version, @mpm, :maxrequestworkers)
+        @maxconnectionsperchild = default_value_for(@version, @mpm, :maxconnectionsperchild)
 
         @run_user = default_run_user_for(
           node['platform'],
@@ -168,6 +185,146 @@ class Chef
                 node['platform_version'],
                 arg
                 ).nil?
+            end
+          }
+          )
+      end
+
+      def mpm(arg = nil)
+        set_or_return(
+          :mpm,
+          arg,
+          :equal_to => [:prefork, :worker, :event]
+          )
+      end
+
+      def startservers(arg = nil)
+        set_or_return(
+          :startservers,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :startservers).nil?
+            end
+          }
+          )
+      end
+
+      def minspareservers(arg = nil)
+        set_or_return(
+          :minspareservers,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :minspareservers).nil?
+            end
+          }
+          )
+      end
+
+      def maxspareservers(arg = nil)
+        set_or_return(
+          :maxspareservers,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :maxspareservers).nil?
+            end
+          }
+          )
+      end
+
+      def maxclients(arg = nil)
+        set_or_return(
+          :maxclients,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :maxclients).nil?
+            end
+          }
+          )
+      end
+
+      def maxrequestsperchild(arg = nil)
+        set_or_return(
+          :maxrequestsperchild,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :maxrequestsperchild).nil?
+            end
+          }
+          )
+      end
+
+      def minsparethreads(arg = nil)
+        set_or_return(
+          :minsparethreads,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :minsparethreads).nil?
+            end
+          }
+          )
+      end
+
+      def maxsparethreads(arg = nil)
+        set_or_return(
+          :maxsparethreads,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :maxsparethreads).nil?
+            end
+          }
+          )
+      end
+
+      def threadlimit(arg = nil)
+        set_or_return(
+          :threadlimit,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :threadlimit).nil?
+            end
+          }
+          )
+      end
+
+      def threadsperchild(arg = nil)
+        set_or_return(
+          :threadsperchild,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :threadsperchild).nil?
+            end
+          }
+          )
+      end
+
+      def maxrequestworkers(arg = nil)
+        set_or_return(
+          :maxrequestworkers,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :maxrequestworkers).nil?
+            end
+          }
+          )
+      end
+
+      def maxconnectionsperchild(arg = nil)
+        set_or_return(
+          :maxconnectionsperchild,
+          arg,
+          :callbacks => {
+            'is not supported for version/mpm combination' => lambda do |_value|
+              true unless default_value_for(version, mpm, :maxconnectionsperchild).nil?
             end
           }
           )
