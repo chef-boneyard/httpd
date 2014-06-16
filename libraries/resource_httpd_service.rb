@@ -194,7 +194,7 @@ class Chef
         set_or_return(
           :mpm,
           arg,
-          :equal_to => [:prefork, :worker, :event]
+          :equal_to => %w(prefork worker event)
           )
       end
 

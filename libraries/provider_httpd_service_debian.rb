@@ -313,7 +313,7 @@ class Chef
 
             # make sure only one mpm is loaded
             case new_resource.mpm
-            when :prefork
+            when 'prefork'
               file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_worker.conf" do
                 path "/etc/#{apache_name}/mods-available/mpm_worker.conf"
                 action :delete
@@ -334,7 +334,7 @@ class Chef
                 action :delete
               end
 
-            when :worker
+            when 'worker'
               file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_prefork.conf" do
                 path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
                 action :delete
@@ -355,7 +355,7 @@ class Chef
                 action :delete
               end
 
-            when :event
+            when 'event'
               file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_prefork.conf" do
                 path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
                 action :delete

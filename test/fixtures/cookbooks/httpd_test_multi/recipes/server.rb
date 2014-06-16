@@ -55,7 +55,7 @@ httpd_service 'instance-2' do
   run_user 'alice'
   run_group 'alice'
   timeout '4321'
-  mpm :prefork
+  mpm 'prefork'
   startservers '10'
   minspareservers '10'
   maxspareservers '20'

@@ -11,8 +11,8 @@ module Opscode
       class MPMinfo
         def self.mpm_version_map
           @version_map ||= {
-            '2.2' => :worker,
-            '2.4' => :event
+            '2.2' => 'worker',
+            '2.4' => 'event'
           }
         end
       end

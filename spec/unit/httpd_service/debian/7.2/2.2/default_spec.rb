@@ -24,7 +24,7 @@ describe 'httpd_test_default::server 2.2 on debian-7.2' do
         :run_group => 'www-data',
         :timeout => '400',
         :version => '2.2',
-        :mpm => :worker,
+        :mpm => 'worker',
         :startservers => '2',
         :minspareservers => nil,
         :maxspareservers => nil,

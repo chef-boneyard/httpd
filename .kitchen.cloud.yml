@@ -199,6 +199,10 @@ suites:
         keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'
+        mpm: 'prefork'
+        startservers: '20'
+        minspareservers: '20'
+        minspareservers: '40'
 
   #
   # server24-default
@@ -231,7 +235,7 @@ suites:
     attributes:
       httpd:
         version: '2.4'
-        service_name: 'custom'
+        service_name: 'multi'
         listen_ports: [ '81', '444' ]
         run_user: 'bob'
         run_group: 'bob'

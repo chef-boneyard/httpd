@@ -14,7 +14,7 @@ module Opscode
         def self.mpm_info
           @mpm_info ||= {
             '2.2' => {
-              :prefork => {
+              'prefork' => {
                 :startservers => '5',
                 :minspareservers => '5',
                 :maxspareservers => '10',
@@ -27,7 +27,7 @@ module Opscode
                 :maxrequestworkers => nil,
                 :maxconnectionsperchild => nil
               },
-              :worker => {
+              'worker' => {
                 :startservers => '2',
                 :minspareservers => nil,
                 :maxspareservers => nil,
@@ -40,7 +40,7 @@ module Opscode
                 :maxrequestworkers => nil,
                 :maxconnectionsperchild => nil
               },
-              :event => {
+              'event' => {
                 :startservers => '2',
                 :minspareservers => nil,
                 :maxspareservers => nil,
@@ -55,7 +55,7 @@ module Opscode
               }
             },
             '2.4' => {
-              :prefork => {
+              'prefork' => {
                 :startservers => '5',
                 :minspareservers => '5',
                 :maxspareservers => '10',
@@ -68,7 +68,7 @@ module Opscode
                 :maxrequestworkers => '150',
                 :maxconnectionsperchild => '0'
               },
-              :worker => {
+              'worker' => {
                 :startservers => '2',
                 :minspareservers => nil,
                 :maxspareservers => nil,
@@ -81,7 +81,7 @@ module Opscode
                 :maxrequestworkers => '150',
                 :maxconnectionsperchild => '0'
               },
-              :event => {
+              'event' => {
                 :startservers => '2',
                 :minspareservers => nil,
                 :maxspareservers => nil,

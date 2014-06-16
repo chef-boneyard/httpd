@@ -7,7 +7,7 @@ describe 'httpd_test_broken::server 2.2 on debian-7.2 with invalid parameter' do
       :version => '7.2'
       ) do |node|
       node.set['httpd']['version'] = '2.2'
-      node.set['httpd']['mpm'] = :worker
+      node.set['httpd']['mpm'] = 'worker'
       node.set['httpd']['minspareservers'] = '42'
     end.converge('httpd_test_broken::server')
   end
@@ -26,7 +26,7 @@ describe 'httpd_test_broken::server 2.2 on debian-7.2 with valid parameter' do
       :version => '7.2'
       ) do |node|
       node.set['httpd']['version'] = '2.2'
-      node.set['httpd']['mpm'] = :prefork
+      node.set['httpd']['mpm'] = 'prefork'
       node.set['httpd']['minspareservers'] = '42'
     end.converge('httpd_test_broken::server')
   end
@@ -45,7 +45,7 @@ describe 'httpd_test_broken::server 2.4 on ubuntu 14.04 with invalid parameter' 
       :version => '14.04'
       ) do |node|
       node.set['httpd']['version'] = '2.4'
-      node.set['httpd']['mpm'] = :event
+      node.set['httpd']['mpm'] = 'event'
       node.set['httpd']['maxclients'] = '42'
     end.converge('httpd_test_broken::server')
   end
@@ -64,7 +64,7 @@ describe 'httpd_test_broken::server 2.4 on ubuntu 14.04 with valid parameter' do
       :version => '14.04'
       ) do |node|
       node.set['httpd']['version'] = '2.4'
-      node.set['httpd']['mpm'] = :event
+      node.set['httpd']['mpm'] = 'event'
       node.set['httpd']['threadlimit'] = '42'
     end.converge('httpd_test_broken::server')
   end
