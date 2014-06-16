@@ -1,0 +1,35 @@
+<IfModule <%= @mpm %>_module>
+<% if @startservers %>
+  StartServers           <%= @startservers %>
+<% end %>
+<% if @minspareservers %>
+  MinSpareServers        <%= @minspareservers %>
+<% end %>
+<% if @maxspareservers %>
+  MaxSpareServers        <%= @maxspareservers %>
+<% end %>
+<% if @maxclients %>
+  MaxClients             <%= @maxclients %>
+<% end %>
+<% if @maxrequestsperchild %>
+  MaxRequestsPerChild    <%= @maxrequestsperchild %>
+<% end %>
+<% if @minsparethreads %>
+  MinSpareThreads        <%= @minsparethreads %>
+<% end %>
+<% if @maxsparethreads %>
+  MaxSpareThreads        <%= @maxsparethreads %>
+<% end %>
+<% if @threadlimit %>
+  ThreadLimit            <%= @threadlimit %>
+<% end %>
+<% if @threadsperchild %>
+  ThreadsPerChild        <%= @threadsperchild %>
+<% end %>
+<% if @maxrequestworkers %>
+  MaxRequestWorkers      <%= @maxrequestworkers %>
+<% end %>
+<% if @maxconnectionsperchild %>
+  MaxConnectionsPerChild <%= @maxconnectionsperchild %>
+<% end %>
+</IfModule>

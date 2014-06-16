@@ -240,6 +240,134 @@ class Chef
               action :create
             end
 
+            # mpm configuration
+            #
+            # With Apache 2.2, only one mpm package can be installed
+            # at any given moment. Installing one will uninstall the
+            # others. Therefore, all httpd_service instances on debian 7, or
+            # ubuntu below 14.04 will need to have the same MPM per
+            # machine or container or things can get weird.
+
+            package "#{new_resource.name} create apache2-mpm-#{new_resource.mpm.to_s}" do
+              action :install
+            end
+
+            # older apache has mpm statically compiled into binaries
+            unless new_resource.version.to_f < 2.4
+              template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.load" do
+                path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.load"
+                source "#{new_resource.version}/debian/module_load.erb"
+                owner 'root'
+                group 'root'
+                mode '0644'
+                cookbook 'httpd'
+                variables(:module => "mpm_#{new_resource.mpm.to_s}")
+                action :create
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.load" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.load"
+                to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.load"
+                action :create
+              end
+            end
+
+            template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.conf" do
+              path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.conf"
+              source "#{new_resource.version}/mods/mpm.conf.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              cookbook 'httpd'
+              variables(
+                :mpm => new_resource.mpm.to_s,
+                :startservers => new_resource.startservers,
+                :minspareservers => new_resource.minspareservers,
+                :maxspareservers => new_resource.maxspareservers,
+                :maxclients => new_resource.maxclients,
+                :maxrequestsperchild => new_resource.maxrequestsperchild,
+                :minsparethreads => new_resource.minsparethreads,
+                :maxsparethreads => new_resource.maxsparethreads,
+                :threadlimit => new_resource.threadlimit,
+                :threadsperchild => new_resource.threadsperchild,
+                :maxrequestworkers => new_resource.maxrequestworkers,
+                :maxconnectionsperchild => new_resource.maxconnectionsperchild,
+                )
+              action :create
+            end
+
+            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.conf" do
+              target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.conf"
+              to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.conf"
+              action :create
+            end
+
+            # make sure only one mpm is loaded
+            case new_resource.mpm
+            when :prefork
+              file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_worker.conf" do
+                path "/etc/#{apache_name}/mods-available/mpm_worker.conf"
+                action :delete
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_worker.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_worker.conf"
+                action :delete
+              end
+
+              file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_event.conf" do
+                path "/etc/#{apache_name}/mods-available/mpm_event.conf"
+                action :delete
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_event.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_event.conf"
+                action :delete
+              end
+
+            when :worker
+              file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_prefork.conf" do
+                path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
+                action :delete
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_prefork.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_prefork.conf"
+                action :delete
+              end
+
+              file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_event.conf" do
+                path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
+                action :delete
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_event.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_event.conf"
+                action :delete
+              end
+
+            when :event
+              file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_prefork.conf" do
+                path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
+                action :delete
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_prefork.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_prefork.conf"
+                action :delete
+              end
+
+              file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_worker.conf" do
+                path "/etc/#{apache_name}/mods-available/mpm_worker.conf"
+                action :delete
+              end
+
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_worker.conf" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_worker.conf"
+                action :delete
+              end
+            end
+
             # service management
             service "#{new_resource.name} create #{apache_name}" do
               service_name apache_name
