@@ -248,39 +248,40 @@ class Chef
             # ubuntu below 14.04 will need to have the same MPM per
             # machine or container or things can get weird.
 
-            package "#{new_resource.name} create apache2-mpm-#{new_resource.mpm.to_s}" do
+            package "#{new_resource.name} create apache2-mpm-#{new_resource.mpm}" do
+              package_name "apache2-mpm-#{new_resource.mpm}"
               action :install
             end
 
             # older apache has mpm statically compiled into binaries
             unless new_resource.version.to_f < 2.4
-              template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.load" do
-                path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.load"
+              template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load" do
+                path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load"
                 source "#{new_resource.version}/debian/module_load.erb"
                 owner 'root'
                 group 'root'
                 mode '0644'
                 cookbook 'httpd'
-                variables(:module => "mpm_#{new_resource.mpm.to_s}")
+                variables(:module => "mpm_#{new_resource.mpm}")
                 action :create
               end
 
-              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.load" do
-                target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.load"
-                to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.load"
+              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.load" do
+                target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.load"
+                to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load"
                 action :create
               end
             end
 
-            template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.conf" do
-              path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.conf"
+            template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf" do
+              path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf"
               source "#{new_resource.version}/mods/mpm.conf.erb"
               owner 'root'
               group 'root'
               mode '0644'
               cookbook 'httpd'
               variables(
-                :mpm => new_resource.mpm.to_s,
+                :mpm => new_resource.mpm,
                 :startservers => new_resource.startservers,
                 :minspareservers => new_resource.minspareservers,
                 :maxspareservers => new_resource.maxspareservers,
@@ -296,9 +297,9 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.conf" do
-              target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm.to_s}.conf"
-              to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm.to_s}.conf"
+            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf" do
+              target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf"
+              to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf"
               action :create
             end
 

@@ -35,6 +35,10 @@ httpd_service 'instance-1' do
   run_user node['httpd']['run_user']
   run_group node['httpd']['run_group']
   timeout node['httpd']['timeout']
+  mpm node['httpd']['mpm']
+  startservers node['httpd']['startservers']
+  minspareservers node['httpd']['minspareservers']
+  maxspareservers node['httpd']['maxspareservers']
   action :create
 end
 
@@ -51,6 +55,10 @@ httpd_service 'instance-2' do
   run_user 'alice'
   run_group 'alice'
   timeout '4321'
+  mpm :prefork
+  startservers '10'
+  minspareservers '10'
+  maxspareservers '20'
   action :create
 end
 
