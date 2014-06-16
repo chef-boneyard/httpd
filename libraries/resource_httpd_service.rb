@@ -20,7 +20,7 @@ class Chef
         @keepalive = true
         @keepaliverequests = '100'
         @keepalivetimeout = '5'
-        @listen_addresses = nil
+        @listen_addresses = ['0.0.0.0']
         @listen_ports = %w(80 443)
         @log_level = 'warn'
 
