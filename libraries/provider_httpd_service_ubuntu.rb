@@ -104,6 +104,14 @@ class Chef
                 mode '0755'
                 action :create
               end
+
+              directory "#{new_resource.name} create /var/lock/#{apache_name}" do
+                path "/var/lock/#{apache_name}"
+                owner new_resource.run_user
+                group new_resource.run_group
+                mode '0755'
+                action :create
+              end
             end
 
             directory "#{new_resource.name} create /etc/#{apache_name}/mods-available" do
@@ -292,7 +300,7 @@ class Chef
                 :threadlimit => new_resource.threadlimit,
                 :threadsperchild => new_resource.threadsperchild,
                 :maxrequestworkers => new_resource.maxrequestworkers,
-                :maxconnectionsperchild => new_resource.maxconnectionsperchild,
+                :maxconnectionsperchild => new_resource.maxconnectionsperchild
                 )
               action :create
             end
@@ -368,13 +376,12 @@ class Chef
                 action :delete
               end
             end
-            
+
             # service management
             service "#{new_resource.name} create #{apache_name}" do
               service_name apache_name
               action [:start, :enable]
               supports :restart => true, :reload => true, :status => true
-              # provider Chef::Provider::Service::Init::Upstart
               provider Chef::Provider::Service::Init::Debian
             end
           end
@@ -524,7 +531,6 @@ class Chef
           new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
           converge_by 'ubuntu pattern' do
             service apache_name do
-              # provider Chef::Provider::Service::Init::Upstart
               provider Chef::Provider::Service::Init::Debian
               supports :restart => true
               action :restart
@@ -536,7 +542,6 @@ class Chef
           new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
           converge_by 'ubuntu pattern' do
             service apache_name do
-              # provider Chef::Provider::Service::Init::Upstart
               provider Chef::Provider::Service::Init::Debian
               supports :reload => true
               action :reload

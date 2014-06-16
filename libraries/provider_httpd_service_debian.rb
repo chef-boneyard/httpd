@@ -104,6 +104,14 @@ class Chef
                 mode '0755'
                 action :create
               end
+
+              directory "#{new_resource.name} create /var/lock/#{apache_name}" do
+                path "/var/lock/#{apache_name}"
+                owner new_resource.run_user
+                group new_resource.run_group
+                mode '0755'
+                action :create
+              end
             end
 
             directory "#{new_resource.name} create /etc/#{apache_name}/mods-available" do
@@ -292,7 +300,7 @@ class Chef
                 :threadlimit => new_resource.threadlimit,
                 :threadsperchild => new_resource.threadsperchild,
                 :maxrequestworkers => new_resource.maxrequestworkers,
-                :maxconnectionsperchild => new_resource.maxconnectionsperchild,
+                :maxconnectionsperchild => new_resource.maxconnectionsperchild
                 )
               action :create
             end

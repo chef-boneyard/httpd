@@ -240,7 +240,7 @@ suites:
         keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'
-        mpm: ':prefork'
+        mpm: 'prefork'
         startservers: '20'
         minspareservers: '20'
         minspareservers: '40'
