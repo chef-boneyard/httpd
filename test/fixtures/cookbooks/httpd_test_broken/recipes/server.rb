@@ -11,7 +11,17 @@ httpd_service node['httpd']['service_name'] do
   keepaliverequests node['httpd']['keepaliverequests']
   keepalivetimeout node['httpd']['keepalivetimeout']
   version node['httpd']['version']
+  mpm node['httpd']['mpm']
   startservers node['httpd']['startservers']
   minspareservers node['httpd']['minspareservers']
+  maxspareservers node['httpd']['maxspareservers']
+  maxclients node['httpd']['maxclients']
+  maxrequestsperchild node['httpd']['maxrequestsperchild']
+  minsparethreads node['httpd']['minsparethreads']
+  maxsparethreads node['httpd']['maxsparethreads']
+  threadlimit node['httpd']['threadlimit']
+  threadsperchild node['httpd']['threadsperchild']
+  maxrequestworkers node['httpd']['maxrequestworkers']
+  maxconnectionsperchild node['httpd']['maxconnectionsperchild']
   action :create
 end
