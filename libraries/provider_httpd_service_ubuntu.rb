@@ -425,7 +425,6 @@ class Chef
             service_name apache_name
             pattern 'apache2'
             action [:disable, :stop]
-            # provider Chef::Provider::Service::Init::Upstart
             provider Chef::Provider::Service::Init::Debian
           end
 
@@ -442,11 +441,11 @@ class Chef
             action :delete
           end
 
-          directory "#{new_resource.name} delete /var/run/#{apache_name}" do
-            path "/var/run/#{apache_name}"
-            recursive true
-            action :delete
-          end
+          # directory "#{new_resource.name} delete /var/run/#{apache_name}" do
+          #   path "/var/run/#{apache_name}"
+          #   recursive true
+          #   action :delete
+          # end
 
           # configuation directories
           if apache_version.to_f < 2.4

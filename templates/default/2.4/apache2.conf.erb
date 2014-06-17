@@ -1,5 +1,5 @@
 Mutex file:/var/lock/<%= @apache_name %> default
-PidFile /var/run/<%= @apache_name %>/apache2.pid
+PidFile /var/run/apache2/<%= @apache_name %>.pid
 
 Timeout <%= @config.timeout %>
 <% if @config.keepalive %>

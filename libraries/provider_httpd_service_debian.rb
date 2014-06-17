@@ -61,13 +61,13 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} create /var/run/#{apache_name}" do
-              path "/var/run/#{apache_name}"
-              owner 'root'
-              group 'adm'
-              mode '0755'
-              action :create
-            end
+            # directory "#{new_resource.name} create /var/run/#{apache_name}" do
+            #   path "/var/run/#{apache_name}"
+            #   owner 'root'
+            #   group 'adm'
+            #   mode '0755'
+            #   action :create
+            # end
 
             # configuration directories
             directory "#{new_resource.name} create /etc/#{apache_name}" do
