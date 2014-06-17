@@ -61,13 +61,26 @@ class Chef
               action :create
             end
 
-            # directory "#{new_resource.name} create /var/run/#{apache_name}" do
-            #   path "/var/run/#{apache_name}"
-            #   owner 'root'
-            #   group 'adm'
-            #   mode '0755'
-            #   action :create
-            # end
+            # The init scripts that ship with 2.2 and 2.4 on
+            # debian/ubuntu behave differently. 2.2 places in /var/run/apache-name/,
+            # and 2.4 stores pids as /var/run/apache2/apache2-instance_name
+            if new_resource.version.to_f < 2.4
+              directory "#{new_resource.name} create /var/run/#{apache_name}" do
+                path "/var/run/#{apache_name}"
+                owner 'root'
+                group 'adm'
+                mode '0755'
+                action :create
+              end
+            else
+              directory "#{new_resource.name} create /var/run/apache2" do
+                path "/var/run/apache2"
+                owner 'root'
+                group 'adm'
+                mode '0755'
+                action :create
+              end
+            end
 
             # configuration directories
             directory "#{new_resource.name} create /etc/#{apache_name}" do
@@ -465,6 +478,12 @@ class Chef
 
             directory "#{new_resource.name} delete /etc/#{apache_name}/conf-enabled" do
               path "/etc/#{apache_name}/conf-enabled"
+              recursive true
+              action :delete
+            end
+
+            directory "#{new_resource.name} create /var/lock/#{apache_name}" do
+              path "/var/lock/#{apache_name}"
               recursive true
               action :delete
             end
