@@ -472,6 +472,7 @@ class Chef
               owner 'root'
               group 'root'
               mode '0755'
+              recursive true
               action :delete
             end
 
