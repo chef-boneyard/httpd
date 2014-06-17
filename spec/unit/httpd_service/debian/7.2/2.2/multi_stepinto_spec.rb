@@ -17,6 +17,7 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
       node.set['httpd']['run_user'] = 'bob'
       node.set['httpd']['run_group'] = 'bob'
       node.set['httpd']['timeout'] = '1234'
+      node.set['httpd']['mpm'] = 'prefork'
     end.converge('httpd_test_multi::server')
   end
 
@@ -374,6 +375,56 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
         )
     end
 
+    # begin mpm config section
+    it 'steps into httpd_service[instance-1] and installs package[instance-1 create apache2-mpm-prefork]' do
+      expect(debian_7_2_multi_stepinto_run).to install_package('instance-1 create apache2-mpm-prefork').with(
+        :package_name => 'apache2-mpm-prefork'
+        )
+    end
+
+    # FIXME: render template
+    it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.conf').with(
+        :path => '/etc/apache2-instance-1/mods-available/mpm_prefork.conf',
+        :source => '2.2/mods/mpm.conf.erb',
+        :owner => 'root',
+        :group => 'root',
+        :mode => '0644',
+        :cookbook => 'httpd'
+        )
+    end
+
+    it 'steps into httpd_service[instance-1] and creates link[instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_prefork.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to create_link('instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_prefork.conf').with(
+        :target_file => '/etc/apache2-instance-1/mods-enabled/mpm_prefork.conf',
+        :to => '/etc/apache2-instance-1/mods-available/mpm_prefork.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-1] and delete file[instance-1 create /etc/apache2-instance-1/mods-available/mpm_worker.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_file('instance-1 create /etc/apache2-instance-1/mods-available/mpm_worker.conf').with(
+        :path => '/etc/apache2-instance-1/mods-available/mpm_worker.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-1] and delete link[instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_worker.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_link('instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_worker.conf').with(
+        :target_file => '/etc/apache2-instance-1/mods-enabled/mpm_worker.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-1] and delete file[instance-1 create /etc/apache2-instance-1/mods-available/mpm_event.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_file('instance-1 create /etc/apache2-instance-1/mods-available/mpm_event.conf').with(
+        :path => '/etc/apache2-instance-1/mods-available/mpm_event.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-1] and delete link[instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_event.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_link('instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_event.conf').with(
+        :target_file => '/etc/apache2-instance-1/mods-enabled/mpm_event.conf'
+        )
+    end
+
     # FIXME: render template
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/apache2.conf]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/apache2.conf').with(
@@ -572,6 +623,56 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
         :group => 'root',
         :mode => '0755',
         :cookbook => 'httpd'
+        )
+    end
+
+    # begin mpm config section
+    it 'steps into httpd_service[instance-2] and installs package[instance-2 create apache2-mpm-prefork]' do
+      expect(debian_7_2_multi_stepinto_run).to install_package('instance-2 create apache2-mpm-prefork').with(
+        :package_name => 'apache2-mpm-prefork'
+        )
+    end
+
+    # FIXME: render template
+    it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/mods-available/mpm_prefork.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/mods-available/mpm_prefork.conf').with(
+        :path => '/etc/apache2-instance-2/mods-available/mpm_prefork.conf',
+        :source => '2.2/mods/mpm.conf.erb',
+        :owner => 'root',
+        :group => 'root',
+        :mode => '0644',
+        :cookbook => 'httpd'
+        )
+    end
+
+    it 'steps into httpd_service[instance-2] and creates link[instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_prefork.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to create_link('instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_prefork.conf').with(
+        :target_file => '/etc/apache2-instance-2/mods-enabled/mpm_prefork.conf',
+        :to => '/etc/apache2-instance-2/mods-available/mpm_prefork.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-2] and delete file[instance-2 create /etc/apache2-instance-2/mods-available/mpm_worker.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_file('instance-2 create /etc/apache2-instance-2/mods-available/mpm_worker.conf').with(
+        :path => '/etc/apache2-instance-2/mods-available/mpm_worker.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-2] and delete link[instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_worker.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_link('instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_worker.conf').with(
+        :target_file => '/etc/apache2-instance-2/mods-enabled/mpm_worker.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-2] and delete file[instance-2 create /etc/apache2-instance-2/mods-available/mpm_event.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_file('instance-2 create /etc/apache2-instance-2/mods-available/mpm_event.conf').with(
+        :path => '/etc/apache2-instance-2/mods-available/mpm_event.conf'
+        )
+    end
+
+    it 'steps into httpd_service[instance-2] and delete link[instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_event.conf]' do
+      expect(debian_7_2_multi_stepinto_run).to delete_link('instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_event.conf').with(
+        :target_file => '/etc/apache2-instance-2/mods-enabled/mpm_event.conf'
         )
     end
 
