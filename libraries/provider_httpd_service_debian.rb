@@ -74,7 +74,7 @@ class Chef
               end
             else
               directory "#{new_resource.name} create /var/run/apache2" do
-                path "/var/run/apache2"
+                path '/var/run/apache2'
                 owner 'root'
                 group 'adm'
                 mode '0755'
@@ -268,7 +268,6 @@ class Chef
             # others. Therefore, all httpd_service instances on debian 7, or
             # ubuntu below 14.04 will need to have the same MPM per
             # machine or container or things can get weird.
-
             package "#{new_resource.name} create apache2-mpm-#{new_resource.mpm}" do
               package_name "apache2-mpm-#{new_resource.mpm}"
               action :install
@@ -359,7 +358,7 @@ class Chef
               end
 
               file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_event.conf" do
-                path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
+                path "/etc/#{apache_name}/mods-available/mpm_event.conf"
                 action :delete
               end
 

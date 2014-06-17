@@ -23,7 +23,7 @@ describe 'httpd_test_default::server 2.2 on debian-7.2' do
         :keepalive => true,
         :keepaliverequests => '100',
         :keepalivetimeout => '5',
-        :listen_addresses => nil,
+        :listen_addresses => ['0.0.0.0'],
         :listen_ports => %w(80 443),
         :log_level => 'warn',
         :version => '2.2',
@@ -213,6 +213,56 @@ describe 'httpd_test_default::server 2.2 on debian-7.2' do
       :group => 'root',
       :mode => '0755',
       :cookbook => 'httpd'
+      )
+  end
+
+  # begin mpm config section
+  it 'steps into httpd_service[default] and installs package[default create apache2-mpm-worker]' do
+    expect(debian_7_2_default_stepinto_run).to install_package('default create apache2-mpm-worker').with(
+      :package_name => 'apache2-mpm-worker'
+      )
+  end
+
+  # FIXME: render template
+  it 'steps into httpd_service[default] and creates template[default create /etc/apache2/mods-available/mpm_worker.conf]' do
+    expect(debian_7_2_default_stepinto_run).to create_template('default create /etc/apache2/mods-available/mpm_worker.conf').with(
+      :path => '/etc/apache2/mods-available/mpm_worker.conf',
+      :source => '2.2/mods/mpm.conf.erb',
+      :owner => 'root',
+      :group => 'root',
+      :mode => '0644',
+      :cookbook => 'httpd'
+      )
+  end
+
+  it 'steps into httpd_service[default] and creates link[default create /etc/apache2/mods-enabled/mpm_worker.conf]' do
+    expect(debian_7_2_default_stepinto_run).to create_link('default create /etc/apache2/mods-enabled/mpm_worker.conf').with(
+      :target_file => '/etc/apache2/mods-enabled/mpm_worker.conf',
+      :to => '/etc/apache2/mods-available/mpm_worker.conf'
+      )
+  end
+
+  it 'steps into httpd_service[default] and delete file[default create /etc/apache2/mods-available/mpm_prefork.conf]' do
+    expect(debian_7_2_default_stepinto_run).to delete_file('default create /etc/apache2/mods-available/mpm_prefork.conf').with(
+      :path => '/etc/apache2/mods-available/mpm_prefork.conf'
+      )
+  end
+
+  it 'steps into httpd_service[default] and delete link[default create /etc/apache2/mods-enabled/mpm_prefork.conf]' do
+    expect(debian_7_2_default_stepinto_run).to delete_link('default create /etc/apache2/mods-enabled/mpm_prefork.conf').with(
+      :target_file => '/etc/apache2/mods-enabled/mpm_prefork.conf'
+      )
+  end
+
+  it 'steps into httpd_service[default] and delete file[default create /etc/apache2/mods-available/mpm_event.conf]' do
+    expect(debian_7_2_default_stepinto_run).to delete_file('default create /etc/apache2/mods-available/mpm_event.conf').with(
+      :path => '/etc/apache2/mods-available/mpm_event.conf'
+      )
+  end
+
+  it 'steps into httpd_service[default] and delete link[default create /etc/apache2/mods-enabled/mpm_event.conf]' do
+    expect(debian_7_2_default_stepinto_run).to delete_link('default create /etc/apache2/mods-enabled/mpm_event.conf').with(
+      :target_file => '/etc/apache2/mods-enabled/mpm_event.conf'
       )
   end
 

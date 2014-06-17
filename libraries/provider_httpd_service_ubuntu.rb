@@ -74,7 +74,7 @@ class Chef
               end
             else
               directory "#{new_resource.name} create /var/run/apache2" do
-                path "/var/run/apache2"
+                path '/var/run/apache2'
                 owner 'root'
                 group 'adm'
                 mode '0755'
