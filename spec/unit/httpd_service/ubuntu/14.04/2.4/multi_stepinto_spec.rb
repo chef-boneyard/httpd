@@ -99,7 +99,7 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
   end
 
   # step_into httpd_service[default]
-  context 'when stepping into the httpd_service[instance] resource' do
+  context 'when stepping into the httpd_service[default] resource' do
 
     it 'steps into httpd_service[default] and installs package[default delete apache2]' do
       expect(ubuntu_14_04_multi_stepinto_run).to install_package('default delete apache2').with(
@@ -142,11 +142,11 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
         )
     end
 
-    # it 'deletes directory[default delete /var/lock/apache2]' do
-    #   expect(ubuntu_14_04_multi_stepinto_run).to delete_directory('default delete /var/lock/apache2').with(
-    #     :recursive => true
-    #     )
-    # end
+    it 'deletes directory[default delete /var/lock/apache2]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to delete_directory('default delete /var/lock/apache2').with(
+        :recursive => true
+        )
+    end
 
     it 'deletes directory[default delete /etc/apache2/mods-available]' do
       expect(ubuntu_14_04_multi_stepinto_run).to delete_directory('default delete /etc/apache2/mods-available').with(
@@ -406,6 +406,25 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     end
 
     # FIXME: render template
+    it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.load]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.load').with(
+        :path => '/etc/apache2-instance-1/mods-available/mpm_prefork.load',
+        :source => '2.4/debian/module_load.erb',
+        :owner => 'root',
+        :group => 'root',
+        :mode => '0644',
+        :cookbook => 'httpd'
+        )
+    end
+
+    it 'steps into httpd_service[instance-1] and creates link[instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_prefork.load]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_link('instance-1 create /etc/apache2-instance-1/mods-enabled/mpm_prefork.load').with(
+        :target_file => '/etc/apache2-instance-1/mods-enabled/mpm_prefork.load',
+        :to => '/etc/apache2-instance-1/mods-available/mpm_prefork.load'
+        )
+    end
+
+    # FIXME: render template
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.conf]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.conf').with(
         :path => '/etc/apache2-instance-1/mods-available/mpm_prefork.conf',
@@ -503,6 +522,15 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-2] and creates directory[instance-2 create /var/log/apache2-instance-2]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_directory('instance-2 create /var/log/apache2-instance-2').with(
         :path => '/var/log/apache2-instance-2',
+        :owner => 'root',
+        :group => 'adm',
+        :mode => '0755'
+        )
+    end
+
+    it 'steps into httpd_service[instance-2] and creates directory[instance-2 create /var/run/apache2]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_directory('instance-2 create /var/run/apache2').with(
+        :path => '/var/run/apache2',
         :owner => 'root',
         :group => 'adm',
         :mode => '0755'
@@ -662,6 +690,25 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-2] and installs package[instance-2 create apache2-mpm-prefork]' do
       expect(ubuntu_14_04_multi_stepinto_run).to install_package('instance-2 create apache2-mpm-prefork').with(
         :package_name => 'apache2-mpm-prefork'
+        )
+    end
+
+    # FIXME: render template
+    it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/mods-available/mpm_prefork.load]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/mods-available/mpm_prefork.load').with(
+        :path => '/etc/apache2-instance-2/mods-available/mpm_prefork.load',
+        :source => '2.4/debian/module_load.erb',
+        :owner => 'root',
+        :group => 'root',
+        :mode => '0644',
+        :cookbook => 'httpd'
+        )
+    end
+
+    it 'steps into httpd_service[instance-2] and creates link[instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_prefork.load]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_link('instance-2 create /etc/apache2-instance-2/mods-enabled/mpm_prefork.load').with(
+        :target_file => '/etc/apache2-instance-2/mods-enabled/mpm_prefork.load',
+        :to => '/etc/apache2-instance-2/mods-available/mpm_prefork.load'
         )
     end
 

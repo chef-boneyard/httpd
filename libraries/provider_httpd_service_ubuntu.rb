@@ -485,7 +485,7 @@ class Chef
               action :delete
             end
 
-            directory "#{new_resource.name} create /var/lock/#{apache_name}" do
+            directory "#{new_resource.name} delete /var/lock/#{apache_name}" do
               path "/var/lock/#{apache_name}"
               recursive true
               action :delete
