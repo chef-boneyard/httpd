@@ -92,7 +92,6 @@ class Chef
               action :create
             end
 
-            # configuration directories
             if apache_version.to_f < 2.4
               directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
                 path "/etc/#{apache_name}/conf.d"

@@ -66,8 +66,8 @@ module Opscode
             'rhel' => {
               '5' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
@@ -75,8 +75,8 @@ module Opscode
               },
               '6' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
@@ -84,8 +84,8 @@ module Opscode
               },
               '7' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
@@ -97,8 +97,8 @@ module Opscode
               },
               '2013.03' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
@@ -106,8 +106,8 @@ module Opscode
               },
               '2013.09' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
@@ -119,8 +119,8 @@ module Opscode
               },
               '2014.03' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
@@ -134,8 +134,8 @@ module Opscode
             'fedora' => {
               '19' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.4' => {
                   'package_name' => 'httpd',
                   'service_name' => 'httpd'
@@ -143,8 +143,8 @@ module Opscode
               },
               '20' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'httpd',
-                'default_run_group' => 'httpd',
+                'default_run_user' => 'apache',
+                'default_run_group' => 'apache',
                 '2.4' => {
                   'package_name' => 'httpd',
                   'service_name' => 'httpd'

@@ -1,0 +1,38 @@
+Mutex file:/var/lock/<%= @apache_name %> default
+PidFile /var/run/apache2/<%= @apache_name %>.pid
+
+Timeout <%= @config.timeout %>
+<% if @config.keepalive %>
+KeepAlive On
+<% else %>
+KeepAlive Off
+<% end %>
+
+MaxKeepAliveRequests <%= @config.keepaliverequests %>
+KeepAliveTimeout <%= @config.keepalivetimeout %>
+
+<% if @config.listen_addresses.nil? %>
+<%   @config.listen_ports.each do |port| %>
+Listen <%= port %>
+<%   end %>
+<% else %>
+<%   @config.listen_addresses.each do |address| %>
+<%     @config.listen_ports.each do |port| %>
+Listen <%= address %>:<%= port %>
+<%     end %>
+<%   end %>
+<% end %>
+
+User <%= @config.run_user %>
+Group <%= @config.run_group %>
+
+DefaultType None
+HostnameLookups <%= @config.hostname_lookups %>
+
+ErrorLog /var/log/<%= @apache_name %>/error.log
+LogLevel <%= @config.log_level %>
+
+IncludeOptional conf-enabled/*.conf
+IncludeOptional mods-enabled/*.load
+IncludeOptional mods-enabled/*.conf
+IncludeOptional sites-enabled/*.conf

@@ -12,7 +12,173 @@ class Chef
 
         action :create do
           converge_by 'rhel pattern' do
-            # wat
+            # local variables
+            case node['kernel']['machine']
+            when 'x86_64'
+              libarch = 'lib64'
+            when 'i686'
+              libarch = 'lib'
+            end
+
+            # enterprise linux version calculation
+            case node['platform_version'].to_i
+            when 5
+              elversion = '5'
+            when 6
+              elversion = '6'
+            end
+
+            apache_version = new_resource.version
+
+            # support multiple instances
+            new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
+
+            # We need to dynamically render the resource name into the title in
+            # order to ensure uniqueness. This avoids cloning via
+            # CHEF-3694 and allows ChefSpec and Chef 10 to work properly
+
+            # software installation
+            package "#{new_resource.name} create #{new_resource.package_name}" do
+              package_name new_resource.package_name
+              notifies :run, "execute[#{new_resource.name} create remove_package_config]", :immediately
+              action :install
+            end
+
+            execute "#{new_resource.name} create remove_package_config" do
+              user 'root'
+              command "rm -f /etc/#{apache_name}/conf.d/*"
+              only_if "test -f /etc/#{apache_name}/conf.d/README"
+              action :nothing
+            end
+
+            # configuration directories
+            directory "#{new_resource.name} create /etc/#{apache_name}" do
+              path "/etc/#{apache_name}"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
+            directory "#{new_resource.name} create /etc/#{apache_name}/conf" do
+              path "/etc/#{apache_name}/conf"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
+            directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
+              path "/etc/#{apache_name}/conf.d"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
+            # support directories
+            directory "#{new_resource.name} create /var/log/#{apache_name}" do
+              path "/var/log/#{apache_name}"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
+            directory "#{new_resource.name} create /usr/#{libarch}/#{apache_name}/modules" do
+              path "/usr/#{libarch}/#{apache_name}/modules"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
+            directory "#{new_resource.name} create /var/run/#{apache_name}" do
+              path "/var/run/#{apache_name}"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
+            link "#{new_resource.name} create /etc/#{apache_name}/logs" do
+              target_file "/etc/#{apache_name}/logs"
+              to "../../var/log/#{apache_name}"
+              action :create
+            end
+
+            link "#{new_resource.name} create /etc/#{apache_name}/modules" do
+              target_file "/etc/#{apache_name}/modules"
+              to "../../usr/lib64/#{apache_name}/modules"
+              action :create
+            end
+
+            link "#{new_resource.name} create /etc/#{apache_name}/run" do
+              target_file "/etc/#{apache_name}/run"
+              to "../../var/run/#{apache_name}"
+              action :create
+            end
+
+            directory "#{new_resource.name} create /var/lock/#{apache_name}" do
+              path "/var/lock/#{apache_name}"
+              owner new_resource.run_user
+              group new_resource.run_group
+              mode '0755'
+              action :create
+            end
+
+            # configuration files
+            template "#{new_resource.name} create /etc/#{apache_name}/conf/magic" do
+              path "/etc/#{apache_name}/conf/magic"
+              source "#{apache_version}/magic.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              cookbook 'httpd'
+              action :create
+            end
+
+            template "#{new_resource.name} create /etc/#{apache_name}/conf/httpd.conf" do
+              path "/etc/#{apache_name}/conf/httpd.conf"
+              source "#{apache_version}/httpd.conf.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              variables(
+                :config => new_resource,
+                :apache_name => apache_name
+                )
+              cookbook 'httpd'
+              notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
+              action :create
+            end
+
+            # init script
+            template "#{new_resource.name} create /etc/rc.d/init.d/#{apache_name}" do
+              path "/etc/init.d/#{apache_name}"
+              source "#{apache_version}/sysvinit/el-#{elversion}/httpd.erb"
+              owner 'root'
+              group 'root'
+              mode '0755'
+              variables(:apache_name => apache_name)
+              cookbook 'httpd'
+              action :create
+            end
+
+            # service management
+            service "#{new_resource.name} create #{apache_name}" do
+              service_name apache_name
+              supports :restart => true, :reload => true, :status => true
+              provider Chef::Provider::Service::Init::Redhat
+              action [:start, :enable]
+            end
+
           end
         end
       end

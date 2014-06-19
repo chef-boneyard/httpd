@@ -1,0 +1,35 @@
+LockFile /var/lock/<%= @apache_name %>/accept.lock
+PidFile /var/run/<%= @apache_name %>/httpd.pid
+
+Timeout <%= @config.timeout %>
+<% if @config.keepalive %>
+KeepAlive On
+<% else %>
+KeepAlive Off
+<% end %>
+
+MaxKeepAliveRequests <%= @config.keepaliverequests %>
+KeepAliveTimeout <%= @config.keepalivetimeout %>
+
+<% if @config.listen_addresses.nil? %>
+<%   @config.listen_ports.each do |port| %>
+Listen <%= port %>
+<%   end %>
+<% else %>
+<%   @config.listen_addresses.each do |address| %>
+<%     @config.listen_ports.each do |port| %>
+Listen <%= address %>:<%= port %>
+<%     end %>
+<%   end %>
+<% end %>
+
+User <%= @config.run_user %>
+Group <%= @config.run_group %>
+
+DefaultType None
+HostnameLookups <%= @config.hostname_lookups %>
+
+ErrorLog /var/log/<%= @apache_name %>/error_log
+LogLevel <%= @config.log_level %>
+
+Include conf.d/
