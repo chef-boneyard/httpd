@@ -159,6 +159,19 @@ class Chef
               action :create
             end
 
+            # mpm selection
+            template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
+              path "/etc/sysconfig/#{apache_name}"
+              source "#{apache_version}/rhel/sysconfig/httpd.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              variables(:mpm => new_resource.mpm)
+              cookbook 'httpd'
+              notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
+              action :create
+            end
+
             # init script
             template "#{new_resource.name} create /etc/rc.d/init.d/#{apache_name}" do
               path "/etc/init.d/#{apache_name}"
@@ -178,6 +191,21 @@ class Chef
               provider Chef::Provider::Service::Init::Redhat
               action [:start, :enable]
             end
+          end
+        end
+
+        action :delete do
+          converge_by 'rhel pattern' do
+            # support multiple instances
+            new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
+
+            service "#{new_resource.name} delete #{apache_name}" do
+              service_name apache_name
+              supports :restart => true, :reload => true, :status => true
+              provider Chef::Provider::Service::Init::Redhat
+              action [:stop, :disable]
+            end
+            # moar resources here
 
           end
         end

@@ -63,25 +63,10 @@ platforms:
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 
 # selinux-permissive
-- name: centos-6.4-x64
+- name: centos-6.4
   driver_plugin: digitalocean
   driver_config:
     image_id: 3797680
-    flavor_id: 63
-    region_id: 4
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[selinux]
-  attributes:
-    selinux:
-      state: disabled
-
-# selinux-permissive
-- name: centos-6.4-x32
-  driver_plugin: digitalocean
-  driver_config:
-    image_id: 3448674
     flavor_id: 63
     region_id: 4
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
@@ -154,8 +139,7 @@ suites:
       'debian-7.2',
       'omnios-151006',
       'centos-5.8',
-      'centos-6.4-x32',
-      'centos-6.4-x64',
+      'centos-6.4',
       'smartos-13.4.0',
       'ubuntu-12.04',
       'ubuntu-13.10',
@@ -175,8 +159,7 @@ suites:
       'debian-7.2',
       'omnios-151006',
       'centos-5.8',
-      'centos-6.4-x32',
-      'centos-6.4-x64',
+      'centos-6.4',
       'smartos-13.4.0',
       'ubuntu-12.04',
     ]

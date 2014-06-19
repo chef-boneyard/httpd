@@ -1,0 +1,5 @@
+<% if @mpm == 'prefork' %>
+HTTPD=/usr/sbin/httpd
+<% else %>
+HTTPD=/usr/sbin/httpd.<%= @mpm %>
+<% end %>
