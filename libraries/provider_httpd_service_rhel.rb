@@ -12,7 +12,9 @@ class Chef
 
         action :create do
           converge_by 'rhel pattern' do
+            #
             # local variables
+            #
             case node['kernel']['machine']
             when 'x86_64'
               libarch = 'lib64'
@@ -23,20 +25,29 @@ class Chef
             # enterprise linux version calculation
             case node['platform_version'].to_i
             when 5
-              elversion = '5'
+              elversion = 5
             when 6
-              elversion = '6'
+              elversion = 5
             end
 
+            # version
             apache_version = new_resource.version
 
             # support multiple instances
             new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
 
-            # We need to dynamically render the resource name into the title in
-            # order to ensure uniqueness. This avoids cloning via
-            # CHEF-3694 and allows ChefSpec and Chef 10 to work properly
+            # PID file
+            case elversion
+            when 5
+              pid_file = "/var/run/#{apache_name}.pid"
+            when 6
+              pid_file = "/var/run/#{apache_name}/httpd.pid"
+            end
 
+            #
+            # Chef resources
+            #
+            
             # software installation
             package "#{new_resource.name} create #{new_resource.package_name}" do
               package_name new_resource.package_name
@@ -119,16 +130,7 @@ class Chef
               recursive true
               action :create
             end
-
-            directory "#{new_resource.name} create /var/run/#{apache_name}" do
-              path "/var/run/#{apache_name}"
-              user 'root'
-              group 'root'
-              mode '0755'
-              recursive true
-              action :create
-            end
-
+            
             link "#{new_resource.name} create /etc/#{apache_name}/logs" do
               target_file "/etc/#{apache_name}/logs"
               to "../../var/log/#{apache_name}"
@@ -141,12 +143,30 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} create /etc/#{apache_name}/run" do
-              target_file "/etc/#{apache_name}/run"
-              to "../../var/run/#{apache_name}"
-              action :create
+            # /var/run
+            if elversion > 5
+              directory "#{new_resource.name} create /var/run/#{apache_name}" do
+                path "/var/run/#{apache_name}"
+                user 'root'
+                group 'root'
+                mode '0755'
+                recursive true
+                action :create
+              end
+              
+              link "#{new_resource.name} create /etc/#{apache_name}/run" do
+                target_file "/etc/#{apache_name}/run"
+                to "../../var/run/#{apache_name}"
+                action :create
+              end
+            else
+              link "#{new_resource.name} create /etc/#{apache_name}/run" do
+                target_file "/etc/#{apache_name}/run"
+                to "../../var/run/"
+                action :create
+              end
             end
-
+            
             # configuration files
             template "#{new_resource.name} create /etc/#{apache_name}/conf/magic" do
               path "/etc/#{apache_name}/conf/magic"
@@ -166,7 +186,8 @@ class Chef
               mode '0644'
               variables(
                 :config => new_resource,
-                :apache_name => apache_name
+                :apache_name => apache_name,
+                :pid_file => pid_file
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
@@ -182,7 +203,8 @@ class Chef
               mode '0644'
               variables(
                 :apache_name => apache_name,
-                :mpm => new_resource.mpm
+                :mpm => new_resource.mpm,
+                :pid_file => pid_file,
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"

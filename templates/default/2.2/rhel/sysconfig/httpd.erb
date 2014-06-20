@@ -5,4 +5,4 @@ HTTPD=/usr/sbin/<%= @apache_name %>.<%= @mpm %>
 <% end %>
 OPTIONS="-f /etc/<%= @apache_name %>/conf/httpd.conf"
 LOCKFILE=/var/lock/subsys/<%= @apache_name %>
-PIDFILE=/var/run/<%= @apache_name %>/httpd.pid
+PIDFILE=<%= @pid_file %>
