@@ -47,7 +47,7 @@ class Chef
             #
             # Chef resources
             #
-            
+
             # software installation
             package "#{new_resource.name} create #{new_resource.package_name}" do
               package_name new_resource.package_name
@@ -122,15 +122,15 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} create /usr/#{libarch}/#{apache_name}/modules" do
-              path "/usr/#{libarch}/#{apache_name}/modules"
+            directory "#{new_resource.name} create /usr/#{libarch}/httpd/modules" do
+              path "/usr/#{libarch}/httpd/modules"
               user 'root'
               group 'root'
               mode '0755'
               recursive true
               action :create
             end
-            
+
             link "#{new_resource.name} create /etc/#{apache_name}/logs" do
               target_file "/etc/#{apache_name}/logs"
               to "../../var/log/#{apache_name}"
@@ -153,7 +153,7 @@ class Chef
                 recursive true
                 action :create
               end
-              
+
               link "#{new_resource.name} create /etc/#{apache_name}/run" do
                 target_file "/etc/#{apache_name}/run"
                 to "../../var/run/#{apache_name}"
@@ -162,11 +162,11 @@ class Chef
             else
               link "#{new_resource.name} create /etc/#{apache_name}/run" do
                 target_file "/etc/#{apache_name}/run"
-                to "../../var/run/"
+                to '../../var/run/'
                 action :create
               end
             end
-            
+
             # configuration files
             template "#{new_resource.name} create /etc/#{apache_name}/conf/magic" do
               path "/etc/#{apache_name}/conf/magic"
@@ -204,7 +204,7 @@ class Chef
               variables(
                 :apache_name => apache_name,
                 :mpm => new_resource.mpm,
-                :pid_file => pid_file,
+                :pid_file => pid_file
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"

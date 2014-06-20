@@ -22,32 +22,15 @@ class Chef
               libarch = 'lib'
             end
 
-            # enterprise linux version calculation
-            case node['platform_version'].to_i
-            when 5
-              elversion = 5
-            when 6
-              elversion = 5
-            end
-
             # version
             apache_version = new_resource.version
 
             # support multiple instances
             new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
 
-            # PID file
-            case elversion
-            when 5
-              pid_file = "/var/run/#{apache_name}.pid"
-            when 6
-              pid_file = "/var/run/#{apache_name}/httpd.pid"
-            end
-
             #
             # Chef resources
             #
-            
             # software installation
             package "#{new_resource.name} create #{new_resource.package_name}" do
               package_name new_resource.package_name
@@ -66,20 +49,6 @@ class Chef
             link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
               target_file "/usr/sbin/#{apache_name}"
               to '/usr/sbin/httpd'
-              action :create
-              not_if { apache_name == 'httpd' }
-            end
-
-            link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
-              target_file "/usr/sbin/#{apache_name}.worker"
-              to '/usr/sbin/httpd.worker'
-              action :create
-              not_if { apache_name == 'httpd' }
-            end
-
-            link "#{new_resource.name} create /usr/sbin/#{apache_name}.event" do
-              target_file "/usr/sbin/#{apache_name}.event"
-              to '/usr/sbin/httpd.event'
               action :create
               not_if { apache_name == 'httpd' }
             end
@@ -112,6 +81,15 @@ class Chef
               action :create
             end
 
+            directory "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d" do
+              path "/etc/#{apache_name}/conf.modules.d"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+
             # support directories
             directory "#{new_resource.name} create /var/log/#{apache_name}" do
               path "/var/log/#{apache_name}"
@@ -122,15 +100,15 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} create /usr/#{libarch}/#{apache_name}/modules" do
-              path "/usr/#{libarch}/#{apache_name}/modules"
+            directory "#{new_resource.name} create /usr/#{libarch}/httpd/modules" do
+              path "/usr/#{libarch}/httpd/modules"
               user 'root'
               group 'root'
               mode '0755'
               recursive true
               action :create
             end
-            
+
             link "#{new_resource.name} create /etc/#{apache_name}/logs" do
               target_file "/etc/#{apache_name}/logs"
               to "../../var/log/#{apache_name}"
@@ -144,29 +122,21 @@ class Chef
             end
 
             # /var/run
-            if elversion > 5
-              directory "#{new_resource.name} create /var/run/#{apache_name}" do
-                path "/var/run/#{apache_name}"
-                user 'root'
-                group 'root'
-                mode '0755'
-                recursive true
-                action :create
-              end
-              
-              link "#{new_resource.name} create /etc/#{apache_name}/run" do
-                target_file "/etc/#{apache_name}/run"
-                to "../../var/run/#{apache_name}"
-                action :create
-              end
-            else
-              link "#{new_resource.name} create /etc/#{apache_name}/run" do
-                target_file "/etc/#{apache_name}/run"
-                to "../../var/run/"
-                action :create
-              end
+            directory "#{new_resource.name} create /var/run/#{apache_name}" do
+              path "/var/run/#{apache_name}"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
             end
-            
+
+            link "#{new_resource.name} create /etc/#{apache_name}/run" do
+              target_file "/etc/#{apache_name}/run"
+              to "../../var/run/#{apache_name}"
+              action :create
+            end
+
             # configuration files
             template "#{new_resource.name} create /etc/#{apache_name}/conf/magic" do
               path "/etc/#{apache_name}/conf/magic"
@@ -180,46 +150,44 @@ class Chef
 
             template "#{new_resource.name} create /etc/#{apache_name}/conf/httpd.conf" do
               path "/etc/#{apache_name}/conf/httpd.conf"
-              source "#{apache_version}/httpd.conf.erb"
+              source "#{apache_version}/httpd-systemd.conf.erb"
               owner 'root'
               group 'root'
               mode '0644'
               variables(
                 :config => new_resource,
                 :apache_name => apache_name,
-                :pid_file => pid_file
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
               action :create
             end
 
-            # mpm selection
-            template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
-              path "/etc/sysconfig/#{apache_name}"
-              source "#{apache_version}/rhel/sysconfig/httpd.erb"
+            # systemd
+            directory "#{new_resource.name} create /run/#{apache_name}" do
+              path "/run/#{apache_name}"
+              owner 'root'
+              group 'apache'
+              mode '0710'
+              action :create
+            end
+
+            template "#{new_resource} create /usr/lib/systemd/system/#{apache_name}.service" do
+              path "/usr/lib/systemd/system/#{apache_name}.service"
+              source "#{apache_version}/systemd/#{node['platform']}/#{node['platform_version']}/httpd.service.erb"
               owner 'root'
               group 'root'
               mode '0644'
-              variables(
-                :apache_name => apache_name,
-                :mpm => new_resource.mpm,
-                :pid_file => pid_file,
-                )
               cookbook 'httpd'
-              notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
+              variables(:apache_name => apache_name)
               action :create
             end
 
-            # init script
-            template "#{new_resource.name} create /etc/rc.d/init.d/#{apache_name}" do
-              path "/etc/init.d/#{apache_name}"
-              source "#{apache_version}/sysvinit/el-#{elversion}/httpd.erb"
+            directory "#{new_resource} create /usr/lib/systemd/system/#{apache_name}.service.d" do
+              path "/usr/lib/systemd/system/#{apache_name}.service.d"
               owner 'root'
               group 'root'
               mode '0755'
-              variables(:apache_name => apache_name)
-              cookbook 'httpd'
               action :create
             end
 
@@ -227,7 +195,7 @@ class Chef
             service "#{new_resource.name} create #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
-              provider Chef::Provider::Service::Init::Redhat
+              provider Chef::Provider::Service::Init::Systemd
               action [:start, :enable]
             end
           end
@@ -244,7 +212,6 @@ class Chef
               provider Chef::Provider::Service::Init::Redhat
               action [:stop, :disable]
             end
-            # moar resources here
           end
         end
 
