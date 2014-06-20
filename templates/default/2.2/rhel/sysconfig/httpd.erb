@@ -1,5 +1,8 @@
 <% if @mpm == 'prefork' %>
-HTTPD=/usr/sbin/httpd
+HTTPD=/usr/sbin/<%= @apache_name %>
 <% else %>
-HTTPD=/usr/sbin/httpd.<%= @mpm %>
+HTTPD=/usr/sbin/<%= @apache_name %>.<%= @mpm %>
 <% end %>
+OPTIONS="-f /etc/<%= @apache_name %>/conf/httpd.conf"
+LOCKFILE=/var/lock/subsys/<%= @apache_name %>
+PIDFILE=/var/run/<%= @apache_name %>/httpd.pid

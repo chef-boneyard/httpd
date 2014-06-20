@@ -51,6 +51,28 @@ class Chef
               action :nothing
             end
 
+            # httpd binary symlinks
+            link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
+              target_file "/usr/sbin/#{apache_name}"
+              to '/usr/sbin/httpd'
+              action :create
+              not_if { apache_name == 'httpd' }
+            end
+
+            link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
+              target_file "/usr/sbin/#{apache_name}.worker"
+              to '/usr/sbin/httpd.worker'
+              action :create
+              not_if { apache_name == 'httpd' }
+            end
+
+            link "#{new_resource.name} create /usr/sbin/#{apache_name}.event" do
+              target_file "/usr/sbin/#{apache_name}.event"
+              to '/usr/sbin/httpd.event'
+              action :create
+              not_if { apache_name == 'httpd' }
+            end
+
             # configuration directories
             directory "#{new_resource.name} create /etc/#{apache_name}" do
               path "/etc/#{apache_name}"
@@ -125,14 +147,6 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} create /var/lock/#{apache_name}" do
-              path "/var/lock/#{apache_name}"
-              owner new_resource.run_user
-              group new_resource.run_group
-              mode '0755'
-              action :create
-            end
-
             # configuration files
             template "#{new_resource.name} create /etc/#{apache_name}/conf/magic" do
               path "/etc/#{apache_name}/conf/magic"
@@ -166,7 +180,10 @@ class Chef
               owner 'root'
               group 'root'
               mode '0644'
-              variables(:mpm => new_resource.mpm)
+              variables(
+                :apache_name => apache_name,
+                :mpm => new_resource.mpm
+                )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
               action :create
@@ -206,7 +223,34 @@ class Chef
               action [:stop, :disable]
             end
             # moar resources here
+          end
+        end
 
+        action :restart do
+          converge_by 'rhel pattern' do
+            # support multiple instances
+            new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
+
+            service "#{new_resource.name} delete #{apache_name}" do
+              service_name apache_name
+              supports :restart => true, :reload => true, :status => true
+              provider Chef::Provider::Service::Init::Redhat
+              action :restart
+            end
+          end
+        end
+
+        action :reload do
+          converge_by 'rhel pattern' do
+            # support multiple instances
+            new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
+
+            service "#{new_resource.name} delete #{apache_name}" do
+              service_name apache_name
+              supports :restart => true, :reload => true, :status => true
+              provider Chef::Provider::Service::Init::Redhat
+              action :reload
+            end
           end
         end
       end

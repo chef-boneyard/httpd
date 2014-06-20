@@ -1,4 +1,4 @@
-LockFile /var/lock/<%= @apache_name %>/accept.lock
+LockFile /var/lock/subsys/<%= @apache_name %>
 PidFile /var/run/<%= @apache_name %>/httpd.pid
 
 Timeout <%= @config.timeout %>
@@ -32,4 +32,4 @@ HostnameLookups <%= @config.hostname_lookups %>
 ErrorLog /var/log/<%= @apache_name %>/error_log
 LogLevel <%= @config.log_level %>
 
-Include conf.d/
+Include conf.d/*.conf
