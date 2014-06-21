@@ -148,6 +148,12 @@ class Chef
               action :create
             end
 
+            link "#{new_resource.name} create /etc/httpd/conf/mime.types" do
+              target_file "/etc/#{apache_name}/conf/mime.types"
+              to '/etc/mime.types'
+              action :create
+            end
+            
             template "#{new_resource.name} create /etc/#{apache_name}/conf/httpd.conf" do
               path "/etc/#{apache_name}/conf/httpd.conf"
               source "#{apache_version}/httpd-systemd.conf.erb"
@@ -240,8 +246,10 @@ class Chef
               provider Chef::Provider::Service::Init::Redhat
               action :reload
             end
+            
           end
         end
+        
       end
     end
   end
