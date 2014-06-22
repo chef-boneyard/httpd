@@ -49,6 +49,7 @@ class Chef
             link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
               target_file "/usr/sbin/#{apache_name}"
               to '/usr/sbin/httpd'
+              link_type :hard
               action :create
               not_if { apache_name == 'httpd' }
             end
@@ -117,7 +118,7 @@ class Chef
 
             link "#{new_resource.name} create /etc/#{apache_name}/modules" do
               target_file "/etc/#{apache_name}/modules"
-              to "../../usr/lib64/#{apache_name}/modules"
+              to '../../usr/lib64/httpd/modules'
               action :create
             end
 
@@ -153,7 +154,7 @@ class Chef
               to '/etc/mime.types'
               action :create
             end
-            
+
             template "#{new_resource.name} create /etc/#{apache_name}/conf/httpd.conf" do
               path "/etc/#{apache_name}/conf/httpd.conf"
               source "#{apache_version}/httpd-systemd.conf.erb"
@@ -162,7 +163,7 @@ class Chef
               mode '0644'
               variables(
                 :config => new_resource,
-                :apache_name => apache_name,
+                :apache_name => apache_name
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
@@ -215,8 +216,14 @@ class Chef
             service "#{new_resource.name} delete #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
-              provider Chef::Provider::Service::Init::Redhat
+              provider Chef::Provider::Service::Init::Systemd
               action [:stop, :disable]
+            end
+
+            directory "#{new_resource.name} delete /etc/#{apache_name}" do
+              path "/etc/#{apache_name}"
+              recursive true
+              action :delete
             end
           end
         end
@@ -226,10 +233,10 @@ class Chef
             # support multiple instances
             new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
 
-            service "#{new_resource.name} delete #{apache_name}" do
+            service "#{new_resource.name} restart #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
-              provider Chef::Provider::Service::Init::Redhat
+              provider Chef::Provider::Service::Init::Systemd
               action :restart
             end
           end
@@ -240,16 +247,14 @@ class Chef
             # support multiple instances
             new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
 
-            service "#{new_resource.name} delete #{apache_name}" do
+            service "#{new_resource.name} reload #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
-              provider Chef::Provider::Service::Init::Redhat
+              provider Chef::Provider::Service::Init::Systemd
               action :reload
             end
-            
           end
         end
-        
       end
     end
   end

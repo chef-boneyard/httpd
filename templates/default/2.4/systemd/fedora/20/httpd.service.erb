@@ -6,8 +6,8 @@ After=network.target remote-fs.target nss-lookup.target
 Type=notify
 Environment=LANG=C
 
-ExecStart=/usr/sbin/<%= @apache_name %> $OPTIONS -DFOREGROUND
-ExecReload=/usr/sbin/<%= @apache_name %> $OPTIONS -k graceful
+ExecStart=/usr/sbin/<%= @apache_name %> -f /etc/<%= @apache_name %>/conf/httpd.conf -DFOREGROUND
+ExecReload=/usr/sbin/<%= @apache_name %> -f /etc/<%= @apache_name %>/conf/httpd.conf -k graceful
 ExecStop=/bin/kill -WINCH ${MAINPID}
 
 KillSignal=SIGCONT
