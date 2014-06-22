@@ -163,6 +163,7 @@ class Chef
               mode '0644'
               variables(
                 :config => new_resource,
+                :pid_file => "/var/run/#{apache_name}/httpd.pid",
                 :apache_name => apache_name
                 )
               cookbook 'httpd'
@@ -170,6 +171,46 @@ class Chef
               action :create
             end
 
+            # mpm configuration
+            template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf" do
+              path "/etc/#{apache_name}/conf.modules.d/mpm_#{new_resource.mpm}.conf"
+              source "#{new_resource.version}/mods/rhel/mpm.conf.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              cookbook 'httpd'
+              variables(
+                :mpm => new_resource.mpm,
+                :startservers => new_resource.startservers,
+                :minspareservers => new_resource.minspareservers,
+                :maxspareservers => new_resource.maxspareservers,
+                :maxclients => new_resource.maxclients,
+                :maxrequestsperchild => new_resource.maxrequestsperchild,
+                :minsparethreads => new_resource.minsparethreads,
+                :maxsparethreads => new_resource.maxsparethreads,
+                :threadlimit => new_resource.threadlimit,
+                :threadsperchild => new_resource.threadsperchild,
+                :maxrequestworkers => new_resource.maxrequestworkers,
+                :maxconnectionsperchild => new_resource.maxconnectionsperchild
+                )
+              action :create
+            end
+
+            # core modules
+            template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/mod_unixd.conf" do              
+              path "/etc/#{apache_name}/conf.modules.d/mod_unixd.conf"
+              source "#{apache_version}/rhel/module_load.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              variables(
+                :libarch => libarch,
+                :module => 'unixd'
+                )
+              cookbook 'httpd'
+              action :create              
+            end
+            
             # systemd
             directory "#{new_resource.name} create /run/#{apache_name}" do
               path "/run/#{apache_name}"
@@ -220,11 +261,11 @@ class Chef
               action [:stop, :disable]
             end
 
-            directory "#{new_resource.name} delete /etc/#{apache_name}" do
-              path "/etc/#{apache_name}"
-              recursive true
-              action :delete
-            end
+            # directory "#{new_resource.name} delete /etc/#{apache_name}" do
+            #   path "/etc/#{apache_name}"
+            #   recursive true
+            #   action :delete
+            # end
           end
         end
 
