@@ -196,21 +196,30 @@ class Chef
               action :create
             end
 
-            # core modules
-            template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/mod_unixd.conf" do              
-              path "/etc/#{apache_name}/conf.modules.d/mod_unixd.conf"
-              source "#{apache_version}/rhel/module_load.erb"
+            # more mpm biz here
+            # ensure things are deleted
+
+            # base modules
+            template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/00-base.conf" do
+              path "/etc/#{apache_name}/conf.modules.d/00-base.conf"
+              source "#{apache_version}/rhel/00-base.conf.erb"
               owner 'root'
               group 'root'
               mode '0644'
-              variables(
-                :libarch => libarch,
-                :module => 'unixd'
-                )
               cookbook 'httpd'
-              action :create              
+              action :create
             end
-            
+
+            template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/00-systemd.conf" do
+              path "/etc/#{apache_name}/conf.modules.d/00-systemd.conf"
+              source "#{apache_version}/rhel/00-systemd.conf.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              cookbook 'httpd'
+              action :create
+            end
+
             # systemd
             directory "#{new_resource.name} create /run/#{apache_name}" do
               path "/run/#{apache_name}"
@@ -261,11 +270,11 @@ class Chef
               action [:stop, :disable]
             end
 
-            # directory "#{new_resource.name} delete /etc/#{apache_name}" do
-            #   path "/etc/#{apache_name}"
-            #   recursive true
-            #   action :delete
-            # end
+            directory "#{new_resource.name} delete /etc/#{apache_name}" do
+              path "/etc/#{apache_name}"
+              recursive true
+              action :delete
+            end
           end
         end
 
