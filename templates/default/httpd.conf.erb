@@ -1,0 +1,53 @@
+<% if @server_root %>
+ServerRoot <%= @server_root %>
+<% end %>
+<% if @pid_file %>
+PidFile <%= @pid_file %>
+<% end %>
+<% if @config.run_user %>
+User <%= @config.run_user %>
+<% end %>
+<% if @config.run_group %>
+Group <%= @config.run_group %>
+<% end %>
+<% if @lock_file %>
+LockFile <%= @lock_file %>
+<% end %>
+<% if @config.timeout %>
+Timeout <%= @config.timeout %>
+<% end %>
+<% if @error_log %>
+ErrorLog /var/log/<%= @apache_name %>/error_log
+<% end %>
+<% if @config.log_level %>
+LogLevel <%= @config.log_level %>
+<% end %>
+<% if @config.keepalive %>
+KeepAlive On
+<% else %>
+KeepAlive Off
+<% end %>
+<% if @config.keepaliverequests %>
+MaxKeepAliveRequests <%= @config.keepaliverequests %>
+<% end %>
+<% if @config.keepalivetimeout %>
+KeepAliveTimeout <%= @config.keepalivetimeout %>
+<% end %>
+DefaultType None
+<% if @config.hostname_lookups %>
+HostnameLookups <%= @config.hostname_lookups %>
+<% end %>
+
+<% if @config.listen_addresses.nil? %>
+<%   @config.listen_ports.each do |port| %>
+Listen <%= port %>
+<%   end %>
+<% else %>
+<%   @config.listen_addresses.each do |address| %>
+<%     @config.listen_ports.each do |port| %>
+Listen <%= address %>:<%= port %>
+<%     end %>
+<%   end %>
+<% end %>
+
+Include conf.d/*.conf

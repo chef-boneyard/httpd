@@ -235,13 +235,17 @@ class Chef
 
             template "#{new_resource.name} create /etc/#{apache_name}/apache2.conf" do
               path "/etc/#{apache_name}/apache2.conf"
-              source "#{apache_version}/apache2.conf.erb"
+              source 'httpd.conf.erb'
               owner 'root'
               group 'root'
               mode '0644'
               variables(
                 :config => new_resource,
-                :apache_name => apache_name
+                :apache_name => apache_name,
+                :server_root => "/etc/#{apache_name}",
+                :pid_file => "/var/run/#{apache_name}.pid",
+                :lock_file => "/var/lock/#{apache_name}",
+                :error_log => "/var/log/#{apache_name}/error_log"
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
@@ -570,4 +574,4 @@ class Chef
   end
 end
 
-Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
+#Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
