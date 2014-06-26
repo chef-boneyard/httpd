@@ -44,6 +44,32 @@ class Chef
               pid_file = "/var/run/#{apache_name}/httpd.pid"
             end
 
+            # lock file
+            lock_file = "/var/lock/subsys/#{apache_name}"
+
+            # apache 2.2 and 2.4 differences
+            if apache_version.to_f < 2.4
+              lock_file = "/var/lock/subsys/#{apache_name}"
+              mutex = nil
+            else
+              lock_file = nil
+              mutex = "file:/var/lock/subsys/#{apache_name} default"
+            end
+
+            # Include directories for additional configurtions
+            if apache_version.to_f < 2.4
+              includes = [
+                'conf.d/*.conf',
+                'conf.d/*.load'
+              ]
+            else
+              include_optionals = [
+                'conf.d/*.conf',
+                'conf.modules.d/*.conf',
+                'conf.modules.d/*.load'
+              ]
+            end
+
             #
             # Chef resources
             #
@@ -170,7 +196,7 @@ class Chef
             # configuration files
             template "#{new_resource.name} create /etc/#{apache_name}/conf/magic" do
               path "/etc/#{apache_name}/conf/magic"
-              source "#{apache_version}/magic.erb"
+              source 'magic.erb'
               owner 'root'
               group 'root'
               mode '0644'
@@ -180,14 +206,19 @@ class Chef
 
             template "#{new_resource.name} create /etc/#{apache_name}/conf/httpd.conf" do
               path "/etc/#{apache_name}/conf/httpd.conf"
-              source "#{apache_version}/httpd.conf.erb"
+              source 'httpd.conf.erb'
               owner 'root'
               group 'root'
               mode '0644'
               variables(
                 :config => new_resource,
-                :apache_name => apache_name,
-                :pid_file => pid_file
+                :server_root => "/etc/#{apache_name}",
+                :error_log => "/var/log/#{apache_name}/error_log",
+                :pid_file => pid_file,
+                :lock_file => lock_file,
+                :mutex => mutex,
+                :includes => includes,
+                :include_optionals => include_optionals
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
@@ -197,7 +228,7 @@ class Chef
             # mpm selection
             template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
               path "/etc/sysconfig/#{apache_name}"
-              source "#{apache_version}/rhel/sysconfig/httpd.erb"
+              source 'rhel/sysconfig/httpd.erb'
               owner 'root'
               group 'root'
               mode '0644'

@@ -12,7 +12,9 @@ class Chef
 
         action :create do
           converge_by 'debian pattern' do
+            #
             # local variables
+            #
             apache_version = new_resource.version
 
             # support multiple instances
@@ -57,6 +59,10 @@ class Chef
               lock_file = nil
               mutex = "file:/var/lock/#{apache_name} default"
             end
+
+            #
+            # Chef resources
+            #
 
             # We need to dynamically render the resource name into the title in
             # order to ensure uniqueness. This avoids cloning via
