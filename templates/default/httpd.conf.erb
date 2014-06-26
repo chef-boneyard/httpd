@@ -13,11 +13,14 @@ Group <%= @config.run_group %>
 <% if @lock_file %>
 LockFile <%= @lock_file %>
 <% end %>
+<% if @mutex %>
+Mutex <%= @mutex %>
+<% end %>
 <% if @config.timeout %>
 Timeout <%= @config.timeout %>
 <% end %>
 <% if @error_log %>
-ErrorLog /var/log/<%= @apache_name %>/error_log
+ErrorLog <%= @error_log %>
 <% end %>
 <% if @config.log_level %>
 LogLevel <%= @config.log_level %>
@@ -50,4 +53,13 @@ Listen <%= address %>:<%= port %>
 <%   end %>
 <% end %>
 
-Include conf.d/*.conf
+<% if @includes %>
+<%  @includes.each do |i| %>
+Include <%= i %>
+<%   end %>
+<% end %>
+<% if @include_optionals %>
+<%  @include_optionals.each do |i| %>
+IncludeOptional <%= i %>
+<%   end %>
+<% end %>

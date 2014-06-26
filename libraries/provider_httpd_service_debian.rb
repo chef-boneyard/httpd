@@ -22,12 +22,45 @@ class Chef
             new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
             new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
 
-            # calculate debian major version from node attributes
-            debian_major_version = "debian-#{node['platform_version'].to_i}"
+            # calculate platform_and_version from node attributes
+            case node['platform']
+            when 'debian'
+              platform_and_version = "debian-#{node['platform_version'].to_i}"
+            when 'ubuntu'
+              platform_and_version = "ubuntu-#{node['platform_version']}"
+            end
+
+            # Include directories for additional configurtions
+            if apache_version.to_f < 2.4
+              includes = [
+                'conf.d/*.conf',
+                'mods-enabled/*.load',
+                'mods-enabled/*.conf',
+                'sites-enabled/*.conf'
+              ]
+            else
+              include_optionals = [
+                'conf-enabled/*.conf',
+                'mods-enabled/*.load',
+                'mods-enabled/*.conf',
+                'sites-enabled/*.conf'
+              ]
+            end
+
+            # apache 2.2 and 2.4 differences
+            if apache_version.to_f < 2.4
+              pid_file = "/var/run/#{apache_name}.pid"
+              lock_file = "/var/lock/#{apache_name}/accept.lock"
+              mutex = nil
+            else
+              pid_file = "/var/run/apache2/#{apache_name}.pid"
+              lock_file = nil
+              mutex = "file:/var/lock/#{apache_name} default"
+            end
 
             # We need to dynamically render the resource name into the title in
             # order to ensure uniqueness. This avoids cloning via
-            # CHEF-3694 and allows ChefSpec and Chef 10 to work properly
+            # CHEF-3694 and allows ChefSpec towork properly.
 
             # software installation
             package "#{new_resource.name} create #{new_resource.package_name}" do
@@ -161,13 +194,17 @@ class Chef
             # envvars
             template "#{new_resource.name} create /etc/#{apache_name}/envvars" do
               path "/etc/#{apache_name}/envvars"
-              source "#{apache_version}/envvars.erb"
+              source 'envvars.erb'
               owner 'root'
               group 'root'
               mode '0644'
               variables(
                 :run_user => new_resource.run_user,
-                :run_group => new_resource.run_group
+                :run_group => new_resource.run_group,
+                :pid_file => pid_file,
+                :run_dir => "/var/run/#{apache_name}",
+                :lock_dir => "/var/lock/#{apache_name}",
+                :log_dir => "/var/log/#{apache_name}"
                 )
               cookbook 'httpd'
               action :create
@@ -220,7 +257,7 @@ class Chef
             # configuration files
             template "#{new_resource.name} create /etc/#{apache_name}/magic" do
               path "/etc/#{apache_name}/magic"
-              source "#{apache_version}/magic.erb"
+              source 'magic.erb'
               owner 'root'
               group 'root'
               mode '0644'
@@ -241,11 +278,13 @@ class Chef
               mode '0644'
               variables(
                 :config => new_resource,
-                :apache_name => apache_name,
                 :server_root => "/etc/#{apache_name}",
-                :pid_file => "/var/run/#{apache_name}.pid",
-                :lock_file => "/var/lock/#{apache_name}",
-                :error_log => "/var/log/#{apache_name}/error_log"
+                :error_log => "/var/log/#{apache_name}/error_log",
+                :pid_file => pid_file,
+                :lock_file => lock_file,
+                :mutex => mutex,
+                :includes => includes,
+                :include_optionals => include_optionals
                 )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
@@ -255,7 +294,7 @@ class Chef
             # init script
             template "#{new_resource.name} create /etc/init.d/#{apache_name}" do
               path "/etc/init.d/#{apache_name}"
-              source "#{apache_version}/sysvinit/#{debian_major_version}/apache2.erb"
+              source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
               owner 'root'
               group 'root'
               mode '0755'
@@ -399,6 +438,7 @@ class Chef
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Debian
             end
+
           end
         end
 
@@ -574,4 +614,5 @@ class Chef
   end
 end
 
-#Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
+Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
+Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian

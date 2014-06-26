@@ -6,9 +6,9 @@ else
 fi
 export APACHE_RUN_USER=<%= @run_user %>
 export APACHE_RUN_GROUP=<%= @run_group %>
-export APACHE_PID_FILE=/var/run/apache2$SUFFIX.pid
-export APACHE_RUN_DIR=/var/run/apache2$SUFFIX
-export APACHE_LOCK_DIR=/var/lock/apache2$SUFFIX
-export APACHE_LOG_DIR=/var/log/apache2$SUFFIX
+export APACHE_PID_FILE=<%= @pid_file %>
+export APACHE_RUN_DIR=<%= @run_dir %>
+export APACHE_LOCK_DIR=<%= @lock_dir %>
+export APACHE_LOG_DIR=<%= @log_dir %>
 export LANG=C
 export LANG
