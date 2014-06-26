@@ -315,7 +315,7 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/envvars]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/envvars').with(
         :path => '/etc/apache2-instance-1/envvars',
-        :source => '2.4/envvars.erb',
+        :source => 'envvars.erb',
         :owner => 'root',
         :group => 'root',
         :mode => '0644',
@@ -373,7 +373,7 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/magic]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/magic').with(
         :path => '/etc/apache2-instance-1/magic',
-        :source => '2.4/magic.erb',
+        :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',
         :mode => '0644',
@@ -471,7 +471,7 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/apache2.conf]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/apache2.conf').with(
         :path => '/etc/apache2-instance-1/apache2.conf',
-        :source => '2.4/apache2.conf.erb',
+        :source => 'httpd.conf.erb',
         :owner => 'root',
         :group => 'root',
         :mode => '0644',
@@ -614,7 +614,7 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/envvars]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/envvars').with(
         :path => '/etc/apache2-instance-2/envvars',
-        :source => '2.4/envvars.erb',
+        :source => 'envvars.erb',
         :owner => 'root',
         :group => 'root',
         :mode => '0644',
@@ -661,7 +661,7 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/magic]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/magic').with(
         :path => '/etc/apache2-instance-2/magic',
-        :source => '2.4/magic.erb',
+        :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',
         :mode => '0644',
@@ -759,7 +759,7 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/apache2.conf]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/apache2.conf').with(
         :path => '/etc/apache2-instance-2/apache2.conf',
-        :source => '2.4/apache2.conf.erb',
+        :source => 'httpd.conf.erb',
         :owner => 'root',
         :group => 'root',
         :mode => '0644',

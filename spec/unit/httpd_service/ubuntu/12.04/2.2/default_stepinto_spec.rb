@@ -133,7 +133,7 @@ describe 'httpd_test_default::server 2.2 on ubuntu-12.04' do
   it 'steps into httpd_service[default] and creates template[default create /etc/apache2/envvars]' do
     expect(ubuntu_12_04_default_stepinto_run).to create_template('default create /etc/apache2/envvars').with(
       :path => '/etc/apache2/envvars',
-      :source => '2.2/envvars.erb',
+      :source => 'envvars.erb',
       :owner => 'root',
       :group => 'root',
       :mode => '0644',
@@ -191,7 +191,7 @@ describe 'httpd_test_default::server 2.2 on ubuntu-12.04' do
   it 'steps into httpd_service[default] and creates template[default create /etc/apache2/magic]' do
     expect(ubuntu_12_04_default_stepinto_run).to create_template('default create /etc/apache2/magic').with(
       :path => '/etc/apache2/magic',
-      :source => '2.2/magic.erb',
+      :source => 'magic.erb',
       :owner => 'root',
       :group => 'root',
       :mode => '0644',
@@ -220,7 +220,7 @@ describe 'httpd_test_default::server 2.2 on ubuntu-12.04' do
   it 'steps into httpd_service[default] and creates template[default create /etc/apache2/apache2.conf]' do
     expect(ubuntu_12_04_default_stepinto_run).to create_template('default create /etc/apache2/apache2.conf').with(
       :path => '/etc/apache2/apache2.conf',
-      :source => '2.2/apache2.conf.erb',
+      :source => 'httpd.conf.erb',
       :owner => 'root',
       :group => 'root',
       :mode => '0644',

@@ -60,7 +60,7 @@ class Chef
 
             # We need to dynamically render the resource name into the title in
             # order to ensure uniqueness. This avoids cloning via
-            # CHEF-3694 and allows ChefSpec towork properly.
+            # CHEF-3694 and allows ChefSpec to work properly.
 
             # software installation
             package "#{new_resource.name} create #{new_resource.package_name}" do
@@ -457,7 +457,7 @@ class Chef
           # order to ensure uniqueness. In addition to this, we need
           # to render the extra string 'delete' to isolate it from action
           # :create This avoids cloning via CHEF-3694 and allows
-          # ChefSpec and Chef 10 to work properly
+          # ChefSpec to work properly.
 
           # Software installation: This is needed to supply the init
           # script that powers the service facility.
