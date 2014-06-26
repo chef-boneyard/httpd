@@ -22,28 +22,8 @@ httpd_service 'default' do
   action :delete
 end
 
-# pass everything from node attributes
-httpd_service 'instance-1' do
-  contact node['httpd']['contact']
-  keepalive node['httpd']['keepalive']
-  keepaliverequests node['httpd']['keepaliverequests']
-  keepalivetimeout node['httpd']['keepalivetimeout']
-  listen_addresses node['httpd']['listen_addresses']
-  listen_ports node['httpd']['listen_ports']
-  log_level node['httpd']['log_level']
-  version node['httpd']['version']
-  run_user node['httpd']['run_user']
-  run_group node['httpd']['run_group']
-  timeout node['httpd']['timeout']
-  mpm node['httpd']['mpm']
-  startservers node['httpd']['startservers']
-  minspareservers node['httpd']['minspareservers']
-  maxspareservers node['httpd']['maxspareservers']
-  action :create
-end
-
 # hard code values where we can
-httpd_service 'instance-2' do
+httpd_service 'instance-1' do
   contact 'hal@computers.biz'
   keepalive false
   keepaliverequests '2001'
@@ -59,6 +39,26 @@ httpd_service 'instance-2' do
   startservers '10'
   minspareservers '10'
   maxspareservers '20'
+  action :create
+end
+
+# pass everything from node attributes
+httpd_service 'instance-2' do
+  contact node['httpd']['contact']
+  keepalive node['httpd']['keepalive']
+  keepaliverequests node['httpd']['keepaliverequests']
+  keepalivetimeout node['httpd']['keepalivetimeout']
+  listen_addresses node['httpd']['listen_addresses']
+  listen_ports node['httpd']['listen_ports']
+  log_level node['httpd']['log_level']
+  version node['httpd']['version']
+  run_user node['httpd']['run_user']
+  run_group node['httpd']['run_group']
+  timeout node['httpd']['timeout']
+  mpm node['httpd']['mpm']
+  startservers node['httpd']['startservers']
+  minspareservers node['httpd']['minspareservers']
+  maxspareservers node['httpd']['maxspareservers']
   action :create
 end
 
