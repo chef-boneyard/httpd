@@ -12,6 +12,7 @@ driver_config:
   aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
   aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  availability_zone: <%= ENV['AWS_AVAILABILITY_ZONE'] %>
 
 provisioner:
   name: chef_zero
@@ -86,19 +87,12 @@ platforms:
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 
-# - name: amazon-2013.09
-#   driver_plugin: ec2
-#   driver_config:
-#     image_id: ami-3be4bc52
-#     username: ec2-user
-#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-
-# - name: amazon-2014.03
-#   driver_plugin: ec2
-#   driver_config:
-#     image_id: ami-6b726502
-#     username: ec2-user
-#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+- name: amazon-2014.03
+  driver_plugin: ec2
+  driver_config:
+    image_id: ami-6b726502
+    username: ec2-user
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 - name: smartos-13.4.0
   driver_plugin: joyent
@@ -224,3 +218,16 @@ suites:
         startservers: '20'
         minspareservers: '20'
         minspareservers: '40'
+
+  #
+  # modules-default
+  #
+  - name: modules-default
+    run_list:
+    - recipe[httpd_test_module::default]
+    includes: [
+      'debian-7.2'
+    ]
+    attributes:
+      httpd:
+        version: '2.2'
