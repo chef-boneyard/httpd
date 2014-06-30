@@ -19,8 +19,7 @@ end
 
 # modules that have non-standard filenames on disk
 httpd_module 'mod_php' do
-  httpd_service 'instance-1'
+  httpd_instance 'instance-1'
   httpd_version '2.4'
   action :install
 end
-
