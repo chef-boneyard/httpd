@@ -55,24 +55,6 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
 
     it 'creates httpd_service[instance-1]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_httpd_service('instance-1').with(
-        :contact => 'bob@computers.biz',
-        :hostname_lookups => 'off',
-        :keepalive => false,
-        :keepaliverequests => '5678',
-        :keepalivetimeout => '8765',
-        :listen_addresses => ['0.0.0.0'],
-        :listen_ports => %w(81 444),
-        :log_level => 'warn',
-        :version => '2.4',
-        :package_name => 'apache2',
-        :run_user => 'bob',
-        :run_group => 'bob',
-        :timeout => '1234'
-        )
-    end
-
-    it 'creates httpd_service[instance-2]' do
-      expect(ubuntu_14_04_multi_stepinto_run).to create_httpd_service('instance-2').with(
         :contact => 'hal@computers.biz',
         :hostname_lookups => 'off',
         :keepalive => false,
@@ -86,6 +68,24 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
         :run_user => 'alice',
         :run_group => 'alice',
         :timeout => '4321'
+        )
+    end
+
+    it 'creates httpd_service[instance-2]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_httpd_service('instance-2').with(
+        :contact => 'bob@computers.biz',
+        :hostname_lookups => 'off',
+        :keepalive => false,
+        :keepaliverequests => '5678',
+        :keepalivetimeout => '8765',
+        :listen_addresses => ['0.0.0.0'],
+        :listen_ports => %w(81 444),
+        :log_level => 'warn',
+        :version => '2.4',
+        :package_name => 'apache2',
+        :run_user => 'bob',
+        :run_group => 'bob',
+        :timeout => '1234'
         )
     end
   end
@@ -268,8 +268,8 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-1] and creates directory[instance-1 create /var/lock/apache2-instance-1]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_directory('instance-1 create /var/lock/apache2-instance-1').with(
         :path => '/var/lock/apache2-instance-1',
-        :owner => 'bob',
-        :group => 'bob',
+        :owner => 'alice',
+        :group => 'alice',
         :mode => '0755'
         )
     end
@@ -567,8 +567,8 @@ describe 'httpd_test_multi::server 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-2] and creates directory[instance-2 create /var/lock/apache2-instance-2]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_directory('instance-2 create /var/lock/apache2-instance-2').with(
         :path => '/var/lock/apache2-instance-2',
-        :owner => 'alice',
-        :group => 'alice',
+        :owner => 'bob',
+        :group => 'bob',
         :mode => '0755'
         )
     end

@@ -56,24 +56,6 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
 
     it 'creates httpd_service[instance-1]' do
       expect(debian_7_2_multi_stepinto_run).to create_httpd_service('instance-1').with(
-        :contact => 'bob@computers.biz',
-        :hostname_lookups => 'off',
-        :keepalive => false,
-        :keepaliverequests => '5678',
-        :keepalivetimeout => '8765',
-        :listen_addresses => ['0.0.0.0'],
-        :listen_ports => %w(81 444),
-        :log_level => 'warn',
-        :version => '2.2',
-        :package_name => 'apache2',
-        :run_user => 'bob',
-        :run_group => 'bob',
-        :timeout => '1234'
-        )
-    end
-
-    it 'creates httpd_service[instance-2]' do
-      expect(debian_7_2_multi_stepinto_run).to create_httpd_service('instance-2').with(
         :contact => 'hal@computers.biz',
         :hostname_lookups => 'off',
         :keepalive => false,
@@ -87,6 +69,24 @@ describe 'httpd_test_multi::server 2.2 on debian-7.2' do
         :run_user => 'alice',
         :run_group => 'alice',
         :timeout => '4321'
+        )
+    end
+
+    it 'creates httpd_service[instance-2]' do
+      expect(debian_7_2_multi_stepinto_run).to create_httpd_service('instance-2').with(
+        :contact => 'bob@computers.biz',
+        :hostname_lookups => 'off',
+        :keepalive => false,
+        :keepaliverequests => '5678',
+        :keepalivetimeout => '8765',
+        :listen_addresses => ['0.0.0.0'],
+        :listen_ports => %w(81 444),
+        :log_level => 'warn',
+        :version => '2.2',
+        :package_name => 'apache2',
+        :run_user => 'bob',
+        :run_group => 'bob',
+        :timeout => '1234'
         )
     end
   end
