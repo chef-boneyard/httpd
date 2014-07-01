@@ -11,8 +11,8 @@ class Chef
         extend Opscode::Httpd::Helpers
 
         @resource_name = :httpd_module
-        @action = :install
-        @allowed_actions = [:install, :remove]
+        @action = :create
+        @allowed_actions = [:create, :delete]
 
         @httpd_instance = 'default'
         @httpd_version = '2.2'
@@ -21,7 +21,7 @@ class Chef
         @package_name = nil
 
         # usually the same as resource_name
-        @filename = nil     
+        @filename = nil
       end
 
       def httpd_instance(arg = nil)
@@ -34,12 +34,11 @@ class Chef
 
       def httpd_version(arg = nil)
         set_or_return(
-          :httpd_instance,
+          :httpd_version,
           arg,
           :equal_to => %w(2.2 2.4)
           )
       end
-      
     end
   end
 end

@@ -1,9 +1,10 @@
 class Chef
   class Provider
     class HttpdModule < Chef::Provider::LWRPBase
-      def action_install
+      def action_create
       end
-      def action_remove
+
+      def action_delete
       end
     end
   end
