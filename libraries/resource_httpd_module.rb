@@ -18,7 +18,7 @@ class Chef
         @httpd_version = '2.2'
 
         # usually nil
-        @package_name = nil
+        @package_name = 'apache2'
 
         # usually the same as resource_name
         @filename = nil
@@ -37,6 +37,22 @@ class Chef
           :httpd_version,
           arg,
           :equal_to => %w(2.2 2.4)
+          )
+      end
+
+      def package_name(arg = nil)
+        set_or_return(
+          :package_name,
+          arg,
+          :kind_of => String
+          )
+      end
+
+      def filename(arg = nil)
+        set_or_return(
+          :filename,
+          arg,
+          :kind_of => String
           )
       end
     end

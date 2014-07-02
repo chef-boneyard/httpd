@@ -1,6 +1,6 @@
-require_relative '../../../libraries/default_version_for.rb'
+require_relative '../../../libraries/service_default_version_for.rb'
 
-describe 'default_version_for' do
+describe 'service_default_version_for' do
   before do
     extend Opscode::Httpd::Helpers
   end

@@ -1,7 +1,7 @@
 require 'chef/resource/lwrp_base'
-require_relative 'default_version_for'
-require_relative 'default_mpm_for'
-require_relative 'default_value_for'
+require_relative 'service_default_version_for'
+require_relative 'service_default_mpm_for'
+require_relative 'service_default_value_for'
 
 class Chef
   class Resource

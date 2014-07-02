@@ -1,4 +1,4 @@
-require_relative '../../../libraries/default_value_for.rb'
+require_relative '../../../libraries/service_default_value_for.rb'
 
 describe 'default_value_for' do
   before do
