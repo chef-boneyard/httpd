@@ -323,20 +323,9 @@ class Chef
 
             # older apache has mpm statically compiled into binaries
             unless new_resource.version.to_f < 2.4
-              template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load" do
-                path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load"
-                source "#{new_resource.version}/debian/module_load.erb"
-                owner 'root'
-                group 'root'
-                mode '0644'
-                cookbook 'httpd'
-                variables(:module => "mpm_#{new_resource.mpm}")
-                action :create
-              end
-
-              link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.load" do
-                target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.load"
-                to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.load"
+              httpd_module "mpm_#{new_resource.mpm}" do
+                httpd_instance new_resource.name
+                httpd_version new_resource.version
                 action :create
               end
             end
