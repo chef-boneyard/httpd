@@ -8,7 +8,5 @@ group :integration do
   cookbook 'ips-omniti'
 end
 
-cookbook 'httpd_test_default', path: 'test/fixtures/cookbooks/httpd_test_default'
-cookbook 'httpd_test_broken', path: 'test/fixtures/cookbooks/httpd_test_broken'
-cookbook 'httpd_test_multi', path: 'test/fixtures/cookbooks/httpd_test_multi'
-cookbook 'httpd_test_module', path: 'test/fixtures/cookbooks/httpd_test_module'
+cookbook 'httpd_module', path: 'test/fixtures/cookbooks/httpd_module'
+cookbook 'httpd_service', path: 'test/fixtures/cookbooks/httpd_service'

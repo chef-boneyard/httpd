@@ -36,8 +36,8 @@ class Chef
               action :nothing
             end
 
-            directory "#{new_resource.name} create /etc/#{apache_name}/mods-available/" do
-              path "/etc/#{apache_name}/mods-available/"
+            directory "#{new_resource.name} create /etc/#{apache_name}/mods-available" do
+              path "/etc/#{apache_name}/mods-available"
               owner 'root'
               group 'root'
               mode '0755'
@@ -49,6 +49,7 @@ class Chef
               path "/etc/#{apache_name}/mods-available/#{module_name}.load"
               source 'module_load.erb'
               owner 'root'
+              group 'root'
               mode '0644'
               variables(
                 :module_name => "#{module_name}_module",
@@ -58,8 +59,8 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/" do
-              path "/etc/#{apache_name}/mods-enabled/"
+            directory "#{new_resource.name} create /etc/#{apache_name}/mods-enabled" do
+              path "/etc/#{apache_name}/mods-enabled"
               owner 'root'
               group 'root'
               mode '0755'
@@ -80,7 +81,6 @@ class Chef
             #
             # local variables
             #
-            module_name = new_resource.name
             new_resource.httpd_instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.httpd_instance}"
 
             #

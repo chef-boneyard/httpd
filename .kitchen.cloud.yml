@@ -123,11 +123,11 @@ platforms:
 
 suites:
   #
-  # server22-default
+  # service22-single
   #
-  - name: server22-default
+  - name: service22-single
     run_list:
-    - recipe[httpd_test_default::server]
+    - recipe[httpd_service::single]
     includes: [
       'amazon-2014.03',
       'debian-7.2',
@@ -143,11 +143,11 @@ suites:
         version: '2.2'
 
   #
-  # server22-multi
+  # service22-multi
   #
-  - name: server22-multi
+  - name: service22-multi
     run_list:
-    - recipe[httpd_test_multi::server]
+    - recipe[httpd_service::multi]
     includes: [
       'amazon-2014.03',
       'debian-7.2',
@@ -175,11 +175,11 @@ suites:
         minspareservers: '40'
 
   #
-  # server24-default
+  # service24-single
   #
-  - name: server24-default
+  - name: service24-single
     run_list:
-    - recipe[httpd_test_default::server]
+    - recipe[httpd_service::single]
     includes: [
       'amazon-2014.03',
       'fedora-20',
@@ -191,11 +191,11 @@ suites:
         version: '2.4'
 
   #
-  # server24-multi
+  # service24-multi
   #
-  - name: server24-multi
+  - name: service24-multi
     run_list:
-    - recipe[httpd_test_multi::server]
+    - recipe[httpd_service::multi]
     includes: [
       'amazon-2014.03',
       'fedora-20',
@@ -220,11 +220,11 @@ suites:
         minspareservers: '40'
 
   #
-  # modules-default
+  # modules
   #
-  - name: modules-default
+  - name: module-alias_22
     run_list:
-    - recipe[httpd_test_module::default]
+    - recipe[httpd_module::alias_22]
     includes: [
       'debian-7.2'
     ]
