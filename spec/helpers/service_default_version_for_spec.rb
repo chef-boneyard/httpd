@@ -1,8 +1,8 @@
-require_relative '../../libraries/service_default_version_for.rb'
+require_relative '../../libraries/service_platform_info.rb'
 
-describe 'service_default_version_for' do
+describe 'service_platform_info' do
   before do
-    extend Opscode::Httpd::Helpers
+    extend Opscode::Httpd::Service::Helpers
   end
 
   # rhel-5
@@ -10,7 +10,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('centos', 'rhel', '5.8')
+          default_httpd_version_for('centos', 'rhel', '5.8')
           ).to eq('2.2')
       end
     end
@@ -35,7 +35,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('centos', 'rhel', '6.4')
+          default_httpd_version_for('centos', 'rhel', '6.4')
           ).to eq('2.2')
       end
     end
@@ -60,7 +60,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('amazon', 'rhel', '2013.09')
+          default_httpd_version_for('amazon', 'rhel', '2013.09')
           ).to eq('2.4')
       end
     end
@@ -85,7 +85,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('fedora', 'fedora', '19')
+          default_httpd_version_for('fedora', 'fedora', '19')
           ).to eq('2.4')
       end
     end
@@ -110,7 +110,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('debian', 'debian', '7.2')
+          default_httpd_version_for('debian', 'debian', '7.2')
           ).to eq('2.2')
       end
     end
@@ -135,7 +135,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('ubuntu', 'debian', '12.04')
+          default_httpd_version_for('ubuntu', 'debian', '12.04')
           ).to eq('2.2')
       end
     end
@@ -160,7 +160,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('ubuntu', 'debian', '13.10')
+          default_httpd_version_for('ubuntu', 'debian', '13.10')
           ).to eq('2.2')
       end
     end
@@ -185,7 +185,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('ubuntu', 'debian', '14.04')
+          default_httpd_version_for('ubuntu', 'debian', '14.04')
           ).to eq('2.4')
       end
     end
@@ -210,7 +210,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('smartos', 'smartos', '5.11')
+          default_httpd_version_for('smartos', 'smartos', '5.11')
           ).to eq('2.4')
       end
     end
@@ -241,7 +241,7 @@ describe 'service_default_version_for' do
     context 'when looking up default version' do
       it 'returns the correct version' do
         expect(
-          default_version_for('omnios', 'omnios', '151006')
+          default_httpd_version_for('omnios', 'omnios', '151006')
           ).to eq('2.2')
       end
     end

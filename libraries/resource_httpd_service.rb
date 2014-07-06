@@ -1,5 +1,5 @@
 require 'chef/resource/lwrp_base'
-require_relative 'service_default_version_for'
+require_relative 'service_platform_info'
 require_relative 'service_default_mpm_for'
 require_relative 'service_default_value_for'
 
@@ -8,7 +8,7 @@ class Chef
     class HttpdService < Chef::Resource
       def initialize(name = nil, run_context = nil)
         super
-        extend Opscode::Httpd::Helpers
+        extend Opscode::Httpd::Service::Helpers
 
         @resource_name = :httpd_service
 
@@ -24,7 +24,7 @@ class Chef
         @listen_ports = %w(80 443)
         @log_level = 'warn'
 
-        @version = default_version_for(
+        @version = default_httpd_version_for(
           node['platform'],
           node['platform_family'],
           node['platform_version']

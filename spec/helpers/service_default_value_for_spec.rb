@@ -2,7 +2,7 @@ require_relative '../../libraries/service_default_value_for.rb'
 
 describe 'default_value_for' do
   before do
-    extend Opscode::Httpd::Helpers
+    extend Opscode::Httpd::Service::Helpers
   end
 
   context 'when using apache 2.2' do
