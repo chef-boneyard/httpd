@@ -36,7 +36,6 @@ module Opscode
         end
 
         def package_name_for_module(name, _httpd_version, _platform, _platform_version)
-          #          binding.pry
           if ModuleInfo.debian_apache_2_2_core.include? name
             'apache2'
           elsif ModuleInfo.debian_apache_2_2_other.include? name
