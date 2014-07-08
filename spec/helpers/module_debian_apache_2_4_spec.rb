@@ -1,4 +1,4 @@
-require_relative '../../libraries/module_debian_apache_2_4.rb'
+require_relative '../../libraries/module_info.rb'
 
 describe 'looking up module package name' do
   before do
@@ -6,7 +6,7 @@ describe 'looking up module package name' do
   end
 
   context 'for apache 2.4 on ubuntu 14.04' do
-    debian_apache_2_4_core = %w(
+    debian_2_4_core = %w(
       actions alias asis auth_basic auth_digest authn_alias authn_anon
       authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
       authz_default authz_groupfile authz_host authz_owner authz_user
@@ -19,7 +19,7 @@ describe 'looking up module package name' do
       vhost_alias
     )
 
-    debian_apache_2_4_other = %w(
+    debian_2_4_other = %w(
       apparmor apreq2 auth_cas auth_kerb auth_memcookie auth_mysql
       auth_ntlm_winbind auth_openid auth_pam auth_pgsql auth_plain
       auth_pubtkt auth_radius auth_sys_group auth_tkt authn_sasl authn_webid
@@ -33,7 +33,7 @@ describe 'looking up module package name' do
       uwsgi_dbg vhost_hash_alias vhost_ldap wsgi wsgi_py3 xsendfile
     )
 
-    debian_apache_2_4_core.each do |m|
+    debian_2_4_core.each do |m|
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.4', 'ubuntu', '14.04')
@@ -41,7 +41,7 @@ describe 'looking up module package name' do
       end
     end
 
-    debian_apache_2_4_other.each do |m|
+    debian_2_4_other.each do |m|
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.4', 'ubuntu', '14.04')

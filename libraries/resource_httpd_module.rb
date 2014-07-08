@@ -1,5 +1,5 @@
 require 'chef/resource/lwrp_base'
-require_relative 'module_debian_apache_2_2'
+require_relative 'module_info'
 
 class Chef
   class Resource
