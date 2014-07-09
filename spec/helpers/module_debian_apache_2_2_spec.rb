@@ -41,12 +41,12 @@ describe 'looking up module package name' do
       end
     end
 
-    debian_2_2_other.each do |m|
-      it 'returns the proper package name' do
-        expect(
-          package_name_for_module(m, '2.2', 'debian', '7.2')
-          ).to eq("libapache2-mod-#{m.gsub('_', '-')}")
-      end
-    end
+    # debian_2_2_other.each do |m|
+    #   it 'returns the proper package name' do
+    #     expect(
+    #       package_name_for_module(m, '2.2', 'debian', '7.2')
+    #       ).to eq("libapache2-mod-#{m.gsub('_', '-')}")
+    #   end
+    # end
   end
 end
