@@ -2,7 +2,6 @@ module Opscode
   module Httpd
     module Module
       module Helpers
-        
         class ModuleInfo
           def self.debian_2_2_core
             debian_2_2_core = %w(
@@ -59,7 +58,7 @@ module Opscode
 
           def self.debian_2_4_other
             debian_2_4_other = %w(
-              apparmor auth_mysql auth_pgsql auth_plain macro perl2 perl2_dev
+              apparmor auth_mysql auth_pgsql auth_plain perl2 perl2_dev
               perl2_doc php5 python python_doc wsgi reload_perl fastcgi
               authcassimple_perl authcookie_perl authenntlm_perl apreq2 auth_cas
               auth_kerb auth_mellon auth_memcookie auth_ntlm_winbind auth_openid
@@ -68,8 +67,7 @@ module Opscode
               defensible dnssd encoding evasive fcgid fcgid_dbg geoip gnutls jk
               ldap_userdir ldap_userdir_dbg lisp log_slow log_sql log_sql_dbi
               log_sql_mysql log_sql_ssl mapcache mime_xattr mono musicindex neko
-              netcgi_apache nss parser3 passenger php5filter proxy_html
-              proxy_msrpc proxy_uwsgi proxy_uwsgi_dbg qos removeip rivet
+              netcgi_apache nss parser3 passenger php5filter qos removeip rivet
               rivet_doc rpaf ruid2 ruwsgi ruwsgi_dbg scgi security2 shib2
               spamhaus suphp svn upload_progress uwsgi uwsgi_dbg vhost_ldap
               watchcat webauth webauthldap webkdc wsgi_py3 xsendfile modsecurity
@@ -208,35 +206,86 @@ module Opscode
           end
         end
 
-        def package_name_for_module(name, _httpd_version, _platform, _platform_version)
-          method_map = {
-            '2.2' => {
-              'debian' => { '7' => 'debian_2_2' },
-              'debian' => { 'jessie' => 'debian_2_4' },
-              'ubuntu' => { '10.04' => 'debian_2_2' },
-              'ubuntu' => { '12.04' => 'debian_2_2' },
-              'rhel' => { '5' => 'rhel_5_2_2' },
-              'rhel' => { '6' => 'rhel_6_2_2' },
-              'amazon' => { '2013.09' => 'amazon_2_2' },
-              'amazon' => { '2014.03' => 'amazon_2_2' }
-            },
-            '2.4' => {
-              'ubuntu' => { '14.04' => 'debian_2_4' },
-              'amazon' => { '2013.09' => 'amazon_2_4' },
-              'amazon' => { '2014.03' => 'amazon_2_4' },
-              'fedora' => { '20' => 'fedora_20_2_4' }
+        class MethodInfo
+          def self.method_info
+            @method_info ||= {
+              'debian' => {
+                '7' => { '2.2' => 'debian_2_2' },
+                'jessie' => { '2.4' => 'debian_2_4' },
+                '10.04' => { '2.2' => 'debian_2_2' },
+                '12.04' => { '2.2' => 'debian_2_2' },
+                '14.04' => { '2.4' => 'debian_2_4' }
+              },
+              'rhel' => {
+                '5' => { '2.2' => 'rhel_5_2_2' },
+                '6' => { '2.2' => 'rhel_6_2_2' },
+                '2014.03' => {
+                  '2.2' => 'amazon_2_2',
+                  '2.4' => 'amazon_2_4'
+                }
+              },
+              'fedora' => {
+                '20' => { '2.4' => 'fedora_20_2_4' }
+              }
             }
-          }
-          
-          if ModuleInfo.debian_2_2_core.include? name
-            'apache2'
-          elsif ModuleInfo.debian_2_2_other.include? name
-            "libapache2-mod-#{name.gsub('_', '-')}"
-          else
-            nil
           end
-          
-        end        
+        end
+
+        def keyname_for(platform, platform_family, platform_version)
+          case
+          when platform_family == 'rhel'
+            platform == 'amazon' ? platform_version : platform_version.to_i.to_s
+          when platform_family == 'suse'
+            platform_version
+          when platform_family == 'fedora'
+            platform_version
+          when platform_family == 'debian'
+            if platform == 'ubuntu'
+              platform_version
+            elsif platform_version =~ /sid$/
+              platform_version
+            else
+              platform_version.to_i.to_s
+            end
+          when platform_family == 'smartos'
+            platform_version
+          when platform_family == 'omnios'
+            platform_version
+          when platform_family == 'freebsd'
+            platform_version.to_i.to_s
+          end
+        rescue NoMethodError
+          nil
+        end
+
+        def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
+          # if platform == 'ubuntu'
+          #   require 'pry' ; binding.pry
+          # end
+
+          keyname = keyname_for(platform, platform_family, platform_version)
+          method_name = MethodInfo.method_info[platform_family][keyname][httpd_version]
+
+          case platform_family
+          when 'debian'
+            if ModuleInfo.send("#{method_name}_core").include? name
+              'apache2'
+            elsif ModuleInfo.send("#{method_name}_other").include? name
+              "libapache2-mod-#{name.gsub('_', '-')}"
+            else
+              nil
+            end
+
+          when 'rhel'
+            if ModuleInfo.send("#{method_name}_core").include? name
+              'httpd'
+            elsif ModuleInfo.send("#{method_name}_other").include? name
+              "mod_#{name}"
+            else
+              nil
+            end
+          end
+        end
       end
     end
   end
