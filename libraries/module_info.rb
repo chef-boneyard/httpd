@@ -259,7 +259,7 @@ module Opscode
         end
 
         def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
-          # if platform == 'ubuntu'
+          # if platform == 'fedora'
           #   require 'pry' ; binding.pry
           # end
 
@@ -277,6 +277,15 @@ module Opscode
             end
 
           when 'rhel'
+            if ModuleInfo.send("#{method_name}_core").include? name
+              'httpd'
+            elsif ModuleInfo.send("#{method_name}_other").include? name
+              "mod_#{name}"
+            else
+              nil
+            end
+
+          when 'fedora'
             if ModuleInfo.send("#{method_name}_core").include? name
               'httpd'
             elsif ModuleInfo.send("#{method_name}_other").include? name
