@@ -3,6 +3,7 @@ module Opscode
     module Module
       module Helpers
         class ModuleInfo
+
           def self.debian_2_2_core
             @debian_2_2_core = %w(
               actions alias asis auth_basic auth_digest authn_alias authn_anon
@@ -91,6 +92,13 @@ module Opscode
             )
           end
 
+          def self.rhel_5_2_2_other
+            @rhel_5_2_2_other = %w(
+              auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
+              perl perl-devel perl-devel python revocator
+            )
+          end
+
           def self.rhel_6_2_2_core
             @rhel_6_2_2_core = %w(
               actions alias asis auth_basic auth_digest authn_alias authn_anon
@@ -106,6 +114,13 @@ module Opscode
             )
           end
 
+          def self.rhel_6_2_2_other
+            @rhel_6_2_2_other = %w(
+              perl-devel perl-devel auth_kerb auth_mysql auth_pgsql authz_ldap
+              dav_svn dnssd nss perl revocator revocator ssl wsgi
+            )
+          end
+
           def self.amazon_2_2_core
             @amazon_2_2_core = %w(
               actions alias asis auth_basic auth_digest authn_alias authn_anon
@@ -118,6 +133,14 @@ module Opscode
               proxy_connect proxy_ftp proxy_http proxy_scgi reqtimeout rewrite
               setenvif speling status substitute suexec unique_id userdir
               usertrack version vhost_alias
+            )
+          end
+
+          def self.amazon_2_2_other
+            @amazon_2_2_other = %w(
+              perl-devel security_crs-extras auth_kerb auth_mysql auth_pgsql
+              authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
+              security_crs ssl wsgi
             )
           end
 
@@ -142,6 +165,13 @@ module Opscode
             )
           end
 
+          def self.amazon_2_4_other
+            @amazon_2_4_other = %w(
+              auth_kerb fcgid geoip ldap nss perl proxy_html security session
+              ssl wsgi wsgi_py27
+            )
+          end
+
           def self.fedora_20_2_4_core
             @fedora_20_2_4_core = %w(
               access_compat actions alias allowmethods asis auth_basic
@@ -163,7 +193,20 @@ module Opscode
             )
           end
 
-          
+          def self.fedora_20_2_4_other
+            @fedora_20_2_4_other = %w(
+              annodex auth_cas auth_kerb auth_mellon auth_ntlm_winbind
+              authnz_external authnz_pam auth_token auth_xradius autoindex_mb
+              bw cluster cluster-java cluster-javadoc dav_svn dnssd evasive
+              fcgid flvx form form form-devel form-devel geoip gnutls
+              intercept_form_submit ldap limitipconn log_post lookup_identity
+              mirrorbrain nss passenger perl perl perl-devel perl-devel
+              proxy_html proxy_uwsgi qos revocator revocator security
+              security_crs security_crs-extras selinux session speedycgi ssl
+              suphp wsgi wso2-axis2 xsendfile
+            )
+          end
+
           def package_name_for_module(name, _httpd_version, _platform, _platform_version)
             if ModuleInfo.debian_2_2_core.include? name
               'apache2'
