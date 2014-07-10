@@ -16,16 +16,13 @@ class Chef
         @httpd_instance = 'default'
         @httpd_version = '2.2'
 
-        # usually nil
-        @package_name = 'apache2'
-
-        # @package_name = package_name_for_module(
-        #  name,
-        #  node['platform'],
-        #  node['platform_family'],
-        #  node['platform_version'],
-        #  @httpd_version
-        #  )
+        @package_name = package_name_for_module(
+          name,
+          @httpd_version,
+          node['platform'],
+          node['platform_family'],
+          node['platform_version']
+          )
 
         # usually the same as resource_name
         @filename = nil
