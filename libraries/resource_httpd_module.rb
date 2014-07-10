@@ -48,7 +48,18 @@ class Chef
         set_or_return(
           :package_name,
           arg,
-          :kind_of => String
+          :callbacks => {            
+            "is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
+#              require 'pry' ; binding.pry
+              true unless package_name_for_module(
+                name,
+                @httpd_version,
+                node['platform'],
+                node['platform_family'],
+                node['platform_version']
+                ).nil?
+            end
+          }
           )
       end
 
