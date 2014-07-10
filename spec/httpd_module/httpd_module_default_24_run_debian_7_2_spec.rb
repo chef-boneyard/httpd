@@ -11,8 +11,8 @@ describe 'httpd_module::default on debian-7.2' do
   end
 
   context 'when using default parameters' do
-    it 'creates httpd_module[auth_basic]' do
-      expect(httpd_module_alias_24_run_debian_7_2).to create_httpd_module('auth_basic')
+    it 'creates raises an error' do
+      expect { httpd_module_alias_24_run_debian_7_2 }.to raise_error(Chef::Exceptions::ValidationFailed)
     end
   end
 end
