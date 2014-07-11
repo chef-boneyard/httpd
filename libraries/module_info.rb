@@ -1,56 +1,37 @@
+require_relative 'module_info_dsl'
+
 module Opscode
   module Httpd
     module Module
       module Helpers
+
+        def keyname_for(platform, platform_family, platform_version)
+          if platform_family == 'rhel' and platform != 'amazon'
+            major_version(platform_version)
+          elsif platform_family == 'debian' and !(platform == 'ubuntu' or platform_version =~ /sid$/)
+            major_version(platform_version)
+          elsif platform_family == 'freebsd'
+            major_version(platform_version)
+          else
+            platform_version
+          end
+        end
+
+        def major_version(version)
+          version.to_i.to_s
+        end
+
+        def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
+          ModuleInfo.find(:module => name,
+                          :httpd_version => httpd_version,
+                          :platform => platform,
+                          :platform_family => platform_family,
+                          :version => keyname_for(platform, platform_family, platform_version))
+        end
+
+
         class ModuleInfo
-          #
-          # Given a key, which is a hash of criteria (i.e. module name, platform,
-          # version, httpd_version), this method will return for you the package
-          # where that module exists. `Nil` is returned if the key does not match
-          # any of the defined criteria.
-          #
-          # @example Searching for the 'alias' module on debian 10.04 with
-          #   httpd version 2.2
-          #
-          #     ModuleInfo.find(:module => 'alias', :platform_family => 'debian', :version => '10.04', :httpd_version: '2.2')
-          #
-          def self.find(key)
-            found_key = modules_list.keys.find { |lock| key.merge(lock) == key }
-            modules_list[found_key]
-          end
-
-          #
-          # Define what package stores a list of modules based on the any of the
-          # criteria: module platform_family, platform, version, httpd_version.
-          #
-          # @example Module 'ssl' on an Amazon 2014.03 instance using httpd version 2.4 can be found in the package 'mod_ssl'
-          #
-          #    modules for: { platform: "amazon", version: "2014.03", httpd_version: "2.4" },
-          #      are: [ "ssl" ], found_in_package: -> (name) { "mod_#{name}" }
-          #
-          # When defining the criteria you can specify as little or as much
-          # criteria you need. Not specifying the field means that field allows
-          # any value.
-          #
-          # @example Module 'alias' on an Debian instance using httpd version 2.2 can be found in the package 'apache2'
-          #
-          #    modules for: { platform_family: "debian", httpd_version: "2.2" },
-          #      are: [ "alias" ], found_in_package: -> (name) { "apache2" }
-          #
-          #
-          # This states that the 'alias' module is found on any version
-          # (e.g. 7, 10.04, 12.04) of Debian with httpd version 2.2.
-          #
-          def self.modules(options)
-            options[:are].each do |mod|
-              key = options[:for].merge(:module => mod)
-              modules_list[key] = options[:found_in_package].call(mod)
-            end
-          end
-
-          def self.modules_list
-            @modules_list ||= {}
-          end
+          extend ModuleInfoDSL
 
           modules :for => { :platform_family => 'debian', :httpd_version => '2.2' },
                   :are => %w(
@@ -253,30 +234,6 @@ module Opscode
                     suphp wsgi wso2-axis2 xsendfile
                   ),
                   :found_in_package => -> (name) { "mod_#{name}" }
-        end
-
-        def keyname_for(platform, platform_family, platform_version)
-          if platform_family == 'rhel' and platform != 'amazon'
-            major_version(platform_version)
-          elsif platform_family == 'debian' and !(platform == 'ubuntu' or platform_version =~ /sid$/)
-            major_version(platform_version)
-          elsif platform_family == 'freebsd'
-            major_version(platform_version)
-          else
-            platform_version
-          end
-        end
-
-        def major_version(version)
-          version.to_i.to_s
-        end
-
-        def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
-          ModuleInfo.find(:module => name,
-                          :httpd_version => httpd_version,
-                          :platform => platform,
-                          :platform_family => platform_family,
-                          :version => keyname_for(platform, platform_family, platform_version))
         end
       end
     end
