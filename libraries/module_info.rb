@@ -232,30 +232,19 @@ module Opscode
         end
 
         def keyname_for(platform, platform_family, platform_version)
-          case
-          when platform_family == 'rhel'
-            platform == 'amazon' ? platform_version : platform_version.to_i.to_s
-          when platform_family == 'suse'
+          if platform_family == 'rhel' and platform != 'amazon'
+            major_version(platform_version)
+          elsif platform_family == 'debian' and !(platform == 'ubuntu' or platform_version =~ /sid$/)
+            major_version(platform_version)
+          elsif platform_family == 'freebsd'
+            major_version(platform_version)
+          else
             platform_version
-          when platform_family == 'fedora'
-            platform_version
-          when platform_family == 'debian'
-            if platform == 'ubuntu'
-              platform_version
-            elsif platform_version =~ /sid$/
-              platform_version
-            else
-              platform_version.to_i.to_s
-            end
-          when platform_family == 'smartos'
-            platform_version
-          when platform_family == 'omnios'
-            platform_version
-          when platform_family == 'freebsd'
-            platform_version.to_i.to_s
           end
-        rescue NoMethodError
-          nil
+        end
+
+        def major_version(version)
+          version.to_i.to_s
         end
 
         def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
