@@ -168,7 +168,7 @@ module Opscode
                   ),
                   :found_in_package => -> (name) { "mod_#{name}" }
 
-          modules :for => { :platform_family => 'rhel', :version => '2014.03', :httpd_version => '2.2' },
+          modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.2' },
                   :are => %w(
                     actions alias asis auth_basic auth_digest authn_alias authn_anon
                     authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
@@ -183,7 +183,7 @@ module Opscode
                   ),
                   :found_in_package => -> (_name) { 'httpd' }
 
-          modules :for => { :platform_family => 'rhel', :version => '2014.03', :httpd_version => '2.2' },
+          modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.2' },
                   :are => %w(
                     perl-devel security_crs-extras auth_kerb auth_mysql auth_pgsql
                     authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
@@ -191,7 +191,7 @@ module Opscode
                   ),
                   :found_in_package => -> (name) { "mod_#{name}" }
 
-          modules :for => { :platform_family => 'rhel', :version => '2014.03', :httpd_version => '2.4' },
+          modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.4' },
                   :are => %w(
                     access_compat actions alias allowmethods asis auth_basic
                     auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
@@ -212,7 +212,7 @@ module Opscode
                   ),
                   :found_in_package => -> (_name) { 'httpd' }
 
-          modules :for => { :platform_family => 'rhel', :version => '2014.03', :httpd_version => '2.4' },
+          modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.4' },
                   :are => %w(
                     auth_kerb fcgid geoip ldap nss perl proxy_html security session
                     ssl wsgi wsgi_py27
@@ -272,10 +272,11 @@ module Opscode
         end
 
         def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
-          ModuleInfo.find(:platform_family => platform_family,
-                          :version => keyname_for(platform, platform_family, platform_version),
+          ModuleInfo.find(:module => name,
                           :httpd_version => httpd_version,
-                          :module => name)
+                          :platform => platform,
+                          :platform_family => platform_family,
+                          :version => keyname_for(platform, platform_family, platform_version))
         end
       end
     end
