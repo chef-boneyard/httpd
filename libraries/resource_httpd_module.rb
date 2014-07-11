@@ -42,7 +42,7 @@ class Chef
           arg,
           :callbacks => {
             "is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
-#              require 'pry' ; binding.pry
+              #              require 'pry' ; binding.pry
               true unless package_name_for_module(
                 name,
                 arg,

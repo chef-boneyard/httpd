@@ -223,9 +223,9 @@ suites:
   #
   # modules
   #
-  - name: module-alias_22
+  - name: module22
     run_list:
-    - recipe[httpd_module::alias_22]
+    - recipe[httpd_module]
     includes: [
       'amazon-2014.03',
       'debian-7.2',
@@ -235,13 +235,19 @@ suites:
       'smartos-13.4.0',
       'ubuntu-12.04'
     ]
+    attributes:
+      httpd:
+        version: '2.2'
 
-  - name: module-alias_24
+  - name: module24
     run_list:
-    - recipe[httpd_module::alias_24]
+    - recipe[httpd_module]
     includes: [
       'amazon-2014.03',
       'fedora-20',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]
+    attributes:
+      httpd:
+        version: '2.4'
