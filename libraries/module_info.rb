@@ -265,17 +265,7 @@ module Opscode
               else
                 nil
               end
-
-            when 'rhel'
-              if ModuleInfo.send("#{method_name}_core").include? name
-                'httpd'
-              elsif ModuleInfo.send("#{method_name}_other").include? name
-                "mod_#{name}"
-              else
-                nil
-              end
-
-            when 'fedora'
+            when /^(rhel|fedora)$/
               if ModuleInfo.send("#{method_name}_core").include? name
                 'httpd'
               elsif ModuleInfo.send("#{method_name}_other").include? name
@@ -284,6 +274,7 @@ module Opscode
                 nil
               end
             end
+
           end
         end
       end
