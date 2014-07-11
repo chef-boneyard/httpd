@@ -4,7 +4,7 @@ module Opscode
       module Helpers
         class ModuleInfo
           def self.debian_2_2_core
-            debian_2_2_core = %w(
+            %w(
               actions alias asis auth_basic auth_digest authn_alias authn_anon
               authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
               authz_default authz_groupfile authz_host authz_owner authz_user
@@ -19,7 +19,7 @@ module Opscode
           end
 
           def self.debian_2_2_other
-            debian_2_2_other = %w(
+            %w(
               apparmor apreq2 auth_cas auth_kerb auth_memcookie auth_mysql
               auth_ntlm_winbind auth_openid auth_pam auth_pgsql auth_plain
               auth_pubtkt auth_radius auth_sys_group auth_tkt authn_sasl authn_webid
@@ -35,7 +35,7 @@ module Opscode
           end
 
           def self.debian_2_4_core
-            debian_2_4_core = %w(
+            %w(
               access_compat actions alias allowmethods asis auth_basic
               auth_digest auth_form authn_anon authn_core authn_dbd authn_dbm
               authn_file authn_socache authnz_ldap authz_core authz_dbd authz_dbm
@@ -57,7 +57,7 @@ module Opscode
           end
 
           def self.debian_2_4_other
-            debian_2_4_other = %w(
+            %w(
               apparmor auth_mysql auth_pgsql auth_plain perl2 perl2_dev
               perl2_doc php5 python python_doc wsgi reload_perl fastcgi
               authcassimple_perl authcookie_perl authenntlm_perl apreq2 auth_cas
@@ -76,7 +76,7 @@ module Opscode
           end
 
           def self.rhel_5_2_2_core
-            rhel_5_2_2_core = %w(
+            %w(
               actions alias asis auth_basic auth_digest authn_alias authn_anon
               authn_dbd authn_dbm authn_default authn_file authnz_ldap
               authz_dbm authz_default authz_groupfile authz_host authz_owner
@@ -91,14 +91,14 @@ module Opscode
           end
 
           def self.rhel_5_2_2_other
-            rhel_5_2_2_other = %w(
+            %w(
               auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
               perl perl-devel perl-devel python revocator
             )
           end
 
           def self.rhel_6_2_2_core
-            rhel_6_2_2_core = %w(
+            %w(
               actions alias asis auth_basic auth_digest authn_alias authn_anon
               authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
               authz_default authz_groupfile authz_host authz_owner authz_user
@@ -113,14 +113,14 @@ module Opscode
           end
 
           def self.rhel_6_2_2_other
-            rhel_6_2_2_other = %w(
+            %w(
               perl-devel perl-devel auth_kerb auth_mysql auth_pgsql authz_ldap
               dav_svn dnssd nss perl revocator revocator ssl wsgi
             )
           end
 
           def self.amazon_2_2_core
-            amazon_2_2_core = %w(
+            %w(
               actions alias asis auth_basic auth_digest authn_alias authn_anon
               authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
               authz_default authz_groupfile authz_host authz_owner authz_user
@@ -135,7 +135,7 @@ module Opscode
           end
 
           def self.amazon_2_2_other
-            amazon_2_2_other = %w(
+            %w(
               perl-devel security_crs-extras auth_kerb auth_mysql auth_pgsql
               authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
               security_crs ssl wsgi
@@ -143,7 +143,7 @@ module Opscode
           end
 
           def self.amazon_2_4_core
-            amazon_2_4_core = %w(
+            %w(
               access_compat actions alias allowmethods asis auth_basic
               auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
               authn_socache authz_core authz_dbd authz_dbm authz_groupfile
@@ -164,14 +164,14 @@ module Opscode
           end
 
           def self.amazon_2_4_other
-            amazon_2_4_other = %w(
+            %w(
               auth_kerb fcgid geoip ldap nss perl proxy_html security session
               ssl wsgi wsgi_py27
             )
           end
 
           def self.fedora_20_2_4_core
-            fedora_20_2_4_core = %w(
+            %w(
               access_compat actions alias allowmethods asis auth_basic
               auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
               authn_socache authz_core authz_dbd authz_dbm authz_groupfile
@@ -192,7 +192,7 @@ module Opscode
           end
 
           def self.fedora_20_2_4_other
-            fedora_20_2_4_other = %w(
+            %w(
               annodex auth_cas auth_kerb auth_mellon auth_ntlm_winbind
               authnz_external authnz_pam auth_token auth_xradius autoindex_mb
               bw cluster cluster-java cluster-javadoc dav_svn dnssd evasive
@@ -232,30 +232,19 @@ module Opscode
         end
 
         def keyname_for(platform, platform_family, platform_version)
-          case
-          when platform_family == 'rhel'
-            platform == 'amazon' ? platform_version : platform_version.to_i.to_s
-          when platform_family == 'suse'
+          if platform_family == 'rhel' and platform != 'amazon'
+            major_version(platform_version)
+          elsif platform_family == 'debian' and !(platform == 'ubuntu' or platform_version =~ /sid$/)
+            major_version(platform_version)
+          elsif platform_family == 'freebsd'
+            major_version(platform_version)
+          else
             platform_version
-          when platform_family == 'fedora'
-            platform_version
-          when platform_family == 'debian'
-            if platform == 'ubuntu'
-              platform_version
-            elsif platform_version =~ /sid$/
-              platform_version
-            else
-              platform_version.to_i.to_s
-            end
-          when platform_family == 'smartos'
-            platform_version
-          when platform_family == 'omnios'
-            platform_version
-          when platform_family == 'freebsd'
-            platform_version.to_i.to_s
           end
-        rescue NoMethodError
-          nil
+        end
+
+        def major_version(version)
+          version.to_i.to_s
         end
 
         def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
@@ -276,17 +265,7 @@ module Opscode
               else
                 nil
               end
-
-            when 'rhel'
-              if ModuleInfo.send("#{method_name}_core").include? name
-                'httpd'
-              elsif ModuleInfo.send("#{method_name}_other").include? name
-                "mod_#{name}"
-              else
-                nil
-              end
-
-            when 'fedora'
+            when /^(rhel|fedora)$/
               if ModuleInfo.send("#{method_name}_core").include? name
                 'httpd'
               elsif ModuleInfo.send("#{method_name}_other").include? name
@@ -295,6 +274,7 @@ module Opscode
                 nil
               end
             end
+
           end
         end
       end
