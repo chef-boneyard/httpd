@@ -266,32 +266,34 @@ module Opscode
           keyname = keyname_for(platform, platform_family, platform_version)
           method_name = MethodInfo.method_info[platform_family][keyname][httpd_version]
 
-          case platform_family
-          when 'debian'
-            if ModuleInfo.send("#{method_name}_core").include? name
-              'apache2'
-            elsif ModuleInfo.send("#{method_name}_other").include? name
-              "libapache2-mod-#{name.gsub('_', '-')}"
-            else
-              nil
-            end
+          unless  method_name.nil?
+            case platform_family
+            when 'debian'
+              if ModuleInfo.send("#{method_name}_core").include? name
+                'apache2'
+              elsif ModuleInfo.send("#{method_name}_other").include? name
+                "libapache2-mod-#{name.gsub('_', '-')}"
+              else
+                nil
+              end
 
-          when 'rhel'
-            if ModuleInfo.send("#{method_name}_core").include? name
-              'httpd'
-            elsif ModuleInfo.send("#{method_name}_other").include? name
-              "mod_#{name}"
-            else
-              nil
-            end
+            when 'rhel'
+              if ModuleInfo.send("#{method_name}_core").include? name
+                'httpd'
+              elsif ModuleInfo.send("#{method_name}_other").include? name
+                "mod_#{name}"
+              else
+                nil
+              end
 
-          when 'fedora'
-            if ModuleInfo.send("#{method_name}_core").include? name
-              'httpd'
-            elsif ModuleInfo.send("#{method_name}_other").include? name
-              "mod_#{name}"
-            else
-              nil
+            when 'fedora'
+              if ModuleInfo.send("#{method_name}_core").include? name
+                'httpd'
+              elsif ModuleInfo.send("#{method_name}_other").include? name
+                "mod_#{name}"
+              else
+                nil
+              end
             end
           end
         end

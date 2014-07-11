@@ -4,7 +4,7 @@ describe 'looking up module package name' do
   before do
     extend Opscode::Httpd::Module::Helpers
   end
-  
+
   context 'for apache 2.4 on ubuntu 14.04' do
     debian_2_4_core = %w(
       access_compat actions alias allowmethods asis auth_basic
