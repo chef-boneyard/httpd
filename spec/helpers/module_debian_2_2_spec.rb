@@ -5,7 +5,7 @@ describe 'looking up module package name' do
     extend Opscode::Httpd::Module::Helpers
   end
 
-  context 'for apache 2.2 on debian 7' do
+  context 'for apache 2.2 on debian 7, 10.04, and 12.04' do
     debian_2_2_core = %w(
       actions alias asis auth_basic auth_digest authn_alias authn_anon
       authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
@@ -37,6 +37,12 @@ describe 'looking up module package name' do
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.2', 'debian', 'debian', '7.2')
+          ).to eq('apache2')
+        expect(
+          package_name_for_module(m, '2.2', 'debian', 'debian', '10.04')
+          ).to eq('apache2')
+        expect(
+          package_name_for_module(m, '2.2', 'debian', 'debian', '12.04')
           ).to eq('apache2')
       end
     end
