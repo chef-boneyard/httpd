@@ -46,7 +46,7 @@ module Opscode
                     speling ssl status substitute suexec unique_id userdir usertrack
                     vhost_alias
                   ),
-                  :found_in_package => -> (_name) { 'apache2' }
+                  :found_in_package => 'apache2'
 
           modules :for => { :platform_family => 'debian', :httpd_version => '2.2' },
                   :are => %w(
@@ -84,7 +84,7 @@ module Opscode
                     status substitute suexec unique_id userdir usertrack vhost_alias
                     xml2enc
                   ),
-                  :found_in_package => -> (_name) { 'apache2' }
+                  :found_in_package => 'apache2'
 
           modules :for => { :platform_family => 'debian', :httpd_version => '2.4' },
                   :are => %w(
@@ -118,7 +118,7 @@ module Opscode
                     setenvif speling status substitute suexec unique_id userdir
                     usertrack version vhost_alias
                   ),
-                  :found_in_package => -> (_name) { 'httpd' }
+                  :found_in_package => 'httpd'
 
           modules :for => { :platform_family => 'rhel', :version => '5', :httpd_version => '2.2' },
                   :are => %w(
@@ -140,7 +140,7 @@ module Opscode
                     status substitute suexec unique_id userdir usertrack version
                     vhost_alias
                   ),
-                  :found_in_package => -> (_name) { 'httpd' }
+                  :found_in_package => 'httpd'
 
           modules :for => { :platform_family => 'rhel', :version => '6', :httpd_version => '2.2' },
                   :are => %w(
@@ -162,7 +162,7 @@ module Opscode
                     setenvif speling status substitute suexec unique_id userdir
                     usertrack version vhost_alias
                   ),
-                  :found_in_package => -> (_name) { 'httpd' }
+                  :found_in_package => 'httpd'
 
           modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.2' },
                   :are => %w(
@@ -191,7 +191,7 @@ module Opscode
                     socache_memcache socache_shmcb speling status substitute suexec
                     unique_id unixd userdir usertrack version vhost_alias watchdog
                   ),
-                  :found_in_package => -> (_name) { 'httpd' }
+                  :found_in_package => 'httpd'
 
           modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.4' },
                   :are => %w(
@@ -219,7 +219,7 @@ module Opscode
                     socache_memcache socache_shmcb speling status substitute suexec
                     systemd unique_id unixd userdir usertrack version vhost_alias watchdog
                   ),
-                  :found_in_package => -> (_name) { 'httpd' }
+                  :found_in_package => 'httpd'
 
           modules :for => { :platform_family => 'fedora', :version => '20', :httpd_version => '2.4' },
                   :are => %w(

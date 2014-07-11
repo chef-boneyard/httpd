@@ -45,7 +45,11 @@ module Opscode
           def modules(options)
             options[:are].each do |mod|
               key = options[:for].merge(:module => mod)
-              modules_list[key] = options[:found_in_package].call(mod)
+
+              package = options[:found_in_package]
+              package = package.call(mod) if package.is_a?(Proc)
+
+              modules_list[key] = package
             end
           end
 
