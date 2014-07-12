@@ -4,11 +4,10 @@ module Opscode
   module Httpd
     module Module
       module Helpers
-
         def keyname_for(platform, platform_family, platform_version)
-          if platform_family == 'rhel' and platform != 'amazon'
+          if platform_family == 'rhel' && platform != 'amazon'
             major_version(platform_version)
-          elsif platform_family == 'debian' and !(platform == 'ubuntu' or platform_version =~ /sid$/)
+          elsif platform_family == 'debian' && !(platform == 'ubuntu' || platform_version =~ /sid$/)
             major_version(platform_version)
           elsif platform_family == 'freebsd'
             major_version(platform_version)
@@ -22,13 +21,14 @@ module Opscode
         end
 
         def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
-          ModuleInfo.find(:module => name,
-                          :httpd_version => httpd_version,
-                          :platform => platform,
-                          :platform_family => platform_family,
-                          :version => keyname_for(platform, platform_family, platform_version))
+          ModuleInfo.find(
+            :module => name,
+            :httpd_version => httpd_version,
+            :platform => platform,
+            :platform_family => platform_family,
+            :version => keyname_for(platform, platform_family, platform_version)
+            )
         end
-
 
         class ModuleInfo
           extend ModuleInfoDSL
@@ -62,8 +62,8 @@ module Opscode
                     ruwsgi_dbg scgi shib2 spamhaus speedycgi suphp upload_progress uwsgi
                     uwsgi_dbg vhost_hash_alias vhost_ldap wsgi wsgi_py3 xsendfile
                   ),
-                  :found_in_package => -> (name) { "libapache2-mod-#{name.gsub('_', '-')}" }
-
+                  :found_in_package => ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
+          
           modules :for => { :platform_family => 'debian', :httpd_version => '2.4' },
                   :are => %w(
                     access_compat actions alias allowmethods asis auth_basic
@@ -103,7 +103,7 @@ module Opscode
                     watchcat webauth webauthldap webkdc wsgi_py3 xsendfile modsecurity
                     mpm_itk request_perl sitecontrol_perl svn webauth webkdc
                   ),
-                  :found_in_package => -> (name) { "libapache2-mod-#{name.gsub('_', '-')}" }
+                  :found_in_package => ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
 
           modules :for => { :platform_family => 'rhel', :version => '5', :httpd_version => '2.2' },
                   :are => %w(
@@ -125,7 +125,7 @@ module Opscode
                     auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
                     perl perl-devel perl-devel python revocator
                   ),
-                  :found_in_package => -> (name) { "mod_#{name}" }
+                  :found_in_package => ->(name) { "mod_#{name}" }
 
           modules :for => { :platform_family => 'rhel', :version => '6', :httpd_version => '2.2' },
                   :are => %w(
@@ -147,7 +147,7 @@ module Opscode
                     perl-devel perl-devel auth_kerb auth_mysql auth_pgsql authz_ldap
                     dav_svn dnssd nss perl revocator revocator ssl wsgi
                   ),
-                  :found_in_package => -> (name) { "mod_#{name}" }
+                  :found_in_package => ->(name) { "mod_#{name}" }
 
           modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.2' },
                   :are => %w(
@@ -170,7 +170,7 @@ module Opscode
                     authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
                     security_crs ssl wsgi
                   ),
-                  :found_in_package => -> (name) { "mod_#{name}" }
+                  :found_in_package => ->(name) { "mod_#{name}" }
 
           modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.4' },
                   :are => %w(
@@ -198,7 +198,7 @@ module Opscode
                     auth_kerb fcgid geoip ldap nss perl proxy_html security session
                     ssl wsgi wsgi_py27
                   ),
-                  :found_in_package => -> (name) { "mod_#{name}" }
+                  :found_in_package => ->(name) { "mod_#{name}" }
 
           modules :for => { :platform_family => 'fedora', :version => '20', :httpd_version => '2.4' },
                   :are => %w(
@@ -233,7 +233,7 @@ module Opscode
                     security_crs security_crs-extras selinux session speedycgi ssl
                     suphp wsgi wso2-axis2 xsendfile
                   ),
-                  :found_in_package => -> (name) { "mod_#{name}" }
+                  :found_in_package => ->(name) { "mod_#{name}" }
         end
       end
     end

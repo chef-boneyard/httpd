@@ -21,30 +21,22 @@ class Chef
             libarch = 'lib'
           end
 
-          # enterprise linux version calculation
-          case node['platform_version'].to_i
-          when 5
-            elversion = 5
-          when 6
-            elversion = 5
-          end
-
           # paths
           module_name = new_resource.name
-          module_path = "/usr/#{libarch}/modules/mod_#{module_name}.so"
+          module_path = "/usr/#{libarch}/httpd/modules/mod_#{module_name}.so"
 
           # support multiple instances
           new_resource.httpd_instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
-          
+
           # version
           apache_version = new_resource.httpd_version
-          
+
           #
           # resources
           #
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
-            notifies :run, "bash[#{new_resource.name} create remove_package_config]", :immediately
+            notifies :run, "execute[#{new_resource.name} create remove_package_config]", :immediately
             action :install
           end
 

@@ -2,7 +2,6 @@ module Opscode
   module Httpd
     module Module
       module Helpers
-
         module ModuleInfoDSL
           #
           # Given a key, which is a hash of criteria (i.e. module name, platform,
@@ -57,7 +56,6 @@ module Opscode
             @modules_list ||= {}
           end
         end
-
       end
     end
   end
