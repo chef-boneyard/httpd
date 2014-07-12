@@ -63,7 +63,7 @@ module Opscode
                     uwsgi_dbg vhost_hash_alias vhost_ldap wsgi wsgi_py3 xsendfile
                   ),
                   :found_in_package => ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
-          
+
           modules :for => { :platform_family => 'debian', :httpd_version => '2.4' },
                   :are => %w(
                     access_compat actions alias allowmethods asis auth_basic

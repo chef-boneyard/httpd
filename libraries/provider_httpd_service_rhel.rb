@@ -186,11 +186,11 @@ class Chef
             end
           else
             link "#{new_resource.name} create /etc/#{apache_name}/run" do
-                target_file "/etc/#{apache_name}/run"
-                to '../../var/run/'
-                action :create
-              end
+              target_file "/etc/#{apache_name}/run"
+              to '../../var/run/'
+              action :create
             end
+          end
 
           # configuration files
           template "#{new_resource.name} create /etc/#{apache_name}/conf/magic" do

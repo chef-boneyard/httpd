@@ -28,9 +28,6 @@ class Chef
           # support multiple instances
           new_resource.httpd_instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
 
-          # version
-          apache_version = new_resource.httpd_version
-
           #
           # resources
           #
