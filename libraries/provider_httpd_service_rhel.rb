@@ -26,7 +26,11 @@ class Chef
           when 5
             elversion = 5
           when 6
-            elversion = 5
+            elversion = 6
+          when 2013
+            elversion = 6
+          when 2014
+            elversion = 6
           end
 
           # version
