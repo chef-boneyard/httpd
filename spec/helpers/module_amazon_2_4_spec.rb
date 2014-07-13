@@ -2,11 +2,11 @@ require_relative '../../libraries/module_info.rb'
 
 describe 'looking up module package name' do
   before do
-    extend Opscode::Httpd::Module::Helpers
+    extend Httpd::Module::Helpers
   end
 
   context 'for apache 2.4 on amazon' do
-    amazon_2_2_core = %w(
+    amazon_2_4_core = %w(
       access_compat actions alias allowmethods asis auth_basic
       auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
       authn_socache authz_core authz_dbd authz_dbm authz_groupfile
@@ -25,24 +25,24 @@ describe 'looking up module package name' do
       unique_id unixd userdir usertrack version vhost_alias watchdog
     )
 
-    amazon_2_2_other = %w(
+    amazon_2_4_other = %w(
       auth_kerb fcgid geoip ldap nss perl proxy_html security session
       ssl wsgi wsgi_py27
     )
 
-    amazon_2_2_core.each do |m|
+    amazon_2_4_core.each do |m|
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.4', 'amazon', 'rhel', '2014.03')
-          ).to eq('httpd')
+          ).to eq('httpd24')
       end
     end
 
-    amazon_2_2_other.each do |m|
+    amazon_2_4_other.each do |m|
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.4', 'amazon', 'rhel', '2014.03')
-          ).to eq("mod_#{m}")
+          ).to eq("mod24_#{m}")
       end
     end
   end

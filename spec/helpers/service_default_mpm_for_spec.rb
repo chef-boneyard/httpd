@@ -2,7 +2,7 @@ require_relative '../../libraries/service_default_mpm_for.rb'
 
 describe 'default_mpm_for' do
   before do
-    extend Opscode::Httpd::Service::Helpers
+    extend Httpd::Service::Helpers
   end
 
   context 'when using apache 2.2' do

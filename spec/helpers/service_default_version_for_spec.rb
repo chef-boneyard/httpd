@@ -2,7 +2,7 @@ require_relative '../../libraries/service_platform_info.rb'
 
 describe 'service_platform_info' do
   before do
-    extend Opscode::Httpd::Service::Helpers
+    extend Httpd::Service::Helpers
   end
 
   # rhel-5

@@ -1,5 +1,6 @@
 require 'chef/resource/lwrp_base'
 require_relative 'module_info'
+require_relative 'service_platform_info'
 
 class Chef
   class Resource
@@ -7,14 +8,20 @@ class Chef
       def initialize(name = nil, run_context = nil)
         super
 
-        extend Opscode::Httpd::Module::Helpers
+        extend Httpd::Module::Helpers
+        extend Httpd::Service::Helpers
 
         @resource_name = :httpd_module
         @action = :create
         @allowed_actions = [:create, :delete]
 
         @httpd_instance = 'default'
-        @httpd_version = '2.2'
+
+        @httpd_version = default_httpd_version_for(
+          node['platform'],
+          node['platform_family'],
+          node['platform_version']
+          )
 
         @package_name = package_name_for_module(
           name,
@@ -41,8 +48,10 @@ class Chef
           :httpd_version,
           arg,
           :callbacks => {
-            "is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
-              #              require 'pry' ; binding.pry
+            "#{name} httpd_version #{arg} is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
+              # if node['platform_version'] == '2014.03'
+              #   require 'pry' ; binding.pry
+              # end
               true unless package_name_for_module(
                 name,
                 arg,
@@ -60,7 +69,7 @@ class Chef
           :package_name,
           arg,
           :callbacks => {
-            "is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
+            "module package_name is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
               true unless
                 package_name_for_module(
                 arg,

@@ -8,7 +8,7 @@ class Chef
     class HttpdService < Chef::Resource
       def initialize(name = nil, run_context = nil)
         super
-        extend Opscode::Httpd::Service::Helpers
+        extend Httpd::Service::Helpers
 
         @resource_name = :httpd_service
 

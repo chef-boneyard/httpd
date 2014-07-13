@@ -91,6 +91,17 @@ class Chef
             action :nothing
           end
 
+          # Modules
+          %w( log_config logio unixd
+              version watchdog
+          ).each do |m|
+            httpd_module m do
+              httpd_version apache_version
+              httpd_instance apache_name
+              action :create
+            end
+          end
+
           # httpd binary symlinks
           link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
             target_file "/usr/sbin/#{apache_name}"
@@ -99,18 +110,21 @@ class Chef
             not_if { apache_name == 'httpd' }
           end
 
-          link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
-            target_file "/usr/sbin/#{apache_name}.worker"
-            to '/usr/sbin/httpd.worker'
-            action :create
-            not_if { apache_name == 'httpd' }
-          end
+          # MPM binaries
+          if apache_version.to_f < 2.4
+            link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
+              target_file "/usr/sbin/#{apache_name}.worker"
+              to '/usr/sbin/httpd.worker'
+              action :create
+              not_if { apache_name == 'httpd' }
+            end
 
-          link "#{new_resource.name} create /usr/sbin/#{apache_name}.event" do
-            target_file "/usr/sbin/#{apache_name}.event"
-            to '/usr/sbin/httpd.event'
-            action :create
-            not_if { apache_name == 'httpd' }
+            link "#{new_resource.name} create /usr/sbin/#{apache_name}.event" do
+              target_file "/usr/sbin/#{apache_name}.event"
+              to '/usr/sbin/httpd.event'
+              action :create
+              not_if { apache_name == 'httpd' }
+            end
           end
 
           # configuration directories
@@ -151,15 +165,6 @@ class Chef
             action :create
           end
 
-          directory "#{new_resource.name} create /usr/#{libarch}/httpd/modules" do
-            path "/usr/#{libarch}/httpd/modules"
-            user 'root'
-            group 'root'
-            mode '0755'
-            recursive true
-            action :create
-          end
-
           link "#{new_resource.name} create /etc/#{apache_name}/logs" do
             target_file "/etc/#{apache_name}/logs"
             to "../../var/log/#{apache_name}"
@@ -168,7 +173,7 @@ class Chef
 
           link "#{new_resource.name} create /etc/#{apache_name}/modules" do
             target_file "/etc/#{apache_name}/modules"
-            to "../../usr/lib64/#{apache_name}/modules"
+            to "../../usr/#{libarch}/#{apache_name}/modules"
             action :create
           end
 

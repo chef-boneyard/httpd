@@ -2,7 +2,7 @@ require_relative '../../libraries/module_info.rb'
 
 describe 'looking up module package name' do
   before do
-    extend Opscode::Httpd::Module::Helpers
+    extend Httpd::Module::Helpers
   end
 
   context 'for apache 2.4 on fedora 20' do
