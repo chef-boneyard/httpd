@@ -16,7 +16,7 @@ describe 'httpd_module::default on amazon-2014.04' do
       expect(httpd_module_default_22_stepinto_run_amazon_2014_03).to create_httpd_module('auth_basic')
     end
 
-    it 'installs package[auth_basic create httpd24]' do
+    it 'installs package[auth_basic create httpd]' do
       expect(httpd_module_default_22_stepinto_run_amazon_2014_03).to install_package('auth_basic create httpd').with(
         :package_name => 'httpd'
         )

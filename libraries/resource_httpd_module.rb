@@ -17,6 +17,7 @@ class Chef
 
         @httpd_instance = 'default'
 
+        # set default values
         @httpd_version = default_httpd_version_for(
           node['platform'],
           node['platform_family'],
@@ -44,14 +45,24 @@ class Chef
       end
 
       def httpd_version(arg = nil)
+        #        if arg == '2.2' && node['platform_version'] == '2014.03'
+        # if node['platform_version'] == '2014.03'
+        #   require 'pry' ; binding.pry
+        # end
+
+        package_name package_name_for_module(
+          name,
+          arg,
+          node['platform'],
+          node['platform_family'],
+          node['platform_version']
+          )
+
         set_or_return(
           :httpd_version,
           arg,
           :callbacks => {
             "#{name} httpd_version #{arg} is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
-              # if node['platform_version'] == '2014.03'
-              #   require 'pry' ; binding.pry
-              # end
               true unless package_name_for_module(
                 name,
                 arg,
@@ -68,18 +79,7 @@ class Chef
         set_or_return(
           :package_name,
           arg,
-          :callbacks => {
-            "module package_name is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
-              true unless
-                package_name_for_module(
-                arg,
-                @httpd_version,
-                node['platform'],
-                node['platform_family'],
-                node['platform_version']
-                ).nil?
-            end
-          }
+          :kind_of => String
           )
       end
 

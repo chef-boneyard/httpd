@@ -25,7 +25,7 @@ module Httpd
         # @example Module 'ssl' on an Amazon 2014.03 instance using httpd version 2.4 can be found in the package 'mod_ssl'
         #
         #    modules for: { platform: "amazon", version: "2014.03", httpd_version: "2.4" },
-        #      are: [ "ssl" ], found_in_package: -> (name) { "mod_#{name}" }
+        #      are: [ "ssl" ], found_in_package: -> (name) { "mod24_#{name}" }
         #
         # When defining the criteria you can specify as little or as much
         # criteria you need. Not specifying the field means that field allows
