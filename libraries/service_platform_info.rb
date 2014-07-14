@@ -91,7 +91,7 @@ module Httpd
                   'service_prefix' => 'httpd'
                 },
                 '2.4' => {
-                  'package_name' => 'httpd24',
+                  'package_name' => 'httpd',
                   'service_prefix' => 'httpd'
                 }
               },

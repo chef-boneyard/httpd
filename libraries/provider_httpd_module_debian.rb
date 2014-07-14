@@ -77,36 +77,34 @@ class Chef
       end
 
       action :delete do
-        converge_by 'debian pattern' do
-          #
-          # local variables
-          #
-          new_resource.httpd_instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.httpd_instance}"
+        #
+        # local variables
+        #
+        new_resource.httpd_instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.httpd_instance}"
 
-          #
-          # resources
-          #
-          directory "#{new_resource.name} delete /etc/#{apache_name}/mods-available/" do
-            path "/etc/#{apache_name}/mods-available/"
-            recursive true
-            action :delete
-          end
+        #
+        # resources
+        #
+        directory "#{new_resource.name} delete /etc/#{apache_name}/mods-available/" do
+          path "/etc/#{apache_name}/mods-available/"
+          recursive true
+          action :delete
+        end
 
-          file "#{new_resource.name} delete /etc/#{apache_name}/mods-available/#{module_name}.load" do
-            path "/etc/#{apache_name}/mods-available/#{module_name}.load"
-            action :delete
-          end
+        file "#{new_resource.name} delete /etc/#{apache_name}/mods-available/#{module_name}.load" do
+          path "/etc/#{apache_name}/mods-available/#{module_name}.load"
+          action :delete
+        end
 
-          directory "#{new_resource.name} delete /etc/#{apache_name}/mods-enabled/" do
-            path "/etc/#{apache_name}/mods-enabled/"
-            recursive true
-            action :delete
-          end
+        directory "#{new_resource.name} delete /etc/#{apache_name}/mods-enabled/" do
+          path "/etc/#{apache_name}/mods-enabled/"
+          recursive true
+          action :delete
+        end
 
-          link "#{new_resource.name} delete /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
-            target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
-            action :delete
-          end
+        link "#{new_resource.name} delete /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
+          target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
+          action :delete
         end
       end
     end

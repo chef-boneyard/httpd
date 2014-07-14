@@ -4,7 +4,7 @@ class Chef
   class Provider
     class HttpdService
       class Rhel < Chef::Provider::HttpdService
-        use_inline_resources if defined?(use_inline_resources)
+#        use_inline_resources if defined?(use_inline_resources)
 
         def whyrun_supported?
           true
@@ -91,7 +91,7 @@ class Chef
             action :nothing
           end
 
-          # Modules
+          # modules
           %w( log_config logio unixd
               version watchdog
           ).each do |m|
@@ -245,88 +245,17 @@ class Chef
             notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
             action :create
           end
-
-          # mpm selection
-          template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
-            path "/etc/sysconfig/#{apache_name}"
-            source 'rhel/sysconfig/httpd.erb'
-            owner 'root'
-            group 'root'
-            mode '0644'
-            variables(
-              :apache_name => apache_name,
-              :mpm => new_resource.mpm,
-              :pid_file => pid_file
-              )
-            cookbook 'httpd'
-            notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
-            action :create
-          end
-
-          # init script
-          template "#{new_resource.name} create /etc/rc.d/init.d/#{apache_name}" do
-            path "/etc/init.d/#{apache_name}"
-            source "#{apache_version}/sysvinit/el-#{elversion}/httpd.erb"
-            owner 'root'
-            group 'root'
-            mode '0755'
-            variables(:apache_name => apache_name)
-            cookbook 'httpd'
-            action :create
-          end
-
-          # service management
-          service "#{new_resource.name} create #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Redhat
-            action [:start, :enable]
-          end
         end
 
         action :delete do
-          # support multiple instances
-          new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
-
-          service "#{new_resource.name} delete #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Redhat
-            action [:stop, :disable]
-          end
-          # moar resources here
         end
 
         action :restart do
-          # support multiple instances
-          new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
-
-          service "#{new_resource.name} delete #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Redhat
-            action :restart
-          end
         end
 
         action :reload do
-          # support multiple instances
-          new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
-
-          service "#{new_resource.name} delete #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Redhat
-            action :reload
-          end
         end
       end
     end
   end
 end
-
-Chef::Platform.set :platform => :amazon, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel
-Chef::Platform.set :platform => :redhat, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel
-Chef::Platform.set :platform => :centos, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel
-Chef::Platform.set :platform => :oracle, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel
-Chef::Platform.set :platform => :scientific, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel

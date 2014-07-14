@@ -11,9 +11,10 @@ class Chef
         end
 
         action :create do
-          converge_by 'smartos pattern' do
-            # wat
-          end
+          # wat
+        end
+        action :delete do
+          # wat
         end
       end
     end
