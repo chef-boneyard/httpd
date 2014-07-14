@@ -44,25 +44,11 @@ class Chef
             action :nothing
           end
 
-          directory "#{new_resource.name} create /usr/#{libarch}/httpd/modules" do
-            path "/usr/#{libarch}/httpd/modules"
-            user 'root'
-            group 'root'
-            mode '0755'
-            recursive true
-            action :create
-          end
-
-          link "#{new_resource.name} create /etc/#{apache_name}/modules" do
-            target_file "/etc/#{apache_name}/modules"
-            to "../../usr/#{libarch}/modules"
-            action :create
-          end
-
           directory "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d" do
             path "/etc/#{apache_name}/conf.modules.d"
             owner 'root'
             group 'root'
+            recursive true
             action :create
           end
 

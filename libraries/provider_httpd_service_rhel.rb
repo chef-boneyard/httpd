@@ -156,6 +156,15 @@ class Chef
           end
 
           # support directories
+          directory "#{new_resource.name} create /usr/#{libarch}/httpd/modules" do
+            path "/usr/#{libarch}/httpd/modules"
+            user 'root'
+            group 'root'
+            mode '0755'
+            recursive true
+            action :create
+          end
+
           directory "#{new_resource.name} create /var/log/#{apache_name}" do
             path "/var/log/#{apache_name}"
             user 'root'
@@ -173,7 +182,7 @@ class Chef
 
           link "#{new_resource.name} create /etc/#{apache_name}/modules" do
             target_file "/etc/#{apache_name}/modules"
-            to "../../usr/#{libarch}/#{apache_name}/modules"
+            to "../../usr/#{libarch}/httpd/modules"
             action :create
           end
 
