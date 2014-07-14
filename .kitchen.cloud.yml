@@ -90,6 +90,20 @@ platforms:
     selinux:
       state: disabled
 
+- name: centos-7.0
+  driver_plugin: digitalocean
+  driver_config:
+    image_id: 4856048
+    flavor_id: 63
+    region_id: 4
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+  run_list:
+  - recipe[selinux]
+  attributes:
+    selinux:
+      state: disabled
+
 - name: fedora-20
   driver_plugin: digitalocean
   driver_config:
@@ -195,6 +209,7 @@ suites:
     includes: [
       'amazon-2014.03',
       'fedora-20',
+      'centos-7.0',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]
@@ -211,6 +226,7 @@ suites:
     includes: [
       'amazon-2014.03',
       'fedora-20',
+      'centos-7.0',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]
@@ -256,6 +272,7 @@ suites:
     includes: [
       'amazon-2014.03',
       'fedora-20',
+      'centos-7.0',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]

@@ -118,7 +118,7 @@ class Chef
 
             link "#{new_resource.name} create /etc/#{apache_name}/modules" do
               target_file "/etc/#{apache_name}/modules"
-              to '../../usr/lib64/httpd/modules'
+              to "../../usr/#{libarch}/httpd/modules"
               action :create
             end
 
@@ -172,6 +172,11 @@ class Chef
             end
 
             # mpm configuration
+            httpd_module new_resource.mpm do
+              action :create
+            end
+
+            # FIXME: better location for template source?
             template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf" do
               path "/etc/#{apache_name}/conf.modules.d/mpm_#{new_resource.mpm}.conf"
               source "#{new_resource.version}/mods/rhel/mpm.conf.erb"
@@ -196,31 +201,22 @@ class Chef
               action :create
             end
 
-            # more mpm biz here
-            # ensure things are deleted
-
-            # base modules
-            template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/00-base.conf" do
-              path "/etc/#{apache_name}/conf.modules.d/00-base.conf"
-              source "#{apache_version}/rhel/00-base.conf.erb"
-              owner 'root'
-              group 'root'
-              mode '0644'
-              cookbook 'httpd'
-              action :create
-            end
-
-            template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/00-systemd.conf" do
-              path "/etc/#{apache_name}/conf.modules.d/00-systemd.conf"
-              source "#{apache_version}/rhel/00-systemd.conf.erb"
-              owner 'root'
-              group 'root'
-              mode '0644'
-              cookbook 'httpd'
-              action :create
+            # Modules
+            %w( log_config logio unixd
+                version watchdog
+            ).each do |m|
+              httpd_module m do
+                httpd_version apache_version
+                httpd_instance apache_name
+                action :create
+              end
             end
 
             # systemd
+            httpd_module 'systemd' do
+              action :create
+            end
+
             directory "#{new_resource.name} create /run/#{apache_name}" do
               path "/run/#{apache_name}"
               owner 'root'

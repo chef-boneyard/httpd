@@ -102,16 +102,16 @@ class Chef
             end
           end
 
-          # httpd binary symlinks
-          link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
-            target_file "/usr/sbin/#{apache_name}"
-            to '/usr/sbin/httpd'
-            action :create
-            not_if { apache_name == 'httpd' }
-          end
+          if apache_version < 2.4
+            # httpd binary symlinks
+            link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
+              target_file "/usr/sbin/#{apache_name}"
+              to '/usr/sbin/httpd'
+              action :create
+              not_if { apache_name == 'httpd' }
+            end
 
-          # MPM binaries
-          if apache_version.to_f < 2.4
+            # MPM binaries
             link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
               target_file "/usr/sbin/#{apache_name}.worker"
               to '/usr/sbin/httpd.worker'
@@ -124,6 +124,10 @@ class Chef
               to '/usr/sbin/httpd.event'
               action :create
               not_if { apache_name == 'httpd' }
+            end
+          else
+            httpd_module new_resource.mpm do
+              action :install
             end
           end
 
