@@ -39,8 +39,7 @@ class Chef
 
           execute "#{new_resource.name} create remove_package_config" do
             user 'root'
-            command "rm -f /etc/#{apache_name}/conf.d/*"
-            only_if "test -f /etc/#{apache_name}/conf.d/README"
+            command "rm -rf /etc/#{apache_name}/conf.modules.d"
             action :nothing
           end
 

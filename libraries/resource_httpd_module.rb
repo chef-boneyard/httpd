@@ -45,11 +45,6 @@ class Chef
       end
 
       def httpd_version(arg = nil)
-        #        if arg == '2.2' && node['platform_version'] == '2014.03'
-        # if node['platform_version'] == '2014.03'
-        #   require 'pry' ; binding.pry
-        # end
-
         package_name package_name_for_module(
           name,
           arg,
