@@ -103,7 +103,7 @@ class Chef
               end
             end
 
-            if apache_version < 2.4
+            if apache_version.to_f < 2.4
               # httpd binary symlinks
               link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
                 target_file "/usr/sbin/#{apache_name}"
