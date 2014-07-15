@@ -57,7 +57,10 @@ class Chef
           :httpd_version,
           arg,
           :callbacks => {
-            "#{name} httpd_version #{arg} is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
+            "not supported for httpd_module[#{name}] on #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
+              if node['platform'] == 'centos' && arg == '2.2'
+                require 'pry' ; binding.pry
+              end
               true unless package_name_for_module(
                 name,
                 arg,
@@ -65,7 +68,7 @@ class Chef
                 node['platform_family'],
                 node['platform_version']
                 ).nil?
-            end
+              end
           }
           )
       end
