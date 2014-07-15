@@ -35,7 +35,7 @@ class Chef
             end
 
             # version
-            apache_version = new_resource.version.to_f
+            apache_version = new_resource.version
 
             # support multiple instances
             new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
@@ -93,7 +93,7 @@ class Chef
             end
 
             # modules
-            if apache_version < 2.4
+            if apache_version.to_f < 2.4
               %w( log_config logio ).each do |m|
                 httpd_module m do
                   httpd_version apache_version
@@ -111,7 +111,7 @@ class Chef
               end
             end
             
-            if apache_version < 2.4
+            if apache_version.to_f < 2.4
               # httpd binary symlinks
               link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
                 target_file "/usr/sbin/#{apache_name}"
