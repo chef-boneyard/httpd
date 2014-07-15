@@ -1,16 +1,17 @@
 require 'spec_helper'
 
-describe 'httpd_service::single on rhel-6.4' do
-  let(:httpd_service_single_22_run_centos_6_4) do
+describe 'httpd_service::single on rhel-7.0' do
+  let(:httpd_service_single_24_run_centos_7_0) do
     ChefSpec::Runner.new(
+      :step_into => 'httpd_service',
       :platform => 'centos',
-      :version => '6.4'
+      :version => '7.0'
       ).converge('httpd_service::single')
   end
 
   context 'when using default parameters' do
     it 'creates httpd_service[default]' do
-      expect(httpd_service_single_22_run_centos_6_4).to create_httpd_service('default').with(
+      expect(httpd_service_single_24_run_centos_7_0).to create_httpd_service('default').with(
         :contact => 'webmaster@localhost',
         :hostname_lookups => 'off',
         :keepalive => true,
@@ -23,19 +24,19 @@ describe 'httpd_service::single on rhel-6.4' do
         :run_user => 'apache',
         :run_group => 'apache',
         :timeout => '400',
-        :version => '2.2',
-        :mpm => 'worker',
+        :version => '2.4',
+        :mpm => 'event',
         :startservers => '2',
         :minspareservers => nil,
         :maxspareservers => nil,
-        :maxclients => '150',
-        :maxrequestsperchild => '0',
+        :maxclients => nil,
+        :maxrequestsperchild => nil,
         :minsparethreads => '25',
         :maxsparethreads => '75',
         :threadlimit => '64',
         :threadsperchild => '25',
-        :maxrequestworkers => nil,
-        :maxconnectionsperchild => nil
+        :maxrequestworkers => '150',
+        :maxconnectionsperchild => '0'
         )
     end
   end

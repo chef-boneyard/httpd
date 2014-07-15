@@ -28,6 +28,8 @@ class Chef
               elversion = 5
             when 6
               elversion = 6
+            when 7
+              elversion = 7
             when 2013
               elversion = 6
             when 2014
@@ -110,7 +112,7 @@ class Chef
                 end
               end
             end
-            
+
             if apache_version.to_f < 2.4
               # httpd binary symlinks
               link "#{new_resource.name} create /usr/sbin/#{apache_name}" do

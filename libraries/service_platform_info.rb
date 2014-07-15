@@ -83,13 +83,9 @@ module Httpd
                 }
               },
               '7' => {
-                'default_version' => '2.2',
+                'default_version' => '2.4',
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
-                '2.2' => {
-                  'package_name' => 'httpd',
-                  'service_prefix' => 'httpd'
-                },
                 '2.4' => {
                   'package_name' => 'httpd',
                   'service_prefix' => 'httpd'

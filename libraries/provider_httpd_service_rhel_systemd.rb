@@ -28,6 +28,8 @@ class Chef
               elversion = 5
             when 6
               elversion = 6
+            when 7
+              elversion = 7
             when 2013
               elversion = 6
             when 2014
@@ -94,8 +96,8 @@ class Chef
 
             # modules
             %w( log_config logio unixd
-              version watchdog
-          ).each do |m|
+                version watchdog
+            ).each do |m|
               httpd_module m do
                 httpd_version apache_version
                 httpd_instance apache_name
@@ -127,8 +129,10 @@ class Chef
                 not_if { apache_name == 'httpd' }
               end
             else
-              httpd_module new_resource.mpm do
-                action :install
+              httpd_module "mpm_#{new_resource.mpm}" do
+                httpd_version apache_version
+                httpd_instance apache_name
+                action :create
               end
             end
 

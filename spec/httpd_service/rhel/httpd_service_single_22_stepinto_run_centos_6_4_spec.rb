@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'httpd_service::single on rhel-6.4' do
   let(:httpd_service_single_22_run_centos_6_4) do
     ChefSpec::Runner.new(
+      :stepinto => 'httpd_service',
       :platform => 'centos',
       :version => '6.4'
       ).converge('httpd_service::single')
