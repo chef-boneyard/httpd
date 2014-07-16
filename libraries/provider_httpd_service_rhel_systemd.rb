@@ -95,13 +95,21 @@ class Chef
             end
 
             # modules
-            %w( log_config logio unixd
-                version watchdog
-            ).each do |m|
-              httpd_module m do
-                httpd_version apache_version
-                httpd_instance apache_name
-                action :create
+            if apache_version.to_f < 2.4
+              %w( log_config logio ).each do |m|
+                httpd_module m do
+                  httpd_version apache_version
+                  httpd_instance apache_name
+                  action :create
+                end
+              end
+            else
+              %w( log_config logio unixd version watchdog ).each do |m|
+                httpd_module m do
+                  httpd_version apache_version
+                  httpd_instance apache_name
+                  action :create
+                end
               end
             end
 
@@ -268,7 +276,7 @@ class Chef
 
             template "#{new_resource} create /usr/lib/systemd/system/#{apache_name}.service" do
               path "/usr/lib/systemd/system/#{apache_name}.service"
-              source "#{apache_version}/systemd/#{node['platform']}/#{node['platform_version']}/httpd.service.erb"
+              source "systemd/httpd.service.erb"
               owner 'root'
               group 'root'
               mode '0644'
