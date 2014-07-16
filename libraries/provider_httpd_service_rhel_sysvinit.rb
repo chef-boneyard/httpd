@@ -48,19 +48,13 @@ class Chef
               pid_file = "/var/run/#{apache_name}.pid"
             when 6
               pid_file = "/var/run/#{apache_name}/httpd.pid"
+            when 7
+              pid_file = "/var/run/#{apache_name}/httpd.pid"
             end
 
-            # lock file
-            lock_file = "/var/lock/subsys/#{apache_name}"
-
-            # apache 2.2 and 2.4 differences
-            if apache_version.to_f < 2.4
-              lock_file = "/var/lock/subsys/#{apache_name}"
-              mutex = nil
-            else
-              lock_file = nil
-              mutex = "file:/var/lock/subsys/#{apache_name} default"
-            end
+            #FIXME: parameterize
+            lock_file = nil
+            mutex = nil
 
             # Include directories for additional configurtions
             if apache_version.to_f < 2.4
@@ -79,18 +73,19 @@ class Chef
             #
             # Chef resources
             #
-
             # software installation
             package "#{new_resource.name} create #{new_resource.package_name}" do
               package_name new_resource.package_name
-              notifies :run, "execute[#{new_resource.name} create remove_package_config]", :immediately
+              notifies :run, "bash[#{new_resource.name} create remove_package_config]", :immediately
               action :install
             end
 
-            execute "#{new_resource.name} create remove_package_config" do
+            bash "#{new_resource.name} create remove_package_config" do
               user 'root'
-              command "rm -f /etc/#{apache_name}/conf.d/*"
-              only_if "test -f /etc/#{apache_name}/conf.d/README"
+              code <<-EOC
+               rm -f /etc/#{apache_name}/conf.d/*
+               rm -rf /etc/#{apache_name}/conf.modules.d/*
+              EOC
               action :nothing
             end
 
@@ -274,21 +269,23 @@ class Chef
               action :create
             end
 
-            # init script configuration
-            template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
-              path "/etc/sysconfig/#{apache_name}"
-              source 'rhel/sysconfig/httpd.erb'
-              owner 'root'
-              group 'root'
-              mode '0644'
-              variables(
-                :apache_name => apache_name,
-                :mpm => new_resource.mpm,
-                :pid_file => pid_file
-                )
-              cookbook 'httpd'
-              notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
-              action :create
+            if apache_version.to_f < 2.4
+              # init script configuration
+              template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
+                path "/etc/sysconfig/#{apache_name}"
+                source 'rhel/sysconfig/httpd.erb'
+                owner 'root'
+                group 'root'
+                mode '0644'
+                variables(
+                  :apache_name => apache_name,
+                  :mpm => new_resource.mpm,
+                  :pid_file => pid_file
+                  )
+                cookbook 'httpd'
+                notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
+                action :create
+              end
             end
 
             # service management
