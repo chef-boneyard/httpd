@@ -1,14 +1,3 @@
-<% if @includes %>
-<%  @includes.each do |i| %>
-Include <%= i %>
-<%   end %>
-<% end %>
-<% if @include_optionals %>
-<%  @include_optionals.each do |i| %>
-IncludeOptional <%= i %>
-<%   end %>
-<% end %>
-
 <% if @server_root %>
 ServerRoot <%= @server_root %>
 <% end %>
@@ -61,5 +50,16 @@ Listen <%= port %>
 <%     @config.listen_ports.each do |port| %>
 Listen <%= address %>:<%= port %>
 <%     end %>
+<%   end %>
+<% end %>
+
+<% if @includes %>
+<%  @includes.each do |i| %>
+Include <%= i %>
+<%   end %>
+<% end %>
+<% if @include_optionals %>
+<%  @include_optionals.each do |i| %>
+IncludeOptional <%= i %>
 <%   end %>
 <% end %>

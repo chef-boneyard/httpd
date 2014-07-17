@@ -69,7 +69,7 @@ class Chef
           }
           )
       end
-      
+
       def package_name(arg = nil)
         set_or_return(
           :package_name,

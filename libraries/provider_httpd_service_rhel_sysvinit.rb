@@ -52,7 +52,7 @@ class Chef
               pid_file = "/var/run/#{apache_name}/httpd.pid"
             end
 
-            #FIXME: parameterize
+            # FIXME: parameterize
             lock_file = nil
             mutex = nil
 
@@ -60,11 +60,13 @@ class Chef
             if apache_version.to_f < 2.4
               includes = [
                 'conf.d/*.conf',
-                'conf.d/*.load'
+                'conf.modules.d/*.conf',
+                'conf.modules.d/*.load'
               ]
             else
               include_optionals = [
                 'conf.d/*.conf',
+                'conf.d/*.load',
                 'conf.modules.d/*.conf',
                 'conf.modules.d/*.load'
               ]
@@ -83,10 +85,15 @@ class Chef
             bash "#{new_resource.name} create remove_package_config" do
               user 'root'
               code <<-EOC
-               rm -f /etc/#{apache_name}/conf.d/*
-               rm -rf /etc/#{apache_name}/conf.modules.d/*
+               rm -f /etc/httpd/conf.d/*
+               rm -rf /etc/httpd/conf.modules.d/*
               EOC
               action :nothing
+            end
+
+            package "#{new_resource.name} create net-tools" do
+              package_name 'net-tools'
+              action :install
             end
 
             # modules
@@ -108,15 +115,15 @@ class Chef
               end
             end
 
-            if apache_version.to_f < 2.4
-              # httpd binary symlinks
-              link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
-                target_file "/usr/sbin/#{apache_name}"
-                to '/usr/sbin/httpd'
-                action :create
-                not_if { apache_name == 'httpd' }
-              end
+            # httpd binary symlinks
+            link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
+              target_file "/usr/sbin/#{apache_name}"
+              to '/usr/sbin/httpd'
+              action :create
+              not_if { apache_name == 'httpd' }
+            end
 
+            if apache_version.to_f < 2.4
               # MPM binaries
               link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
                 target_file "/usr/sbin/#{apache_name}.worker"
@@ -167,6 +174,15 @@ class Chef
               action :create
             end
 
+            directory "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d" do
+              path "/etc/#{apache_name}/conf.modules.d"
+              user 'root'
+              group 'root'
+              mode '0755'
+              recursive true
+              action :create
+            end
+            
             # support directories
             directory "#{new_resource.name} create /usr/#{libarch}/httpd/modules" do
               path "/usr/#{libarch}/httpd/modules"

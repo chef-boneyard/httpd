@@ -36,8 +36,7 @@ class Chef
             includes = [
               'conf.d/*.conf',
               'mods-enabled/*.load',
-              'mods-enabled/*.conf',
-              'sites-enabled/*.conf'
+              'mods-enabled/*.conf'
             ]
           else
             include_optionals = [
