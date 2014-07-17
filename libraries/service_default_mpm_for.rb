@@ -1,20 +1,18 @@
+require_relative 'mpm_model_dsl'
+
 module Httpd
   module Service
     module Helpers
-      ## MPM section
       def default_mpm_for(version)
-        MPMinfo.mpm_version_map[version]
-      rescue NoMethodError
-        nil
+        MPMModelInfo.find :httpd_version => version
       end
 
-      class MPMinfo
-        def self.mpm_version_map
-          @version_map ||= {
-            '2.2' => 'worker',
-            '2.4' => 'event'
-          }
-        end
+      class MPMModelInfo
+        extend MPMModelDSL
+
+        use :model => 'worker', :for => { :httpd_version => '2.2' }
+
+        use :model => 'event', :for => { :httpd_version => '2.4' }
       end
     end
   end
