@@ -289,7 +289,7 @@ class Chef
               # init script configuration
               template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
                 path "/etc/sysconfig/#{apache_name}"
-                source 'rhel/sysconfig/httpd.erb'
+                source "rhel/sysconfig/httpd-#{apache_version}.erb"
                 owner 'root'
                 group 'root'
                 mode '0644'
