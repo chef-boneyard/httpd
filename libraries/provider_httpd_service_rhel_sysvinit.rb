@@ -182,7 +182,7 @@ class Chef
               recursive true
               action :create
             end
-            
+
             # support directories
             directory "#{new_resource.name} create /usr/#{libarch}/httpd/modules" do
               path "/usr/#{libarch}/httpd/modules"
@@ -285,23 +285,21 @@ class Chef
               action :create
             end
 
-            if apache_version.to_f < 2.4
-              # init script configuration
-              template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
-                path "/etc/sysconfig/#{apache_name}"
-                source "rhel/sysconfig/httpd-#{apache_version}.erb"
-                owner 'root'
-                group 'root'
-                mode '0644'
-                variables(
-                  :apache_name => apache_name,
-                  :mpm => new_resource.mpm,
-                  :pid_file => pid_file
-                  )
-                cookbook 'httpd'
-                notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
-                action :create
-              end
+            # init script configuration
+            template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
+              path "/etc/sysconfig/#{apache_name}"
+              source "rhel/sysconfig/httpd-#{apache_version}.erb"
+              owner 'root'
+              group 'root'
+              mode '0644'
+              variables(
+                :apache_name => apache_name,
+                :mpm => new_resource.mpm,
+                :pid_file => pid_file
+                )
+              cookbook 'httpd'
+              notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
+              action :create
             end
 
             # service management
