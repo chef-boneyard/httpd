@@ -3,13 +3,13 @@ require 'spec_helper'
 describe 'httpd_service::single on rhel-7.0' do
   let(:httpd_service_single_24_run_centos_7_0) do
     ChefSpec::Runner.new(
-      :step_into => 'httpd_service',
+      #      :step_into => 'httpd_service',
       :platform => 'centos',
       :version => '7.0'
       ).converge('httpd_service::single')
   end
 
-  context 'when using default parameters' do
+  context 'when compiling the recipe' do
     it 'creates httpd_service[default]' do
       expect(httpd_service_single_24_run_centos_7_0).to create_httpd_service('default').with(
         :contact => 'webmaster@localhost',
@@ -39,5 +39,13 @@ describe 'httpd_service::single on rhel-7.0' do
         :maxconnectionsperchild => '0'
         )
     end
+  end
+
+  context 'when stepping into httpd_service' do
+    # it 'installs package[httpd]' do
+    #   expect(httpd_service_single_24_run_centos_7_0).to install_package('default create httpd').with(
+    #     :package_name => 'httpd'
+    #     )
+    # end
   end
 end

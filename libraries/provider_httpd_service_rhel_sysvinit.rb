@@ -99,7 +99,8 @@ class Chef
             # modules
             if apache_version.to_f < 2.4
               %w( log_config logio ).each do |m|
-                httpd_module m do
+                httpd_module "#{new_resource.name} create #{m}" do
+                  module_name m
                   httpd_version apache_version
                   httpd_instance apache_name
                   action :create
@@ -107,7 +108,8 @@ class Chef
               end
             else
               %w( log_config logio unixd version watchdog ).each do |m|
-                httpd_module m do
+                httpd_module "#{new_resource.name} create #{m}" do
+                  module_name m
                   httpd_version apache_version
                   httpd_instance apache_name
                   action :create
@@ -119,8 +121,8 @@ class Chef
             link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
               target_file "/usr/sbin/#{apache_name}"
               to '/usr/sbin/httpd'
-              action :create
               not_if { apache_name == 'httpd' }
+              action :create
             end
 
             if apache_version.to_f < 2.4

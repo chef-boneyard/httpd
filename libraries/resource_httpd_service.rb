@@ -11,6 +11,7 @@ class Chef
         extend Httpd::Service::Helpers
 
         @resource_name = :httpd_service
+        @service_name = name
 
         @action = :create
         @allowed_actions = [:create, :delete, :restart, :reload]

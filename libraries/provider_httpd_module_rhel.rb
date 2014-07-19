@@ -22,7 +22,7 @@ class Chef
           end
 
           # paths
-          module_name = new_resource.name
+          module_name = new_resource.module_name
           module_path = "/usr/#{libarch}/httpd/modules/mod_#{module_name}.so"
 
           # support multiple instances

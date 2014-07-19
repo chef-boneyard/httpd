@@ -12,6 +12,7 @@ class Chef
         extend Httpd::Service::Helpers
 
         @resource_name = :httpd_module
+        @module_name = name
         @action = :create
         @allowed_actions = [:create, :delete]
 
@@ -25,7 +26,7 @@ class Chef
           )
 
         @package_name = package_name_for_module(
-          name,
+          @module_name,
           @httpd_version,
           node['platform'],
           node['platform_family'],
@@ -34,6 +35,14 @@ class Chef
 
         # usually the same as resource_name
         @filename = nil
+      end
+
+      def module_name(arg = nil)
+        set_or_return(
+          :module_name,
+          arg,
+          :kind_of => String
+          )
       end
 
       def httpd_instance(arg = nil)
@@ -46,7 +55,7 @@ class Chef
 
       def httpd_version(arg = nil)
         package_name package_name_for_module(
-          name,
+          @module_name,
           arg,
           node['platform'],
           node['platform_family'],
@@ -59,7 +68,7 @@ class Chef
           :callbacks => {
             "not supported for httpd_module[#{name}] on #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
               true unless package_name_for_module(
-                name,
+                @module_name,
                 arg,
                 node['platform'],
                 node['platform_family'],
