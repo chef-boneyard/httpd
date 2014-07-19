@@ -96,12 +96,6 @@ class Chef
           action :delete
         end
 
-        directory "#{new_resource.name} delete /etc/#{apache_name}/mods-enabled/" do
-          path "/etc/#{apache_name}/mods-enabled/"
-          recursive true
-          action :delete
-        end
-
         link "#{new_resource.name} delete /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
           target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
           action :delete

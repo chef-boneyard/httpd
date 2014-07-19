@@ -321,7 +321,8 @@ class Chef
 
           # older apache has mpm statically compiled into binaries
           unless new_resource.version.to_f < 2.4
-            httpd_module "mpm_#{new_resource.mpm}" do
+            httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
+              module_name "mpm_#{new_resource.mpm}"
               httpd_instance new_resource.name
               httpd_version new_resource.version
               action :create
@@ -469,7 +470,7 @@ class Chef
           # service management
           service "#{new_resource.name} delete #{apache_name}" do
             service_name apache_name
-            pattern 'apache2'
+            #            pattern apache_name
             action [:disable, :stop]
             provider Chef::Provider::Service::Init::Debian
           end
@@ -602,4 +603,4 @@ class Chef
 end
 
 Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
-Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
+# Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
