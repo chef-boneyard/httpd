@@ -99,7 +99,8 @@ class Chef
             # modules
             if apache_version.to_f < 2.4
               %w( log_config logio ).each do |m|
-                httpd_module m do
+                httpd_module "#{new_resource.name} create #{m}" do
+                  module_name m
                   httpd_version apache_version
                   httpd_instance apache_name
                   action :create
@@ -107,7 +108,8 @@ class Chef
               end
             else
               %w( log_config logio unixd version watchdog ).each do |m|
-                httpd_module m do
+                httpd_module "#{new_resource.name} create #{m}" do
+                  module_name m
                   httpd_version apache_version
                   httpd_instance apache_name
                   action :create
@@ -124,7 +126,6 @@ class Chef
             end
 
             if apache_version.to_f < 2.4
-
               # MPM binaries
               link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
                 target_file "/usr/sbin/#{apache_name}.worker"
@@ -140,7 +141,8 @@ class Chef
                 not_if { apache_name == 'httpd' }
               end
             else
-              httpd_module "mpm_#{new_resource.mpm}" do
+              httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
+                module_name "mpm_#{new_resource.mpm}"
                 httpd_version apache_version
                 httpd_instance apache_name
                 action :create
@@ -274,7 +276,8 @@ class Chef
             #
             # SystemD
             #
-            httpd_module 'systemd' do
+            httpd_module "#{new_resource.name} create systemd" do
+              module_name 'systemd'
               httpd_version apache_version
               httpd_instance apache_name
               action :create
@@ -285,10 +288,11 @@ class Chef
               owner 'root'
               group 'apache'
               mode '0710'
+              recursive true
               action :create
             end
 
-            template "#{new_resource} create /usr/lib/systemd/system/#{apache_name}.service" do
+            template "#{new_resource.name} create /usr/lib/systemd/system/#{apache_name}.service" do
               path "/usr/lib/systemd/system/#{apache_name}.service"
               source 'systemd/httpd.service.erb'
               owner 'root'
@@ -299,11 +303,12 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource} create /usr/lib/systemd/system/#{apache_name}.service.d" do
+            directory "#{new_resource.name} create /usr/lib/systemd/system/#{apache_name}.service.d" do
               path "/usr/lib/systemd/system/#{apache_name}.service.d"
               owner 'root'
               group 'root'
               mode '0755'
+              recursive true
               action :create
             end
 

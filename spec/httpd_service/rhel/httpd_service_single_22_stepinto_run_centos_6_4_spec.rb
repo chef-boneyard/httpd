@@ -229,8 +229,12 @@ describe 'httpd_service::single on rhel-6.4' do
     end
 
     it 'manage service[default create httpd]' do
-      expect(httpd_service_single_22_run_centos_6_4).to start_service('default create httpd')
-      expect(httpd_service_single_22_run_centos_6_4).to enable_service('default create httpd')
+      expect(httpd_service_single_22_run_centos_6_4).to start_service('default create httpd').with(
+        :provider => Chef::Provider::Service::Init::Redhat
+        )
+      expect(httpd_service_single_22_run_centos_6_4).to enable_service('default create httpd').with(
+        :provider => Chef::Provider::Service::Init::Redhat
+        )
     end
   end
 end

@@ -141,7 +141,8 @@ class Chef
                 not_if { apache_name == 'httpd' }
               end
             else
-              httpd_module "mpm_#{new_resource.mpm}" do
+              httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
+                module_name "mpm_#{new_resource.mpm}"
                 httpd_version apache_version
                 httpd_instance apache_name
                 action :create
