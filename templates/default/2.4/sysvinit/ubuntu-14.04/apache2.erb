@@ -1,6 +1,6 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          apache2
+# Provides:          <%= @apache_name %>
 # Required-Start:    $local_fs $remote_fs $network $syslog $named
 # Required-Stop:     $local_fs $remote_fs $network $syslog $named
 # Default-Start:     2 3 4 5
@@ -225,9 +225,12 @@ do_stop()
 	                killproc -p $PIDFILE $DAEMON
 	                apache_wait_stop $?
 	                return $?
-	        elif [ $AP_RET = 1 ] ; then
-	                APACHE2_INIT_MESSAGE="There are processes named 'apache2' running which do not match your pid file which are left untouched in the name of safety, Please review the situation by hand".
-	                return 2
+          #
+          # Patched to support multiple instances - @someara
+          #
+	        # elif [ $AP_RET = 1 ] ; then
+	        #         APACHE2_INIT_MESSAGE="There are processes named 'apache2' running which do not match your pid file which are left untouched in the name of safety, Please review the situation by hand".
+	        #         return 2
 	        fi
 	fi
 

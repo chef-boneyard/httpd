@@ -603,4 +603,4 @@ class Chef
 end
 
 Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
-# Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
+Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
