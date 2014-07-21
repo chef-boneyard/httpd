@@ -109,8 +109,8 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
     end
 
     it 'disables service[default delete apache2]' do
-      expect(debian_7_2_multi_stepinto_run).to stop_service('default delete apache2')
       expect(debian_7_2_multi_stepinto_run).to disable_service('default delete apache2')
+      expect(debian_7_2_multi_stepinto_run).to stop_service('default delete apache2')
     end
 
     it 'does not run_bash[default delete remove_package_config]' do
@@ -132,7 +132,7 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
     end
 
     it 'deletes directory[default delete /var/run/apache2]' do
-      expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /var/run/apache2').with(
+      expect(debian_7_2_multi_stepinto_run).to_not delete_directory('default delete /var/run/apache2').with(
         :recursive => true
         )
     end

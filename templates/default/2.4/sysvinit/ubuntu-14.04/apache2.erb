@@ -227,12 +227,9 @@ do_stop()
 	                killproc -p $PIDFILE $DAEMON
 	                apache_wait_stop $?
 	                return $?
-          #
-          # Patched to support multiple instances - someara@opscode.com
-          #
-	        # elif [ $AP_RET = 1 ] ; then
-	        #         APACHE2_INIT_MESSAGE="There are processes named 'apache2' running which do not match your pid file which are left untouched in the name of safety, Please review the situation by hand".
-	        #         return 2
+	        elif [ $AP_RET = 1 ] ; then
+	                APACHE2_INIT_MESSAGE="There are processes named 'apache2' running which do not match your pid file which are left untouched in the name of safety, Please review the situation by hand".
+	                return 2
 	        fi
 	fi
 

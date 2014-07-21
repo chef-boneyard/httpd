@@ -55,7 +55,7 @@ class Chef
             mutex = nil
           else
             pid_file = "/var/run/apache2/#{apache_name}.pid"
-            run_dir = "/var/run/apache2"
+            run_dir = '/var/run/apache2'
             lock_file = nil
             mutex = "file:/var/lock/#{apache_name} default"
           end
@@ -198,7 +198,7 @@ class Chef
           end
 
           # envvars
-         template "#{new_resource.name} create /etc/#{apache_name}/envvars" do
+          template "#{new_resource.name} create /etc/#{apache_name}/envvars" do
             path "/etc/#{apache_name}/envvars"
             source 'envvars.erb'
             owner 'root'
@@ -430,16 +430,7 @@ class Chef
           # service management
           service "#{new_resource.name} create #{apache_name}" do
             service_name apache_name
-            if apache_name == 'apache2'
-              pattern '/usr/sbin/apache2 -k start'
-            else
-              pattern "/usr/sbin/apache2 -d /etc/#{apache_name} -k start"
-            end
-            start_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k start"
-            stop_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k stop"
-            restart_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k restart"
-            reload_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k graceful"
-            supports :restart => true, :reload => true, :status => false
+            supports :restart => true, :reload => true, :status => true
             provider Chef::Provider::Service::Init::Debian
             action [:start, :enable]
           end
@@ -455,14 +446,6 @@ class Chef
           new_resource.name == 'default' ? a2dismod_name = 'a2dismod' : a2dismod_name = "a2dismod-#{new_resource.name}"
           new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
           new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
-
-          # calculate platform_and_version from node attributes
-          case node['platform']
-          when 'debian'
-            platform_and_version = "debian-#{node['platform_version'].to_i}"
-          when 'ubuntu'
-            platform_and_version = "ubuntu-#{node['platform_version']}"
-          end
 
           # We need to dynamically render the resource name into the title in
           # order to ensure uniqueness. In addition to this, we need
@@ -486,23 +469,12 @@ class Chef
             action :nothing
           end
 
-          template "#{new_resource.name} delete /etc/init.d/#{apache_name}" do
-            path "/etc/init.d/#{apache_name}"
-            source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
-            owner 'root'
-            group 'root'
-            mode '0755'
-            variables(:apache_name => apache_name)
-            cookbook 'httpd'
-            action :create
-          end
-
           # service management
           service "#{new_resource.name} delete #{apache_name}" do
             service_name apache_name
-            #            pattern apache_name
-            action [:disable, :stop]
+            supports :restart => true, :reload => true, :status => true
             provider Chef::Provider::Service::Init::Debian
+            action [:disable, :stop]
           end
 
           # support directories
@@ -521,6 +493,7 @@ class Chef
           directory "#{new_resource.name} delete /var/run/#{apache_name}" do
             path "/var/run/#{apache_name}"
             recursive true
+            not_if { apache_name == 'apache2' }
             action :delete
           end
 
@@ -612,18 +585,9 @@ class Chef
 
         action :restart do
           new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
-          service "#{new_resource.name} create #{apache_name}" do
+          service "#{new_resource.name} restart #{apache_name}" do
             service_name apache_name
-            if apache_name == 'apache2'
-              pattern '/usr/sbin/apache2 -k start'
-            else
-              pattern "/usr/sbin/apache2 -d /etc/#{apache_name} -k start"
-            end
-            start_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k start"
-            stop_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k stop"
-            restart_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k restart"
-            reload_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k graceful"
-            supports :restart => true, :reload => true, :status => false
+            supports :restart => true, :reload => true, :status => true
             provider Chef::Provider::Service::Init::Debian
             action :restart
           end
@@ -631,18 +595,9 @@ class Chef
 
         action :reload do
           new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
-          service "#{new_resource.name} create #{apache_name}" do
+          service "#{new_resource.name} reload #{apache_name}" do
             service_name apache_name
-            if apache_name == 'apache2'
-              pattern '/usr/sbin/apache2 -k start'
-            else
-              pattern "/usr/sbin/apache2 -d /etc/#{apache_name} -k start"
-            end
-            start_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k start"
-            stop_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k stop"
-            restart_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k restart"
-            reload_command "/usr/sbin/apache2 -d /etc/#{apache_name} -k graceful"
-            supports :restart => true, :reload => true, :status => false
+            supports :restart => true, :reload => true, :status => true
             provider Chef::Provider::Service::Init::Debian
             action :reload
           end
