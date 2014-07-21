@@ -128,8 +128,6 @@ describe 'httpd_service::single on debian-7.2' do
       )
   end
 
-  # FIXME: render tempalte
-  # FIXME: variables?
   it 'steps into httpd_service[default] and creates template[default create /etc/apache2/envvars]' do
     expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_template('default create /etc/apache2/envvars').with(
       :path => '/etc/apache2/envvars',
@@ -223,7 +221,6 @@ describe 'httpd_service::single on debian-7.2' do
       )
   end
 
-  # FIXME: render template
   it 'steps into httpd_service[default] and creates template[default create /etc/apache2/mods-available/mpm_worker.conf]' do
     expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_template('default create /etc/apache2/mods-available/mpm_worker.conf').with(
       :path => '/etc/apache2/mods-available/mpm_worker.conf',
@@ -266,7 +263,6 @@ describe 'httpd_service::single on debian-7.2' do
       )
   end
 
-  # FIXME: render template
   it 'steps into httpd_service[default] and creates template[default create /etc/apache2/apache2.conf]' do
     expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_template('default create /etc/apache2/apache2.conf').with(
       :path => '/etc/apache2/apache2.conf',

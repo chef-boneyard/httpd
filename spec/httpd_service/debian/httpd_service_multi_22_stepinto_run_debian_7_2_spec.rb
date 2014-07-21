@@ -109,8 +109,14 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
     end
 
     it 'disables service[default delete apache2]' do
-      expect(debian_7_2_multi_stepinto_run).to disable_service('default delete apache2')
-      expect(debian_7_2_multi_stepinto_run).to stop_service('default delete apache2')
+      expect(debian_7_2_multi_stepinto_run).to disable_service('default delete apache2').with(
+        :service_name => 'apache2',
+        :provider => Chef::Provider::Service::Init::Debian
+        )
+      expect(debian_7_2_multi_stepinto_run).to stop_service('default delete apache2').with(
+        :service_name => 'apache2',
+        :provider => Chef::Provider::Service::Init::Debian
+        )
     end
 
     it 'does not run_bash[default delete remove_package_config]' do
@@ -121,74 +127,94 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
 
     it 'deletes directory[default delete /var/cache/apache2]' do
       expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /var/cache/apache2').with(
+        :path => '/var/cache/apache2',
         :recursive => true
         )
     end
 
     it 'deletes directory[default delete /var/log/apache2]' do
       expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /var/log/apache2').with(
+        :path => '/var/log/apache2',
         :recursive => true
         )
     end
 
     it 'deletes directory[default delete /var/run/apache2]' do
       expect(debian_7_2_multi_stepinto_run).to_not delete_directory('default delete /var/run/apache2').with(
+        :path => '/var/run/apache2',
         :recursive => true
         )
     end
 
     it 'deletes directory[default delete /etc/apache2/conf.d]' do
       expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /etc/apache2/conf.d').with(
+        :path => '/etc/apache2/conf.d',
         :recursive => true
         )
     end
 
     it 'deletes directory[default delete /etc/apache2/mods-available]' do
       expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /etc/apache2/mods-available').with(
+        :path => '/etc/apache2/mods-available',
         :recursive => true
         )
     end
 
     it 'deletes directory[default delete /etc/apache2/mods-enabled]' do
       expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /etc/apache2/mods-enabled').with(
+        :path => '/etc/apache2/mods-enabled',
         :recursive => true
         )
     end
 
     it 'deletes directory[default delete /etc/apache2/sites-available]' do
       expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /etc/apache2/sites-available').with(
+        :path => '/etc/apache2/sites-available',
         :recursive => true
         )
     end
 
     it 'deletes directory[default delete /etc/apache2/sites-enabled]' do
       expect(debian_7_2_multi_stepinto_run).to delete_directory('default delete /etc/apache2/sites-enabled').with(
+        :path => '/etc/apache2/sites-enabled',
         :recursive => true
         )
     end
 
     it 'deletes file[default delete /usr/sbin/a2enmod]' do
-      expect(debian_7_2_multi_stepinto_run).to delete_file('default delete /usr/sbin/a2enmod')
+      expect(debian_7_2_multi_stepinto_run).to delete_file('default delete /usr/sbin/a2enmod').with(
+        :path => '/usr/sbin/a2enmod'
+        )
     end
 
     it 'deletes link[default delete /usr/sbin/a2dismod]' do
-      expect(debian_7_2_multi_stepinto_run).to delete_link('default delete /usr/sbin/a2dismod')
+      expect(debian_7_2_multi_stepinto_run).to delete_link('default delete /usr/sbin/a2dismod').with(
+        :path => '/usr/sbin/a2dismod'
+        )
     end
 
     it 'deletes link[default delete /usr/sbin/a2ensite]' do
-      expect(debian_7_2_multi_stepinto_run).to delete_link('default delete /usr/sbin/a2ensite')
+      expect(debian_7_2_multi_stepinto_run).to delete_link('default delete /usr/sbin/a2ensite').with(
+        :path => '/usr/sbin/a2ensite'
+        )
     end
 
     it 'deletes link[default delete /usr/sbin/a2dissite]' do
-      expect(debian_7_2_multi_stepinto_run).to delete_link('default delete /usr/sbin/a2dissite')
+      expect(debian_7_2_multi_stepinto_run).to delete_link('default delete /usr/sbin/a2dissite').with(
+        :path => '/usr/sbin/a2dissite'
+        )
     end
 
     it 'deletes file[default delete /etc/apache2/magic]' do
-      expect(debian_7_2_multi_stepinto_run).to delete_file('default delete /etc/apache2/magic')
+      expect(debian_7_2_multi_stepinto_run).to delete_file('default delete /etc/apache2/magic').with(
+        :path => '/etc/apache2/magic'
+        )
     end
 
     it 'deletes file[default delete /etc/apache2/ports.conf]' do
-      expect(debian_7_2_multi_stepinto_run).to delete_file('default delete /etc/apache2/ports.conf')
+      expect(debian_7_2_multi_stepinto_run).to delete_file('default delete /etc/apache2/ports.conf').with(
+        :path => '/etc/apache2/ports.conf'
+        )
     end
   end
 
@@ -287,8 +313,6 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
         )
     end
 
-    # FIXME: render tempalte
-    # FIXME: variables?
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/envvars]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/envvars').with(
         :path => '/etc/apache2-instance-1/envvars',
@@ -382,7 +406,6 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
         )
     end
 
-    # FIXME: render template
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.conf]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/mods-available/mpm_prefork.conf').with(
         :path => '/etc/apache2-instance-1/mods-available/mpm_prefork.conf',
@@ -425,7 +448,6 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
         )
     end
 
-    # FIXME: render template
     it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/apache2.conf]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/apache2.conf').with(
         :path => '/etc/apache2-instance-1/apache2.conf',
@@ -449,8 +471,14 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
     end
 
     it 'steps into httpd_service[instance-1] and manages service[instance-1 create apache2-instance-1]' do
-      expect(debian_7_2_multi_stepinto_run).to start_service('instance-1 create apache2-instance-1')
-      expect(debian_7_2_multi_stepinto_run).to enable_service('instance-1 create apache2-instance-1')
+      expect(debian_7_2_multi_stepinto_run).to start_service('instance-1 create apache2-instance-1').with(
+        :service_name => 'apache2-instance-1',
+        :provider => Chef::Provider::Service::Init::Debian
+        )
+      expect(debian_7_2_multi_stepinto_run).to enable_service('instance-1 create apache2-instance-1').with(
+        :service_name => 'apache2-instance-1',
+        :provider => Chef::Provider::Service::Init::Debian
+        )
     end
   end
 
@@ -549,8 +577,6 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
         )
     end
 
-    # FIXME: render tempalte
-    # FIXME: variables?
     it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/envvars]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/envvars').with(
         :path => '/etc/apache2-instance-2/envvars',
@@ -633,7 +659,6 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
         )
     end
 
-    # FIXME: render template
     it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/mods-available/mpm_prefork.conf]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/mods-available/mpm_prefork.conf').with(
         :path => '/etc/apache2-instance-2/mods-available/mpm_prefork.conf',
@@ -676,7 +701,6 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
         )
     end
 
-    # FIXME: render template
     it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/apache2.conf]' do
       expect(debian_7_2_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/apache2.conf').with(
         :path => '/etc/apache2-instance-2/apache2.conf',
@@ -689,8 +713,14 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
     end
 
     it 'steps into httpd_service[instance-2] and manages service[instance-2 create apache2-instance-2]' do
-      expect(debian_7_2_multi_stepinto_run).to start_service('instance-2 create apache2-instance-2')
-      expect(debian_7_2_multi_stepinto_run).to enable_service('instance-2 create apache2-instance-2')
+      expect(debian_7_2_multi_stepinto_run).to start_service('instance-2 create apache2-instance-2').with(
+        :service_name => 'apache2-instance-2',
+        :provider => Chef::Provider::Service::Init::Debian
+        )
+      expect(debian_7_2_multi_stepinto_run).to enable_service('instance-2 create apache2-instance-2').with(
+        :service_name => 'apache2-instance-2',
+        :provider => Chef::Provider::Service::Init::Debian
+        )
     end
   end
 end
