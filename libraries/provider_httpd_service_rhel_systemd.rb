@@ -296,8 +296,8 @@ class Chef
             directory "#{new_resource.name} create /run/#{apache_name}" do
               path "/run/#{apache_name}"
               owner 'root'
-              group 'apache'
-              mode '0710'
+              group 'root'
+              mode '0755'
               recursive true
               action :create
             end

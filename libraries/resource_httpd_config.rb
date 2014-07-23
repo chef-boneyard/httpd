@@ -23,7 +23,7 @@ class Chef
           :kind_of => String
           )
       end
-      
+
       def instance(arg = nil)
         set_or_return(
           :instance,
