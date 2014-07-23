@@ -96,7 +96,7 @@ class Chef
               action :install
             end
 
-            # modules
+            # modules statically compiled into debian
             if apache_version.to_f < 2.4
               %w( log_config logio ).each do |m|
                 httpd_module "#{new_resource.name} create #{m}" do
@@ -114,6 +114,16 @@ class Chef
                   httpd_instance apache_name
                   action :create
                 end
+              end
+            end
+
+            # modules required for 'hello world'
+            %w( authz_core ).each do |m|
+              httpd_module "#{new_resource.name} create #{m}" do
+                module_name m
+                httpd_version apache_version
+                httpd_instance apache_name
+                action :create
               end
             end
 

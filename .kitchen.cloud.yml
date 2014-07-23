@@ -279,3 +279,10 @@ suites:
     attributes:
       httpd:
         version: '2.4'
+
+  #
+  # modules
+  #
+  - name: config
+    run_list:
+    - recipe[httpd_config]

@@ -72,9 +72,3 @@ class Chef
     end
   end
 end
-
-Chef::Platform.set :platform => :amazon, :resource => :httpd_module, :provider => Chef::Provider::HttpdModule::Rhel
-Chef::Platform.set :platform => :redhat, :resource => :httpd_module, :provider => Chef::Provider::HttpdModule::Rhel
-Chef::Platform.set :platform => :centos, :resource => :httpd_module, :provider => Chef::Provider::HttpdModule::Rhel
-Chef::Platform.set :platform => :oracle, :resource => :httpd_module, :provider => Chef::Provider::HttpdModule::Rhel
-Chef::Platform.set :platform => :scientific, :resource => :httpd_module, :provider => Chef::Provider::HttpdModule::Rhel
