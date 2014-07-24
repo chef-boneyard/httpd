@@ -1,10 +1,13 @@
 require 'chef/resource/lwrp_base'
+require_relative 'service_platform_info'
 
 class Chef
   class Resource
     class HttpdConfig < Chef::Resource
       def initialize(name = nil, run_context = nil)
         super
+
+        extend Httpd::Service::Helpers
 
         @resource_name = :httpd_config
         @config_name = name
@@ -14,6 +17,12 @@ class Chef
         @instance = 'default'
         @source = nil
         @cookbook = nil
+
+        @httpd_version = default_httpd_version_for(
+          node['platform'],
+          node['platform_family'],
+          node['platform_version']
+          )
       end
 
       def config_name(arg = nil)
@@ -43,6 +52,14 @@ class Chef
       def cookbook(arg = nil)
         set_or_return(
           :cookbook,
+          arg,
+          :kind_of => String
+          )
+      end
+
+      def httpd_version(arg = nil)
+        set_or_return(
+          :httpd_version,
           arg,
           :kind_of => String
           )

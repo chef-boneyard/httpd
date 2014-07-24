@@ -102,7 +102,7 @@ class Chef
                 httpd_module "#{new_resource.name} create #{m}" do
                   module_name m
                   httpd_version apache_version
-                  httpd_instance apache_name
+                  instance apache_name
                   action :create
                 end
               end
@@ -111,7 +111,7 @@ class Chef
                 httpd_module "#{new_resource.name} create #{m}" do
                   module_name m
                   httpd_version apache_version
-                  httpd_instance apache_name
+                  instance apache_name
                   action :create
                 end
               end
@@ -144,7 +144,7 @@ class Chef
               httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
                 module_name "mpm_#{new_resource.mpm}"
                 httpd_version apache_version
-                httpd_instance apache_name
+                instance apache_name
                 action :create
               end
             end

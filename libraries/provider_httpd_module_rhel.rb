@@ -26,7 +26,7 @@ class Chef
           module_path = "/usr/#{libarch}/httpd/modules/mod_#{module_name}.so"
 
           # support multiple instances
-          new_resource.httpd_instance == 'default' ? apache_name = 'httpd' : apache_name = new_resource.httpd_instance
+          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = new_resource.instance
 
           #
           # resources

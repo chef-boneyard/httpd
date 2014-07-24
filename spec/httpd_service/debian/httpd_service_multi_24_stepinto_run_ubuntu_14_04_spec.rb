@@ -438,7 +438,7 @@ describe 'httpd_service::multi 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-1] and creates httpd_module[instance-1 create mpm_prefork]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_httpd_module('instance-1 create mpm_prefork').with(
         :module_name => 'mpm_prefork',
-        :httpd_instance => 'instance-1',
+        :instance => 'instance-1',
         :httpd_version => '2.4'
         )
     end
@@ -715,7 +715,7 @@ describe 'httpd_service::multi 2.4 on ubuntu-14.04' do
     it 'steps into httpd_service[instance-2] and creates httpd_module[instance-2 create mpm_prefork]' do
       expect(ubuntu_14_04_multi_stepinto_run).to create_httpd_module('instance-2 create mpm_prefork').with(
         :module_name => 'mpm_prefork',
-        :httpd_instance => 'instance-2',
+        :instance => 'instance-2',
         :httpd_version => '2.4'
         )
     end

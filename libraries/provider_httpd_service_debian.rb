@@ -325,7 +325,7 @@ class Chef
           unless new_resource.version.to_f < 2.4
             httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
               module_name "mpm_#{new_resource.mpm}"
-              httpd_instance new_resource.name
+              instance new_resource.name
               httpd_version new_resource.version
               action :create
             end

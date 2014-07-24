@@ -16,7 +16,7 @@ class Chef
           #
           module_name = new_resource.module_name
           module_path = "/usr/lib/apache2/modules/mod_#{module_name}.so"
-          new_resource.httpd_instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.httpd_instance}"
+          new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
 
           #
           # resources
@@ -80,7 +80,7 @@ class Chef
         #
         # local variables
         #
-        new_resource.httpd_instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.httpd_instance}"
+        new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
 
         #
         # resources

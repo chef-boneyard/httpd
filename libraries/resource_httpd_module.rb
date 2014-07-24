@@ -16,7 +16,7 @@ class Chef
         @action = :create
         @allowed_actions = [:create, :delete]
 
-        @httpd_instance = 'default'
+        @instance = 'default'
 
         # set default values
         @httpd_version = default_httpd_version_for(
@@ -45,9 +45,9 @@ class Chef
           )
       end
 
-      def httpd_instance(arg = nil)
+      def instance(arg = nil)
         set_or_return(
-          :httpd_instance,
+          :instance,
           arg,
           :kind_of => String
           )

@@ -102,7 +102,7 @@ class Chef
                 httpd_module "#{new_resource.name} create #{m}" do
                   module_name m
                   httpd_version apache_version
-                  httpd_instance apache_name
+                  instance apache_name
                   action :create
                 end
               end
@@ -111,18 +111,19 @@ class Chef
                 httpd_module "#{new_resource.name} create #{m}" do
                   module_name m
                   httpd_version apache_version
-                  httpd_instance apache_name
+                  instance apache_name
                   action :create
                 end
               end
             end
 
+            # FIXME
             # modules required for 'hello world'
-            %w( authz_core ).each do |m|
+            %w( authz_core autoindex alias ).each do |m|
               httpd_module "#{new_resource.name} create #{m}" do
                 module_name m
                 httpd_version apache_version
-                httpd_instance apache_name
+                instance apache_name
                 action :create
               end
             end
@@ -154,7 +155,7 @@ class Chef
               httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
                 module_name "mpm_#{new_resource.mpm}"
                 httpd_version apache_version
-                httpd_instance apache_name
+                instance apache_name
                 action :create
               end
             end
@@ -289,7 +290,7 @@ class Chef
             httpd_module "#{new_resource.name} create systemd" do
               module_name 'systemd'
               httpd_version apache_version
-              httpd_instance apache_name
+              instance apache_name
               action :create
             end
 
@@ -360,7 +361,7 @@ class Chef
             # support multiple instances
             new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
 
-            service "#{new_resource.name} delete #{apache_name}" do
+            service "#{new_resource.name} reload #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Systemd
