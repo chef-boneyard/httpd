@@ -1,12 +1,13 @@
 require 'serverspec'
 
 include Serverspec::Helper::Exec
-include  Serverspec::Helper::DetectOS
+include Serverspec::Helper::DetectOS
 
 property[:os] = backend.check_os
-os = property[:os][:family]
+platform = property[:os][:family]
+platform_version = property[:os][:release]
 
-if os =~ /Debian/ || os =~ /Ubuntu/
+if platform =~ /Debian/
   describe file('/etc/apache2/conf.d') do
     it { should be_directory }
     it { should be_mode 755 }
@@ -19,5 +20,52 @@ if os =~ /Debian/ || os =~ /Ubuntu/
     it { should be_mode 644 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
+  end
+end
+
+if platform =~ /Ubuntu/
+  if platform_version =~ /12.04/
+    describe file('/etc/apache2/conf.d') do
+      it { should be_directory }
+      it { should be_mode 755 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+    end
+
+    describe file('/etc/apache2/conf.d/hello.conf') do
+      it { should be_file }
+      it { should be_mode 644 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+    end
+  elsif platform_version =~ /14.04/
+    describe file('/etc/apache2/conf-available') do
+      it { should be_directory }
+      it { should be_mode 755 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+    end
+
+    describe file('/etc/apache2/conf-enabled') do
+      it { should be_directory }
+      it { should be_mode 755 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+    end
+
+    describe file('/etc/apache2/conf-available/hello.conf') do
+      it { should be_file }
+      it { should be_mode 644 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+    end
+
+    describe file('/etc/apache2/conf-enabled/hello.conf') do
+      it { should be_file }
+      it { should be_mode 777 }
+      it { should be_owned_by 'root' }
+      it { should be_grouped_into 'root' }
+      it { should be_linked_to '/etc/apache2/conf-available/hello.conf' }
+    end
   end
 end

@@ -1,7 +1,7 @@
 require 'serverspec'
 
 include Serverspec::Helper::Exec
-include  Serverspec::Helper::DetectOS
+include Serverspec::Helper::DetectOS
 
 property[:os] = backend.check_os
 os = property[:os][:family]

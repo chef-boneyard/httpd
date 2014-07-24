@@ -40,6 +40,7 @@ class Chef
           execute "#{new_resource.name} create remove_package_config" do
             user 'root'
             command "rm -rf /etc/#{apache_name}/conf.modules.d"
+            only_if { new_resource.package_name == 'httpd' }
             action :nothing
           end
 

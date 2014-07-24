@@ -24,7 +24,7 @@ class Chef
             recursive true
             action :create
           end
-          
+
           template "#{new_resource.name} create #{new_resource.config_name}" do
             path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
             source new_resource.source

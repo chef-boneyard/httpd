@@ -1,12 +1,12 @@
 require 'serverspec'
 
 include Serverspec::Helper::Exec
-include  Serverspec::Helper::DetectOS
+include Serverspec::Helper::DetectOS
 
 property[:os] = backend.check_os
-os = property[:os][:family]
+platform = property[:os][:family]
 
-if os =~ /RedHat/ || os =~ /RedHat7/ || os =~ /Fedora/
+if platform =~ /RedHat/ || platform =~ /RedHat7/ || platform =~ /Fedora/
   describe file('/etc/httpd/conf.d') do
     it { should be_directory }
     it { should be_mode 755 }
