@@ -12,7 +12,7 @@ class Chef
 
         action :create do
           # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = new_resource.instance
+          new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
 
           #
           # resources
@@ -29,6 +29,9 @@ class Chef
 
             template "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
               path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
+              owner 'root'
+              group 'root'
+              mode '0644'
               source new_resource.source
               cookbook new_resource.cookbook
               action :create
@@ -45,6 +48,9 @@ class Chef
 
             template "#{new_resource.name} create /etc/#{apache_name}/conf-available/#{new_resource.config_name}.conf" do
               path "/etc/#{apache_name}/conf-available/#{new_resource.config_name}.conf"
+              owner 'root'
+              group 'root'
+              mode '0644'
               source new_resource.source
               cookbook new_resource.cookbook
               action :create
@@ -59,7 +65,7 @@ class Chef
               action :create
             end
 
-            link "#{new_resource.name} create /etc/#{apache_name}/conf-enabled/#{new_resource.config_name}" do
+            link "#{new_resource.name} create /etc/#{apache_name}/conf-enabled/#{new_resource.config_name}.conf" do
               target_file "/etc/#{apache_name}/conf-enabled/#{new_resource.config_name}.conf"
               to "/etc/#{apache_name}/conf-available/#{new_resource.config_name}.conf"
               action :create

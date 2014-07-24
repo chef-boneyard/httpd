@@ -12,21 +12,25 @@ class Chef
 
         action :create do
           # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = new_resource.instance
+          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
 
           #
           # resources
           #
           directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
-            path "/etc/#{apache_name}/conf.d/"
+            path "/etc/#{apache_name}/conf.d"
             owner 'root'
             group 'root'
+            mode '0755'
             recursive true
             action :create
           end
 
-          template "#{new_resource.name} create #{new_resource.config_name}" do
+          template "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
             path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
+            owner 'root'
+            group 'root'
+            mode '0644'
             source new_resource.source
             cookbook new_resource.cookbook
             action :create
@@ -34,7 +38,7 @@ class Chef
         end
 
         action :delete do
-          file "#{new_resource.name} create #{new_resource.config_name}" do
+          file "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}" do
             path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
             action :create
           end
