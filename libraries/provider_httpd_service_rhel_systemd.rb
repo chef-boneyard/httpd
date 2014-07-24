@@ -96,7 +96,8 @@ class Chef
               action :install
             end
 
-            # modules statically compiled into debian
+            # achieve parity with modules statically compiled into
+            # debian and ubuntu
             if apache_version.to_f < 2.4
               %w( log_config logio ).each do |m|
                 httpd_module "#{new_resource.name} create #{m}" do
@@ -119,14 +120,14 @@ class Chef
 
             # FIXME
             # modules required for 'hello world'
-            %w( authz_core autoindex alias ).each do |m|
-              httpd_module "#{new_resource.name} create #{m}" do
-                module_name m
-                httpd_version apache_version
-                instance apache_name
-                action :create
-              end
-            end
+            # %w( authz_core autoindex alias ).each do |m|
+            #   httpd_module "#{new_resource.name} create #{m}" do
+            #     module_name m
+            #     httpd_version apache_version
+            #     instance apache_name
+            #     action :create
+            #   end
+            # end
 
             # httpd binary symlinks
             link "#{new_resource.name} create /usr/sbin/#{apache_name}" do

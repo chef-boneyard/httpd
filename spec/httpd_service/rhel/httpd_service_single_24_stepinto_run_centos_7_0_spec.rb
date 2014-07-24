@@ -240,8 +240,8 @@ describe 'httpd_service::single on rhel-7.0' do
       expect(httpd_service_single_24_run_centos_7_0).to create_directory('default create /run/httpd').with(
         :path => '/run/httpd',
         :user => 'root',
-        :group => 'apache',
-        :mode => '0710',
+        :group => 'root',
+        :mode => '0755',
         :recursive => true
         )
     end

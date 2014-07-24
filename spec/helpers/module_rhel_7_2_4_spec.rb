@@ -26,15 +26,8 @@ describe 'looking up module package name' do
     )
 
     rhel_7_2_4_other = %w(
-      annodex auth_cas auth_kerb auth_mellon auth_ntlm_winbind
-      authnz_external authnz_pam auth_token auth_xradius autoindex_mb
-      bw cluster cluster-java cluster-javadoc dav_svn dnssd evasive
-      fcgid flvx form form form-devel form-devel geoip gnutls
-      intercept_form_submit ldap limitipconn log_post lookup_identity
-      mirrorbrain nss passenger perl perl perl-devel perl-devel
-      proxy_html proxy_uwsgi qos revocator revocator security
-      security_crs security_crs-extras selinux session speedycgi ssl
-      suphp wsgi wso2-axis2 xsendfile
+      auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
+      security_crs session ssl wsgi
     )
 
     rhel_7_2_4_core.each do |m|
