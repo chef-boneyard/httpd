@@ -285,3 +285,4 @@ suites:
   - name: config
     run_list:
     - recipe[httpd_config]
+    excludes: 'fedora-20' 

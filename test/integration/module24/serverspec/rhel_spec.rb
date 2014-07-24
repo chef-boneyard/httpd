@@ -6,7 +6,6 @@ include  Serverspec::Helper::DetectOS
 property[:os] = backend.check_os
 os = property[:os][:family]
 
-puts "SEANDEBUG: #{os}"
 if os =~ /RedHat/ || os =~ /RedHat7/ || os =~ /Fedora/
   # auth_basic
   describe file('/usr/lib64/httpd/modules/mod_auth_basic.so') do
