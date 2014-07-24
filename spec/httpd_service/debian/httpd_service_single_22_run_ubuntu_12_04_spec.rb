@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe 'httpd_service::single on rhel-5.9' do
-  let(:httpd_service_single_22_run_centos_5_9) do
+describe 'httpd_service::single on ubuntu-12.04' do
+  let(:httpd_service_single_22_run_ubuntu_12_04) do
     ChefSpec::Runner.new(
-      :platform => 'centos',
-      :version => '5.9'
+      :platform => 'ubuntu',
+      :version => '12.04'
       ).converge('httpd_service::single')
   end
 
   context 'when using default parameters' do
     it 'creates httpd_service[default]' do
-      expect(httpd_service_single_22_run_centos_5_9).to create_httpd_service('default').with(
+      expect(httpd_service_single_22_run_ubuntu_12_04).to create_httpd_service('default').with(
         :contact => 'webmaster@localhost',
         :hostname_lookups => 'off',
         :keepalive => true,
@@ -19,9 +19,9 @@ describe 'httpd_service::single on rhel-5.9' do
         :listen_addresses => ['0.0.0.0'],
         :listen_ports => %w(80 443),
         :log_level => 'warn',
-        :package_name => 'httpd',
-        :run_user => 'apache',
-        :run_group => 'apache',
+        :package_name => 'apache2',
+        :run_user => 'www-data',
+        :run_group => 'www-data',
         :timeout => '400',
         :version => '2.2',
         :mpm => 'worker',
