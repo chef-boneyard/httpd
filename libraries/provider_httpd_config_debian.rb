@@ -11,6 +11,9 @@ class Chef
         end
 
         action :create do
+          #
+          # local variables
+          #
           # support multiple instances
           new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
 
@@ -32,6 +35,7 @@ class Chef
               owner 'root'
               group 'root'
               mode '0644'
+              variables(new_resource.variables)
               source new_resource.source
               cookbook new_resource.cookbook
               action :create
@@ -51,6 +55,7 @@ class Chef
               owner 'root'
               group 'root'
               mode '0644'
+              variables(new_resource.variables)
               source new_resource.source
               cookbook new_resource.cookbook
               action :create
@@ -74,6 +79,15 @@ class Chef
         end
 
         action :delete do
+          #
+          # local variables
+          #
+          # support multiple instances
+          new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
+
+          #
+          # resources
+          #
           if new_resource.httpd_version.to_f < 2.4
             file "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
               path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"

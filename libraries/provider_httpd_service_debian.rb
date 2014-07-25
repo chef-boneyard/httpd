@@ -102,7 +102,7 @@ class Chef
 
           # The init scripts that ship with 2.2 and 2.4 on
           # debian/ubuntu behave differently. 2.2 places in /var/run/apache-name/,
-          # and 2.4 stores pids as /var/run/apache2/apache2-instance_name
+          # and 2.4 stores pids as /var/run/apache2/apache2-service_name
           if new_resource.version.to_f < 2.4
             directory "#{new_resource.name} create /var/run/#{apache_name}" do
               path "/var/run/#{apache_name}"
@@ -313,7 +313,7 @@ class Chef
           #
           # With Apache 2.2, only one mpm package can be installed
           # at any given moment. Installing one will uninstall the
-          # others. Therefore, all httpd_service instances on debian 7, or
+          # others. Therefore, all service instances on debian 7, or
           # ubuntu below 14.04 will need to have the same MPM per
           # machine or container or things can get weird.
           package "#{new_resource.name} create apache2-mpm-#{new_resource.mpm}" do
@@ -325,104 +325,57 @@ class Chef
           unless new_resource.version.to_f < 2.4
             httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
               module_name "mpm_#{new_resource.mpm}"
-              instance new_resource.name
+              instance new_resource.instance_name
               httpd_version new_resource.version
               action :create
             end
           end
 
-          template "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf" do
-            path "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf"
-            source "#{new_resource.version}/mods/mpm.conf.erb"
-            owner 'root'
-            group 'root'
-            mode '0644'
+          httpd_config "#{new_resource.name} create mpm_#{new_resource.mpm}" do
+            config_name "mpm_#{new_resource.mpm}"
+            instance new_resource.instance_name
+            source 'mpm.conf.erb'
+            variables(:config => new_resource)
             cookbook 'httpd'
-            variables(
-              :mpm => new_resource.mpm,
-              :startservers => new_resource.startservers,
-              :minspareservers => new_resource.minspareservers,
-              :maxspareservers => new_resource.maxspareservers,
-              :maxclients => new_resource.maxclients,
-              :maxrequestsperchild => new_resource.maxrequestsperchild,
-              :minsparethreads => new_resource.minsparethreads,
-              :maxsparethreads => new_resource.maxsparethreads,
-              :threadlimit => new_resource.threadlimit,
-              :threadsperchild => new_resource.threadsperchild,
-              :maxrequestworkers => new_resource.maxrequestworkers,
-              :maxconnectionsperchild => new_resource.maxconnectionsperchild
-              )
             action :create
           end
 
-          link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf" do
-            target_file "/etc/#{apache_name}/mods-enabled/mpm_#{new_resource.mpm}.conf"
-            to "/etc/#{apache_name}/mods-available/mpm_#{new_resource.mpm}.conf"
-            action :create
-          end
-
-          # make sure only one mpm is loaded
+          # make sure there is only one MPM loaded
           case new_resource.mpm
           when 'prefork'
-            file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_worker.conf" do
-              path "/etc/#{apache_name}/mods-available/mpm_worker.conf"
+            httpd_config "#{new_resource.name} create mpm_worker" do
+              config_name 'mpm_worker'
+              instance new_resource.instance_name
               action :delete
             end
 
-            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_worker.conf" do
-              target_file "/etc/#{apache_name}/mods-enabled/mpm_worker.conf"
+            httpd_config "#{new_resource.name} create mpm_event" do
+              config_name 'mpm_event'
+              instance new_resource.instance_name
               action :delete
             end
-
-            file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_event.conf" do
-              path "/etc/#{apache_name}/mods-available/mpm_event.conf"
-              action :delete
-            end
-
-            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_event.conf" do
-              target_file "/etc/#{apache_name}/mods-enabled/mpm_event.conf"
-              action :delete
-            end
-
           when 'worker'
-            file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_prefork.conf" do
-              path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
+            httpd_config "#{new_resource.name} create mpm_prefork" do
+              config_name 'mpm_prefork'
+              instance new_resource.instance_name
               action :delete
             end
 
-            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_prefork.conf" do
-              target_file "/etc/#{apache_name}/mods-enabled/mpm_prefork.conf"
+            httpd_config "#{new_resource.name} create mpm_event" do
+              config_name 'mpm_event'
+              instance new_resource.instance_name
               action :delete
             end
-
-            file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_event.conf" do
-              path "/etc/#{apache_name}/mods-available/mpm_event.conf"
-              action :delete
-            end
-
-            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_event.conf" do
-              target_file "/etc/#{apache_name}/mods-enabled/mpm_event.conf"
-              action :delete
-            end
-
           when 'event'
-            file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_prefork.conf" do
-              path "/etc/#{apache_name}/mods-available/mpm_prefork.conf"
+            httpd_config "#{new_resource.name} create mpm_prefork" do
+              config_name 'mpm_prefork'
+              instance new_resource.instance_name
               action :delete
             end
 
-            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_prefork.conf" do
-              target_file "/etc/#{apache_name}/mods-enabled/mpm_prefork.conf"
-              action :delete
-            end
-
-            file "#{new_resource.name} create /etc/#{apache_name}/mods-available/mpm_worker.conf" do
-              path "/etc/#{apache_name}/mods-available/mpm_worker.conf"
-              action :delete
-            end
-
-            link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/mpm_worker.conf" do
-              target_file "/etc/#{apache_name}/mods-enabled/mpm_worker.conf"
+            httpd_config "#{new_resource.name} create mpm_worker" do
+              config_name 'mpm_worker'
+              instance new_resource.instance_name
               action :delete
             end
           end

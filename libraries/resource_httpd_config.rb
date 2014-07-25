@@ -16,6 +16,7 @@ class Chef
 
         @instance = 'default'
         @source = nil
+        @variables = nil
         @cookbook = nil
 
         @httpd_version = default_httpd_version_for(
@@ -46,6 +47,14 @@ class Chef
           :source,
           arg,
           :kind_of => String
+          )
+      end
+
+      def variables(arg = nil)
+        set_or_return(
+          :variables,
+          arg,
+          :kind_of => [Hash]
           )
       end
 

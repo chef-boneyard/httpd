@@ -221,45 +221,26 @@ describe 'httpd_service::single on debian-7.2' do
       )
   end
 
-  it 'steps into httpd_service[default] and creates template[default create /etc/apache2/mods-available/mpm_worker.conf]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_template('default create /etc/apache2/mods-available/mpm_worker.conf').with(
-      :path => '/etc/apache2/mods-available/mpm_worker.conf',
-      :source => '2.2/mods/mpm.conf.erb',
-      :owner => 'root',
-      :group => 'root',
-      :mode => '0644',
+  it 'steps into httpd_service[default] and creates httpd_config[default create mpm_worker]' do
+    expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_httpd_config('default create mpm_worker').with(
+      :config_name => 'mpm_worker',
+      :instance => 'default',
+      :source => 'mpm.conf.erb',
       :cookbook => 'httpd'
       )
   end
 
-  it 'steps into httpd_service[default] and creates link[default create /etc/apache2/mods-enabled/mpm_worker.conf]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_link('default create /etc/apache2/mods-enabled/mpm_worker.conf').with(
-      :target_file => '/etc/apache2/mods-enabled/mpm_worker.conf',
-      :to => '/etc/apache2/mods-available/mpm_worker.conf'
+  it 'steps into httpd_service[default] and delete httpd_config[default create mpm_prefork]' do
+    expect(httpd_service_single_22_stepinto_run_debian_7_2).to delete_httpd_config('default create mpm_prefork').with(
+      :config_name => 'mpm_prefork',
+      :instance => 'default'
       )
   end
 
-  it 'steps into httpd_service[default] and delete file[default create /etc/apache2/mods-available/mpm_prefork.conf]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to delete_file('default create /etc/apache2/mods-available/mpm_prefork.conf').with(
-      :path => '/etc/apache2/mods-available/mpm_prefork.conf'
-      )
-  end
-
-  it 'steps into httpd_service[default] and delete link[default create /etc/apache2/mods-enabled/mpm_prefork.conf]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to delete_link('default create /etc/apache2/mods-enabled/mpm_prefork.conf').with(
-      :target_file => '/etc/apache2/mods-enabled/mpm_prefork.conf'
-      )
-  end
-
-  it 'steps into httpd_service[default] and delete file[default create /etc/apache2/mods-available/mpm_event.conf]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to delete_file('default create /etc/apache2/mods-available/mpm_event.conf').with(
-      :path => '/etc/apache2/mods-available/mpm_event.conf'
-      )
-  end
-
-  it 'steps into httpd_service[default] and delete link[default create /etc/apache2/mods-enabled/mpm_event.conf]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to delete_link('default create /etc/apache2/mods-enabled/mpm_event.conf').with(
-      :target_file => '/etc/apache2/mods-enabled/mpm_event.conf'
+  it 'steps into httpd_service[default] and delete httpd_config[default create mpm_event]' do
+    expect(httpd_service_single_22_stepinto_run_debian_7_2).to delete_httpd_config('default create mpm_event').with(
+      :config_name => 'mpm_event',
+      :instance => 'default'
       )
   end
 
@@ -275,7 +256,11 @@ describe 'httpd_service::single on debian-7.2' do
   end
 
   it 'steps into httpd_service[default] and manages service[default create apache2]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to start_service('default create apache2')
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to enable_service('default create apache2')
+    expect(httpd_service_single_22_stepinto_run_debian_7_2).to start_service('default create apache2').with(
+      :provider => Chef::Provider::Service::Init::Debian
+      )
+    expect(httpd_service_single_22_stepinto_run_debian_7_2).to enable_service('default create apache2').with(
+      :provider => Chef::Provider::Service::Init::Debian
+      )
   end
 end

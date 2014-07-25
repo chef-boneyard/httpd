@@ -11,7 +11,7 @@ class Chef
         extend Httpd::Service::Helpers
 
         @resource_name = :httpd_service
-        @service_name = name
+        @instance_name = name
 
         @action = :create
         @allowed_actions = [:create, :delete, :restart, :reload]
@@ -66,8 +66,15 @@ class Chef
           node['platform_version']
           )
 
-        @service_name = name
         @timeout = '400'
+      end
+
+      def instance_name(arg = nil)
+        set_or_return(
+          :instance_name,
+          arg,
+          :kind_of => String
+          )
       end
 
       def contact(arg = nil)
