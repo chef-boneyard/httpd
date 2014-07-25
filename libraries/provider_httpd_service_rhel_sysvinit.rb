@@ -40,7 +40,7 @@ class Chef
             apache_version = new_resource.version
 
             # support multiple instances
-            new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
+            new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
 
             # PID file
             case elversion
@@ -60,8 +60,7 @@ class Chef
             if apache_version.to_f < 2.4
               includes = [
                 'conf.d/*.conf',
-                'conf.modules.d/*.conf',
-                'conf.modules.d/*.load'
+                'conf.d/*.load'
               ]
             else
               include_optionals = [
@@ -96,13 +95,14 @@ class Chef
               action :install
             end
 
-            # modules
+            # achieve parity with modules statically compiled into
+            # debian and ubuntu
             if apache_version.to_f < 2.4
               %w( log_config logio ).each do |m|
                 httpd_module "#{new_resource.name} create #{m}" do
                   module_name m
                   httpd_version apache_version
-                  instance apache_name
+                  instance new_resource.instance
                   action :create
                 end
               end
@@ -111,7 +111,7 @@ class Chef
                 httpd_module "#{new_resource.name} create #{m}" do
                   module_name m
                   httpd_version apache_version
-                  instance apache_name
+                  instance new_resource.instance
                   action :create
                 end
               end
@@ -121,12 +121,12 @@ class Chef
             link "#{new_resource.name} create /usr/sbin/#{apache_name}" do
               target_file "/usr/sbin/#{apache_name}"
               to '/usr/sbin/httpd'
-              not_if { apache_name == 'httpd' }
               action :create
+              not_if { apache_name == 'httpd' }
             end
 
+            # MPM loading
             if apache_version.to_f < 2.4
-              # MPM binaries
               link "#{new_resource.name} create /usr/sbin/#{apache_name}.worker" do
                 target_file "/usr/sbin/#{apache_name}.worker"
                 to '/usr/sbin/httpd.worker'
@@ -144,9 +144,19 @@ class Chef
               httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
                 module_name "mpm_#{new_resource.mpm}"
                 httpd_version apache_version
-                instance apache_name
+                instance new_resource.instance
                 action :create
               end
+            end
+
+            # MPM configuration
+            httpd_config "#{new_resource.name} create mpm_#{new_resource.mpm}" do
+              config_name "mpm_#{new_resource.mpm}"
+              instance new_resource.instance
+              source 'mpm.conf.erb'
+              variables(:config => new_resource)
+              cookbook 'httpd'
+              action :create
             end
 
             # configuration directories
@@ -177,13 +187,15 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d" do
-              path "/etc/#{apache_name}/conf.modules.d"
-              user 'root'
-              group 'root'
-              mode '0755'
-              recursive true
-              action :create
+            unless apache_version.to_f < 2.4
+              directory "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d" do
+                path "/etc/#{apache_name}/conf.modules.d"
+                user 'root'
+                group 'root'
+                mode '0755'
+                recursive true
+                action :create
+              end
             end
 
             # support directories
@@ -316,7 +328,7 @@ class Chef
 
           action :delete do
             # support multiple instances
-            new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
+            new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
 
             service "#{new_resource.name} create #{apache_name}" do
               supports :restart => true, :reload => true, :status => true
@@ -327,7 +339,7 @@ class Chef
 
           action :restart do
             # support multiple instances
-            new_resource.name == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.name}"
+            new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
 
             service "#{new_resource.name} delete #{apache_name}" do
               service_name apache_name

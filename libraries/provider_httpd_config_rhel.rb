@@ -31,6 +31,7 @@ class Chef
             owner 'root'
             group 'root'
             mode '0644'
+            variables(new_resource.variables)
             source new_resource.source
             cookbook new_resource.cookbook
             action :create
@@ -38,6 +39,9 @@ class Chef
         end
 
         action :delete do
+          # support multiple instances
+          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
+
           file "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}" do
             path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
             action :create

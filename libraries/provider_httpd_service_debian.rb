@@ -325,7 +325,7 @@ class Chef
           unless new_resource.version.to_f < 2.4
             httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
               module_name "mpm_#{new_resource.mpm}"
-              instance new_resource.instance_name
+              instance new_resource.instance
               httpd_version new_resource.version
               action :create
             end
@@ -333,7 +333,7 @@ class Chef
 
           httpd_config "#{new_resource.name} create mpm_#{new_resource.mpm}" do
             config_name "mpm_#{new_resource.mpm}"
-            instance new_resource.instance_name
+            instance new_resource.instance
             source 'mpm.conf.erb'
             variables(:config => new_resource)
             cookbook 'httpd'
@@ -345,37 +345,37 @@ class Chef
           when 'prefork'
             httpd_config "#{new_resource.name} create mpm_worker" do
               config_name 'mpm_worker'
-              instance new_resource.instance_name
+              instance new_resource.instance
               action :delete
             end
 
             httpd_config "#{new_resource.name} create mpm_event" do
               config_name 'mpm_event'
-              instance new_resource.instance_name
+              instance new_resource.instance
               action :delete
             end
           when 'worker'
             httpd_config "#{new_resource.name} create mpm_prefork" do
               config_name 'mpm_prefork'
-              instance new_resource.instance_name
+              instance new_resource.instance
               action :delete
             end
 
             httpd_config "#{new_resource.name} create mpm_event" do
               config_name 'mpm_event'
-              instance new_resource.instance_name
+              instance new_resource.instance
               action :delete
             end
           when 'event'
             httpd_config "#{new_resource.name} create mpm_prefork" do
               config_name 'mpm_prefork'
-              instance new_resource.instance_name
+              instance new_resource.instance
               action :delete
             end
 
             httpd_config "#{new_resource.name} create mpm_worker" do
               config_name 'mpm_worker'
-              instance new_resource.instance_name
+              instance new_resource.instance
               action :delete
             end
           end

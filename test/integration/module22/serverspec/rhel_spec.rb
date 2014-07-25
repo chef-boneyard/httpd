@@ -15,14 +15,14 @@ if os =~ /RedHat/ || os =~ /RedHat7/ || os =~ /Fedora/
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d') do
+  describe file('/etc/httpd/conf.d') do
     it { should be_directory }
     it { should be_mode 755 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d/auth_basic.load') do
+  describe file('/etc/httpd/conf.d/auth_basic.load') do
     it { should be_file }
     it { should be_mode 644 }
     it { should be_owned_by 'root' }
@@ -37,14 +37,14 @@ if os =~ /RedHat/ || os =~ /RedHat7/ || os =~ /Fedora/
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d') do
+  describe file('/etc/httpd/conf.d') do
     it { should be_directory }
     it { should be_mode 755 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d/auth_kerb.load') do
+  describe file('/etc/httpd/conf.d/auth_kerb.load') do
     it { should be_file }
     it { should be_mode 644 }
     it { should be_owned_by 'root' }
