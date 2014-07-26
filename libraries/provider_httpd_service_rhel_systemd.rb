@@ -103,6 +103,7 @@ class Chef
                   module_name m
                   httpd_version apache_version
                   instance new_resource.instance
+                  notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
                   action :create
                 end
               end
@@ -112,6 +113,7 @@ class Chef
                   module_name m
                   httpd_version apache_version
                   instance new_resource.instance
+                  notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
                   action :create
                 end
               end
@@ -145,6 +147,7 @@ class Chef
                 module_name "mpm_#{new_resource.mpm}"
                 httpd_version apache_version
                 instance new_resource.instance
+                notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
                 action :create
               end
             end
@@ -156,6 +159,7 @@ class Chef
               source 'mpm.conf.erb'
               variables(:config => new_resource)
               cookbook 'httpd'
+              notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
               action :create
             end
 
@@ -292,6 +296,7 @@ class Chef
               module_name 'systemd'
               httpd_version apache_version
               instance new_resource.instance
+              notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
               action :create
             end
 
@@ -411,24 +416,6 @@ class Chef
                 target_file "/etc/#{apache_name}/run"
                 action :delete
               end
-            end
-
-            # SystemD
-            directory "#{new_resource.name} delete /run/#{apache_name}" do
-              path "/run/#{apache_name}"
-              recursive true
-              action :delete
-            end
-
-            file "#{new_resource.name} delete /usr/lib/systemd/system/#{apache_name}.service" do
-              path "/usr/lib/systemd/system/#{apache_name}.service"
-              action :delete
-            end
-
-            directory "#{new_resource.name} delete /usr/lib/systemd/system/#{apache_name}.service.d" do
-              path "/usr/lib/systemd/system/#{apache_name}.service.d"
-              recursive true
-              action :delete
             end
           end
 

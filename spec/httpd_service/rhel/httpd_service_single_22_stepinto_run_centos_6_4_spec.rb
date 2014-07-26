@@ -197,7 +197,7 @@ describe 'httpd_service::single on rhel-6.4' do
     end
 
     it 'creates template[default create /etc/rc.d/init.d/httpd]' do
-      expect(httpd_service_single_22_run_centos_6_4).to create_template('default create /etc/rc.d/init.d/httpd').with(
+      expect(httpd_service_single_22_run_centos_6_4).to create_template('default create /etc/init.d/httpd').with(
         :path => '/etc/init.d/httpd',
         :source => '2.2/sysvinit/el-6/httpd.erb',
         :owner => 'root',

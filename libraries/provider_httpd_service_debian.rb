@@ -327,6 +327,7 @@ class Chef
               module_name "mpm_#{new_resource.mpm}"
               instance new_resource.instance
               httpd_version new_resource.version
+              notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
               action :create
             end
           end
@@ -337,6 +338,7 @@ class Chef
             source 'mpm.conf.erb'
             variables(:config => new_resource)
             cookbook 'httpd'
+            notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
             action :create
           end
 
