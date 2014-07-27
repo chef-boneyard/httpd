@@ -15,19 +15,19 @@ class Chef
           # LWRP DSL methods
           #
           action :create do
-            set_class_variables(node, new_resource)
+            set_class_variables(node,new_resource)
             create_common
             create_service
           end
 
           action :delete do
-            set_class_variables(node, new_resource)
+            set_class_variables(node,new_resource)
             delete_common
             delete_service
           end
 
           action :restart do
-            set_class_variables(node, new_resource)
+            set_class_variables(node,new_resource)
 
             service "#{new_resource.name} delete #{@@apache_name}" do
               service_name @@apache_name
@@ -38,7 +38,7 @@ class Chef
           end
 
           action :reload do
-            set_class_variables(node, new_resource)
+            set_class_variables(node,new_resource)
 
             service "#{new_resource.name} reload #{@@apache_name}" do
               service_name @@apache_name
