@@ -9,7 +9,7 @@ class Chef
         @@apache_version = nil
         @@apache_name = nil
         @@includes = nil
-        @@include_optional = nil
+        @@include_optionals = nil
         @@pid_file = nil
         @@lock_file = nil
         @@mutex = nil
@@ -30,7 +30,7 @@ class Chef
           # Override this in a subclass
         end
 
-        def set_class_variables(node, resource)
+        def set_class_variables(node, _resource)
           case node['kernel']['machine']
           when 'x86_64'
             @@libarch = 'lib64'
@@ -158,7 +158,7 @@ class Chef
               target_file "/usr/sbin/#{@@apache_name}.event"
               to '/usr/sbin/httpd.event'
               action :create
-              not_if { apache_name == 'httpd' }
+              not_if { @@apache_name == 'httpd' }
             end
           else
             httpd_module "#{new_resource.name} create mpm_#{new_resource.mpm}" do
