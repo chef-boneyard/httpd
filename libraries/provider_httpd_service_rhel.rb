@@ -315,7 +315,7 @@ class Chef
           else
             link "#{new_resource.name} create /etc/#{apache_name}/run" do
               target_file "/etc/#{apache_name}/run"
-              to '../../var/run/'
+              to '../../var/run'
               action :create
             end
           end
@@ -354,25 +354,9 @@ class Chef
         end
 
         def delete_common
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
-          # enterprise linux version calculation
-          case node['platform_version'].to_i
-          when 5
-            elversion = 5
-          when 6
-            elversion = 6
-          when 7
-            elversion = 7
-          when 2013
-            elversion = 6
-          when 2014
-            elversion = 6
-          end
-
           link "#{new_resource.name} delete /usr/sbin/#{apache_name}" do
             target_file "/usr/sbin/#{apache_name}"
+            to "/usr/sbin/#{apache_name}"
             action :delete
             not_if { apache_name == 'httpd' }
           end
@@ -381,12 +365,14 @@ class Chef
           if new_resource.version.to_f < 2.4
             link "#{new_resource.name} delete /usr/sbin/#{apache_name}.worker" do
               target_file "/usr/sbin/#{apache_name}.worker"
+              to "/usr/sbin/#{apache_name}.worker"
               action :delete
               not_if { apache_name == 'httpd' }
             end
 
             link "#{new_resource.name} delete /usr/sbin/#{apache_name}.event" do
               target_file "/usr/sbin/#{apache_name}.event"
+              to "/usr/sbin/#{apache_name}.event"
               action :delete
               not_if { apache_name == 'httpd' }
             end

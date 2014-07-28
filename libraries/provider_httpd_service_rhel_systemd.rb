@@ -76,7 +76,7 @@ class Chef
           end
 
           def delete_service
-            service "#{new_resource.name} create #{apache_name}" do
+            service "#{new_resource.name} delete #{apache_name}" do
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Systemd
               action [:stop, :disable]

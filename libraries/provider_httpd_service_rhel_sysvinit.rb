@@ -67,59 +67,10 @@ class Chef
 
           def delete_service
             service "#{new_resource.name} create #{apache_name}" do
+              service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Redhat
               action [:stop, :disable]
-            end
-
-            link "#{new_resource.name} delete /usr/sbin/#{apache_name}" do
-              target_file "/usr/sbin/#{apache_name}"
-              action :delete
-              not_if { apache_name == 'httpd' }
-            end
-
-            if new_resource.version.to_f < 2.4
-              link "#{new_resource.name} delete /usr/sbin/#{apache_name}.worker" do
-                target_file "/usr/sbin/#{apache_name}.worker"
-                action :delete
-                not_if { apache_name == 'httpd' }
-              end
-
-              link "#{new_resource.name} delete /usr/sbin/#{apache_name}.event" do
-                target_file "/usr/sbin/#{apache_name}.event"
-                action :delete
-                not_if { apache_name == 'httpd' }
-              end
-            end
-
-            directory "#{new_resource.name} delete /etc/#{apache_name}" do
-              path "/etc/#{apache_name}"
-              recursive true
-              action :delete
-            end
-
-            directory "#{new_resource.name} delete /var/log/#{apache_name}" do
-              path "/var/log/#{apache_name}"
-              recursive true
-              action :delete
-            end
-
-            if elversion > 5
-              directory "#{new_resource.name} delete /var/run/#{apache_name}" do
-                path "/var/run/#{apache_name}"
-                recursive true
-                action :delete
-              end
-
-              link "#{new_resource.name} delete /etc/#{apache_name}/run" do
-                target_file "/etc/#{apache_name}/run"
-                action :delete
-              end
-            else
-              link "#{new_resource.name} delete /etc/#{apache_name}/run" do
-                target_file "/etc/#{apache_name}/run"
-                action :delete
-              end
             end
           end
         end
