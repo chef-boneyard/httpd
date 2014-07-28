@@ -4,9 +4,56 @@ class Chef
   class Provider
     class HttpdService
       class Rhel < Chef::Provider::HttpdService
+        # Enterprise linux version calculation
+        # Account for Amazon Linux.
+        def elversion
+          case node['platform_version'].to_i
+          when 5
+            elversion = 5
+          when 6
+            elversion = 6
+          when 7
+            elversion = 7
+          when 2013
+            elversion = 6
+          when 2014
+            elversion = 6
+          end
+          elversion
+        end
+
+        # support multiple instances
+        def apache_name
+          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
+          apache_name
+        end
+
+        # libarch
+        def libarch
+          case node['kernel']['machine']
+          when 'x86_64'
+            libarch = 'lib64'
+          when 'i686'
+            libarch = 'lib'
+          end
+          libarch
+        end
+
+        def pid_file
+          # PID file
+          case elversion
+          when 5
+            pid_file = "/var/run/#{apache_name}.pid"
+          when 6
+            pid_file = "/var/run/#{apache_name}/httpd.pid"
+          when 7
+            pid_file = "/var/run/#{apache_name}/httpd.pid"
+          end
+          pid_file
+        end
+
         # break common and service specific resources into separate
         # functions to allow overriding in a subclass.
-        
         def action_create
           create_common
           create_service
@@ -68,43 +115,6 @@ class Chef
         protected
 
         def create_common
-          #
-          # local variables
-          #
-          case node['kernel']['machine']
-          when 'x86_64'
-            libarch = 'lib64'
-          when 'i686'
-            libarch = 'lib'
-          end
-
-          # enterprise linux version calculation
-          case node['platform_version'].to_i
-          when 5
-            elversion = 5
-          when 6
-            elversion = 6
-          when 7
-            elversion = 7
-          when 2013
-            elversion = 6
-          when 2014
-            elversion = 6
-          end
-
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
-          # PID file
-          case elversion
-          when 5
-            pid_file = "/var/run/#{apache_name}.pid"
-          when 6
-            pid_file = "/var/run/#{apache_name}/httpd.pid"
-          when 7
-            pid_file = "/var/run/#{apache_name}/httpd.pid"
-          end
-
           # FIXME: parameterize
           lock_file = nil
           mutex = nil

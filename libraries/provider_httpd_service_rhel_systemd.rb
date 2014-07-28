@@ -12,9 +12,6 @@ class Chef
           end
 
           def action_restart
-            # support multiple instances
-            new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
             service "#{new_resource.name} delete #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
@@ -24,9 +21,6 @@ class Chef
           end
 
           def action_reload
-            # support multiple instances
-            new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
             service "#{new_resource.name} reload #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
@@ -36,9 +30,6 @@ class Chef
           end
 
           def create_service
-            # support multiple instances
-            new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
             httpd_module "#{new_resource.name} create systemd" do
               module_name 'systemd'
               httpd_version new_resource.version
@@ -85,8 +76,6 @@ class Chef
           end
 
           def delete_service
-            new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
             service "#{new_resource.name} create #{apache_name}" do
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Systemd
