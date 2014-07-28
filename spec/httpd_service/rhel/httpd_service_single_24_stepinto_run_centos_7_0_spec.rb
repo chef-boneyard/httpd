@@ -117,6 +117,15 @@ describe 'httpd_service::single on rhel-7.0' do
         )
     end
 
+    it 'creates httpd_config[default create mpm_event]' do
+      expect(httpd_service_single_24_run_centos_7_0).to create_httpd_config('default create mpm_event').with(
+        :config_name => 'mpm_event',
+        :instance => 'default',
+        :source => 'mpm.conf.erb',
+        :cookbook => 'httpd'
+        )
+    end
+
     it 'creates directory[default create /etc/httpd]' do
       expect(httpd_service_single_24_run_centos_7_0).to create_directory('default create /etc/httpd').with(
         :path => '/etc/httpd',

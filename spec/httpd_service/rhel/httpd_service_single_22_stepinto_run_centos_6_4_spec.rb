@@ -93,6 +93,15 @@ describe 'httpd_service::single on rhel-6.4' do
         )
     end
 
+    it 'creates httpd_config[default create mpm_worker]' do
+      expect(httpd_service_single_22_run_centos_6_4).to create_httpd_config('default create mpm_worker').with(
+        :config_name => 'mpm_worker',
+        :instance => 'default',
+        :source => 'mpm.conf.erb',
+        :cookbook => 'httpd'
+        )
+    end
+
     it 'creates directory[default create /etc/httpd]' do
       expect(httpd_service_single_22_run_centos_6_4).to create_directory('default create /etc/httpd').with(
         :path => '/etc/httpd',
