@@ -56,6 +56,26 @@ class Chef
           pid_file
         end
 
+        def includes
+          if new_resource.version.to_f < 2.4
+            includes = [
+              'conf.d/*.conf',
+              'conf.d/*.load'
+            ]
+          end
+        end
+
+        def include_optionals
+          if new_resource.version.to_f >= 2.4
+            include_optionals = [
+              'conf.d/*.conf',
+              'conf.d/*.load',
+              'conf.modules.d/*.conf',
+              'conf.modules.d/*.load'
+            ]
+          end
+        end
+        
         #
         # Chef Resources
         #
@@ -120,29 +140,12 @@ class Chef
           end
         end
 
-        # bad monkey.
-        protected
         
         def create_common
           # FIXME: parameterize
           lock_file = nil
           mutex = nil
-
-          # Include directories for additional configurtions
-          if new_resource.version.to_f < 2.4
-            includes = [
-              'conf.d/*.conf',
-              'conf.d/*.load'
-            ]
-          else
-            include_optionals = [
-              'conf.d/*.conf',
-              'conf.d/*.load',
-              'conf.modules.d/*.conf',
-              'conf.modules.d/*.load'
-            ]
-          end
-
+          
           #
           # Chef resources
           #
@@ -263,7 +266,7 @@ class Chef
             action :create
           end
 
-          unless new_resource.version.to_f < 2.4
+          if new_resource.version.to_f >= 2.4
             directory "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d" do
               path "/etc/#{apache_name}/conf.modules.d"
               user 'root'
