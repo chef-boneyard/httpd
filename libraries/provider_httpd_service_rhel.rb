@@ -57,23 +57,23 @@ class Chef
         end
 
         def includes
-          if new_resource.version.to_f < 2.4
-            includes = [
-              'conf.d/*.conf',
-              'conf.d/*.load'
-            ]
-          end
+          return unless new_resource.version.to_f < 2.4
+          includes = [
+            'conf.d/*.conf',
+            'conf.d/*.load'
+          ]
+          includes
         end
 
         def include_optionals
-          if new_resource.version.to_f >= 2.4
-            include_optionals = [
-              'conf.d/*.conf',
-              'conf.d/*.load',
-              'conf.modules.d/*.conf',
-              'conf.modules.d/*.load'
-            ]
-          end
+          return unless new_resource.version.to_f >= 2.4
+          include_optionals = [
+            'conf.d/*.conf',
+            'conf.d/*.load',
+            'conf.modules.d/*.conf',
+            'conf.modules.d/*.load'
+          ]
+          include_optionals
         end
 
         #

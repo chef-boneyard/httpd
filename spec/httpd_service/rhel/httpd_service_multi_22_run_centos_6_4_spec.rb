@@ -305,7 +305,11 @@ describe 'httpd_service::multi on rhel-6.4' do
 
     it 'creates directory[instance-1 create /var/run/httpd-instance-1]' do
       expect(httpd_service_multi_22_run_centos_6_4).to create_directory('instance-1 create /var/run/httpd-instance-1').with(
-        :path => '/var/run/httpd-instance-1'
+        :path => '/var/run/httpd-instance-1',
+        :owner => 'root',
+        :group => 'root',
+        :mode => '0755',
+        :recursive => true
         )
     end
 
@@ -503,7 +507,11 @@ describe 'httpd_service::multi on rhel-6.4' do
 
     it 'creates directory[instance-2 create /var/run/httpd-instance-2]' do
       expect(httpd_service_multi_22_run_centos_6_4).to create_directory('instance-2 create /var/run/httpd-instance-2').with(
-        :path => '/var/run/httpd-instance-2'
+        :path => '/var/run/httpd-instance-2',
+        :owner => 'root',
+        :group => 'root',
+        :mode => '0755',
+        :recursive => true
         )
     end
 
