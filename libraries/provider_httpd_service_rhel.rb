@@ -4,6 +4,10 @@ class Chef
   class Provider
     class HttpdService
       class Rhel < Chef::Provider::HttpdService
+        #
+        # Local variables
+        #
+        
         # Enterprise linux version calculation
         # Account for Amazon Linux.
         def elversion
@@ -52,8 +56,12 @@ class Chef
           pid_file
         end
 
-        # break common and service specific resources into separate
-        # functions to allow overriding in a subclass.
+        #
+        # Chef Resources
+        #
+        
+        # break common and service resources into separate
+        # functions to allow for overriding in a subclass.
         def action_create
           create_common
           create_service
@@ -79,7 +87,7 @@ class Chef
         # override me in subclass
         def action_reload
           log 'action :reload not implemented' do
-            str = 'action :reload implemented on'
+            str = 'action :reload not implemented on'
             str << ' Chef::Provider::HttpdService::Rhel.'
             str << ' Please use Chef::Provider::HttpdService::Rhel::Sysvinit'
             str << ' or Chef::Provider::HttpdService::Rhel::Systemd'
@@ -91,7 +99,7 @@ class Chef
         # override me in subclass
         def create_service
           log 'action create_service not implemented' do
-            str = 'action :create implemented on'
+            str = 'action :create not implemented on'
             str << ' Chef::Provider::HttpdService::Rhel.'
             str << ' Please use Chef::Provider::HttpdService::Rhel::Sysvinit'
             str << ' or Chef::Provider::HttpdService::Rhel::Systemd'
@@ -103,7 +111,7 @@ class Chef
         # override me in subclass
         def delete_service
           log 'action delete_service not implemented' do
-            str = 'action :delete implemented on'
+            str = 'action :delete not implemented on'
             str << ' Chef::Provider::HttpdService::Rhel.'
             str << ' Please use Chef::Provider::HttpdService::Rhel::Sysvinit'
             str << ' or Chef::Provider::HttpdService::Rhel::Systemd'
@@ -112,8 +120,9 @@ class Chef
           end
         end
 
+        # bad monkey.
         protected
-
+        
         def create_common
           # FIXME: parameterize
           lock_file = nil
