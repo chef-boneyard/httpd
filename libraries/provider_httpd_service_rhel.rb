@@ -7,7 +7,7 @@ class Chef
         #
         # Local variables
         #
-        
+
         # Enterprise linux version calculation
         # Account for Amazon Linux.
         def elversion
@@ -75,11 +75,11 @@ class Chef
             ]
           end
         end
-        
+
         #
         # Chef Resources
         #
-        
+
         # break common and service resources into separate
         # functions to allow for overriding in a subclass.
         def action_create
@@ -140,12 +140,11 @@ class Chef
           end
         end
 
-        
         def create_common
           # FIXME: parameterize
           lock_file = nil
           mutex = nil
-          
+
           #
           # Chef resources
           #
@@ -393,6 +392,9 @@ class Chef
           # configuration directories
           directory "#{new_resource.name} delete /etc/#{apache_name}" do
             path "/etc/#{apache_name}"
+            owner 'root'
+            group 'root'
+            mode '0755'
             recursive true
             action :delete
           end
@@ -400,6 +402,9 @@ class Chef
           # logs
           directory "#{new_resource.name} delete /var/log/#{apache_name}" do
             path "/var/log/#{apache_name}"
+            owner 'root'
+            group 'root'
+            mode '0755'
             recursive true
             action :delete
           end
@@ -408,6 +413,9 @@ class Chef
           if elversion > 5
             directory "#{new_resource.name} delete /var/run/#{apache_name}" do
               path "/var/run/#{apache_name}"
+              owner 'root'
+              group 'root'
+              mode '0755'
               recursive true
               action :delete
             end

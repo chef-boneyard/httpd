@@ -24,6 +24,7 @@ class Chef
         @listen_addresses = ['0.0.0.0']
         @listen_ports = %w(80 443)
         @log_level = 'warn'
+        @servername = node['hostname']
 
         @version = default_httpd_version_for(
           node['platform'],
@@ -287,6 +288,14 @@ class Chef
               true unless default_value_for(version, mpm, :maxsparethreads).nil?
             end
           }
+          )
+      end
+
+      def servername(arg = nil)
+        set_or_return(
+          :servername,
+          arg,
+          :kind_of => String
           )
       end
 
