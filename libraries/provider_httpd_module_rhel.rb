@@ -10,27 +10,33 @@ class Chef
           true
         end
 
-        action :create do
-          #
-          # local variables
-          #
+        #
+        # local variables
+        #
+        def apache_name
+          # support multiple instances
+          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
+          apache_name
+        end
+
+        def libarch
           case node['kernel']['machine']
           when 'x86_64'
             libarch = 'lib64'
           when 'i686'
             libarch = 'lib'
           end
+          libarch
+        end
 
+        #
+        # resources
+        #
+        def action_create
           # paths
           module_name = new_resource.module_name
           module_path = "/usr/#{libarch}/httpd/modules/mod_#{module_name}.so"
 
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
-          #
-          # resources
-          #
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
             notifies :run, "execute[#{new_resource.name} create remove_package_config]", :immediately
@@ -91,10 +97,7 @@ class Chef
           end
         end
 
-        action :delete do
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
+        def action_delete
           if new_resource.httpd_version.to_f < 2.4
             file "#{new_resource.name} delete /etc/#{apache_name}/conf.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.d/#{module_name}.load"

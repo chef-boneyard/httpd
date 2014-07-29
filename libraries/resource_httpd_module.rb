@@ -32,9 +32,6 @@ class Chef
           node['platform_family'],
           node['platform_version']
           )
-
-        # usually the same as resource_name
-        @filename = nil
       end
 
       def module_name(arg = nil)

@@ -122,7 +122,7 @@ module Httpd
         modules :for => { :platform_family => 'rhel', :version => '5', :httpd_version => '2.2' },
                 :are => %w(
                   auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
-                  perl perl-devel perl-devel python revocator
+                  perl python revocator
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 
@@ -143,8 +143,8 @@ module Httpd
 
         modules :for => { :platform_family => 'rhel', :version => '6', :httpd_version => '2.2' },
                 :are => %w(
-                  perl-devel perl-devel auth_kerb auth_mysql auth_pgsql authz_ldap
-                  dav_svn dnssd nss perl revocator revocator ssl wsgi
+                  auth_kerb auth_mysql auth_pgsql authz_ldap dav_svn dnssd nss
+                  perl revocator ssl wsgi
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 
@@ -172,7 +172,7 @@ module Httpd
         modules :for => { :platform_family => 'rhel', :version => '7', :httpd_version => '2.4' },
                 :are => %w(
                   auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
-                  security_crs session ssl wsgi
+                  session ssl wsgi
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 

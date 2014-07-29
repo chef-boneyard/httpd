@@ -20,19 +20,6 @@ provisioner:
   require_chef_omnibus: 11.12.8
 
 platforms:
-# - name: debian-7.2
-#   driver_plugin: gce
-#   driver_config:
-#     image_name: debian-7-wheezy-v20140318
-#     zone: <%= ENV['GCE_ZONE'] %>
-#     area: <%= ENV['GCE_AREA'] %>
-#     network: <%= ENV['GCE_NETWORK'] %>
-#     username: <%= ENV['GCE_USERNAME'] %>
-#     public_key_path: <%= ENV['GCE_PUBLIC_KEY_PATH'] %>
-#     ssh_key: <%= ENV['GCE_SSH_KEY_PATH'] %>
-#   run_list:
-#   - recipe[apt]
-
 - name: debian-7.2
   driver_plugin: digitalocean
   driver_config:
@@ -79,9 +66,11 @@ platforms:
 - name: centos-6.4
   driver_plugin: digitalocean
   driver_config:
-    image_id: 3797680
+#    image_id: 3797680
+    image_id: 562354
     flavor_id: 63
-    region_id: 4
+#    region_id: 4
+    region_id: 1
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
@@ -156,10 +145,10 @@ suites:
     - recipe[httpd_service::single]
     includes: [
       'amazon-2014.03',
-      'debian-7.2',
-      'omnios-151006',
       'centos-5.8',
       'centos-6.4',
+      'debian-7.2',
+      'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-12.04',
       'ubuntu-13.10',
@@ -176,10 +165,10 @@ suites:
     - recipe[httpd_service::multi]
     includes: [
       'amazon-2014.03',
-      'debian-7.2',
-      'omnios-151006',
       'centos-5.8',
       'centos-6.4',
+      'debian-7.2',
+      'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-12.04',
     ]
@@ -208,8 +197,9 @@ suites:
     - recipe[httpd_service::single]
     includes: [
       'amazon-2014.03',
-      'fedora-20',
       'centos-7.0',
+      'fedora-20',
+      'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]
@@ -225,8 +215,9 @@ suites:
     - recipe[httpd_service::multi]
     includes: [
       'amazon-2014.03',
-      'fedora-20',
       'centos-7.0',
+      'fedora-20',
+      'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]
@@ -255,10 +246,10 @@ suites:
     - recipe[httpd_module]
     includes: [
       'amazon-2014.03',
-      'debian-7.2',
-      'omnios-151006',
       'centos-5.8',
       'centos-6.4',
+      'debian-7.2',
+      'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-12.04'
     ]
@@ -272,6 +263,7 @@ suites:
     includes: [
       'amazon-2014.03',
       'centos-7.0',
+      'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]
@@ -280,9 +272,8 @@ suites:
         version: '2.4'
 
   #
-  # modules
+  # config
   #
   - name: config
     run_list:
     - recipe[httpd_config]
-    excludes: 'fedora-20' 
