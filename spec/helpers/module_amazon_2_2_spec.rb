@@ -20,9 +20,8 @@ describe 'looking up module package name' do
     )
 
     amazon_2_2_other = %w(
-      perl-devel security_crs-extras auth_kerb auth_mysql auth_pgsql
-      authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
-      security_crs ssl wsgi
+      perl-devel auth_kerb auth_mysql auth_pgsql authz_ldap dav_svn
+      fcgid geoip nss perl proxy_html python security ssl wsgi
     )
 
     amazon_2_2_core.each do |m|

@@ -27,7 +27,7 @@ describe 'looking up module package name' do
 
     rhel_7_2_4_other = %w(
       auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
-      security_crs session ssl wsgi
+      session ssl wsgi
     )
 
     rhel_7_2_4_core.each do |m|
