@@ -21,7 +21,7 @@ describe 'looking up module package name' do
 
     rhel_5_2_2_other = %w(
       auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
-      perl perl-devel perl-devel python revocator
+      perl python revocator
     )
 
     rhel_5_2_2_core.each do |m|

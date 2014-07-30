@@ -193,9 +193,9 @@ module Httpd
 
         modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.2' },
                 :are => %w(
-                  perl-devel security_crs-extras auth_kerb auth_mysql auth_pgsql
+                  perl-devel auth_kerb auth_mysql auth_pgsql
                   authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
-                  security_crs ssl wsgi
+                  ssl wsgi
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 

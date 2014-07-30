@@ -20,7 +20,7 @@ describe 'looking up module package name' do
     )
 
     rhel_6_2_2_other = %w(
-      perl-devel perl-devel auth_kerb auth_mysql auth_pgsql authz_ldap
+      auth_kerb auth_mysql auth_pgsql authz_ldap
       dav_svn dnssd nss perl revocator revocator ssl wsgi
     )
 
