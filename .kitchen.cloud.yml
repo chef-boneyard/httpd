@@ -20,14 +20,16 @@ provisioner:
   require_chef_omnibus: 11.12.8
 
 platforms:
-- name: debian-7.2
-  driver_plugin: digitalocean
+- name: debian-7.0
+  driver_plugin: gce
   driver_config:
-    image_id: 3445812
-    flavor_id: 63
-    region_id: 4
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    image_name: debian-7-wheezy-v20131120
+    zone: <%= ENV['GCE_ZONE'] %>
+    area: <%= ENV['GCE_AREA'] %>
+    network: <%= ENV['GCE_NETWORK'] %>
+    username: <%= ENV['GCE_USERNAME'] %>
+    public_key_path: <%= ENV['GCE_PUBLIC_KEY_PATH'] %>
+    ssh_key: <%= ENV['GCE_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
@@ -66,11 +68,10 @@ platforms:
 - name: centos-6.4
   driver_plugin: digitalocean
   driver_config:
-#    image_id: 3797680
+    image_id: 3797680
     image_id: 562354
     flavor_id: 63
-#    region_id: 4
-    region_id: 1
+    region_id: 4
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
