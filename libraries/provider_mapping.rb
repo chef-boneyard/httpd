@@ -19,8 +19,8 @@ Chef::Platform.set :platform => :oracle, :resource => :httpd_module, :provider =
 Chef::Platform.set :platform => :amazon, :resource => :httpd_module, :provider => Chef::Provider::HttpdModule::Rhel
 
 # service
-Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
-Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian
+Chef::Platform.set :platform => :debian, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian::Sysvinit
+Chef::Platform.set :platform => :ubuntu, :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Debian::Sysvinit
 Chef::Platform.set :platform => :redhat, :version => '>= 5.0', :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel::Sysvinit
 Chef::Platform.set :platform => :redhat, :version => '>= 7.0', :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel::Systemd
 Chef::Platform.set :platform => :centos, :version => '>= 5.0', :resource => :httpd_service, :provider => Chef::Provider::HttpdService::Rhel::Sysvinit

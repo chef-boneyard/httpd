@@ -13,7 +13,52 @@ class Chef
           true
         end
 
+        # break common and service resources into separate
+        # functions to allow for overriding in a subclass.
         def action_create
+          create_common
+          create_service
+        end
+
+        def action_delete
+          delete_service
+          delete_common
+        end
+
+        # override me in subclass
+        def action_restart
+          log 'action :restart not implemented' do
+            str = 'action :restart implemented on'
+            str << ' Chef::Provider::HttpdService::Debian.'
+            str << ' Please use Chef::Provider::HttpdService::Debian::Sysvinit'
+            message str
+            level :info
+          end
+        end
+
+        # override me in subclass
+        def action_reload
+          log 'action :reload not implemented' do
+            str = 'action :reload not implemented on'
+            str << ' Chef::Provider::HttpdService::Debian.'
+            str << ' Please use Chef::Provider::HttpdService::Debian::Sysvinit'
+            message str
+            level :info
+          end
+        end
+
+        # override me in subclass
+        def delete_service
+          log 'delete_service not implemented' do
+            str = 'delete_service not implemented on'
+            str << ' Chef::Provider::HttpdService::Debian.'
+            str << ' Please use Chef::Provider::HttpdService::Debian::Sysvinit'
+            message str
+            level :info
+          end
+        end
+
+        def create_common
           # We need to dynamically render the resource name into the title in
           # order to ensure uniqueness. This avoids cloning via
           # CHEF-3694 and allows ChefSpec to work properly.
@@ -246,18 +291,6 @@ class Chef
             action :create
           end
 
-          # init script
-          template "#{new_resource.name} create /etc/init.d/#{apache_name}" do
-            path "/etc/init.d/#{apache_name}"
-            source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
-            owner 'root'
-            group 'root'
-            mode '0755'
-            variables(:apache_name => apache_name)
-            cookbook 'httpd'
-            action :create
-          end
-
           # mpm configuration
           #
           # With Apache 2.2, only one mpm package can be installed
@@ -330,41 +363,9 @@ class Chef
               action :delete
             end
           end
-
-          # service management
-          service "#{new_resource.name} create #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Debian
-            action [:start, :enable]
-          end
         end
 
-        def action_delete
-          # Software installation: This is needed to supply the init
-          # script that powers the service facility.
-          package "#{new_resource.name} delete #{new_resource.package_name}" do
-            package_name new_resource.package_name
-            notifies :run, "bash[#{new_resource.name} delete remove_package_config]", :immediately
-            action :install
-          end
-
-          bash "#{new_resource.name} delete remove_package_config" do
-            user 'root'
-            code <<-EOH
-              for i in `ls /etc/apache2 | egrep -v "envvars|apache2.conf"` ; do rm -rf /etc/apache2/$i ; done
-              EOH
-            action :nothing
-          end
-
-          # service management
-          service "#{new_resource.name} delete #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Debian
-            action [:disable, :stop]
-          end
-
+        def delete_common
           # support directories
           directory "#{new_resource.name} delete /var/cache/#{apache_name}" do
             path "/var/cache/#{apache_name}"
@@ -468,24 +469,6 @@ class Chef
           file "#{new_resource.name} delete /etc/#{apache_name}/ports.conf" do
             path "/etc/#{apache_name}/ports.conf"
             action :delete
-          end
-        end
-
-        def action_restart
-          service "#{new_resource.name} restart #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Debian
-            action :restart
-          end
-        end
-
-        def action_reload
-          service "#{new_resource.name} reload #{apache_name}" do
-            service_name apache_name
-            supports :restart => true, :reload => true, :status => true
-            provider Chef::Provider::Service::Init::Debian
-            action :reload
           end
         end
       end

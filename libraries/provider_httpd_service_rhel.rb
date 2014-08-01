@@ -73,6 +73,18 @@ class Chef
           end
         end
 
+        # override me in subclass
+        def delete_service
+          log 'delete_service not implemented' do
+            str = 'delete_service not implemented on'
+            str << ' Chef::Provider::HttpdService::Rhel.'
+            str << ' Please use Chef::Provider::HttpdService::Rhel::Sysvinit'
+            str << ' or Chef::Provider::HttpdService::Rhel::Systemd'
+            message str
+            level :info
+          end
+        end
+
         def create_common
           # FIXME: parameterize
           lock_file = nil
