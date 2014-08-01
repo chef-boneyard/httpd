@@ -1,4 +1,5 @@
 require 'chef/provider/lwrp_base'
+require_relative 'helpers_debian'
 
 class Chef
   class Provider
@@ -6,21 +7,13 @@ class Chef
       class Debian < Chef::Provider::HttpdModule
         use_inline_resources if defined?(use_inline_resources)
 
+        include Httpd::Helpers::Debian
+
         def whyrun_supported?
           true
         end
 
-        action :create do
-          #
-          # local variables
-          #
-          module_name = new_resource.module_name
-          module_path = "/usr/lib/apache2/modules/mod_#{module_name}.so"
-          new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
-
-          #
-          # resources
-          #
+        def action_create
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
             notifies :run, "bash[#{new_resource.name} create remove_package_config]", :immediately
@@ -76,15 +69,7 @@ class Chef
         end
       end
 
-      action :delete do
-        #
-        # local variables
-        #
-        new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
-
-        #
-        # resources
-        #
+      def action_delete
         directory "#{new_resource.name} delete /etc/#{apache_name}/mods-available/" do
           path "/etc/#{apache_name}/mods-available/"
           recursive true

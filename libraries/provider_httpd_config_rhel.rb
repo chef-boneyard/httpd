@@ -1,4 +1,5 @@
 require 'chef/provider/lwrp_base'
+require_relative 'helpers_rhel'
 
 class Chef
   class Provider
@@ -6,17 +7,13 @@ class Chef
       class Rhel < Chef::Provider::HttpdConfig
         use_inline_resources if defined?(use_inline_resources)
 
+        include Httpd::Helpers::Rhel
+
         def whyrun_supported?
           true
         end
 
-        action :create do
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
-          #
-          # resources
-          #
+        def action_create
           directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
             path "/etc/#{apache_name}/conf.d"
             owner 'root'
@@ -38,10 +35,7 @@ class Chef
           end
         end
 
-        action :delete do
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-
+        def action_delete
           file "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}" do
             path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
             action :create

@@ -1,4 +1,5 @@
 require 'chef/provider/lwrp_base'
+require_relative 'helpers_debian'
 
 class Chef
   class Provider
@@ -6,69 +7,17 @@ class Chef
       class Debian < Chef::Provider::HttpdService
         use_inline_resources if defined?(use_inline_resources)
 
+        include Httpd::Helpers::Debian
+
         def whyrun_supported?
           true
         end
 
-        action :create do
-          #
-          # local variables
-          #
-          apache_version = new_resource.version
-
-          # support multiple instances
-          new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
-          new_resource.name == 'default' ? a2enmod_name = 'a2enmod' : a2enmod_name = "a2enmod-#{new_resource.name}"
-          new_resource.name == 'default' ? a2dismod_name = 'a2dismod' : a2dismod_name = "a2dismod-#{new_resource.name}"
-          new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
-          new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
-
-          # calculate platform_and_version from node attributes
-          case node['platform']
-          when 'debian'
-            platform_and_version = "debian-#{node['platform_version'].to_i}"
-          when 'ubuntu'
-            platform_and_version = "ubuntu-#{node['platform_version']}"
-          end
-
-          # Include directories for additional configurtions
-          if apache_version.to_f < 2.4
-            includes = [
-              'conf.d/*.conf',
-              'mods-enabled/*.load',
-              'mods-enabled/*.conf'
-            ]
-          else
-            include_optionals = [
-              'conf-enabled/*.conf',
-              'mods-enabled/*.load',
-              'mods-enabled/*.conf',
-              'sites-enabled/*.conf'
-            ]
-          end
-
-          # apache 2.2 and 2.4 differences
-          if apache_version.to_f < 2.4
-            pid_file = "/var/run/#{apache_name}.pid"
-            run_dir = "/var/run/#{apache_name}"
-            lock_file = "/var/lock/#{apache_name}/accept.lock"
-            mutex = nil
-          else
-            pid_file = "/var/run/apache2/#{apache_name}.pid"
-            run_dir = '/var/run/apache2'
-            lock_file = nil
-            mutex = "file:/var/lock/#{apache_name} default"
-          end
-
-          #
-          # Chef resources
-          #
-
+        def action_create
           # We need to dynamically render the resource name into the title in
           # order to ensure uniqueness. This avoids cloning via
           # CHEF-3694 and allows ChefSpec to work properly.
 
-          # software installation
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
             notifies :run, "bash[#{new_resource.name} create remove_package_config]", :immediately
@@ -391,23 +340,7 @@ class Chef
           end
         end
 
-        action :delete do
-          # local variables
-          apache_version = new_resource.version
-
-          # support multiple instances
-          new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
-          new_resource.name == 'default' ? a2enmod_name = 'a2enmod' : a2enmod_name = "a2enmod-#{new_resource.name}"
-          new_resource.name == 'default' ? a2dismod_name = 'a2dismod' : a2dismod_name = "a2dismod-#{new_resource.name}"
-          new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
-          new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
-
-          # We need to dynamically render the resource name into the title in
-          # order to ensure uniqueness. In addition to this, we need
-          # to render the extra string 'delete' to isolate it from action
-          # :create This avoids cloning via CHEF-3694 and allows
-          # ChefSpec to work properly.
-
+        def action_delete
           # Software installation: This is needed to supply the init
           # script that powers the service facility.
           package "#{new_resource.name} delete #{new_resource.package_name}" do
@@ -538,8 +471,7 @@ class Chef
           end
         end
 
-        action :restart do
-          new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
+        def action_restart
           service "#{new_resource.name} restart #{apache_name}" do
             service_name apache_name
             supports :restart => true, :reload => true, :status => true
@@ -548,8 +480,7 @@ class Chef
           end
         end
 
-        action :reload do
-          new_resource.name == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.name}"
+        def action_reload
           service "#{new_resource.name} reload #{apache_name}" do
             service_name apache_name
             supports :restart => true, :reload => true, :status => true

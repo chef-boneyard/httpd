@@ -1,4 +1,5 @@
 require 'chef/provider/lwrp_base'
+require_relative 'helpers_rhel'
 
 class Chef
   class Provider
@@ -6,6 +7,8 @@ class Chef
       class Rhel
         class Sysvinit < Chef::Provider::HttpdService::Rhel
           use_inline_resources if defined?(use_inline_resources)
+
+          include Httpd::Helpers::Rhel
 
           def whyrun_supported?
             true

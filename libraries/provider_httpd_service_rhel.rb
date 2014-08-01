@@ -1,84 +1,17 @@
 require 'chef/provider/lwrp_base'
+require_relative 'helpers_rhel'
 
 class Chef
   class Provider
     class HttpdService
       class Rhel < Chef::Provider::HttpdService
-        #
-        # Local variables
-        #
+        use_inline_resources if defined?(use_inline_resources)
 
-        # Enterprise linux version calculation
-        # Account for Amazon Linux.
-        def elversion
-          case node['platform_version'].to_i
-          when 5
-            elversion = 5
-          when 6
-            elversion = 6
-          when 7
-            elversion = 7
-          when 2013
-            elversion = 6
-          when 2014
-            elversion = 6
-          end
-          elversion
+        include Httpd::Helpers::Rhel
+
+        def whyrun_supported?
+          true
         end
-
-        # support multiple instances
-        def apache_name
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-          apache_name
-        end
-
-        # libarch
-        def libarch
-          case node['kernel']['machine']
-          when 'x86_64'
-            libarch = 'lib64'
-          when 'i686'
-            libarch = 'lib'
-          end
-          libarch
-        end
-
-        def pid_file
-          # PID file
-          case elversion
-          when 5
-            pid_file = "/var/run/#{apache_name}.pid"
-          when 6
-            pid_file = "/var/run/#{apache_name}/httpd.pid"
-          when 7
-            pid_file = "/var/run/#{apache_name}/httpd.pid"
-          end
-          pid_file
-        end
-
-        def includes
-          return unless new_resource.version.to_f < 2.4
-          includes = [
-            'conf.d/*.conf',
-            'conf.d/*.load'
-          ]
-          includes
-        end
-
-        def include_optionals
-          return unless new_resource.version.to_f >= 2.4
-          include_optionals = [
-            'conf.d/*.conf',
-            'conf.d/*.load',
-            'conf.modules.d/*.conf',
-            'conf.modules.d/*.load'
-          ]
-          include_optionals
-        end
-
-        #
-        # Chef Resources
-        #
 
         # break common and service resources into separate
         # functions to allow for overriding in a subclass.

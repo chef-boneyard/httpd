@@ -1,4 +1,5 @@
 require 'chef/provider/lwrp_base'
+require_relative 'helpers_debian'
 
 class Chef
   class Provider
@@ -6,20 +7,13 @@ class Chef
       class Debian < Chef::Provider::HttpdConfig
         use_inline_resources if defined?(use_inline_resources)
 
+        include Httpd::Helpers::Debian
+
         def whyrun_supported?
           true
         end
 
-        action :create do
-          #
-          # local variables
-          #
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
-
-          #
-          # resources
-          #
+        def action_create
           if new_resource.httpd_version.to_f < 2.4
             directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
               path "/etc/#{apache_name}/conf.d"
@@ -78,16 +72,7 @@ class Chef
           end
         end
 
-        action :delete do
-          #
-          # local variables
-          #
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
-
-          #
-          # resources
-          #
+        def action_delete
           if new_resource.httpd_version.to_f < 2.4
             file "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
               path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"

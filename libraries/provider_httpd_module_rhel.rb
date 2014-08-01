@@ -1,4 +1,5 @@
 require 'chef/provider/lwrp_base'
+require_relative 'helpers_rhel'
 
 class Chef
   class Provider
@@ -6,37 +7,13 @@ class Chef
       class Rhel < Chef::Provider::HttpdModule
         use_inline_resources if defined?(use_inline_resources)
 
+        include Httpd::Helpers::Rhel
+
         def whyrun_supported?
           true
         end
 
-        #
-        # local variables
-        #
-        def apache_name
-          # support multiple instances
-          new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
-          apache_name
-        end
-
-        def libarch
-          case node['kernel']['machine']
-          when 'x86_64'
-            libarch = 'lib64'
-          when 'i686'
-            libarch = 'lib'
-          end
-          libarch
-        end
-
-        #
-        # resources
-        #
         def action_create
-          # paths
-          module_name = new_resource.module_name
-          module_path = "/usr/#{libarch}/httpd/modules/mod_#{module_name}.so"
-
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
             notifies :run, "execute[#{new_resource.name} create remove_package_config]", :immediately
