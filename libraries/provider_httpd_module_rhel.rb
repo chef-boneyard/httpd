@@ -14,6 +14,7 @@ class Chef
         end
 
         def action_create
+          # do magic with packge
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
             notifies :run, "execute[#{new_resource.name} create remove_package_config]", :immediately
@@ -27,6 +28,7 @@ class Chef
             action :nothing
           end
 
+          # 2.2 vs 2.4
           if new_resource.httpd_version.to_f < 2.4
             directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
               path "/etc/#{apache_name}/conf.d"

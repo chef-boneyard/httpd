@@ -38,6 +38,16 @@ class Chef
             action :create
           end
 
+          directory "#{new_resource.name} create /etc/#{apache_name}/mods-enabled" do
+            path "/etc/#{apache_name}/mods-enabled"
+            owner 'root'
+            group 'root'
+            mode '0755'
+            recursive true
+            action :create
+          end
+
+          # more of these
           template "#{new_resource.name} create /etc/#{apache_name}/mods-available/#{module_name}.load" do
             path "/etc/#{apache_name}/mods-available/#{module_name}.load"
             source 'module_load.erb'
@@ -51,16 +61,7 @@ class Chef
             cookbook 'httpd'
             action :create
           end
-
-          directory "#{new_resource.name} create /etc/#{apache_name}/mods-enabled" do
-            path "/etc/#{apache_name}/mods-enabled"
-            owner 'root'
-            group 'root'
-            mode '0755'
-            recursive true
-            action :create
-          end
-
+          
           link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
             target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
             to "/etc/#{apache_name}/mods-available/#{module_name}.load"
