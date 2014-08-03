@@ -61,7 +61,7 @@ class Chef
             cookbook 'httpd'
             action :create
           end
-          
+
           link "#{new_resource.name} create /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
             target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
             to "/etc/#{apache_name}/mods-available/#{module_name}.load"
