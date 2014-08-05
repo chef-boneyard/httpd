@@ -2,6 +2,7 @@ module Httpd
   module Module
     module Helpers
       module ModuleInfoDSL
+
         def find(key)
           found_key = modules_list.keys.find { |lock| key.merge(lock) == key }
           modules_list[found_key]
@@ -9,7 +10,6 @@ module Httpd
 
         def modules(options)
           options[:are].each do |mod|
-            #            require 'pry' ; binding.pry
             key = options[:for].merge(:module => mod)
 
             package = options[:found_in_package]

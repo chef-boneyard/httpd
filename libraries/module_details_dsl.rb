@@ -1,13 +1,17 @@
+
+
 module Httpd
   module Module
     module Helpers
       module ModuleDetailsDSL
-        def module_details(options)
-          options[:are].each do |mod|
-            # key = options[:for]
-            key = options[:for].merge(:module => mod)
-            require 'pry'; binding.pry
-          end
+        
+        def after_installing(options)
+#          require 'pry'; binding.pry
+          
+          # options[:packages_for].each do |mod|
+          #   require 'pry'; binding.pry
+          # end
+          
         end
 
         def module_details_data

@@ -1,4 +1,4 @@
-require_relative 'after_installing_dsl'
+require_relative 'module_details_dsl'
 
 module Httpd
   module Module
