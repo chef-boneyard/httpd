@@ -248,7 +248,7 @@ module Httpd
                 ),
                 :found_in_package => 'httpd'
 
-        modules :for => { :platform_family => 'fedora', :version => '20', :httpd_version => '2.4' },
+        modules :for => { :platform_family => 'fedora', :version => '20', :httpd_versioZn => '2.4' },
                 :are => %w(
                   annodex auth_cas auth_kerb auth_mellon auth_ntlm_winbind
                   authnz_external authnz_pam auth_token auth_xradius autoindex_mb
