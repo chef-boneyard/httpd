@@ -30,7 +30,7 @@ module Httpd
       end
 
       def load_files_for_module(name, httpd_version, platform, platform_family, platform_version)
-        ModuleDetailsDSL.find_load_files(
+        ModuleDetails.find_load_files(
           :module => name,
           :httpd_version => httpd_version,
           :platform => platform,
@@ -67,8 +67,7 @@ module Httpd
                          :on => { :platform_family => 'rhel', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/authz_ldap.conf ),
-                           :and_load => %w( mod_authz_ldap.so ),
-                           :binaries => %w( /usr/bin/cert2ldap /usr/bin/certfind )
+                           :and_load => %w( mod_authz_ldap.so )
                          }
 
         after_installing :module => 'dav_svn',
@@ -82,16 +81,14 @@ module Httpd
                          :on => { :platform_family => 'rhel', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/nss.conf ),
-                           :and_load => %w( libmodnss.so ),
-                           :binaries => %w( /usr/sbin/gencert /usr/sbin/nss_pcache )
+                           :and_load => %w( libmodnss.so )
                          }
 
         after_installing :module => 'perl',
                          :on => { :platform_family => 'rhel', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/perl.conf ),
-                           :and_load => %w( mod_perl.so ),
-                           :binaries => %w( /usr/bin/mp2bug )
+                           :and_load => %w( mod_perl.so )
                          }
 
         after_installing :module => 'python',
@@ -105,8 +102,7 @@ module Httpd
                          :on => { :platform_family => 'rhel', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/revocator.conf ),
-                           :and_load => %w( mod_rev.so ),
-                           :binaries => %w( /usr/bin/crlhelper /usr/bin/ldapget )
+                           :and_load => %w( mod_rev.so )
                          }
 
         after_installing :module => 'ssl',
@@ -135,8 +131,7 @@ module Httpd
                          :on => { :platform_family => 'rhel', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/authz_ldap.conf ),
-                           :and_load => %w( mod_authz_ldap.so ),
-                           :binaries => %w( /usr/bin/cert2ldap /usr/bin/certfind )
+                           :and_load => %w( mod_authz_ldap.so )
                          }
 
         after_installing :module => 'dav_svn',
@@ -157,24 +152,21 @@ module Httpd
                          :on => { :platform_family => 'rhel', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/nss.conf ),
-                           :and_load => %w( libmodnss.so ),
-                           :binaries => %w( /usr/sbin/gencert /usr/sbin/nss_pcache )
+                           :and_load => %w( libmodnss.so )
                          }
 
         after_installing :module => 'perl',
                          :on => { :platform_family => 'rhel', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/perl.conf ),
-                           :and_load => %w( mod_perl.so ),
-                           :binaries => %w( /usr/bin/mp2bug )
+                           :and_load => %w( mod_perl.so )
                          }
 
         after_installing :module => 'revocator',
                          :on => { :platform_family => 'rhel', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/revocator.conf ),
-                           :and_load => %w( mod_rev.so ),
-                           :binaries => %w( /usr/bin/crlhelper /usr/bin/ldapget )
+                           :and_load => %w( mod_rev.so )
                          }
 
         after_installing :module => 'ssl',
@@ -230,8 +222,7 @@ module Httpd
                              /etc/httpd/conf.d/nss.conf
                              /etc/httpd/conf.modules.d/10-nss.conf
                            ),
-                           :and_load => %w( libmodnss.so ),
-                           :binaries => %w( /usr/libexec/nss_pcache /usr/sbin/gencert /usr/sbin/nss_pcache )
+                           :and_load => %w( libmodnss.so )
                          }
 
         after_installing :module => 'proxy_html',
@@ -248,11 +239,7 @@ module Httpd
                              /etc/httpd/conf.d/revocator.conf
                              /etc/httpd/conf.modules.d/11-revocator.conf
                            ),
-                           :and_load => %w( mod_rev.so ),
-                           :binaries => %w(
-                             /usr/bin/crlhelper /usr/bin/ldapget
-                             /usr/libexec/crlhelper /usr/sbin/ldapget
-                           )
+                           :and_load => %w( mod_rev.so )
                          }
 
         after_installing :module => 'security',

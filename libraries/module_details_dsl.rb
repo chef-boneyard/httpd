@@ -4,7 +4,6 @@ module Httpd
       module ModuleDetailsDSL
         def find_deletes(key)
           found_key = module_details_data.keys.find { |lock| key.merge(lock) == key }
-          # require 'pry' ; binding.pry
           module_details_data[found_key][:delete_files]
         end
 
