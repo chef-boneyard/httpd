@@ -25,7 +25,7 @@ module Httpd
           :httpd_version => httpd_version,
           :platform => platform,
           :platform_family => platform_family,
-          :version => keyname_for(platform, platform_family, platform_version)
+          :platform_version => keyname_for(platform, platform_family, platform_version)
           )
       end
 
@@ -104,7 +104,7 @@ module Httpd
                 ),
                 :found_in_package => ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
 
-        modules :for => { :platform_family => 'rhel', :version => '5', :httpd_version => '2.2' },
+        modules :for => { :platform_family => 'rhel', :platform_version => '5', :httpd_version => '2.2' },
                 :are => %w(
                   actions alias asis auth_basic auth_digest authn_alias authn_anon
                   authn_dbd authn_dbm authn_default authn_file authnz_ldap
@@ -119,14 +119,14 @@ module Httpd
                 ),
                 :found_in_package => 'httpd'
 
-        modules :for => { :platform_family => 'rhel', :version => '5', :httpd_version => '2.2' },
+        modules :for => { :platform_family => 'rhel', :platform_version => '5', :httpd_version => '2.2' },
                 :are => %w(
                   auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
                   perl python revocator
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 
-        modules :for => { :platform_family => 'rhel', :version => '6', :httpd_version => '2.2' },
+        modules :for => { :platform_family => 'rhel', :platform_version => '6', :httpd_version => '2.2' },
                 :are => %w(
                   actions alias asis auth_basic auth_digest authn_alias authn_anon
                   authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
@@ -141,14 +141,14 @@ module Httpd
                 ),
                 :found_in_package => 'httpd'
 
-        modules :for => { :platform_family => 'rhel', :version => '6', :httpd_version => '2.2' },
+        modules :for => { :platform_family => 'rhel', :platform_version => '6', :httpd_version => '2.2' },
                 :are => %w(
                   auth_kerb auth_mysql auth_pgsql authz_ldap dav_svn dnssd nss
                   perl revocator ssl wsgi
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 
-        modules :for => { :platform_family => 'rhel', :version => '7', :httpd_version => '2.4' },
+        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
                 :are => %w(
                   access_compat actions alias allowmethods asis auth_basic
                   auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
@@ -169,14 +169,14 @@ module Httpd
                 ),
                 :found_in_package => 'httpd'
 
-        modules :for => { :platform_family => 'rhel', :version => '7', :httpd_version => '2.4' },
+        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
                 :are => %w(
                   auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
                   session ssl wsgi
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 
-        modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.2' },
+        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.2' },
                 :are => %w(
                   actions alias asis auth_basic auth_digest authn_alias authn_anon
                   authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
@@ -191,7 +191,7 @@ module Httpd
                 ),
                 :found_in_package => 'httpd'
 
-        modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.2' },
+        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.2' },
                 :are => %w(
                   perl-devel auth_kerb auth_mysql auth_pgsql
                   authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
@@ -199,7 +199,7 @@ module Httpd
                 ),
                 :found_in_package => ->(name) { "mod_#{name}" }
 
-        modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.4' },
+        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
                 :are => %w(
                   access_compat actions alias allowmethods asis auth_basic
                   auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
@@ -220,14 +220,14 @@ module Httpd
                 ),
                 :found_in_package => 'httpd24'
 
-        modules :for => { :platform => 'amazon', :version => '2014.03', :httpd_version => '2.4' },
+        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
                 :are => %w(
                   auth_kerb fcgid geoip ldap nss perl proxy_html security session
                   ssl wsgi wsgi_py27
                 ),
                 :found_in_package => ->(name) { "mod24_#{name}" }
 
-        modules :for => { :platform_family => 'fedora', :version => '20', :httpd_version => '2.4' },
+        modules :for => { :platform_family => 'fedora', :platform_version => '20', :httpd_version => '2.4' },
                 :are => %w(
                   access_compat actions alias allowmethods asis auth_basic
                   auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
@@ -248,7 +248,7 @@ module Httpd
                 ),
                 :found_in_package => 'httpd'
 
-        modules :for => { :platform_family => 'fedora', :version => '20', :httpd_version => '2.4' },
+        modules :for => { :platform_family => 'fedora', :platform_version => '20', :httpd_version => '2.4' },
                 :are => %w(
                   annodex auth_cas auth_kerb auth_mellon auth_ntlm_winbind
                   authnz_external authnz_pam auth_token auth_xradius autoindex_mb

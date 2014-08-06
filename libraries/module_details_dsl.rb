@@ -1,17 +1,22 @@
-
-
 module Httpd
   module Module
     module Helpers
       module ModuleDetailsDSL
-        
+        def find_deletes(key)
+          found_key = module_details_data.keys.find { |lock| key.merge(lock) == key }
+          # require 'pry' ; binding.pry
+          module_details_data[found_key][:delete_files]
+        end
+
+        def find_load_files(key)
+          found_key = module_details_data.keys.find { |lock| key.merge(lock) == key }
+          module_details_data[found_key][:and_load]
+        end
+
         def after_installing(options)
-#          require 'pry'; binding.pry
-          
-          # options[:packages_for].each do |mod|
-          #   require 'pry'; binding.pry
-          # end
-          
+          key = options[:on].merge(:module => options[:module])
+          actions = options[:chef_should]
+          module_details_data[key] = actions
         end
 
         def module_details_data

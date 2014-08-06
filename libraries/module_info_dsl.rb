@@ -2,7 +2,6 @@ module Httpd
   module Module
     module Helpers
       module ModuleInfoDSL
-
         def find(key)
           found_key = modules_list.keys.find { |lock| key.merge(lock) == key }
           modules_list[found_key]
