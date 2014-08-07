@@ -1,5 +1,6 @@
 require 'chef/provider/lwrp_base'
 require_relative 'helpers_rhel'
+require_relative 'module_details_dsl'
 
 class Chef
   class Provider
@@ -14,18 +15,26 @@ class Chef
         end
 
         def action_create
-          # do magic with packge
+          extend Httpd::Module::Helpers
+
+          # package_name is set by resource
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
-            notifies :run, "execute[#{new_resource.name} create remove_package_config]", :immediately
             action :install
           end
 
-          execute "#{new_resource.name} create remove_package_config" do
-            user 'root'
-            command "rm -rf /etc/#{apache_name}"
-            only_if { new_resource.package_name == 'httpd' }
-            action :nothing
+          # voodoo people
+          delete_files_for_module(
+            new_resource.name,
+            new_resource.httpd_version,
+            node['platform'],
+            node['platform_family'],
+            node['platform_version']
+            ).each do |f|
+            file "#{new_resource.name} create #{f}" do
+              action :nothing
+              subscribes :delete, "package[#{new_resource.name} create #{new_resource.package_name}]", :immediately
+            end
           end
 
           # 2.2 vs 2.4
