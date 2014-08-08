@@ -92,7 +92,7 @@ class Chef
                 action :nothing
                 subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
               end
-              
+
               file "#{new_resource.name} create /etc/httpd/conf.modules.d/00-systemd.conf" do
                 path '/etc/httpd/conf.modules.d/00-systemd.conf'
                 action :nothing
