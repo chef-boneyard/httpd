@@ -54,12 +54,6 @@ describe 'httpd_service::single on rhel-6.4' do
         )
     end
 
-    it 'does not run_bash[default create remove_package_config]' do
-      expect(httpd_service_single_22_run_centos_6_4).to_not run_bash('default create remove_package_config').with(
-        :user => 'root'
-        )
-    end
-
     it 'creates httpd_module[default create log_config]' do
       expect(httpd_service_single_22_run_centos_6_4).to create_httpd_module('default create log_config').with(
         :module_name => 'log_config'

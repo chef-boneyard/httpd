@@ -96,19 +96,45 @@ class Chef
           # software installation
           package "#{new_resource.name} create #{new_resource.package_name}" do
             package_name new_resource.package_name
-            notifies :run, "bash[#{new_resource.name} create remove_package_config]", :immediately
             action :install
           end
 
-          bash "#{new_resource.name} create remove_package_config" do
-            user 'root'
-            code <<-EOC
-               rm -f /etc/httpd/conf.d/*
-               rm -rf /etc/httpd/conf.modules.d/*
-              EOC
-            action :nothing
+          # remove cruft dropped off by package
+          if new_resource.httpd_version.to_f < 2.4
+            %w(
+              /etc/httpd/conf.d/README
+              /etc/httpd/conf.d/welcome.conf
+            ).each do |f|
+              file "#{new_resource.name} create #{f}" do
+                path f
+                action :nothing
+                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+              end
+            end
+          else
+            %w(
+              /etc/httpd/conf.d/autoindex.conf
+              /etc/httpd/conf.d/README
+              /etc/httpd/conf.d/userdir.conf
+              /etc/httpd/conf.d/welcome.conf
+              /etc/httpd/conf.modules.d/00-base.conf
+              /etc/httpd/conf.modules.d/00-dav.conf
+              /etc/httpd/conf.modules.d/00-lua.conf
+              /etc/httpd/conf.modules.d/00-mpm.conf
+              /etc/httpd/conf.modules.d/00-proxy.conf
+              /etc/httpd/conf.modules.d/00-systemd.conf
+              /etc/httpd/conf.modules.d/01-cgi.conf
+            ).each do |f|
+              file "#{new_resource.name} create #{f}" do
+                path f
+                action :nothing
+                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+              end
+            end
           end
 
+          # FIXME: This is needed for serverspec.
+          # Move into a serverspec recipe
           package "#{new_resource.name} create net-tools" do
             package_name 'net-tools'
             action :install

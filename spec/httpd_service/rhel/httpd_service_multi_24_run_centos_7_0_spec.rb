@@ -160,12 +160,6 @@ describe 'httpd_service::multi on rhel-7.0' do
         )
     end
 
-    it 'bash[instance-1 create remove_package_config]' do
-      expect(httpd_service_multi_24_run_centos_7_0).to_not run_bash('instance-1 create remove_package_config').with(
-        :user => 'root'
-        )
-    end
-
     it 'installs package[instance-1 create net-tools]' do
       expect(httpd_service_multi_24_run_centos_7_0).to install_package('instance-1 create net-tools').with(
         :package_name => 'net-tools'
@@ -401,12 +395,6 @@ describe 'httpd_service::multi on rhel-7.0' do
     it 'installs package[instance-2 create httpd]' do
       expect(httpd_service_multi_24_run_centos_7_0).to install_package('instance-2 create httpd').with(
         :package_name => 'httpd'
-        )
-    end
-
-    it 'bash[instance-2 create remove_package_config]' do
-      expect(httpd_service_multi_24_run_centos_7_0).to_not run_bash('instance-2 create remove_package_config').with(
-        :user => 'root'
         )
     end
 

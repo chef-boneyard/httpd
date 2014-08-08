@@ -23,86 +23,38 @@ class Chef
             action :install
           end
 
-          # clean up after httpd package
-          # require 'pry' ; binding.pry
+          # remove cruft dropped off by package
           if new_resource.package_name == 'httpd'
             if new_resource.httpd_version.to_f < 2.4
-              file "#{new_resource.name} create /etc/httpd/conf.d/README" do
-                path '/etc/httpd/conf.d/README'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.d/welcome.conf" do
-                path '/etc/httpd/conf.d/welcome.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+              %w(
+                /etc/httpd/conf.d/README
+                /etc/httpd/conf.d/welcome.conf
+              ).each do |f|
+                file "#{new_resource.name} create #{f}" do
+                  path f
+                  action :nothing
+                  subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+                end
               end
             else
-              file "#{new_resource.name} create /etc/httpd/conf.d/autoindex.conf" do
-                path '/etc/httpd/conf.d/autoindex.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.d/README" do
-                path '/etc/httpd/conf.d/README'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.d/userdir.conf" do
-                path '/etc/httpd/conf.d/userdir.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.d/welcome.conf" do
-                path '/etc/httpd/conf.d/welcome.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.modules.d/00-base.conf" do
-                path '/etc/httpd/conf.modules.d/00-base.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.modules.d/00-dav.conf" do
-                path '/etc/httpd/conf.modules.d/00-dav.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.modules.d/00-lua.conf" do
-                path '/etc/httpd/conf.modules.d/00-lua.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.modules.d/00-mpm.conf" do
-                path '/etc/httpd/conf.modules.d/00-mpm.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.modules.d/00-proxy.conf" do
-                path '/etc/httpd/conf.modules.d/00-proxy.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.modules.d/00-systemd.conf" do
-                path '/etc/httpd/conf.modules.d/00-systemd.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-              end
-
-              file "#{new_resource.name} create /etc/httpd/conf.modules.d/01-cgi.conf" do
-                path '/etc/httpd/conf.modules.d/01-cgi.conf'
-                action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+              %w(
+                /etc/httpd/conf.d/autoindex.conf
+                /etc/httpd/conf.d/README
+                /etc/httpd/conf.d/userdir.conf
+                /etc/httpd/conf.d/welcome.conf
+                /etc/httpd/conf.modules.d/00-base.conf
+                /etc/httpd/conf.modules.d/00-dav.conf
+                /etc/httpd/conf.modules.d/00-lua.conf
+                /etc/httpd/conf.modules.d/00-mpm.conf
+                /etc/httpd/conf.modules.d/00-proxy.conf
+                /etc/httpd/conf.modules.d/00-systemd.conf
+                /etc/httpd/conf.modules.d/01-cgi.conf
+              ).each do |f|
+                file "#{new_resource.name} create #{f}" do
+                  path f
+                  action :nothing
+                  subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+                end
               end
             end
           end
