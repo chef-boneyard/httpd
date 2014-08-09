@@ -100,7 +100,7 @@ class Chef
           end
 
           # remove cruft dropped off by package
-          if new_resource.httpd_version.to_f < 2.4
+          if new_resource.version.to_f < 2.4
             %w(
               /etc/httpd/conf.d/README
               /etc/httpd/conf.d/welcome.conf
