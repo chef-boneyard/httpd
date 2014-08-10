@@ -1,4 +1,4 @@
-require_relative '../../libraries/module_info.rb'
+require_relative '../../libraries/module_package_info.rb'
 
 describe 'looking up module package name' do
   before do

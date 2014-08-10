@@ -1,5 +1,5 @@
 require 'chef/resource/lwrp_base'
-require_relative 'module_info'
+require_relative 'module_package_info'
 require_relative 'service_platform_info'
 
 class Chef
