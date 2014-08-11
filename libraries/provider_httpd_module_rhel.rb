@@ -23,50 +23,8 @@ class Chef
             action :install
           end
 
-          # remove cruft dropped off by package
-          if new_resource.package_name == 'httpd'
-            if new_resource.httpd_version.to_f < 2.4
-              %w(
-                /etc/httpd/conf.d/README
-                /etc/httpd/conf.d/welcome.conf
-              ).each do |f|
-                file "#{new_resource.name} create #{f}" do
-                  path f
-                  action :nothing
-                  subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-                end
-              end
-            else
-              %w(
-                /etc/httpd/conf.d/autoindex.conf
-                /etc/httpd/conf.d/README
-                /etc/httpd/conf.d/userdir.conf
-                /etc/httpd/conf.d/welcome.conf
-                /etc/httpd/conf.modules.d/00-base.conf
-                /etc/httpd/conf.modules.d/00-dav.conf
-                /etc/httpd/conf.modules.d/00-lua.conf
-                /etc/httpd/conf.modules.d/00-mpm.conf
-                /etc/httpd/conf.modules.d/00-proxy.conf
-                /etc/httpd/conf.modules.d/00-systemd.conf
-                /etc/httpd/conf.modules.d/01-cgi.conf
-              ).each do |f|
-                file "#{new_resource.name} create #{f}" do
-                  path f
-                  action :nothing
-                  subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
-                end
-              end
-            end
-          end
-
           # voodoo people
-          delete_files_for_module(
-            new_resource.name,
-            new_resource.httpd_version,
-            node['platform'],
-            node['platform_family'],
-            node['platform_version']
-            ).each do |f|
+          delete_files_for_package(new_resource.package_name, new_resource.httpd_version).each do |f|
             file "#{new_resource.name} create #{f}" do
               path f
               action :nothing
@@ -106,6 +64,7 @@ class Chef
               action :create
             end
 
+            # FIXME: handle outliers
             template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.modules.d/#{module_name}.load"
               source 'module_load.erb'
