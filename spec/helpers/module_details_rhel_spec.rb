@@ -3,7 +3,7 @@ require_relative '../../libraries/module_details_dsl.rb'
 
 describe 'looking up module package name' do
   before do
-    extend Httpd::Module::Helpers
+    extend Httpd::Module::Helpers::ModuleDetails
   end
 
   context 'for apache 2.2 on rhel-5' do
