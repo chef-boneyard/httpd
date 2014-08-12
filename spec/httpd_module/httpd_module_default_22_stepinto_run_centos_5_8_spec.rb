@@ -22,6 +22,24 @@ describe 'httpd_module::default on centos-5.8' do
         )
     end
 
+    it 'deletes file[auth_basic create /etc/httpd/conf.d/README]' do
+      expect(httpd_module_default_22_stepinto_run_centos_5_8).to_not delete_file('auth_basic create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_22_stepinto_run_centos_5_8).to_not delete_file('auth_basic create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_22_stepinto_run_centos_5_8).to_not delete_file('auth_basic create /etc/httpd/conf.d/proxy_ajp.conf').with(
+        :path => '/etc/httpd/conf.d/proxy_ajp.conf'
+        )
+    end
+
     it 'create directory[auth_basic create /etc/httpd/conf.d]' do
       expect(httpd_module_default_22_stepinto_run_centos_5_8).to create_directory('auth_basic create /etc/httpd/conf.d').with(
         :owner => 'root',

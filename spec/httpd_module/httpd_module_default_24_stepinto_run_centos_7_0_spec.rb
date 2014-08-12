@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'httpd_module::default on centos-7.0' do
-  let(:httpd_module_default_22_stepinto_run_centos_7_0) do
+  let(:httpd_module_default_24_stepinto_run_centos_7_0) do
     ChefSpec::Runner.new(
       :step_into => 'httpd_module',
       :platform => 'centos',
@@ -13,17 +13,83 @@ describe 'httpd_module::default on centos-7.0' do
 
   context 'when using default parameters' do
     it 'creates httpd_module[auth_basic]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to create_httpd_module('auth_basic')
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_httpd_module('auth_basic')
     end
 
     it 'installs package[auth_basic create httpd]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to install_package('auth_basic create httpd').with(
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to install_package('auth_basic create httpd').with(
         :package_name => 'httpd'
         )
     end
 
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.d/autoindex.conf').with(
+        :path => '/etc/httpd/conf.d/autoindex.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create /etc/httpd/conf.d/README]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.d/userdir.conf').with(
+        :path => '/etc/httpd/conf.d/userdir.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-base.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-base.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-dav.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-dav.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-lua.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-lua.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-mpm.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-mpm.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-proxy.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-proxy.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-systemd.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-systemd.conf'
+        )
+    end
+
+    it 'deletes file[auth_basic create httpd]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/01-cgi.conf').with(
+        :path => '/etc/httpd/conf.modules.d/01-cgi.conf'
+        )
+    end
+
     it 'create directory[auth_basic create /etc/httpd/conf.modules.d]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to create_directory('auth_basic create /etc/httpd/conf.modules.d').with(
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_directory('auth_basic create /etc/httpd/conf.modules.d').with(
         :owner => 'root',
         :group => 'root',
         :recursive => true
@@ -31,7 +97,7 @@ describe 'httpd_module::default on centos-7.0' do
     end
 
     it 'create template[auth_basic create /etc/httpd/conf.modules.d/auth_basic.load]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to create_template('auth_basic create /etc/httpd/conf.modules.d/auth_basic.load').with(
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_template('auth_basic create /etc/httpd/conf.modules.d/auth_basic.load').with(
         :owner => 'root',
         :group => 'root',
         :source => 'module_load.erb',
@@ -40,17 +106,17 @@ describe 'httpd_module::default on centos-7.0' do
     end
 
     it 'creates httpd_module[auth_kerb]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to create_httpd_module('auth_kerb')
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_httpd_module('auth_kerb')
     end
 
     it 'installs package[auth_kerb create mod_auth_kerb]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to install_package('auth_kerb create mod_auth_kerb').with(
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to install_package('auth_kerb create mod_auth_kerb').with(
         :package_name => 'mod_auth_kerb'
         )
     end
 
     it 'create directory[auth_kerb create /etc/httpd/conf.modules.d]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to create_directory('auth_kerb create /etc/httpd/conf.modules.d').with(
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_directory('auth_kerb create /etc/httpd/conf.modules.d').with(
         :owner => 'root',
         :group => 'root',
         :recursive => true
@@ -58,7 +124,7 @@ describe 'httpd_module::default on centos-7.0' do
     end
 
     it 'create template[auth_kerb create /etc/httpd/conf.modules.d/auth_kerb.load]' do
-      expect(httpd_module_default_22_stepinto_run_centos_7_0).to create_template('auth_kerb create /etc/httpd/conf.modules.d/auth_kerb.load').with(
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_template('auth_kerb create /etc/httpd/conf.modules.d/auth_kerb.load').with(
         :owner => 'root',
         :group => 'root',
         :source => 'module_load.erb',

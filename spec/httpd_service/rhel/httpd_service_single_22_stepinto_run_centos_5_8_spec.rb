@@ -48,6 +48,24 @@ describe 'httpd_service::single on rhel-5.8' do
         )
     end
 
+    it 'deletes file[/etc/httpd/conf.d/README]' do
+      expect(httpd_service_single_22_run_centos_5_8).to_not delete_file('default create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
+      expect(httpd_service_single_22_run_centos_5_8).to_not delete_file('default create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/proxy_ajp.conf]' do
+      expect(httpd_service_single_22_run_centos_5_8).to_not delete_file('default create /etc/httpd/conf.d/proxy_ajp.conf').with(
+        :path => '/etc/httpd/conf.d/proxy_ajp.conf'
+        )
+    end
+
     it 'installs package[net-tools]' do
       expect(httpd_service_single_22_run_centos_5_8).to install_package('default create net-tools').with(
         :package_name => 'net-tools'
