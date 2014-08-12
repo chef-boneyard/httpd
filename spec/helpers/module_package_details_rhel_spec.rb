@@ -9,6 +9,22 @@ describe 'looking up module package name' do
     it 'returns the proper list of files to delete' do
       expect(
         subject.find_deletes(
+          :package => 'httpd',
+          :httpd_version => '2.2',
+          :platform_family => 'rhel',
+          :platform_version => '5'
+          )
+        ).to eq([
+          '/etc/httpd/conf.d/README',
+          '/etc/httpd/conf.d/welcome.conf',
+          '/etc/httpd/conf.d/proxy_ajp.conf'
+        ])
+    end
+
+    # auth_kerb for 2.2 on rhel-5
+    it 'returns the proper list of files to delete' do
+      expect(
+        subject.find_deletes(
           :package => 'mod_auth_kerb',
           :httpd_version => '2.2',
           :platform_family => 'rhel',

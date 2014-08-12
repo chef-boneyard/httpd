@@ -52,139 +52,143 @@ module Httpd
         after_installing :package => 'httpd',
                          :on => { :platform_family => 'rhel', :platform_version => '5'  },
                          :chef_should => {
-                           :delete_files => %w( /etc/httpd/conf.d/README /etc/httpd/conf.d/welcome.conf )
+                           :delete_files => %w(
+                             /etc/httpd/conf.d/README
+                             /etc/httpd/conf.d/welcome.conf
+                             /etc/httpd/conf.d/proxy_ajp.conf
+                           )
                          }
 
         after_installing :package => 'mod_auth_kerb',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/auth_kerb.conf )
                          }
 
         after_installing :package => 'mod_auth_mysql',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/auth_mysql.conf )
                          }
 
         after_installing :package => 'mod_auth_psql',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/auth_psql.conf )
                          }
 
         after_installing :package => 'mod_authz_ldap',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/authz_ldap.conf )
                          }
 
         after_installing :package => 'mod_dav_svn',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/subversion.conf )
                          }
 
         after_installing :package => 'mod_nss',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/nss.conf )
                          }
 
         after_installing :package => 'mod_perl',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/perl.conf )
                          }
 
         after_installing :package => 'mod_python',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/python.conf )
                          }
 
         after_installing :package => 'mod_revocator',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/revocator.conf )
                          }
 
         after_installing :package => 'mod_ssl',
-                         :on => { :platform_family => 'rhel', :platform_version => '5'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '5'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/ssl.conf )
                          }
 
         # rhel-6
         after_installing :package => 'httpd',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/README /etc/httpd/conf.d/welcome.conf )
                          }
 
         after_installing :package => 'mod_auth_kerb',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/auth_kerb.conf )
                          }
 
         after_installing :package => 'mod_auth_mysql',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/auth_mysql.conf )
                          }
 
         after_installing :package => 'mod_authz_ldap',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/authz_ldap.conf )
                          }
 
         after_installing :package => 'mod_dav_svn',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/subversion.conf )
                          }
 
         after_installing :package => 'mod_dnssd',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/mod_dnssd.conf )
                          }
 
         after_installing :package => 'mod_nss',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/nss.conf )
                          }
 
         after_installing :package => 'mod_perl',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/perl.conf )
                          }
 
         after_installing :package => 'mod_revocator',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/revocator.conf )
                          }
 
         after_installing :package => 'mod_ssl',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/ssl.conf )
                          }
 
         after_installing :package => 'mod_wsgi',
-                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/wsgi.conf )
                          }
 
         # rhel-7
         after_installing :package => 'httpd',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w(
                              /etc/httpd/conf.d/autoindex.conf
@@ -202,19 +206,19 @@ module Httpd
                          }
 
         after_installing :package => 'mod_auth_kerb',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.modules.d/10-auth_kerb.conf )
                          }
 
         after_installing :package => 'mod_dav_svn',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.modules.d/10-subversion.conf )
                          }
 
         after_installing :package => 'mod_fcgid',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w(
                              /etc/httpd/conf.d/fcgid.conf
@@ -223,13 +227,13 @@ module Httpd
                          }
 
         after_installing :package => 'mod_ldap',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.modules.d/01-ldap.conf )
                          }
 
         after_installing :package => 'mod_nss',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w(
                              /etc/httpd/conf.d/nss.conf
@@ -238,13 +242,13 @@ module Httpd
                          }
 
         after_installing :package => 'mod_proxy_html',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.modules.d/00-proxyhtml.conf )
                          }
 
         after_installing :package => 'mod_revocator',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w(
                              /etc/httpd/conf.d/revocator.conf
@@ -253,7 +257,7 @@ module Httpd
                          }
 
         after_installing :package => 'mod_security',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w(
                              /etc/httpd/conf.d/mod_security.conf
@@ -262,13 +266,13 @@ module Httpd
                          }
 
         after_installing :package => 'mod_session',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.modules.d/01-session.conf )
                          }
 
         after_installing :package => 'mod_ssl',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w(
                              /etc/httpd/conf.d/ssl.conf
@@ -277,7 +281,7 @@ module Httpd
                          }
 
         after_installing :package => 'mod_wsgi',
-                         :on => { :platform_family => 'rhel', :platform_version => '7'  },
+                         :on => { :platform_family => 'rhel', :httpd_version => '2.4', :platform_version => '7'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.modules.d/10-wsgi.conf )
                          }

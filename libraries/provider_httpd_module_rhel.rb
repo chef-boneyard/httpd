@@ -1,6 +1,5 @@
 require 'chef/provider/lwrp_base'
 require_relative 'helpers_rhel'
-require_relative 'module_package_details_dsl'
 
 class Chef
   class Provider
@@ -23,7 +22,7 @@ class Chef
             action :install
           end
 
-          # voodoo people
+          # remove cruft dropped off by package
           delete_files_for_package(new_resource.package_name, new_resource.httpd_version).each do |f|
             file "#{new_resource.name} create #{f}" do
               path f

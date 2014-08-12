@@ -104,6 +104,7 @@ class Chef
             %w(
               /etc/httpd/conf.d/README
               /etc/httpd/conf.d/welcome.conf
+              /etc/httpd/conf.d/proxy_ajp.conf
             ).each do |f|
               file "#{new_resource.name} create #{f}" do
                 path f
