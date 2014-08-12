@@ -1,6 +1,6 @@
 require 'chef/provider/lwrp_base'
 require_relative 'helpers_rhel'
-require_relative 'module_details_dsl'
+require_relative 'module_package_details_dsl'
 
 class Chef
   class Provider

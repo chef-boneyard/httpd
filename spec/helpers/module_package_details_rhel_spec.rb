@@ -1,5 +1,4 @@
-require_relative '../../libraries/module_details_rhel.rb'
-#require_relative '../../libraries/module_details_dsl.rb'
+require_relative '../../libraries/module_package_details_rhel.rb'
 
 describe 'looking up module package name' do
 
@@ -12,7 +11,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_auth_kerb',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -25,7 +23,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_auth_mysql',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -38,7 +35,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_auth_psql',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -51,7 +47,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_authz_ldap',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -64,7 +59,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_dav_svn',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -77,7 +71,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_nss',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -90,7 +83,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_perl',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -103,7 +95,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_python',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -116,7 +107,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_revocator',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -129,7 +119,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_ssl',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '5'
           )
@@ -144,7 +133,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_auth_kerb',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -157,7 +145,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_auth_mysql',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -170,7 +157,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_authz_ldap',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -183,7 +169,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_dav_svn',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -196,7 +181,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_dnssd',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -209,7 +193,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_nss',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -222,7 +205,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_perl',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -235,7 +217,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_revocator',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -248,7 +229,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_wsgi',
           :httpd_version => '2.2',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '6'
           )
@@ -263,7 +243,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_auth_kerb',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -276,7 +255,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_dav_svn',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -289,7 +267,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_fcgid',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -302,7 +279,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_ldap',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -315,7 +291,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_nss',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -328,7 +303,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_proxy_html',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -341,7 +315,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_revocator',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -354,7 +327,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_security',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -367,7 +339,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_session',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -380,7 +351,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_ssl',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
@@ -393,7 +363,6 @@ describe 'looking up module package name' do
         subject.find_deletes(
           :package => 'mod_wsgi',
           :httpd_version => '2.4',
-          :platform => 'centos',
           :platform_family => 'rhel',
           :platform_version => '7'
           )
