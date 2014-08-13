@@ -22,7 +22,7 @@ describe 'httpd_module::default on centos-7.0' do
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.d/autoindex.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.d/autoindex.conf').with(
         :path => '/etc/httpd/conf.d/autoindex.conf'
         )
@@ -34,55 +34,55 @@ describe 'httpd_module::default on centos-7.0' do
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.d/userdir.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.d/userdir.conf').with(
         :path => '/etc/httpd/conf.d/userdir.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.d/welcome.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.d/welcome.conf').with(
         :path => '/etc/httpd/conf.d/welcome.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.modules.d/00-base.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-base.conf').with(
         :path => '/etc/httpd/conf.modules.d/00-base.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.modules.d/00-dav.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-dav.conf').with(
         :path => '/etc/httpd/conf.modules.d/00-dav.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.modules.d/00-lua.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-lua.conf').with(
         :path => '/etc/httpd/conf.modules.d/00-lua.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.modules.d/00-mpm.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-mpm.conf').with(
         :path => '/etc/httpd/conf.modules.d/00-mpm.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.modules.d/00-proxy.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-proxy.conf').with(
         :path => '/etc/httpd/conf.modules.d/00-proxy.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.modules.d/00-systemd.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/00-systemd.conf').with(
         :path => '/etc/httpd/conf.modules.d/00-systemd.conf'
         )
     end
 
-    it 'deletes file[auth_basic create httpd]' do
+    it 'deletes file[auth_basic create /etc/httpd/conf.modules.d/01-cgi.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_basic create /etc/httpd/conf.modules.d/01-cgi.conf').with(
         :path => '/etc/httpd/conf.modules.d/01-cgi.conf'
         )
@@ -108,10 +108,16 @@ describe 'httpd_module::default on centos-7.0' do
     it 'creates httpd_module[auth_kerb]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_httpd_module('auth_kerb')
     end
-
+    
     it 'installs package[auth_kerb create mod_auth_kerb]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to install_package('auth_kerb create mod_auth_kerb').with(
         :package_name => 'mod_auth_kerb'
+        )
+    end
+    
+    it 'deletes file[auth_kerb create /etc/httpd/conf.modules.d/10-auth_kerb.conf]' do
+      expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_kerb create /etc/httpd/conf.modules.d/10-auth_kerb.conf').with(
+        :path => '/etc/httpd/conf.modules.d/10-auth_kerb.conf'
         )
     end
 
