@@ -72,6 +72,48 @@ describe 'httpd_service::single on rhel-7.0' do
         )
     end
 
+    it 'deletes file[default create /etc/httpd/conf.modules.d/00-base.conf]' do
+      expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.modules.d/00-base.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-base.conf'
+        )
+    end
+
+    it 'deletes file[default create /etc/httpd/conf.modules.d/00-dav.conf]' do
+      expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.modules.d/00-dav.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-dav.conf'
+        )
+    end
+
+    it 'deletes file[default create /etc/httpd/conf.modules.d/00-lua.conf]' do
+      expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.modules.d/00-lua.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-lua.conf'
+        )
+    end
+
+    it 'deletes file[default create /etc/httpd/conf.modules.d/00-mpm.conf]' do
+      expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.modules.d/00-mpm.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-mpm.conf'
+        )
+    end
+
+    it 'deletes file[default create /etc/httpd/conf.modules.d/00-proxy.conf]' do
+      expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.modules.d/00-proxy.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-proxy.conf'
+        )
+    end
+
+    it 'deletes file[default create /etc/httpd/conf.modules.d/00-systemd.conf]' do
+      expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.modules.d/00-systemd.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-systemd.conf'
+        )
+    end
+
+    it 'deletes file[default create /etc/httpd/conf.modules.d/01-cgi.conf]' do
+      expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.modules.d/01-cgi.conf').with(
+        :path => '/etc/httpd/conf.modules.d/01-cgi.conf'
+        )
+    end
+
     it 'installs package[net-tools]' do
       expect(httpd_service_single_24_run_centos_7_0).to install_package('default create net-tools').with(
         :package_name => 'net-tools'

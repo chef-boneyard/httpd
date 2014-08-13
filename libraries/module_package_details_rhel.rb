@@ -121,6 +121,16 @@ module Httpd
 
         # rhel-6
         after_installing :package => 'httpd',
+                         :on => { :platform_family => 'rhel', :platform_version => '6'  },
+                         :chef_should => {
+                           :delete_files => %w(
+                             /etc/httpd/conf.d/README
+                             /etc/httpd/conf.d/welcome.conf
+                             /etc/httpd/conf.d/proxy_ajp.conf
+                           )
+                         }
+
+        after_installing :package => 'httpd',
                          :on => { :platform_family => 'rhel', :httpd_version => '2.2', :platform_version => '6'  },
                          :chef_should => {
                            :delete_files => %w( /etc/httpd/conf.d/README /etc/httpd/conf.d/welcome.conf )

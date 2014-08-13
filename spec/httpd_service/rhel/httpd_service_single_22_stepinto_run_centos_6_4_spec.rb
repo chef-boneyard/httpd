@@ -48,21 +48,21 @@ describe 'httpd_service::single on rhel-6.4' do
         )
     end
 
-    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
-      expect(httpd_service_single_22_run_centos_6_4).to_not delete_file('default create /etc/httpd/conf.d/autoindex.conf').with(
-        :path => '/etc/httpd/conf.d/autoindex.conf'
-        )
-    end
-
     it 'deletes file[/etc/httpd/conf.d/README]' do
       expect(httpd_service_single_22_run_centos_6_4).to_not delete_file('default create /etc/httpd/conf.d/README').with(
         :path => '/etc/httpd/conf.d/README'
         )
     end
 
-    it 'deletes file[/etc/httpd/conf.d/userdir.conf]' do
+    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
+      expect(httpd_service_single_22_run_centos_6_4).to_not delete_file('default create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/proxy_ajp.conf]' do
       expect(httpd_service_single_22_run_centos_6_4).to_not delete_file('default create /etc/httpd/conf.d/proxy_ajp.conf').with(
-        :path => '/etc/httpd/conf.d/userdir.conf'
+        :path => '/etc/httpd/conf.d/proxy_ajp.conf'
         )
     end
 
