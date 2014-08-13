@@ -110,7 +110,7 @@ class Chef
               file "#{new_resource.name} create #{f}" do
                 path f
                 action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+                subscribes :delete, "package[#{new_resource.name} create #{new_resource.package_name}]", :immediately
               end
             end
           else
@@ -131,7 +131,7 @@ class Chef
               file "#{new_resource.name} create #{f}" do
                 path f
                 action :nothing
-                subscribes :delete, "package[#{new_resource.name} create httpd]", :immediately
+                subscribes :delete, "package[#{new_resource.name} create #{new_resource.package_name}]", :immediately
               end
             end
           end
