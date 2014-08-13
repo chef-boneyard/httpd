@@ -160,6 +160,72 @@ describe 'httpd_service::multi on rhel-7.0' do
         )
     end
 
+    it 'deletes file[/etc/httpd/conf.d/autoindex.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.d/autoindex.conf').with(
+        :path => '/etc/httpd/conf.d/autoindex.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/README]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/userdir.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.d/userdir.conf').with(
+        :path => '/etc/httpd/conf.d/userdir.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[instance-1 create /etc/httpd/conf.modules.d/00-base.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.modules.d/00-base.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-base.conf'
+        )
+    end
+
+    it 'deletes file[instance-1 create /etc/httpd/conf.modules.d/00-dav.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.modules.d/00-dav.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-dav.conf'
+        )
+    end
+
+    it 'deletes file[instance-1 create /etc/httpd/conf.modules.d/00-lua.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.modules.d/00-lua.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-lua.conf'
+        )
+    end
+
+    it 'deletes file[instance-1 create /etc/httpd/conf.modules.d/00-mpm.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.modules.d/00-mpm.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-mpm.conf'
+        )
+    end
+
+    it 'deletes file[instance-1 create /etc/httpd/conf.modules.d/00-proxy.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.modules.d/00-proxy.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-proxy.conf'
+        )
+    end
+
+    it 'deletes file[instance-1 create /etc/httpd/conf.modules.d/00-systemd.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.modules.d/00-systemd.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-systemd.conf'
+        )
+    end
+
+    it 'deletes file[instance-1 create /etc/httpd/conf.modules.d/01-cgi.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.modules.d/01-cgi.conf').with(
+        :path => '/etc/httpd/conf.modules.d/01-cgi.conf'
+        )
+    end
+
     it 'installs package[instance-1 create net-tools]' do
       expect(httpd_service_multi_24_stepinto_run_centos_7_0).to install_package('instance-1 create net-tools').with(
         :package_name => 'net-tools'
@@ -395,6 +461,72 @@ describe 'httpd_service::multi on rhel-7.0' do
     it 'installs package[instance-2 create httpd]' do
       expect(httpd_service_multi_24_stepinto_run_centos_7_0).to install_package('instance-2 create httpd').with(
         :package_name => 'httpd'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/autoindex.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.d/autoindex.conf').with(
+        :path => '/etc/httpd/conf.d/autoindex.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/README]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/userdir.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.d/userdir.conf').with(
+        :path => '/etc/httpd/conf.d/userdir.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/00-base.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/00-base.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-base.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/00-dav.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/00-dav.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-dav.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/00-lua.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/00-lua.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-lua.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/00-mpm.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/00-mpm.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-mpm.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/00-proxy.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/00-proxy.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-proxy.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/00-systemd.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/00-systemd.conf').with(
+        :path => '/etc/httpd/conf.modules.d/00-systemd.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/01-cgi.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/01-cgi.conf').with(
+        :path => '/etc/httpd/conf.modules.d/01-cgi.conf'
         )
     end
 
