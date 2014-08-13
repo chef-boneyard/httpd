@@ -372,6 +372,24 @@ describe 'httpd_service::multi on rhel-5.8' do
         )
     end
 
+    it 'deletes file[/etc/httpd/conf.d/README]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_5_8).to_not delete_file('instance-2 create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_5_8).to_not delete_file('instance-2 create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/proxy_ajp.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_5_8).to_not delete_file('instance-2 create /etc/httpd/conf.d/proxy_ajp.conf').with(
+        :path => '/etc/httpd/conf.d/proxy_ajp.conf'
+        )
+    end
+
     it 'installs package[instance-2 create net-tools]' do
       expect(httpd_service_multi_22_stepinto_run_centos_5_8).to install_package('instance-2 create net-tools').with(
         :package_name => 'net-tools'

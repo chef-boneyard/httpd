@@ -38,7 +38,7 @@ describe 'httpd_service::multi on rhel-6.4' do
       expect(httpd_service_multi_22_stepinto_run_centos_6_4).to create_user('bob')
     end
 
-    it 'deletes httpd_service[delete]' do
+    it 'deletes httpd_service[default]' do
       expect(httpd_service_multi_22_stepinto_run_centos_6_4).to delete_httpd_service('default')
     end
 
@@ -112,7 +112,7 @@ describe 'httpd_service::multi on rhel-6.4' do
   end
 
   context 'when stepping into httpd_service' do
-    # default
+    # httpd_service[default]
     it 'manages service[default create httpd]' do
       expect(httpd_service_multi_22_stepinto_run_centos_6_4).to stop_service('default create httpd').with(
         :provider => Chef::Provider::Service::Init::Redhat
@@ -167,10 +167,28 @@ describe 'httpd_service::multi on rhel-6.4' do
         )
     end
 
-    # instance-1
+    # httpd_service[instance-1]
     it 'installs package[instance-1 create httpd]' do
       expect(httpd_service_multi_22_stepinto_run_centos_6_4).to install_package('instance-1 create httpd').with(
         :package_name => 'httpd'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/README]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_6_4).to_not delete_file('instance-1 create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_6_4).to_not delete_file('instance-1 create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/proxy_ajp.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_6_4).to_not delete_file('instance-1 create /etc/httpd/conf.d/proxy_ajp.conf').with(
+        :path => '/etc/httpd/conf.d/proxy_ajp.conf'
         )
     end
 
@@ -363,10 +381,28 @@ describe 'httpd_service::multi on rhel-6.4' do
         )
     end
 
-    # instance-2
+    # httpd_service[instance-2]
     it 'installs package[instance-2 create httpd]' do
       expect(httpd_service_multi_22_stepinto_run_centos_6_4).to install_package('instance-2 create httpd').with(
         :package_name => 'httpd'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/README]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_6_4).to_not delete_file('instance-2 create /etc/httpd/conf.d/README').with(
+        :path => '/etc/httpd/conf.d/README'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_6_4).to_not delete_file('instance-2 create /etc/httpd/conf.d/welcome.conf').with(
+        :path => '/etc/httpd/conf.d/welcome.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/proxy_ajp.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_6_4).to_not delete_file('instance-2 create /etc/httpd/conf.d/proxy_ajp.conf').with(
+        :path => '/etc/httpd/conf.d/proxy_ajp.conf'
         )
     end
 
