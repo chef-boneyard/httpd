@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe 'httpd_service::single on rhel-7.0' do
-  let(:httpd_service_single_22_run_centos_7_0) do
+describe 'httpd_service::single on amazon-2014.03' do
+  let(:httpd_service_single_24_run_amazon_2014_03) do
     ChefSpec::Runner.new(
-      :platform => 'centos',
-      :version => '7.0'
+      :platform => 'amazon',
+      :version => '2014.03'
       ) do |node|
       node.set['httpd']['version'] = '2.4'
     end.converge('httpd_service::single')
@@ -12,7 +12,7 @@ describe 'httpd_service::single on rhel-7.0' do
 
   context 'when using default parameters' do
     it 'creates httpd_service[default]' do
-      expect(httpd_service_single_22_run_centos_7_0).to create_httpd_service('default').with(
+      expect(httpd_service_single_24_run_amazon_2014_03).to create_httpd_service('default').with(
         :contact => 'webmaster@localhost',
         :hostname_lookups => 'off',
         :keepalive => true,

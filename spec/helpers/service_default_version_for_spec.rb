@@ -80,31 +80,6 @@ describe 'service_platform_info' do
     end
   end
 
-  # fedora-19
-  context 'for fedora-19' do
-    context 'when looking up default version' do
-      it 'returns the correct version' do
-        expect(
-          default_httpd_version_for('fedora', 'fedora', '19')
-          ).to eq('2.4')
-      end
-    end
-
-    context 'when looking up package' do
-      it 'returns the correct package for httpd 2.2' do
-        expect(
-          package_name_for('fedora', 'fedora', '19', '2.2')
-          ).to eq(nil)
-      end
-
-      it 'returns the correct package for httpd 2.4' do
-        expect(
-          package_name_for('fedora', 'fedora', '19', '2.4')
-          ).to eq('httpd')
-      end
-    end
-  end
-
   # debian-7
   context 'for debian-7' do
     context 'when looking up default version' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'httpd_service::single on rhel-6.4' do
+describe 'httpd_service::single on amazon-2014.03' do
   let(:httpd_service_single_22_run_amazon_2014_03) do
     ChefSpec::Runner.new(
       :platform => 'amazon',

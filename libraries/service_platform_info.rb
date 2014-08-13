@@ -30,13 +30,6 @@ module Httpd
         nil
       end
 
-      def service_name_for(platform, platform_family, platform_version, version)
-        keyname = keyname_for(platform, platform_family, platform_version)
-        PlatformInfo.httpd_info[platform_family][keyname][version]['service_name']
-      rescue NoMethodError
-        nil
-      end
-
       def keyname_for(platform, platform_family, platform_version)
         case
         when platform_family == 'rhel'
@@ -69,8 +62,7 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.2' => {
-                  'package_name' => 'httpd',
-                  'service_prefix' => 'httpd'
+                  'package_name' => 'httpd'
                 }
               },
               '6' => {
@@ -78,8 +70,7 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.2' => {
-                  'package_name' => 'httpd',
-                  'service_prefix' => 'httpd'
+                  'package_name' => 'httpd'
                 }
               },
               '7' => {
@@ -87,8 +78,7 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.4' => {
-                  'package_name' => 'httpd',
-                  'service_prefix' => 'httpd'
+                  'package_name' => 'httpd'
                 }
               },
               '2013.03' => {
@@ -96,8 +86,7 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.2' => {
-                  'package_name' => 'httpd',
-                  'service_prefix' => 'httpd'
+                  'package_name' => 'httpd'
                 }
               },
               '2013.09' => {
@@ -105,12 +94,10 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.2' => {
-                  'package_name' => 'httpd',
-                  'service_prefix' => 'httpd'
+                  'package_name' => 'httpd'
                 },
                 '2.4' => {
-                  'package_name' => 'httpd24',
-                  'service_prefix' => 'httpd24'
+                  'package_name' => 'httpd24'
                 }
               },
               '2014.03' => {
@@ -118,32 +105,20 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.2' => {
-                  'package_name' => 'httpd',
-                  'service_prefix' => 'httpd'
+                  'package_name' => 'httpd'
                 },
                 '2.4' => {
-                  'package_name' => 'httpd24',
-                  'service_prefix' => 'httpd'
+                  'package_name' => 'httpd24'
                 }
               }
             },
             'fedora' => {
-              '19' => {
-                'default_version' => '2.4',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
-                '2.4' => {
-                  'package_name' => 'httpd',
-                  'service_name' => 'httpd'
-                }
-              },
               '20' => {
                 'default_version' => '2.4',
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.4' => {
-                  'package_name' => 'httpd',
-                  'service_name' => 'httpd'
+                  'package_name' => 'httpd'
                 }
               }
             },
@@ -153,8 +128,7 @@ module Httpd
                 'default_run_user' => 'www-data',
                 'default_run_group' => 'www-data',
                 '2.2' => {
-                  'package_name' => 'apache2',
-                  'service_name' => 'apache2'
+                  'package_name' => 'apache2'
                 }
               },
               'jessie/sid' => {
@@ -162,8 +136,7 @@ module Httpd
                 'default_run_user' => 'www-data',
                 'default_run_group' => 'www-data',
                 '2.4' => {
-                  'package_name' => 'apache2',
-                  'service_name' => 'apache2'
+                  'package_name' => 'apache2'
                 }
               },
               '12.04' => {
@@ -171,8 +144,7 @@ module Httpd
                 'default_run_user' => 'www-data',
                 'default_run_group' => 'www-data',
                 '2.2' => {
-                  'package_name' => 'apache2',
-                  'service_name' => 'apache2'
+                  'package_name' => 'apache2'
                 }
               },
               '13.04' => {
@@ -180,8 +152,7 @@ module Httpd
                 'default_run_user' => 'www-data',
                 'default_run_group' => 'www-data',
                 '2.2' => {
-                  'package_name' => 'apache2',
-                  'service_name' => 'apache2'
+                  'package_name' => 'apache2'
                 }
               },
               '13.10' => {
@@ -189,8 +160,7 @@ module Httpd
                 'default_run_user' => 'www-data',
                 'default_run_group' => 'www-data',
                 '2.2' => {
-                  'package_name' => 'apache2',
-                  'service_name' => 'apache2'
+                  'package_name' => 'apache2'
                 }
               },
               '14.04' => {
@@ -198,8 +168,7 @@ module Httpd
                 'default_run_user' => 'www-data',
                 'default_run_group' => 'www-data',
                 '2.4' => {
-                  'package_name' => 'apache2',
-                  'service_name' => 'apache2'
+                  'package_name' => 'apache2'
                 }
               }
             },
@@ -211,16 +180,13 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.0' => {
-                  'package_name' => 'apache',
-                  'service_name' => 'apache'
+                  'package_name' => 'apache'
                 },
                 '2.2' => {
-                  'package_name' => 'apache',
-                  'service_name' => 'apache'
+                  'package_name' => 'apache'
                 },
                 '2.4' => {
-                  'package_name' => 'apache',
-                  'service_name' => 'apache'
+                  'package_name' => 'apache'
                 }
               }
             },
@@ -230,8 +196,7 @@ module Httpd
                 'default_run_user' => 'apache',
                 'default_run_group' => 'apache',
                 '2.2' => {
-                  'package_name' => 'apache22',
-                  'service_name' => 'apache22'
+                  'package_name' => 'apache22'
                 }
               }
             }
