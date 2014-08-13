@@ -108,13 +108,13 @@ describe 'httpd_module::default on centos-7.0' do
     it 'creates httpd_module[auth_kerb]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to create_httpd_module('auth_kerb')
     end
-    
+
     it 'installs package[auth_kerb create mod_auth_kerb]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to install_package('auth_kerb create mod_auth_kerb').with(
         :package_name => 'mod_auth_kerb'
         )
     end
-    
+
     it 'deletes file[auth_kerb create /etc/httpd/conf.modules.d/10-auth_kerb.conf]' do
       expect(httpd_module_default_24_stepinto_run_centos_7_0).to_not delete_file('auth_kerb create /etc/httpd/conf.modules.d/10-auth_kerb.conf').with(
         :path => '/etc/httpd/conf.modules.d/10-auth_kerb.conf'

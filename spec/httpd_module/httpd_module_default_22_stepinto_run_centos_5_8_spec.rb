@@ -72,7 +72,7 @@ describe 'httpd_module::default on centos-5.8' do
         :path => '/etc/httpd/conf.d/auth_kerb.conf'
         )
     end
-    
+
     it 'create directory[auth_kerb create /etc/httpd/conf.d]' do
       expect(httpd_module_default_22_stepinto_run_centos_5_8).to create_directory('auth_kerb create /etc/httpd/conf.d').with(
         :owner => 'root',

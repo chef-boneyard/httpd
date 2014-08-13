@@ -74,12 +74,12 @@ describe 'httpd_module::default on centos-6.4' do
         :package_name => 'mod_auth_kerb'
         )
     end
-    
+
     it 'deletes file[auth_kerb create /etc/httpd/conf.d/auth_kerb.conf]' do
       expect(httpd_module_default_22_stepinto_run_centos_6_4).to_not delete_file('auth_kerb create /etc/httpd/conf.d/auth_kerb.conf').with(
         :path => '/etc/httpd/conf.d/auth_kerb.conf')
-    end    
-    
+    end
+
     it 'create directory[auth_kerb create /etc/httpd/conf.d]' do
       expect(httpd_module_default_22_stepinto_run_centos_6_4).to create_directory('auth_kerb create /etc/httpd/conf.d').with(
         :owner => 'root',

@@ -53,7 +53,7 @@ describe 'httpd_service::single on rhel-7.0' do
         :path => '/etc/httpd/conf.d/autoindex.conf'
         )
     end
-    
+
     it 'deletes file[/etc/httpd/conf.d/README]' do
       expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.d/README').with(
         :path => '/etc/httpd/conf.d/README'
@@ -65,7 +65,7 @@ describe 'httpd_service::single on rhel-7.0' do
         :path => '/etc/httpd/conf.d/userdir.conf'
         )
     end
-    
+
     it 'deletes file[/etc/httpd/conf.d/welcome.conf]' do
       expect(httpd_service_single_24_run_centos_7_0).to_not delete_file('default create /etc/httpd/conf.d/welcome.conf').with(
         :path => '/etc/httpd/conf.d/welcome.conf'
