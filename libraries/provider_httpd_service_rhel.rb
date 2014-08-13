@@ -103,6 +103,7 @@ class Chef
           if new_resource.version.to_f < 2.4
             %w(
               /etc/httpd/conf.d/README
+              /etc/httpd/conf.d/notrace.conf
               /etc/httpd/conf.d/welcome.conf
               /etc/httpd/conf.d/proxy_ajp.conf
             ).each do |f|
@@ -116,6 +117,7 @@ class Chef
             %w(
               /etc/httpd/conf.d/autoindex.conf
               /etc/httpd/conf.d/README
+              /etc/httpd/conf.d/notrace.conf
               /etc/httpd/conf.d/userdir.conf
               /etc/httpd/conf.d/welcome.conf
               /etc/httpd/conf.modules.d/00-base.conf
