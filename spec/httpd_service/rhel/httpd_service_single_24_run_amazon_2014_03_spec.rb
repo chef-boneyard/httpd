@@ -21,7 +21,7 @@ describe 'httpd_service::single on amazon-2014.03' do
         :listen_addresses => ['0.0.0.0'],
         :listen_ports => %w(80 443),
         :log_level => 'warn',
-        :package_name => 'httpd',
+        :package_name => 'httpd24',
         :run_user => 'apache',
         :run_group => 'apache',
         :timeout => '400',
