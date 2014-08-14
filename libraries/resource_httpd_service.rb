@@ -175,12 +175,29 @@ class Chef
       end
 
       def version(arg = nil)
-        package_name package_name_for(
-          node['platform'],
-          node['platform_family'],
-          node['platform_version'],
-          arg
-          )
+        # package_name package_name_for(
+        #   node['platform'],
+        #   node['platform_family'],
+        #   node['platform_version'],
+        #   arg
+        #   )
+
+        # if node['platform'] == 'amazon'
+        #   require 'pry' ; binding.pry
+        # end
+
+        # mpm default_mpm_for(arg)
+        # startservers default_value_for(arg, mpm, :startservers)
+        # minspareservers default_value_for(arg, mpm, :minspareservers)
+        # maxspareservers default_value_for(arg, mpm, :maxspareservers)
+        # maxclients default_value_for(arg, mpm, :maxclients)
+        # maxrequestsperchild default_value_for(arg, mpm, :maxrequestsperchild)
+        # minsparethreads default_value_for(arg, mpm, :minsparethreads)
+        # maxsparethreads default_value_for(arg, mpm, :maxsparethreads)
+        # threadlimit default_value_for(arg, mpm, :threadlimit)
+        # threadsperchild default_value_for(arg, mpm, :threadsperchild)
+        # maxrequestworkers default_value_for(arg, mpm, :maxrequestworkers)
+        # maxconnectionsperchild default_value_for(arg, mpm, :maxconnectionsperchild)
 
         set_or_return(
           :version,
