@@ -7,6 +7,10 @@ module Httpd
         MPMModelInfo.find :httpd_version => version
       end
 
+      def default_mpm
+        default_mpm_for(node['httpd']['version'])
+      end
+      
       class MPMModelInfo
         extend MPMModelDSL
 

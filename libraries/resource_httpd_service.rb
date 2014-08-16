@@ -26,19 +26,9 @@ class Chef
         @log_level = 'warn'
         @servername = node['hostname']
 
-        @version = default_httpd_version_for(
-          node['platform'],
-          node['platform_family'],
-          node['platform_version']
-          )
-
-        @package_name = package_name_for(
-          node['platform'],
-          node['platform_family'],
-          node['platform_version'],
-          @version
-          )
-
+        @version = default_httpd_version        
+        @package_name = default_package_name
+        
         @mpm = default_mpm_for(
           @version
           )

@@ -9,7 +9,7 @@ describe 'httpd_service::single on amazon-2014.03' do
       node.set['httpd']['version'] = '2.2'
     end.converge('httpd_service::single')
   end
-  
+
   context 'when using default parameters' do
     it 'creates httpd_service[default]' do
       expect(httpd_service_single_22_run_amazon_2014_03).to create_httpd_service('default').with(

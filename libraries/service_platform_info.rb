@@ -2,6 +2,7 @@ module Httpd
   module Service
     module Helpers
       # package and service name information section
+      
       def default_httpd_version_for(platform, platform_family, platform_version)
         keyname = keyname_for(platform, platform_family, platform_version)
         PlatformInfo.httpd_info[platform_family][keyname]['default_version']
@@ -9,6 +10,14 @@ module Httpd
         nil
       end
 
+      def default_httpd_version
+        default_httpd_version_for(
+          node['platform'],
+          node['platform_family'],
+          node['platform_version']
+          )
+      end
+      
       def default_run_user_for(platform, platform_family, platform_version)
         keyname = keyname_for(platform, platform_family, platform_version)
         PlatformInfo.httpd_info[platform_family][keyname]['default_run_user']
@@ -30,6 +39,15 @@ module Httpd
         nil
       end
 
+      def default_package_name
+        package_name_for(
+          node['platform'],
+          node['platform_family'],
+          node['platform_version'],
+          @version
+          )
+      end
+      
       def keyname_for(platform, platform_family, platform_version)
         case
         when platform_family == 'rhel'
