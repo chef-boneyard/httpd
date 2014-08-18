@@ -10,7 +10,7 @@ module Httpd
       def default_mpm
         default_mpm_for(node['httpd']['version'])
       end
-      
+
       class MPMModelInfo
         extend MPMModelDSL
 

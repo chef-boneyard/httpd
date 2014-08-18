@@ -26,9 +26,9 @@ class Chef
         @log_level = 'warn'
         @servername = node['hostname']
 
-        @version = default_httpd_version        
+        @version = default_httpd_version
         @package_name = default_package_name
-        
+
         @mpm = default_mpm_for(
           @version
           )
@@ -180,38 +180,44 @@ class Chef
             end
           }
           )
-        
+
         package_name package_name_for(
           node['platform'],
           node['platform_family'],
           node['platform_version'],
           arg
           )
-        
-        mpm default_mpm_for(arg)
-        startservers default_value_for(arg, @mpm, :startservers)
-        minspareservers default_value_for(arg, @mpm, :minspareservers)
-        maxspareservers default_value_for(arg, @mpm, :maxspareservers)
-        maxclients default_value_for(arg, @mpm, :maxclients)
-        maxrequestsperchild default_value_for(arg, @mpm, :maxrequestsperchild)
-        minsparethreads default_value_for(arg, @mpm, :minsparethreads)
-        maxsparethreads default_value_for(arg, @mpm, :maxsparethreads)
-        threadlimit default_value_for(arg, @mpm, :threadlimit)
-        threadsperchild default_value_for(arg, @mpm, :threadsperchild)
-        # if node['platform'] == 'amazon'
-        #   require 'pry' ; binding.pry
-        # end
-        maxrequestworkers default_value_for(arg, @mpm, :maxrequestworkers)
-        maxconnectionsperchild default_value_for(arg, @mpm, :maxconnectionsperchild)
+
+        @mpm = default_mpm_for(@version) unless dirty_flags.include?(:mpm)
+        @startservers = default_value_for(@version, @mpm, :startservers)
+        @minspareservers = default_value_for(@version, @mpm, :minspareservers)
+        @maxspareservers = default_value_for(@version, @mpm, :maxspareservers)
+        @maxclients = default_value_for(@version, @mpm, :maxclients)
+        @maxrequestsperchild = default_value_for(@version, @mpm, :maxrequestsperchild)
+        @minsparethreads = default_value_for(@version, @mpm, :minsparethreads)
+        @maxsparethreads = default_value_for(@version, @mpm, :maxsparethreads)
+        @threadlimit = default_value_for(@version, @mpm, :threadlimit)
+        @threadsperchild = default_value_for(@version, @mpm, :threadsperchild)
+        @maxrequestworkers = default_value_for(@version, @mpm, :maxrequestworkers)
+        @maxconnectionsperchild = default_value_for(@version, @mpm, :maxconnectionsperchild)
         @version
       end
 
+      def dirty_flags
+        @dirty_flags ||= []
+      end
+
       def mpm(arg = nil)
-        set_or_return(
+        old_value = @mpm
+        current_value = set_or_return(
           :mpm,
           arg,
           :equal_to => %w(prefork worker event)
           )
+        if old_value != current_value
+          dirty_flags.push(:mpm)
+        end
+        current_value
       end
 
       def startservers(arg = nil)

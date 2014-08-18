@@ -2,7 +2,7 @@ module Httpd
   module Service
     module Helpers
       # package and service name information section
-      
+
       def default_httpd_version_for(platform, platform_family, platform_version)
         keyname = keyname_for(platform, platform_family, platform_version)
         PlatformInfo.httpd_info[platform_family][keyname]['default_version']
@@ -17,7 +17,7 @@ module Httpd
           node['platform_version']
           )
       end
-      
+
       def default_run_user_for(platform, platform_family, platform_version)
         keyname = keyname_for(platform, platform_family, platform_version)
         PlatformInfo.httpd_info[platform_family][keyname]['default_run_user']
@@ -47,7 +47,7 @@ module Httpd
           @version
           )
       end
-      
+
       def keyname_for(platform, platform_family, platform_version)
         case
         when platform_family == 'rhel'
