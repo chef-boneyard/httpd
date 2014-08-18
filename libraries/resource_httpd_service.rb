@@ -1,364 +1,165 @@
-require 'chef/resource/lwrp_base'
+equire 'chef/resource/lwrp_base'
 require_relative 'service_platform_info'
 require_relative 'service_default_mpm_for'
 require_relative 'service_default_value_for'
 
 class Chef
   class Resource
-    class HttpdService < Chef::Resource
-      def initialize(name = nil, run_context = nil)
-        super
-        extend Httpd::Service::Helpers
+    class HttpdService < Chef::Resource::LWRPBase
 
-        @resource_name = :httpd_service
-        @instance = name
+      extend Httpd::Service::Helpers
 
-        @action = :create
-        @allowed_actions = [:create, :delete, :restart, :reload]
+      self.resource_name = :httpd_service
+      actions :create, :delete, :restart, :reload
+      default_action :create
 
-        @contact = 'webmaster@localhost'
-        @hostname_lookups = 'off'
-        @keepalive = true
-        @keepaliverequests = '100'
-        @keepalivetimeout = '5'
-        @listen_addresses = ['0.0.0.0']
-        @listen_ports = %w(80 443)
-        @log_level = 'warn'
-        @servername = node['hostname']
+      attribute :contact, :kind_of => String, :default => 'webmaster@localhost'
+      attribute :hostname_lookups, :kind_of => String, :default => 'off'
+      attribute :instance, :kind_of => String, :name_attribute => true
+      attribute :keepalive, :kind_of => String, :default => true
+      attribute :keepaliverequests, :kind_of => String, :default => '100'
+      attribute :keepalivetimeout, :kind_of => String, :default => '5'
+      attribute :listen_addresses, :kind_of => String, :default => ['0.0.0.0']
+      attribute :listen_ports, :kind_of => String, :default => %w(80 443)
+      attribute :log_level, :kind_of => String, :default => 'warn'
+      attribute :maxclients, :kind_of => String, :default => nil
+      attribute :maxconnectionsperchild, :kind_of => String, :default => nil
+      attribute :maxrequestsperchild, :kind_of => String, :default => nil
+      attribute :maxrequestworkers, :kind_of => String, :default => nil
+      attribute :maxspareservers, :kind_of => String, :default => nil
+      attribute :maxsparethreads, :kind_of => String, :default => nil
+      attribute :minspareservers, :kind_of => String, :default => nil
+      attribute :minsparethreads, :kind_of => String, :default => nil
+      attribute :mpm, :kind_of => String, :default => nil
+      attribute :package_name, :kind_of => String, :default => nil
+      attribute :run_group, :kind_of => String, :default => nil
+      attribute :run_user, :kind_of => String, :default => nil
+      attribute :servername, :kind_of => String, :default => nil
+      attribute :startservers, :kind_of => String, :default => nil
+      attribute :threadlimit, :kind_of => String, :default => nil
+      attribute :threadsperchild, :kind_of => String, :default => nil
+      attribute :timeout, :kind_of => String, :default => '400'
+      attribute :version, :kind_of => String, :default => nil
 
-        @version = default_httpd_version
-        @package_name = default_package_name
-
-        @mpm = default_mpm_for(
-          @version
-          )
-
-        @startservers = default_value_for(@version, @mpm, :startservers)
-        @minspareservers = default_value_for(@version, @mpm, :minspareservers)
-        @maxspareservers = default_value_for(@version, @mpm, :maxspareservers)
-        @maxclients = default_value_for(@version, @mpm, :maxclients)
-        @maxrequestsperchild = default_value_for(@version, @mpm, :maxrequestsperchild)
-        @minsparethreads = default_value_for(@version, @mpm, :minsparethreads)
-        @maxsparethreads = default_value_for(@version, @mpm, :maxsparethreads)
-        @threadlimit = default_value_for(@version, @mpm, :threadlimit)
-        @threadsperchild = default_value_for(@version, @mpm, :threadsperchild)
-        @maxrequestworkers = default_value_for(@version, @mpm, :maxrequestworkers)
-        @maxconnectionsperchild = default_value_for(@version, @mpm, :maxconnectionsperchild)
-
-        @run_user = default_run_user_for(
-          node['platform'],
-          node['platform_family'],
-          node['platform_version']
-          )
-
-        @run_group = default_run_user_for(
-          node['platform'],
-          node['platform_family'],
-          node['platform_version']
-          )
-
-        @timeout = '400'
+      def parsed_contact
+        return contact if contact
+      end
+      
+      def parsed_hostname_lookups
+        return hostname_lookups if hostname_lookups
       end
 
-      def instance(arg = nil)
-        set_or_return(
-          :instance,
-          arg,
-          :kind_of => String
-          )
+      def parsed_instance
+        return instance if instance
       end
 
-      def contact(arg = nil)
-        set_or_return(
-          :contact,
-          arg,
-          :kind_of => String
-          )
+      def parsed_keepalive
+        return keepalive if keepalive
       end
 
-      def hostname_lookups(arg = nil)
-        set_or_return(
-          :hostname_lookups,
-          arg,
-          :kind_of => %w(on off double)
-          )
+      def parsed_keepaliverequests
+        return keepaliverequests if keepaliverequests
       end
 
-      def keepalive(arg = nil)
-        set_or_return(
-          :keepalive,
-          arg,
-          :kind_of => [TrueClass, FalseClass]
-          )
+      def parsed_keepalivetimeout
+        return keepalivetimeout if keepalivetimeout
       end
 
-      def keepaliverequests(arg = nil)
-        set_or_return(
-          :keepaliverequests,
-          arg,
-          :kind_of => String
-          )
+      def parsed_listen_addresses
+        return listen_addresses if listen_addresses
       end
 
-      def keepalivetimeout(arg = nil)
-        set_or_return(
-          :keepalivetimeout,
-          arg,
-          :kind_of => String
-          )
+      def parsed_listen_ports
+        return listen_ports if listen_ports
       end
 
-      def listen_addresses(arg = nil)
-        set_or_return(
-          :listen_addresses,
-          arg,
-          :kind_of => [String, Array]
-          )
+      def parsed_log_level
+        return log_level if log_level
+      end
+      
+      def parsed_maxclients
+        return maxclients if maxclients
+        default_value_for(parsed_version, parsed_mpm, :maxclients)
+      end
+      
+      def parsed_maxconnectionsperchild
+        return maxconnectionsperchild if maxconnectionsperchild
+        default_value_for(parsed_version, parsed_mpm, :maxconnectionsperchild)
       end
 
-      def listen_ports(arg = nil)
-        set_or_return(
-          :listen_ports,
-          arg,
-          :kind_of => [Chef::Node::ImmutableArray, String, Array]
-          )
+      def parsed_maxrequestsperchild
+        return maxrequestsperchild if maxrequestsperchild
+        default_value_for(parsed_version, parsed_mpm, :maxrequestsperchild)
       end
 
-      def log_level(arg = nil)
-        set_or_return(
-          :log_level,
-          arg,
-          :equal_to => %w(emerg alert crit error warn notice info debug)
-          )
+      def parsed_maxrequestworkers
+        return maxrequestworkers if maxrequestworkers
+        default_value_for(parsed_version, parsed_mpm, :maxrequestworkers)
       end
 
-      def package_name(arg = nil)
-        set_or_return(
-          :package_name,
-          arg,
-          :kind_of => String
-          )
+      def parsed_maxspareservers
+        return maxspareservers if maxspareservers
+        default_value_for(parsed_version, parsed_mpm, :maxspareservers)
       end
 
-      def run_user(arg = nil)
-        set_or_return(
-          :run_user,
-          arg,
-          :kind_of => String
-          )
+      def parsed_maxspareservers
+        return maxspareservers if maxspareservers
+        default_value_for(parsed_version, parsed_mpm, :maxspareservers)
       end
 
-      def run_group(arg = nil)
-        set_or_return(
-          :run_group,
-          arg,
-          :kind_of => String
-          )
+      def parsed_minspareservers
+        return minspareservers if minspareservers
+        default_value_for(parsed_version, parsed_mpm, :minspareservers)
       end
 
-      def timeout(arg = nil)
-        set_or_return(
-          :timeout,
-          arg,
-          :kind_of => String
-          )
+      def parsed_minsparethreads
+        return minsparethreads if minsparethreads
+        default_value_for(parsed_version, parsed_mpm, :minsparethreads)
       end
 
-      def version(arg = nil)
-        set_or_return(
-          :version,
-          arg,
-          :kind_of => String,
-          :callbacks => {
-            "is not supported for #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
-              true unless package_name_for(
-                node['platform'],
-                node['platform_family'],
-                node['platform_version'],
-                arg
-                ).nil?
-            end
-          }
-          )
-
-        package_name package_name_for(
-          node['platform'],
-          node['platform_family'],
-          node['platform_version'],
-          arg
-          )
-
-        @mpm = default_mpm_for(@version) unless dirty_flags.include?(:mpm)
-        @startservers = default_value_for(@version, @mpm, :startservers)
-        @minspareservers = default_value_for(@version, @mpm, :minspareservers)
-        @maxspareservers = default_value_for(@version, @mpm, :maxspareservers)
-        @maxclients = default_value_for(@version, @mpm, :maxclients)
-        @maxrequestsperchild = default_value_for(@version, @mpm, :maxrequestsperchild)
-        @minsparethreads = default_value_for(@version, @mpm, :minsparethreads)
-        @maxsparethreads = default_value_for(@version, @mpm, :maxsparethreads)
-        @threadlimit = default_value_for(@version, @mpm, :threadlimit)
-        @threadsperchild = default_value_for(@version, @mpm, :threadsperchild)
-        @maxrequestworkers = default_value_for(@version, @mpm, :maxrequestworkers)
-        @maxconnectionsperchild = default_value_for(@version, @mpm, :maxconnectionsperchild)
-        @version
+      def parsed_mpm
+        return mpm if mpm
+        parsed_version == '2.4' ? 'event' : 'worker'
       end
 
-      def dirty_flags
-        @dirty_flags ||= []
+      def parsed_package_name
+        return package_name if package_name
+        # FIXME: default_package_name
       end
 
-      def mpm(arg = nil)
-        old_value = @mpm
-        current_value = set_or_return(
-          :mpm,
-          arg,
-          :equal_to => %w(prefork worker event)
-          )
-        if old_value != current_value
-          dirty_flags.push(:mpm)
-        end
-        current_value
+      def parsed_run_group
+        return run_group if run_group
+        node['platform_family'] == 'debian' ? 'www-data' : 'apache'
       end
 
-      def startservers(arg = nil)
-        set_or_return(
-          :startservers,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :startservers).nil?
-            end
-          }
-          )
+      def parsed_run_user
+        return run_user if run_user
+        node['platform_family'] == 'debian' ? 'www-data' : 'apache'
+      end
+      
+      def parsed_servername
+        return servername if servername
+        node['hostname']
       end
 
-      def minspareservers(arg = nil)
-        set_or_return(
-          :minspareservers,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :minspareservers).nil?
-            end
-          }
-          )
+      def parsed_threadlimit
+        return threadlimit if threadlimit
+        default_value_for(parsed_version, parsed_mpm, :threadlimit)
       end
 
-      def maxspareservers(arg = nil)
-        set_or_return(
-          :maxspareservers,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :maxspareservers).nil?
-            end
-          }
-          )
+      def parsed_threadsperchild
+        return threadsperchild if threadsperchild
+        default_value_for(parsed_version, parsed_mpm, :threadsperchild)
       end
 
-      def maxclients(arg = nil)
-        set_or_return(
-          :maxclients,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :maxclients).nil?
-            end
-          }
-          )
+      def parsed_timeout
+        return threadsperchild if threadsperchild
       end
-
-      def maxrequestsperchild(arg = nil)
-        set_or_return(
-          :maxrequestsperchild,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :maxrequestsperchild).nil?
-            end
-          }
-          )
-      end
-
-      def minsparethreads(arg = nil)
-        set_or_return(
-          :minsparethreads,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :minsparethreads).nil?
-            end
-          }
-          )
-      end
-
-      def maxsparethreads(arg = nil)
-        set_or_return(
-          :maxsparethreads,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :maxsparethreads).nil?
-            end
-          }
-          )
-      end
-
-      def servername(arg = nil)
-        set_or_return(
-          :servername,
-          arg,
-          :kind_of => String
-          )
-      end
-
-      def threadlimit(arg = nil)
-        set_or_return(
-          :threadlimit,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :threadlimit).nil?
-            end
-          }
-          )
-      end
-
-      def threadsperchild(arg = nil)
-        set_or_return(
-          :threadsperchild,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :threadsperchild).nil?
-            end
-          }
-          )
-      end
-
-      def maxrequestworkers(arg = nil)
-        set_or_return(
-          :maxrequestworkers,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :maxrequestworkers).nil?
-            end
-          }
-          )
-      end
-
-      def maxconnectionsperchild(arg = nil)
-        set_or_return(
-          :maxconnectionsperchild,
-          arg,
-          :callbacks => {
-            'is not supported for version/mpm combination' => lambda do |_value|
-              true unless default_value_for(@version, @mpm, :maxconnectionsperchild).nil?
-            end
-          }
-          )
-      end
+      
+      def parsed_version
+        return version if version
+        default_httpd_version
+      end      
     end
   end
 end
