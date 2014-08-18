@@ -1,4 +1,4 @@
-equire 'chef/resource/lwrp_base'
+require 'chef/resource/lwrp_base'
 require_relative 'service_platform_info'
 require_relative 'service_default_mpm_for'
 require_relative 'service_default_value_for'
@@ -123,7 +123,7 @@ class Chef
 
       def parsed_package_name
         return package_name if package_name
-        # FIXME: default_package_name
+        'httpd'
       end
 
       def parsed_run_group
