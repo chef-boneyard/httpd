@@ -6,7 +6,6 @@ require_relative 'service_default_value_for'
 class Chef
   class Resource
     class HttpdService < Chef::Resource::LWRPBase
-
       extend Httpd::Service::Helpers
 
       self.resource_name = :httpd_service
@@ -44,7 +43,7 @@ class Chef
       def parsed_contact
         return contact if contact
       end
-      
+
       def parsed_hostname_lookups
         return hostname_lookups if hostname_lookups
       end
@@ -76,12 +75,12 @@ class Chef
       def parsed_log_level
         return log_level if log_level
       end
-      
+
       def parsed_maxclients
         return maxclients if maxclients
         default_value_for(parsed_version, parsed_mpm, :maxclients)
       end
-      
+
       def parsed_maxconnectionsperchild
         return maxconnectionsperchild if maxconnectionsperchild
         default_value_for(parsed_version, parsed_mpm, :maxconnectionsperchild)
@@ -136,7 +135,7 @@ class Chef
         return run_user if run_user
         node['platform_family'] == 'debian' ? 'www-data' : 'apache'
       end
-      
+
       def parsed_servername
         return servername if servername
         node['hostname']
@@ -155,11 +154,11 @@ class Chef
       def parsed_timeout
         return threadsperchild if threadsperchild
       end
-      
+
       def parsed_version
         return version if version
         default_httpd_version
-      end      
+      end
     end
   end
 end
