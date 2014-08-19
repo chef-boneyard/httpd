@@ -15,7 +15,7 @@ class Chef
           end
 
           def action_restart
-            service "#{new_resource.name} delete #{apache_name}" do
+            service "#{new_resource.parsed_name} delete #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Systemd
@@ -24,7 +24,7 @@ class Chef
           end
 
           def action_reload
-            service "#{new_resource.name} reload #{apache_name}" do
+            service "#{new_resource.parsed_name} reload #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Systemd
@@ -33,15 +33,15 @@ class Chef
           end
 
           def create_service
-            httpd_module "#{new_resource.name} create systemd" do
+            httpd_module "#{new_resource.parsed_name} create systemd" do
               module_name 'systemd'
-              httpd_version new_resource.version
-              instance new_resource.instance
-              notifies :reload, "service[#{new_resource.name} create #{apache_name}]"
+              httpd_version new_resource.parsed_version
+              instance new_resource.parsed_instance
+              notifies :reload, "service[#{new_resource.parsed_name} create #{apache_name}]"
               action :create
             end
 
-            directory "#{new_resource.name} create /run/#{apache_name}" do
+            directory "#{new_resource.parsed_name} create /run/#{apache_name}" do
               path "/run/#{apache_name}"
               owner 'root'
               group 'root'
@@ -50,7 +50,7 @@ class Chef
               action :create
             end
 
-            template "#{new_resource.name} create /usr/lib/systemd/system/#{apache_name}.service" do
+            template "#{new_resource.parsed_name} create /usr/lib/systemd/system/#{apache_name}.service" do
               path "/usr/lib/systemd/system/#{apache_name}.service"
               source 'systemd/httpd.service.erb'
               owner 'root'
@@ -61,7 +61,7 @@ class Chef
               action :create
             end
 
-            directory "#{new_resource.name} create /usr/lib/systemd/system/#{apache_name}.service.d" do
+            directory "#{new_resource.parsed_name} create /usr/lib/systemd/system/#{apache_name}.service.d" do
               path "/usr/lib/systemd/system/#{apache_name}.service.d"
               owner 'root'
               group 'root'
@@ -70,7 +70,7 @@ class Chef
               action :create
             end
 
-            service "#{new_resource.name} create #{apache_name}" do
+            service "#{new_resource.parsed_name} create #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Systemd
@@ -79,7 +79,7 @@ class Chef
           end
 
           def delete_service
-            service "#{new_resource.name} delete #{apache_name}" do
+            service "#{new_resource.parsed_name} delete #{apache_name}" do
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Systemd
               action [:stop, :disable]

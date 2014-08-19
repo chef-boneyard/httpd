@@ -4,91 +4,48 @@ require_relative 'service_platform_info'
 
 class Chef
   class Resource
-    class HttpdModule < Chef::Resource
-      def initialize(name = nil, run_context = nil)
-        super
+    class HttpdModule < Chef::Resource::LWRPBase
+      self.resource_name = :httpd_module
+      actions :create, :delete
+      default_action :create
 
-        extend Httpd::Module::Helpers
-        extend Httpd::Service::Helpers
+      attribute :httpd_version, :kind_of => String
+      attribute :instance, :kind_of => String, :default => 'default'
+      attribute :module_name, :kind_of => String, :name_attribute => true, :required => true
+      attribute :package_name, :kind_of => String
 
-        @resource_name = :httpd_module
-        @module_name = name
-        @action = :create
-        @allowed_actions = [:create, :delete]
+      include Httpd::Module::Helpers
+      include Httpd::Service::Helpers
 
-        @instance = 'default'
-
-        # set default values
-        @httpd_version = default_httpd_version_for(
-          node['platform'],
-          node['platform_family'],
-          node['platform_version']
-          )
-
-        @package_name = package_name_for_module(
-          @module_name,
-          @httpd_version,
+      def parsed_httpd_version
+        return httpd_version if httpd_version
+        default_httpd_version_for(
           node['platform'],
           node['platform_family'],
           node['platform_version']
           )
       end
 
-      def module_name(arg = nil)
-        set_or_return(
-          :module_name,
-          arg,
-          :kind_of => String
-          )
+      def parsed_instance
+        return instance if instance
       end
 
-      def instance(arg = nil)
-        set_or_return(
-          :instance,
-          arg,
-          :kind_of => String
-          )
+      def parsed_name
+        return name if name
       end
 
-      def httpd_version(arg = nil)
-        package_name package_name_for_module(
-          @module_name,
-          arg,
+      def parsed_module_name
+        return module_name if module_name
+      end
+
+      def parsed_package_name
+        return package_name if package_name
+        package_name_for_module(
+          parsed_module_name,
+          parsed_httpd_version,
           node['platform'],
           node['platform_family'],
           node['platform_version']
-          )
-
-        set_or_return(
-          :httpd_version,
-          arg,
-          :callbacks => {
-            "not supported for httpd_module[#{name}] on #{node['platform']}-#{node['platform_version']}" => lambda do |_httpd_version|
-              true unless package_name_for_module(
-                @module_name,
-                arg,
-                node['platform'],
-                node['platform_family'],
-                node['platform_version']
-                ).nil?
-            end
-          }
-          )
-      end
-
-      def package_name(arg = nil)
-        set_or_return(
-          :package_name,
-          arg,
-          :kind_of => String
-          )
-      end
-
-      def filename(arg = nil)
-        set_or_return(
-          :filename,
-          arg,
-          :kind_of => String
           )
       end
     end

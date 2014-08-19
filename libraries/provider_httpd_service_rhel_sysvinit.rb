@@ -15,7 +15,7 @@ class Chef
           end
 
           def action_restart
-            service "#{new_resource.name} delete #{apache_name}" do
+            service "#{new_resource.parsed_name} delete #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Redhat
@@ -24,7 +24,7 @@ class Chef
           end
 
           def action_reload
-            service "#{new_resource.name} delete #{apache_name}" do
+            service "#{new_resource.parsed_name} delete #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Redhat
@@ -33,9 +33,9 @@ class Chef
           end
 
           def create_service
-            template "#{new_resource.name} create /etc/init.d/#{apache_name}" do
+            template "#{new_resource.parsed_name} create /etc/init.d/#{apache_name}" do
               path "/etc/init.d/#{apache_name}"
-              source "#{new_resource.version}/sysvinit/el-#{elversion}/httpd.erb"
+              source "#{new_resource.parsed_version}/sysvinit/el-#{elversion}/httpd.erb"
               owner 'root'
               group 'root'
               mode '0755'
@@ -44,23 +44,23 @@ class Chef
               action :create
             end
 
-            template "#{new_resource.name} create /etc/sysconfig/#{apache_name}" do
+            template "#{new_resource.parsed_name} create /etc/sysconfig/#{apache_name}" do
               path "/etc/sysconfig/#{apache_name}"
-              source "rhel/sysconfig/httpd-#{new_resource.version}.erb"
+              source "rhel/sysconfig/httpd-#{new_resource.parsed_version}.erb"
               owner 'root'
               group 'root'
               mode '0644'
               variables(
                 :apache_name => apache_name,
-                :mpm => new_resource.mpm,
+                :mpm => new_resource.parsed_mpm,
                 :pid_file => pid_file
                 )
               cookbook 'httpd'
-              notifies :restart, "service[#{new_resource.name} create #{apache_name}]"
+              notifies :restart, "service[#{new_resource.parsed_name} create #{apache_name}]"
               action :create
             end
 
-            service "#{new_resource.name} create #{apache_name}" do
+            service "#{new_resource.parsed_name} create #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Redhat
@@ -69,7 +69,7 @@ class Chef
           end
 
           def delete_service
-            service "#{new_resource.name} create #{apache_name}" do
+            service "#{new_resource.parsed_name} create #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
               provider Chef::Provider::Service::Init::Redhat

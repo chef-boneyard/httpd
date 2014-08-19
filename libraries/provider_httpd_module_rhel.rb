@@ -17,23 +17,23 @@ class Chef
           extend Httpd::Module::Helpers
 
           # package_name is set by resource
-          package "#{new_resource.name} create #{new_resource.package_name}" do
-            package_name new_resource.package_name
+          package "#{new_resource.parsed_name} create #{new_resource.parsed_package_name}" do
+            package_name new_resource.parsed_package_name
             action :install
           end
 
           # remove cruft dropped off by package
-          delete_files_for_package(new_resource.package_name, new_resource.httpd_version).each do |f|
-            file "#{new_resource.name} create #{f}" do
+          delete_files_for_package(new_resource.parsed_package_name, new_resource.parsed_httpd_version).each do |f|
+            file "#{new_resource.parsed_name} create #{f}" do
               path f
               action :nothing
-              subscribes :delete, "package[#{new_resource.name} create #{new_resource.package_name}]", :immediately
+              subscribes :delete, "package[#{new_resource.parsed_name} create #{new_resource.parsed_package_name}]", :immediately
             end
           end
 
           # 2.2 vs 2.4
-          if new_resource.httpd_version.to_f < 2.4
-            directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
+          if new_resource.parsed_httpd_version.to_f < 2.4
+            directory "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d" do
               path "/etc/#{apache_name}/conf.d"
               owner 'root'
               group 'root'
@@ -41,7 +41,7 @@ class Chef
               action :create
             end
 
-            template "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{module_name}.load" do
+            template "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.d/#{module_name}.load"
               source 'module_load.erb'
               owner 'root'
@@ -55,7 +55,7 @@ class Chef
               action :create
             end
           else
-            directory "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d" do
+            directory "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.modules.d" do
               path "/etc/#{apache_name}/conf.modules.d"
               owner 'root'
               group 'root'
@@ -64,7 +64,7 @@ class Chef
             end
 
             # FIXME: handle outliers
-            template "#{new_resource.name} create /etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
+            template "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.modules.d/#{module_name}.load"
               source 'module_load.erb'
               owner 'root'
@@ -81,13 +81,13 @@ class Chef
         end
 
         def action_delete
-          if new_resource.httpd_version.to_f < 2.4
-            file "#{new_resource.name} delete /etc/#{apache_name}/conf.d/#{module_name}.load" do
+          if new_resource.parsed_httpd_version.to_f < 2.4
+            file "#{new_resource.parsed_name} delete /etc/#{apache_name}/conf.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.d/#{module_name}.load"
               action :delete
             end
           else
-            file "#{new_resource.name} delete /etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
+            file "#{new_resource.parsed_name} delete /etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.modules.d/#{module_name}.load"
               action :delete
             end

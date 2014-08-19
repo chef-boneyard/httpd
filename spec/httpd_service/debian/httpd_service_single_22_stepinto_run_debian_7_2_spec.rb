@@ -18,19 +18,19 @@ describe 'httpd_service::single on debian-7.2' do
   context 'when using default parameters' do
     it 'creates httpd_service[default]' do
       expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_httpd_service('default').with(
-        :contact => 'webmaster@localhost',
-        :hostname_lookups => 'off',
-        :keepalive => true,
-        :keepaliverequests => '100',
-        :keepalivetimeout => '5',
-        :listen_addresses => ['0.0.0.0'],
-        :listen_ports => %w(80 443),
-        :log_level => 'warn',
-        :version => '2.2',
-        :package_name => 'apache2',
-        :run_user => 'www-data',
-        :run_group => 'www-data',
-        :timeout => '400'
+        :parsed_contact => 'webmaster@localhost',
+        :parsed_hostname_lookups => 'off',
+        :parsed_keepalive => true,
+        :parsed_keepaliverequests => '100',
+        :parsed_keepalivetimeout => '5',
+        :parsed_listen_addresses => ['0.0.0.0'],
+        :parsed_listen_ports => %w(80 443),
+        :parsed_log_level => 'warn',
+        :parsed_version => '2.2',
+        :parsed_package_name => 'apache2',
+        :parsed_run_user => 'www-data',
+        :parsed_run_group => 'www-data',
+        :parsed_timeout => '400'
         )
     end
   end

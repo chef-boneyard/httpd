@@ -3,39 +3,39 @@ module Httpd
     module Debian
       # version
       def apache_version
-        apache_version = new_resource.version
+        apache_version = new_resource.parsed_version
         apache_version
       end
 
       # support multiple instances
       def apache_name
-        new_resource.instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.instance}"
+        new_resource.parsed_instance == 'default' ? apache_name = 'apache2' : apache_name = "apache2-#{new_resource.parsed_instance}"
         apache_name
       end
 
       def a2enmod_name
-        new_resource.name == 'default' ? a2enmod_name = 'a2enmod' : a2enmod_name = "a2enmod-#{new_resource.name}"
+        new_resource.parsed_name == 'default' ? a2enmod_name = 'a2enmod' : a2enmod_name = "a2enmod-#{new_resource.parsed_name}"
         a2enmod_name
       end
 
       def a2dismod_name
-        new_resource.name == 'default' ? a2dismod_name = 'a2dismod' : a2dismod_name = "a2dismod-#{new_resource.name}"
+        new_resource.parsed_name == 'default' ? a2dismod_name = 'a2dismod' : a2dismod_name = "a2dismod-#{new_resource.parsed_name}"
         a2dismod_name
       end
 
       def a2ensite_name
-        new_resource.name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.name}"
+        new_resource.parsed_name == 'default' ? a2ensite_name = 'a2ensite' : a2ensite_name = "a2ensite-#{new_resource.parsed_name}"
         a2ensite_name
       end
 
       def a2dissite_name
-        new_resource.name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.name}"
+        new_resource.parsed_name == 'default' ? a2dissite_name = 'a2dissite' : a2dissite_name = "a2dissite-#{new_resource.parsed_name}"
         a2dissite_name
       end
 
       # module things
       def module_name
-        module_name = new_resource.module_name
+        module_name = new_resource.parsed_module_name
         module_name
       end
 

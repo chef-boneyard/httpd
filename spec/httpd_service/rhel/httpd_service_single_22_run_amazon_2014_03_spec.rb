@@ -23,7 +23,7 @@ describe 'httpd_service::single on amazon-2014.03' do
         :parsed_log_level => 'warn',
         :parsed_package_name => 'httpd',
         :parsed_run_user => 'apache',
-        :parsed_run_group => 'apache', 
+        :parsed_run_group => 'apache',
         :parsed_timeout => '400',
         :parsed_version => '2.2',
         :parsed_mpm => 'worker',

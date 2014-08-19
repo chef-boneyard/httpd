@@ -2,7 +2,7 @@ module Httpd
   module Helpers
     module Rhel
       def apache_name
-        new_resource.instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.instance}"
+        new_resource.parsed_instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.parsed_instance}"
         apache_name
       end
 
@@ -17,7 +17,7 @@ module Httpd
       end
 
       def module_name
-        module_name = new_resource.module_name
+        module_name = new_resource.parsed_module_name
         module_name
       end
 
@@ -56,7 +56,7 @@ module Httpd
       end
 
       def includes
-        return unless new_resource.version.to_f < 2.4
+        return unless new_resource.parsed_version.to_f < 2.4
         includes = [
           'conf.d/*.conf',
           'conf.d/*.load'
@@ -65,7 +65,7 @@ module Httpd
       end
 
       def include_optionals
-        return unless new_resource.version.to_f >= 2.4
+        return unless new_resource.parsed_version.to_f >= 2.4
         include_optionals = [
           'conf.d/*.conf',
           'conf.d/*.load',

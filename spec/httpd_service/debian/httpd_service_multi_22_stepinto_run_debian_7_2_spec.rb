@@ -56,37 +56,37 @@ describe 'httpd_service::multi 2.2 on debian-7.2' do
 
     it 'creates httpd_service[instance-1]' do
       expect(debian_7_2_multi_stepinto_run).to create_httpd_service('instance-1').with(
-        :contact => 'hal@computers.biz',
-        :hostname_lookups => 'off',
-        :keepalive => false,
-        :keepaliverequests => '2001',
-        :keepalivetimeout => '0',
-        :listen_addresses => ['0.0.0.0'],
-        :listen_ports => %w(8080 4343),
-        :log_level => 'warn',
-        :version => '2.2',
-        :package_name => 'apache2',
-        :run_user => 'alice',
-        :run_group => 'alice',
-        :timeout => '4321'
+        :parsed_contact => 'hal@computers.biz',
+        :parsed_hostname_lookups => 'off',
+        :parsed_keepalive => false,
+        :parsed_keepaliverequests => '2001',
+        :parsed_keepalivetimeout => '0',
+        :parsed_listen_addresses => ['0.0.0.0'],
+        :parsed_listen_ports => %w(8080 4343),
+        :parsed_log_level => 'warn',
+        :parsed_version => '2.2',
+        :parsed_package_name => 'apache2',
+        :parsed_run_user => 'alice',
+        :parsed_run_group => 'alice',
+        :parsed_timeout => '4321'
         )
     end
 
     it 'creates httpd_service[instance-2]' do
       expect(debian_7_2_multi_stepinto_run).to create_httpd_service('instance-2').with(
-        :contact => 'bob@computers.biz',
-        :hostname_lookups => 'off',
-        :keepalive => false,
-        :keepaliverequests => '5678',
-        :keepalivetimeout => '8765',
-        :listen_addresses => ['0.0.0.0'],
-        :listen_ports => %w(81 444),
-        :log_level => 'warn',
-        :version => '2.2',
-        :package_name => 'apache2',
-        :run_user => 'bob',
-        :run_group => 'bob',
-        :timeout => '1234'
+        :parsed_contact => 'bob@computers.biz',
+        :parsed_hostname_lookups => 'off',
+        :parsed_keepalive => false,
+        :parsed_keepaliverequests => '5678',
+        :parsed_keepalivetimeout => '8765',
+        :parsed_listen_addresses => ['0.0.0.0'],
+        :parsed_listen_ports => %w(81 444),
+        :parsed_log_level => 'warn',
+        :parsed_version => '2.2',
+        :parsed_package_name => 'apache2',
+        :parsed_run_user => 'bob',
+        :parsed_run_group => 'bob',
+        :parsed_timeout => '1234'
         )
     end
   end

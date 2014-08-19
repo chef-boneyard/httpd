@@ -3,75 +3,51 @@ require_relative 'service_platform_info'
 
 class Chef
   class Resource
-    class HttpdConfig < Chef::Resource
-      def initialize(name = nil, run_context = nil)
-        super
+    class HttpdConfig < Chef::Resource::LWRPBase
+      self.resource_name = :httpd_config
+      default_action :create
+      actions :create, :delete
 
-        extend Httpd::Service::Helpers
+      attribute :config_name, :kind_of => String, :name_attribute => true, :required => true
+      attribute :instance, :kind_of => String, :default => 'default'
+      attribute :source, :kind_of => String, :default => nil
+      attribute :variables, :kind_of => [Hash], :default => nil
+      attribute :cookbook, :kind_of => String, :default => nil
+      attribute :httpd_version, :kind_of => String, :default => nil
 
-        @resource_name = :httpd_config
-        @config_name = name
-        @action = :create
-        @allowed_actions = [:create, :delete]
+      include Httpd::Service::Helpers
 
-        @instance = 'default'
-        @source = nil
-        @variables = nil
-        @cookbook = nil
+      def parsed_name
+        return name if name
+      end
 
-        @httpd_version = default_httpd_version_for(
+      def parsed_config_name
+        return config_name if config_name
+      end
+
+      def parsed_instance
+        return instance if instance
+      end
+
+      def parsed_source
+        return source if source
+      end
+
+      def parsed_variables
+        return variables if variables
+      end
+
+      def parsed_cookbook
+        return cookbook if cookbook
+      end
+
+      def parsed_httpd_version
+        return httpd_version if httpd_version
+        default_httpd_version_for(
           node['platform'],
           node['platform_family'],
           node['platform_version']
-          )
-      end
-
-      def config_name(arg = nil)
-        set_or_return(
-          :config_name,
-          arg,
-          :kind_of => String
-          )
-      end
-
-      def instance(arg = nil)
-        set_or_return(
-          :instance,
-          arg,
-          :kind_of => String
-          )
-      end
-
-      def source(arg = nil)
-        set_or_return(
-          :source,
-          arg,
-          :kind_of => String
-          )
-      end
-
-      def variables(arg = nil)
-        set_or_return(
-          :variables,
-          arg,
-          :kind_of => [Hash]
-          )
-      end
-
-      def cookbook(arg = nil)
-        set_or_return(
-          :cookbook,
-          arg,
-          :kind_of => String
-          )
-      end
-
-      def httpd_version(arg = nil)
-        set_or_return(
-          :httpd_version,
-          arg,
-          :kind_of => String
-          )
+        )
       end
     end
   end

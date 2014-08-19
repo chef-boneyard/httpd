@@ -14,7 +14,7 @@ class Chef
         end
 
         def action_create
-          directory "#{new_resource.name} create /etc/#{apache_name}/conf.d" do
+          directory "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d" do
             path "/etc/#{apache_name}/conf.d"
             owner 'root'
             group 'root'
@@ -23,21 +23,21 @@ class Chef
             action :create
           end
 
-          template "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
-            path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
+          template "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}.conf" do
+            path "/etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}.conf"
             owner 'root'
             group 'root'
             mode '0644'
-            variables(new_resource.variables)
-            source new_resource.source
-            cookbook new_resource.cookbook
+            variables(new_resource.parsed_variables)
+            source new_resource.parsed_source
+            cookbook new_resource.parsed_cookbook
             action :create
           end
         end
 
         def action_delete
-          file "#{new_resource.name} create /etc/#{apache_name}/conf.d/#{new_resource.config_name}" do
-            path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
+          file "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}" do
+            path "/etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}.conf"
             action :create
           end
         end
