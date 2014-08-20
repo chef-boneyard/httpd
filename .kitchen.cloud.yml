@@ -38,7 +38,7 @@ platforms:
   driver_config:
     image_id: 5588928
     flavor_id: 63
-    region_id: 4
+    region_id: 8
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
@@ -49,7 +49,7 @@ platforms:
   driver_config:
     image_id: 5141286
     flavor_id: 63
-    region_id: 4
+    region_id: 8
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
@@ -60,7 +60,7 @@ platforms:
   driver_config:
     image_id: 1601
     flavor_id: 63
-    region_id: 4
+    region_id: 8
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 
@@ -71,7 +71,7 @@ platforms:
     image_id: 3797680
     image_id: 562354
     flavor_id: 63
-    region_id: 4
+    region_id: 8
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
@@ -85,7 +85,7 @@ platforms:
   driver_config:
     image_id: 4856048
     flavor_id: 63
-    region_id: 4
+    region_id: 8
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
@@ -106,7 +106,7 @@ platforms:
 #   driver_config:
 #     image_id: 3243145
 #     flavor_id: 63
-#     region_id: 4
+#     region_id: 8
 #     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
 #     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
 

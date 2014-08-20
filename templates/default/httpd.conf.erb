@@ -1,5 +1,5 @@
-<% if @config.servername %>
-ServerName <%= @config.servername %>
+<% if @config.parsed_servername %>
+ServerName <%= @config.parsed_servername %>
 <% end %>
 <% if @server_root %>
 ServerRoot <%= @server_root %>
@@ -7,11 +7,11 @@ ServerRoot <%= @server_root %>
 <% if @pid_file %>
 PidFile <%= @pid_file %>
 <% end %>
-<% if @config.run_user %>
-User <%= @config.run_user %>
+<% if @config.parsed_run_user %>
+User <%= @config.parsed_run_user %>
 <% end %>
-<% if @config.run_group %>
-Group <%= @config.run_group %>
+<% if @config.parsed_run_group %>
+Group <%= @config.parsed_run_group %>
 <% end %>
 <% if @lock_file %>
 LockFile <%= @lock_file %>
@@ -19,38 +19,38 @@ LockFile <%= @lock_file %>
 <% if @mutex %>
 Mutex <%= @mutex %>
 <% end %>
-<% if @config.timeout %>
-Timeout <%= @config.timeout %>
+<% if @config.parsed_timeout %>
+Timeout <%= @config.parsed_timeout %>
 <% end %>
 <% if @error_log %>
 ErrorLog <%= @error_log %>
 <% end %>
-<% if @config.log_level %>
-LogLevel <%= @config.log_level %>
+<% if @config.parsed_log_level %>
+LogLevel <%= @config.parsed_log_level %>
 <% end %>
-<% if @config.keepalive %>
+<% if @config.parsed_keepalive %>
 KeepAlive On
 <% else %>
 KeepAlive Off
 <% end %>
-<% if @config.keepaliverequests %>
-MaxKeepAliveRequests <%= @config.keepaliverequests %>
+<% if @config.parsed_keepaliverequests %>
+MaxKeepAliveRequests <%= @config.parsed_keepaliverequests %>
 <% end %>
-<% if @config.keepalivetimeout %>
-KeepAliveTimeout <%= @config.keepalivetimeout %>
+<% if @config.parsed_keepalivetimeout %>
+KeepAliveTimeout <%= @config.parsed_keepalivetimeout %>
 <% end %>
 DefaultType None
-<% if @config.hostname_lookups %>
-HostnameLookups <%= @config.hostname_lookups %>
+<% if @config.parsed_hostname_lookups %>
+HostnameLookups <%= @config.parsed_hostname_lookups %>
 <% end %>
 
-<% if @config.listen_addresses.nil? %>
-<%   @config.listen_ports.each do |port| %>
+<% if @config.parsed_listen_addresses.nil? %>
+<%   @config.parsed_listen_ports.each do |port| %>
 Listen <%= port %>
 <%   end %>
 <% else %>
-<%   @config.listen_addresses.each do |address| %>
-<%     @config.listen_ports.each do |port| %>
+<%   @config.parsed_listen_addresses.each do |address| %>
+<%     @config.parsed_listen_ports.each do |port| %>
 Listen <%= address %>:<%= port %>
 <%     end %>
 <%   end %>
