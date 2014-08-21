@@ -186,6 +186,12 @@ describe 'httpd_service::multi on rhel-5.8' do
         )
     end
 
+    it 'deletes file[/etc/httpd/conf.d/notrace.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_5_8).to_not delete_file('instance-1 create /etc/httpd/conf.d/notrace.conf').with(
+        :path => '/etc/httpd/conf.d/notrace.conf'
+        )
+    end
+
     it 'installs package[instance-1 create net-tools]' do
       expect(httpd_service_multi_22_stepinto_run_centos_5_8).to install_package('instance-1 create net-tools').with(
         :package_name => 'net-tools'
@@ -387,6 +393,12 @@ describe 'httpd_service::multi on rhel-5.8' do
     it 'deletes file[/etc/httpd/conf.d/proxy_ajp.conf]' do
       expect(httpd_service_multi_22_stepinto_run_centos_5_8).to_not delete_file('instance-2 create /etc/httpd/conf.d/proxy_ajp.conf').with(
         :path => '/etc/httpd/conf.d/proxy_ajp.conf'
+        )
+    end
+
+    it 'deletes file[/etc/httpd/conf.d/notrace.conf]' do
+      expect(httpd_service_multi_22_stepinto_run_centos_5_8).to_not delete_file('instance-2 create /etc/httpd/conf.d/notrace.conf').with(
+        :path => '/etc/httpd/conf.d/notrace.conf'
         )
     end
 

@@ -66,6 +66,12 @@ describe 'httpd_service::single on rhel-6.4' do
         )
     end
 
+    it 'deletes file[/etc/httpd/conf.d/notrace.conf]' do
+      expect(httpd_service_single_22_run_centos_6_4).to_not delete_file('default create /etc/httpd/conf.d/notrace.conf').with(
+        :path => '/etc/httpd/conf.d/notrace.conf'
+        )
+    end
+
     it 'installs package[net-tools]' do
       expect(httpd_service_single_22_run_centos_6_4).to install_package('default create net-tools').with(
         :package_name => 'net-tools'

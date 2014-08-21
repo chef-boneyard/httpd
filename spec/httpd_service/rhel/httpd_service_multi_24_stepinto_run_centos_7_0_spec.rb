@@ -226,6 +226,12 @@ describe 'httpd_service::multi on rhel-7.0' do
         )
     end
 
+    it 'deletes file[instance-1 create /etc/httpd/conf.d/notrace.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-1 create /etc/httpd/conf.d/notrace.conf').with(
+        :path => '/etc/httpd/conf.d/notrace.conf'
+        )
+    end
+
     it 'installs package[instance-1 create net-tools]' do
       expect(httpd_service_multi_24_stepinto_run_centos_7_0).to install_package('instance-1 create net-tools').with(
         :package_name => 'net-tools'
@@ -527,6 +533,12 @@ describe 'httpd_service::multi on rhel-7.0' do
     it 'deletes file[instance-2 create /etc/httpd/conf.modules.d/01-cgi.conf]' do
       expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.modules.d/01-cgi.conf').with(
         :path => '/etc/httpd/conf.modules.d/01-cgi.conf'
+        )
+    end
+
+    it 'deletes file[instance-2 create /etc/httpd/conf.d/notrace.conf]' do
+      expect(httpd_service_multi_24_stepinto_run_centos_7_0).to_not delete_file('instance-2 create /etc/httpd/conf.d/notrace.conf').with(
+        :path => '/etc/httpd/conf.d/notrace.conf'
         )
     end
 
