@@ -24,6 +24,7 @@ class Chef
         if node['platform_family'] == 'rhel'
           return 'libmodnss.so' if module_name == 'nss'
           return 'mod_rev.so' if module_name == 'revocator'
+          return 'libphp5.so' if module_name == 'php'
         end
         "mod_#{module_name}.so"
       end
