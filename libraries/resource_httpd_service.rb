@@ -1,6 +1,5 @@
 require 'chef/resource/lwrp_base'
 require_relative 'service_platform_info'
-require_relative 'service_default_mpm_for'
 require_relative 'service_default_value_for'
 
 class Chef
