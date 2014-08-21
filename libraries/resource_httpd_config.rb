@@ -9,11 +9,11 @@ class Chef
       actions :create, :delete
 
       attribute :config_name, :kind_of => String, :name_attribute => true, :required => true
+      attribute :cookbook, :kind_of => String, :default => nil
+      attribute :httpd_version, :kind_of => String, :default => nil
       attribute :instance, :kind_of => String, :default => 'default'
       attribute :source, :kind_of => String, :default => nil
       attribute :variables, :kind_of => [Hash], :default => nil
-      attribute :cookbook, :kind_of => String, :default => nil
-      attribute :httpd_version, :kind_of => String, :default => nil
 
       include Httpd::Service::Helpers
 
@@ -23,18 +23,6 @@ class Chef
 
       def parsed_config_name
         return config_name if config_name
-      end
-
-      def parsed_instance
-        return instance if instance
-      end
-
-      def parsed_source
-        return source if source
-      end
-
-      def parsed_variables
-        return variables if variables
       end
 
       def parsed_cookbook
@@ -48,6 +36,18 @@ class Chef
           node['platform_family'],
           node['platform_version']
         )
+      end
+
+      def parsed_instance
+        return instance if instance
+      end
+
+      def parsed_source
+        return source if source
+      end
+
+      def parsed_variables
+        return variables if variables
       end
     end
   end

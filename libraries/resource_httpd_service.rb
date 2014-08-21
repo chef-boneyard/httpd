@@ -95,14 +95,14 @@ class Chef
         default_value_for(parsed_version, parsed_mpm, :maxrequestworkers)
       end
 
-      def parsed_maxsparethreads
-        return maxsparethreads if maxsparethreads
-        default_value_for(parsed_version, parsed_mpm, :maxsparethreads)
-      end
-
       def parsed_maxspareservers
         return maxspareservers if maxspareservers
         default_value_for(parsed_version, parsed_mpm, :maxspareservers)
+      end
+
+      def parsed_maxsparethreads
+        return maxsparethreads if maxsparethreads
+        default_value_for(parsed_version, parsed_mpm, :maxsparethreads)
       end
 
       def parsed_minspareservers

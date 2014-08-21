@@ -9,6 +9,7 @@ class Chef
       actions :create, :delete
       default_action :create
 
+      attribute :filename, :kind_of => String
       attribute :httpd_version, :kind_of => String
       attribute :instance, :kind_of => String, :default => 'default'
       attribute :module_name, :kind_of => String, :name_attribute => true, :required => true
@@ -16,6 +17,20 @@ class Chef
 
       include Httpd::Module::Helpers
       include Httpd::Service::Helpers
+
+      def parsed_filename
+        return filename if filename
+        # Put all exceptions here
+        if node['platform_family'] == 'rhel'
+          return 'libmodnss.so' if module_name == 'nss'
+          return 'mod_rev.so' if module_name == 'revocator'
+        end
+        "mod_#{module_name}.so"
+      end
+
+      def parsed_instance
+        return instance if instance
+      end
 
       def parsed_httpd_version
         return httpd_version if httpd_version
@@ -26,16 +41,12 @@ class Chef
           )
       end
 
-      def parsed_instance
-        return instance if instance
+      def parsed_module_name
+        return module_name if module_name
       end
 
       def parsed_name
         return name if name
-      end
-
-      def parsed_module_name
-        return module_name if module_name
       end
 
       def parsed_package_name

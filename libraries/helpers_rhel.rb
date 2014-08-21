@@ -22,7 +22,7 @@ module Httpd
       end
 
       def module_path
-        module_path = "/usr/#{libarch}/httpd/modules/mod_#{module_name}.so"
+        module_path = "/usr/#{libarch}/httpd/modules/#{new_resource.parsed_filename}"
         module_path
       end
 

@@ -40,7 +40,7 @@ module Httpd
       end
 
       def module_path
-        module_path = "/usr/lib/apache2/modules/mod_#{module_name}.so"
+        module_path = "/usr/lib/apache2/modules/#{new_resource.parsed_filename}"
         module_path
       end
 
