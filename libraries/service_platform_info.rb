@@ -10,20 +10,6 @@ module Httpd
         nil
       end
 
-      def default_run_user_for(platform, platform_family, platform_version)
-        keyname = keyname_for(platform, platform_family, platform_version)
-        PlatformInfo.httpd_info[platform_family][keyname]['default_run_user']
-      rescue NoMethodError
-        nil
-      end
-
-      def default_run_group_for(platform, platform_family, platform_version)
-        keyname = keyname_for(platform, platform_family, platform_version)
-        PlatformInfo.httpd_info[platform_family][keyname]['default_run_group']
-      rescue NoMethodError
-        nil
-      end
-
       def package_name_for(platform, platform_family, platform_version, version)
         keyname = keyname_for(platform, platform_family, platform_version)
         PlatformInfo.httpd_info[platform_family][keyname][version]['package_name']
@@ -60,40 +46,30 @@ module Httpd
             'rhel' => {
               '5' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd'
                 }
               },
               '6' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd'
                 }
               },
               '7' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.4' => {
                   'package_name' => 'httpd'
                 }
               },
               '2013.03' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd'
                 }
               },
               '2013.09' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd'
                 },
@@ -103,8 +79,6 @@ module Httpd
               },
               '2014.03' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'httpd'
                 },
@@ -116,8 +90,6 @@ module Httpd
             'fedora' => {
               '20' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.4' => {
                   'package_name' => 'httpd'
                 }
@@ -126,48 +98,36 @@ module Httpd
             'debian' => {
               '7' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'www-data',
-                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2'
                 }
               },
               'jessie/sid' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'www-data',
-                'default_run_group' => 'www-data',
                 '2.4' => {
                   'package_name' => 'apache2'
                 }
               },
               '12.04' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'www-data',
-                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2'
                 }
               },
               '13.04' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'www-data',
-                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2'
                 }
               },
               '13.10' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'www-data',
-                'default_run_group' => 'www-data',
                 '2.2' => {
                   'package_name' => 'apache2'
                 }
               },
               '14.04' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'www-data',
-                'default_run_group' => 'www-data',
                 '2.4' => {
                   'package_name' => 'apache2'
                 }
@@ -178,8 +138,6 @@ module Httpd
               # smartmachine vs global zone (base64 13.4.0) from /etc/product
               '5.11' => {
                 'default_version' => '2.4',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.0' => {
                   'package_name' => 'apache'
                 },
@@ -194,8 +152,6 @@ module Httpd
             'omnios' => {
               '151006' => {
                 'default_version' => '2.2',
-                'default_run_user' => 'apache',
-                'default_run_group' => 'apache',
                 '2.2' => {
                   'package_name' => 'apache22'
                 }
