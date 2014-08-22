@@ -11,6 +11,14 @@ describe 'httpd_module::default on centos-5.8' do
     end.converge('httpd_module::default')
   end
 
+  let(:auth_basic_load_content) do
+    'LoadModule auth_basic_module /usr/lib64/httpd/modules/mod_auth_basic.so'
+  end
+
+  let(:auth_kerb_load_content) do
+    'LoadModule auth_kerb_module /usr/lib64/httpd/modules/mod_auth_kerb.so'
+  end
+
   context 'when using default parameters' do
     it 'creates httpd_module[auth_basic]' do
       expect(httpd_module_default_22_stepinto_run_centos_5_8).to create_httpd_module('auth_basic')
@@ -57,6 +65,12 @@ describe 'httpd_module::default on centos-5.8' do
         )
     end
 
+    it 'renders file[auth_basic create /etc/httpd/conf.d/auth_basic.load]' do
+      expect(httpd_module_default_22_stepinto_run_centos_5_8).to render_file('auth_basic create /etc/httpd/conf.d/auth_basic.load').with_content(
+        auth_basic_load_content
+        )
+    end
+
     it 'creates httpd_module[auth_kerb]' do
       expect(httpd_module_default_22_stepinto_run_centos_5_8).to create_httpd_module('auth_kerb')
     end
@@ -87,6 +101,12 @@ describe 'httpd_module::default on centos-5.8' do
         :group => 'root',
         :source => 'module_load.erb',
         :mode => '0644'
+        )
+    end
+
+    it 'renders file[auth_kerb create /etc/httpd/conf.d/auth_kerb.load]' do
+      expect(httpd_module_default_22_stepinto_run_centos_5_8).to render_file('auth_kerb create /etc/httpd/conf.d/auth_kerb.load').with_content(
+        auth_kerb_load_content
         )
     end
   end
