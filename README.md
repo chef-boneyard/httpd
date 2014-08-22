@@ -18,7 +18,6 @@ This cookbook is concerned with
 shipped with F/OSS Unix and Linux distributions. It does not address
 other httpd server implementations like Lighttpd, Nginx, or IIS.
 
-
 Requirements
 ------------
 * Chef 11 or higher
@@ -149,25 +148,74 @@ before failing a request. Defaults to '400'
 
 `version` - Apache software version to use. Available options are
 '2.2', and '2.4', depending on platform. Defaults to latest available.
-    
+
+
 ### httpd_module
+The `httpd_module` resource is responsible ensuring that an Apache
+module is installed on the system, as well as ensuring a load configuration
+snippet is dropped off at the appropriate location.
+
 #### Examples
+
+    httpd_module 'ssl' do
+      action :create
+    end
+    
+    httpd_module 'el dap' do
+      module_name 'ldap'
+      action :create
+    end
+    
+    httpd_module 'auth_pgsql' do
+      httpd_instance 'instance-2'
+      action :create
+    end
+    
 #### Parameters
-`filename`
-`httpd_version`
-`instance`
-`module_name`
-`package_name`
+`filename` - The filename of the shared object to be rendered into the
+load config snippet. This can usually be omitted, and defaults to a
+generated value looked up in an internal map.
+
+`httpd_version` - The version of the `httpd_service` this module is
+meant to be installed for. Useful on platforms that support multiple
+Apache versions. Defaults to the platform default.
+
+`instance` - The `httpd_service` name to drop the load snippet off
+for. Defaults to 'default'.
+
+`module_name` - The module name to install. Defaults to the
+`httpd_module` name.
+
+`package_name` - The package name the module is found in. By default,
+this is looked up in an internal map.
 
 ### httpd_config
+The `httpd_config` resource is a thin wrapper around the core Chef
+template resource. Instead of a path parameter, `httpd_config` uses
+the instance parameter to calculate where the config is dropped off.
+
 #### Examples
+
+    httpd_config 'mysite' do
+      source 'mysite.erb'
+      action :create
+    end
+    
+    httpd_config 'computers dot biz ssl_config' do
+      config_name 'ssl-config'
+      httpd_instance 'computers_dot_biz'
+      source 'ssl_config.erb'
+      action :create
+    end
+    
 #### Parameters
-`config_name`
-`cookbook`
-`httpd_version`
-`instance`
-`source`
-`variables`
+`config_name` - The name of the config on disk
+`cookbook` - The cookbook that the source template is found in. Defaults to the current cookbook.
+`httpd_version` - Used to calculate the configuration's disk path. Defaults to the platform's native Apache version.
+`instance` - The `httpd_service` instance the config is meant for.
+Defaults to 'default'
+`source` - The ERB format template source used to render the file.
+`variables` - A hash of variables passed to the underlying template resource
 
 License & Authors
 -----------------
