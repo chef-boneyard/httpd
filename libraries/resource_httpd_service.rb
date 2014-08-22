@@ -13,13 +13,13 @@ class Chef
       attribute :hostname_lookups, :kind_of => String, :default => 'off'
       attribute :instance, :kind_of => String, :name_attribute => true
       attribute :keepalive, :kind_of => [TrueClass, FalseClass], :default => true
-      attribute :keepaliverequests, :kind_of => String, :default => '100'
       attribute :keepalivetimeout, :kind_of => String, :default => '5'
       attribute :listen_addresses, :kind_of => String, :default => ['0.0.0.0']
       attribute :listen_ports, :kind_of => [String, Array], :default => %w(80 443)
       attribute :log_level, :kind_of => String, :default => 'warn'
       attribute :maxclients, :kind_of => String, :default => nil
       attribute :maxconnectionsperchild, :kind_of => String, :default => nil
+      attribute :maxkeepaliverequests, :kind_of => String, :default => '100'
       attribute :maxrequestsperchild, :kind_of => String, :default => nil
       attribute :maxrequestworkers, :kind_of => String, :default => nil
       attribute :maxspareservers, :kind_of => String, :default => nil
@@ -55,8 +55,8 @@ class Chef
         return keepalive unless keepalive.nil?
       end
 
-      def parsed_keepaliverequests
-        return keepaliverequests if keepaliverequests
+      def parsed_maxkeepaliverequests
+        return maxkeepaliverequests if maxkeepaliverequests
       end
 
       def parsed_keepalivetimeout
