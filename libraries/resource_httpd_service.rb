@@ -55,10 +55,6 @@ class Chef
         return keepalive unless keepalive.nil?
       end
 
-      def parsed_maxkeepaliverequests
-        return maxkeepaliverequests if maxkeepaliverequests
-      end
-
       def parsed_keepalivetimeout
         return keepalivetimeout if keepalivetimeout
       end
@@ -83,6 +79,10 @@ class Chef
       def parsed_maxconnectionsperchild
         return maxconnectionsperchild if maxconnectionsperchild
         default_value_for(parsed_version, parsed_mpm, :maxconnectionsperchild)
+      end
+
+      def parsed_maxkeepaliverequests
+        return maxkeepaliverequests if maxkeepaliverequests
       end
 
       def parsed_maxrequestsperchild

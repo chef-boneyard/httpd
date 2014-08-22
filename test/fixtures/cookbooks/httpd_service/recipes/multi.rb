@@ -26,7 +26,7 @@ end
 httpd_service 'instance-1' do
   contact 'hal@computers.biz'
   keepalive false
-  keepaliverequests '2001'
+  maxkeepaliverequests '2001'
   keepalivetimeout '0'
   listen_addresses nil
   listen_ports %w(8080 4343)
@@ -46,7 +46,7 @@ end
 httpd_service 'instance-2' do
   contact node['httpd']['contact']
   keepalive node['httpd']['keepalive']
-  keepaliverequests node['httpd']['keepaliverequests']
+  maxkeepaliverequests node['httpd']['maxkeepaliverequests']
   keepalivetimeout node['httpd']['keepalivetimeout']
   listen_addresses node['httpd']['listen_addresses']
   listen_ports node['httpd']['listen_ports']

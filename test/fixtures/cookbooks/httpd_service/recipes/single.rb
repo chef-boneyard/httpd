@@ -8,7 +8,7 @@ httpd_service node['httpd']['service_name'] do
   contact node['httpd']['contact']
   timeout node['httpd']['timeout']
   keepalive node['httpd']['keepalive']
-  keepaliverequests node['httpd']['keepaliverequests']
+  maxkeepaliverequests node['httpd']['maxkeepaliverequests']
   keepalivetimeout node['httpd']['keepalivetimeout']
   version node['httpd']['version']
   mpm node['httpd']['mpm']
