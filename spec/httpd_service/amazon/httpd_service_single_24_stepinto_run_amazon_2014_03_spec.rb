@@ -17,7 +17,7 @@ describe 'httpd_service::single on amazon-2014.03' do
         :parsed_contact => 'webmaster@localhost',
         :parsed_hostname_lookups => 'off',
         :parsed_keepalive => true,
-        :parsed_keepaliverequests => '100',
+        :parsed_maxkeepaliverequests => '100',
         :parsed_keepalivetimeout => '5',
         :parsed_listen_addresses => ['0.0.0.0'],
         :parsed_listen_ports => %w(80 443),

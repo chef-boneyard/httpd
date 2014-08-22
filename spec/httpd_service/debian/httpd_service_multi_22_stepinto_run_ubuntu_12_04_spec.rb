@@ -10,7 +10,7 @@ describe 'httpd_service::multi 2.2 on ubuntu-12.04' do
       node.set['httpd']['contact'] = 'bob@computers.biz'
       node.set['httpd']['version'] = '2.2'
       node.set['httpd']['keepalive'] = false
-      node.set['httpd']['keepaliverequests'] = '5678'
+      node.set['httpd']['maxkeepaliverequests'] = '5678'
       node.set['httpd']['keepalivetimeout'] = '8765'
       node.set['httpd']['listen_ports'] = %w(81 444)
       node.set['httpd']['log_level'] = 'warn'
@@ -59,7 +59,7 @@ describe 'httpd_service::multi 2.2 on ubuntu-12.04' do
         :parsed_contact => 'hal@computers.biz',
         :parsed_hostname_lookups => 'off',
         :parsed_keepalive => false,
-        :parsed_keepaliverequests => '2001',
+        :parsed_maxkeepaliverequests => '2001',
         :parsed_keepalivetimeout => '0',
         :parsed_listen_addresses => ['0.0.0.0'],
         :parsed_listen_ports => %w(8080 4343),
@@ -77,7 +77,7 @@ describe 'httpd_service::multi 2.2 on ubuntu-12.04' do
         :parsed_contact => 'bob@computers.biz',
         :parsed_hostname_lookups => 'off',
         :parsed_keepalive => false,
-        :parsed_keepaliverequests => '5678',
+        :parsed_maxkeepaliverequests => '5678',
         :parsed_keepalivetimeout => '8765',
         :parsed_listen_addresses => ['0.0.0.0'],
         :parsed_listen_ports => %w(81 444),
