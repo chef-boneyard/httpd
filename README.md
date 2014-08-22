@@ -210,11 +210,15 @@ the instance parameter to calculate where the config is dropped off.
     
 #### Parameters
 `config_name` - The name of the config on disk
+
 `cookbook` - The cookbook that the source template is found in. Defaults to the current cookbook.
+
 `httpd_version` - Used to calculate the configuration's disk path. Defaults to the platform's native Apache version.
-`instance` - The `httpd_service` instance the config is meant for.
-Defaults to 'default'
+
+`instance` - The `httpd_service` instance the config is meant for. Defaults to 'default'
+
 `source` - The ERB format template source used to render the file.
+
 `variables` - A hash of variables passed to the underlying template resource
 
 License & Authors
