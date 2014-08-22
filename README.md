@@ -24,7 +24,7 @@ Requirements
 * Chef 11 or higher
 * Ruby 1.9 or higher (preferably from the Chef full-stack installer)
 
-Resources / Providers
+Resources
 ---------------------
 ### httpd_service
 
@@ -41,7 +41,7 @@ machine, enabling advanced Apache configuration in scenarios where
 multiple servers need different loaded modules and global
 configurations.
 
-### Examples
+## Examples
 
     httpd_service 'default' do
       action :create
@@ -62,7 +62,7 @@ configurations.
       action :create
     end
 
-### Parameters
+## Parameters
 Most of the parameters on the `httpd_service` resource map to their
 CamelCase equivalents found at
 http://httpd.apache.org/docs/2.4/mod/directives.html
@@ -150,6 +150,25 @@ before failing a request. Defaults to '400'
 `version` - Apache software version to use. Available options are
 '2.2', and '2.4', depending on platform. Defaults to latest available.
     
+### httpd_module
+## Examples
+## Parameters
+`filename`
+`httpd_version`
+`instance`
+`module_name`
+`package_name`
+
+### httpd_config
+## Examples
+## Parameters
+`config_name`
+`cookbook`
+`httpd_version`
+`instance`
+`source`
+`variables`
+
 License & Authors
 -----------------
 - Author:: Sean OMeara (<someara@opscode.com>)
