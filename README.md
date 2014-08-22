@@ -68,8 +68,8 @@ http://httpd.apache.org/docs/2.4/mod/directives.html
 
 `contact` - The email address rendered into the main configuration file as the ServerAdmin directive.
 
-`hostname_lookups` - The HostnameLookups Directive. Can be 'on' 'off'
-or 'double'. Defaults to 'off'.
+`hostname_lookups` - Enables DNS lookups on client IP addresses.  Can
+be 'on' 'off' or 'double'. Defaults to 'off'.
 
 `instance` - A string name to identify the `httpd_service` instance.
 By convention, this will result in configuration, log, and support
