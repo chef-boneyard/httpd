@@ -1,4 +1,4 @@
-xrequire 'spec_helper'
+require 'spec_helper'
 
 describe 'httpd_module::default on ubuntu-14.04' do
   let(:httpd_module_default_24_stepinto_run_ubuntu_14_04) do

@@ -1,6 +1,8 @@
 HTTPD Cookbook
 =======================
 
+Now may be a good time to start writing the README.
+
 This is a placeholder cookbook for the HTTPD cookbook in the
 communituy site namespace
 
