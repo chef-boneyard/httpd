@@ -186,9 +186,9 @@ describe 'httpd_service::single on debian-7.2' do
       )
   end
 
-  it 'steps into httpd_service[default] and creates template[default create /etc/apache2/magic]' do
-    expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_template('default create /etc/apache2/magic').with(
-      :path => '/etc/apache2/magic',
+  it 'steps into httpd_service[default] and creates template[default create /etc/apache2/mime.types]' do
+    expect(httpd_service_single_22_stepinto_run_debian_7_2).to create_template('default create /etc/apache2/mime.types').with(
+      :path => '/etc/apache2/mime.types',
       :source => 'magic.erb',
       :owner => 'root',
       :group => 'root',

@@ -201,9 +201,9 @@ describe 'httpd_service::single on rhel-6.4' do
         )
     end
 
-    it 'creates template[default create /etc/httpd/conf/magic]' do
-      expect(httpd_service_single_22_run_centos_6_4).to create_template('default create /etc/httpd/conf/magic').with(
-        :path => '/etc/httpd/conf/magic',
+    it 'creates template[default create /etc/httpd/conf/mime.types]' do
+      expect(httpd_service_single_22_run_centos_6_4).to create_template('default create /etc/httpd/conf/mime.types').with(
+        :path => '/etc/httpd/conf/mime.types',
         :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',

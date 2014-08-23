@@ -331,9 +331,9 @@ describe 'httpd_service::multi on amazon-2014.03' do
         )
     end
 
-    it 'creates template[instance-1 create /etc/httpd-instance-1/conf/magic]' do
-      expect(httpd_service_multi_22_stepinto_run_amazon_2014_03).to create_template('instance-1 create /etc/httpd-instance-1/conf/magic').with(
-        :path => '/etc/httpd-instance-1/conf/magic',
+    it 'creates template[instance-1 create /etc/httpd-instance-1/conf/mime.types]' do
+      expect(httpd_service_multi_22_stepinto_run_amazon_2014_03).to create_template('instance-1 create /etc/httpd-instance-1/conf/mime.types').with(
+        :path => '/etc/httpd-instance-1/conf/mime.types',
         :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',
@@ -551,9 +551,9 @@ describe 'httpd_service::multi on amazon-2014.03' do
         )
     end
 
-    it 'creates template[instance-2 create /etc/httpd-instance-2/conf/magic]' do
-      expect(httpd_service_multi_22_stepinto_run_amazon_2014_03).to create_template('instance-2 create /etc/httpd-instance-2/conf/magic').with(
-        :path => '/etc/httpd-instance-2/conf/magic',
+    it 'creates template[instance-2 create /etc/httpd-instance-2/conf/mime.types]' do
+      expect(httpd_service_multi_22_stepinto_run_amazon_2014_03).to create_template('instance-2 create /etc/httpd-instance-2/conf/mime.types').with(
+        :path => '/etc/httpd-instance-2/conf/mime.types',
         :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',

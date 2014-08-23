@@ -306,8 +306,8 @@ class Chef
           end
 
           # configuration files
-          template "#{new_resource.parsed_name} create /etc/#{apache_name}/conf/magic" do
-            path "/etc/#{apache_name}/conf/magic"
+          template "#{new_resource.parsed_name} create /etc/#{apache_name}/conf/mime.types" do
+            path "/etc/#{apache_name}/conf/mime.types"
             source 'magic.erb'
             owner 'root'
             group 'root'

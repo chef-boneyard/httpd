@@ -293,9 +293,9 @@ describe 'httpd_service::single on amazon-2014.03' do
         )
     end
 
-    it 'creates template[default create /etc/httpd/conf/magic]' do
-      expect(httpd_service_single_24_stepinto_run_amazon_2014_03).to create_template('default create /etc/httpd/conf/magic').with(
-        :path => '/etc/httpd/conf/magic',
+    it 'creates template[default create /etc/httpd/conf/mime.types]' do
+      expect(httpd_service_single_24_stepinto_run_amazon_2014_03).to create_template('default create /etc/httpd/conf/mime.types').with(
+        :path => '/etc/httpd/conf/mime.types',
         :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',

@@ -255,8 +255,8 @@ class Chef
           end
 
           # configuration files
-          template "#{new_resource.parsed_name} create /etc/#{apache_name}/magic" do
-            path "/etc/#{apache_name}/magic"
+          template "#{new_resource.parsed_name} create /etc/#{apache_name}/mime.types" do
+            path "/etc/#{apache_name}/mime.types"
             source 'magic.erb'
             owner 'root'
             group 'root'
@@ -461,8 +461,8 @@ class Chef
             action :delete
           end
 
-          file "#{new_resource.parsed_name} delete /etc/#{apache_name}/magic" do
-            path "/etc/#{apache_name}/magic"
+          file "#{new_resource.parsed_name} delete /etc/#{apache_name}/mime.types" do
+            path "/etc/#{apache_name}/mime.types"
             action :delete
           end
 

@@ -219,9 +219,9 @@ describe 'httpd_service::multi 2.4 on ubuntu-14.04' do
         )
     end
 
-    it 'deletes file[default delete /etc/apache2/magic]' do
-      expect(ubuntu_14_04_multi_stepinto_run).to delete_file('default delete /etc/apache2/magic').with(
-        :path => '/etc/apache2/magic'
+    it 'deletes file[default delete /etc/apache2/mime.types]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to delete_file('default delete /etc/apache2/mime.types').with(
+        :path => '/etc/apache2/mime.types'
         )
     end
 
@@ -403,9 +403,9 @@ describe 'httpd_service::multi 2.4 on ubuntu-14.04' do
         )
     end
 
-    it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/magic]' do
-      expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/magic').with(
-        :path => '/etc/apache2-instance-1/magic',
+    it 'steps into httpd_service[instance-1] and creates template[instance-1 create /etc/apache2-instance-1/mime.types]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-1 create /etc/apache2-instance-1/mime.types').with(
+        :path => '/etc/apache2-instance-1/mime.types',
         :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',
@@ -663,9 +663,9 @@ describe 'httpd_service::multi 2.4 on ubuntu-14.04' do
         )
     end
 
-    it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/magic]' do
-      expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/magic').with(
-        :path => '/etc/apache2-instance-2/magic',
+    it 'steps into httpd_service[instance-2] and creates template[instance-2 create /etc/apache2-instance-2/mime.types]' do
+      expect(ubuntu_14_04_multi_stepinto_run).to create_template('instance-2 create /etc/apache2-instance-2/mime.types').with(
+        :path => '/etc/apache2-instance-2/mime.types',
         :source => 'magic.erb',
         :owner => 'root',
         :group => 'root',
