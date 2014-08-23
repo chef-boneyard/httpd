@@ -13,7 +13,7 @@ class Chef
           true
         end
 
-        def action_create
+        action :create do
           package "#{new_resource.parsed_name} create #{new_resource.parsed_package_name}" do
             package_name new_resource.parsed_package_name
             notifies :run, "bash[#{new_resource.parsed_name} create remove_package_config]", :immediately
@@ -70,7 +70,7 @@ class Chef
         end
       end
 
-      def action_delete
+      action :delete do
         directory "#{new_resource.parsed_name} delete /etc/#{apache_name}/mods-available/" do
           path "/etc/#{apache_name}/mods-available/"
           recursive true

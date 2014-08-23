@@ -13,7 +13,7 @@ class Chef
           true
         end
 
-        def action_create
+        action :create do
           if new_resource.parsed_httpd_version.to_f < 2.4
             directory "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d" do
               path "/etc/#{apache_name}/conf.d"
@@ -72,7 +72,7 @@ class Chef
           end
         end
 
-        def action_delete
+        action :delete do
           if new_resource.parsed_httpd_version.to_f < 2.4
             file "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}.conf" do
               path "/etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}.conf"

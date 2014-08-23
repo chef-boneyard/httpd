@@ -15,18 +15,18 @@ class Chef
 
         # break common and service resources into separate
         # functions to allow for overriding in a subclass.
-        def action_create
+        action :create do
           create_common
           create_service
         end
 
-        def action_delete
+        action :delete do
           delete_service
           delete_common
         end
 
         # override me in subclass
-        def action_restart
+        action :restart do
           log 'action :restart not implemented' do
             str = 'action :restart implemented on'
             str << ' Chef::Provider::HttpdService::Debian.'
@@ -37,7 +37,7 @@ class Chef
         end
 
         # override me in subclass
-        def action_reload
+        action :reload do
           log 'action :reload not implemented' do
             str = 'action :reload not implemented on'
             str << ' Chef::Provider::HttpdService::Debian.'

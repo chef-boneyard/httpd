@@ -13,7 +13,7 @@ class Chef
           true
         end
 
-        def action_create
+        action :create do
           extend Httpd::Module::Helpers
 
           # package_name is set by resource
@@ -80,7 +80,7 @@ class Chef
           end
         end
 
-        def action_delete
+        action :delete do
           if new_resource.parsed_httpd_version.to_f < 2.4
             file "#{new_resource.parsed_name} delete /etc/#{apache_name}/conf.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.d/#{module_name}.load"

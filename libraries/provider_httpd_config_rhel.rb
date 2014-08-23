@@ -13,7 +13,7 @@ class Chef
           true
         end
 
-        def action_create
+        action :create do
           directory "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d" do
             path "/etc/#{apache_name}/conf.d"
             owner 'root'
@@ -35,7 +35,7 @@ class Chef
           end
         end
 
-        def action_delete
+        action :delete do
           file "#{new_resource.parsed_name} create /etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}" do
             path "/etc/#{apache_name}/conf.d/#{new_resource.parsed_config_name}.conf"
             action :create

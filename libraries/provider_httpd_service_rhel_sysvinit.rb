@@ -14,7 +14,7 @@ class Chef
             true
           end
 
-          def action_restart
+          action :restart do
             service "#{new_resource.parsed_name} delete #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
@@ -23,7 +23,7 @@ class Chef
             end
           end
 
-          def action_reload
+          action :reload do
             service "#{new_resource.parsed_name} delete #{apache_name}" do
               service_name apache_name
               supports :restart => true, :reload => true, :status => true
