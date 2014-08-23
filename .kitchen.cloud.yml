@@ -1,3 +1,4 @@
+#<% require 'kitchen-sync' %>
 ---
 driver_config:
   digitalocean_client_id: <%= ENV['DIGITAL_OCEAN_CLIENT_ID'] %>
@@ -278,3 +279,10 @@ suites:
   - name: config
     run_list:
     - recipe[httpd_config]
+
+  #
+  # hello_world
+  #
+  - name: hello_world
+    run_list:
+    - recipe[hello_world]

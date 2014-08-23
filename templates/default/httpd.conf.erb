@@ -33,8 +33,8 @@ KeepAlive On
 <% else %>
 KeepAlive Off
 <% end %>
-<% if @config.parsed_keepaliverequests %>
-MaxKeepAliveRequests <%= @config.parsed_keepaliverequests %>
+<% if @config.parsed_maxkeepaliverequests %>
+MaxKeepAliveRequests <%= @config.parsed_maxkeepaliverequests %>
 <% end %>
 <% if @config.parsed_keepalivetimeout %>
 KeepAliveTimeout <%= @config.parsed_keepalivetimeout %>
