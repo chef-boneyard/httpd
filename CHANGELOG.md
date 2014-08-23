@@ -2,6 +2,10 @@ httpd Cookbook CHANGELOG
 ========================
 This file is used to list changes made in each version of the httpd cookbook.
 
+v0.1.3 (2014-08-22)
+-------------------
+- Fixing notifications by using LWRP DSL actions
+
 v0.1.2 (2014-08-22)
 -------------------
 - Fixing up maxkeepaliverequests in template
