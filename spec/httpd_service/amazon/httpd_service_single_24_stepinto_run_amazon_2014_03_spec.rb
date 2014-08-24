@@ -337,6 +337,23 @@ describe 'httpd_service::single on amazon-2014.03' do
         )
     end
 
+    %w(
+      authz_core authz_host authn_core
+      auth_basic access_compat authn_file
+      authz_user alias dir autoindex
+      env mime negotiation setenvif
+      filter deflate status
+    ).each do |mod|
+      it "steps into httpd_service[default] and creates httpd_module[default create #{mod}]" do
+        expect(httpd_service_single_24_stepinto_run_amazon_2014_03).to create_httpd_module("default create #{mod}")
+          .with(
+          :module_name => mod,
+          :instance => 'default',
+          :httpd_version => '2.4'
+          )
+      end
+    end
+
     it 'manage service[default create httpd]' do
       expect(httpd_service_single_24_stepinto_run_amazon_2014_03).to start_service('default create httpd').with(
         :provider => Chef::Provider::Service::Init::Redhat
