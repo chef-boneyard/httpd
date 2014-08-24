@@ -363,6 +363,17 @@ class Chef
               action :delete
             end
           end
+
+          # Install core modules
+          new_resource.parsed_modules.each do |mod|
+            httpd_module "#{new_resource.parsed_name} create #{mod}" do
+              module_name mod
+              instance new_resource.parsed_instance
+              httpd_version new_resource.parsed_version
+              action :create
+              notifies :restart, "service[#{new_resource.parsed_name} create #{apache_name}]"
+            end
+          end
         end
 
         def delete_common

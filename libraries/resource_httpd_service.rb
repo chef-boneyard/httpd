@@ -26,6 +26,7 @@ class Chef
       attribute :maxsparethreads, :kind_of => String, :default => nil
       attribute :minspareservers, :kind_of => String, :default => nil
       attribute :minsparethreads, :kind_of => String, :default => nil
+      attribute :modules, :kind_of => Array, :default => nil
       attribute :mpm, :kind_of => String, :default => nil
       attribute :package_name, :kind_of => String, :default => nil
       attribute :run_group, :kind_of => String, :default => nil
@@ -113,6 +114,27 @@ class Chef
       def parsed_minsparethreads
         return minsparethreads if minsparethreads
         default_value_for(parsed_version, parsed_mpm, :minsparethreads)
+      end
+
+      def parsed_modules
+        return modules if modules
+        return %w(
+          alias autoindex dir
+          env mime negotiation
+          setenvif status auth_basic
+          deflate authz_default
+          authz_user authz_groupfile
+          authn_file authz_host
+          reqtimeout
+        ) if parsed_version == '2.2'
+
+        return %w(
+          authz_core authz_host authn_core
+          auth_basic access_compat authn_file
+          authz_user alias dir autoindex
+          env mime negotiation setenvif
+          filter deflate status
+        ) if parsed_version == '2.4'
       end
 
       def parsed_mpm
