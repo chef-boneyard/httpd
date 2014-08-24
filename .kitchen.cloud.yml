@@ -286,6 +286,3 @@ suites:
   - name: hello_world
     run_list:
     - recipe[hello_world]
-    includes: [
-      'debian-7.0',
-    ]
