@@ -116,6 +116,9 @@ Valid only for preform MPM.
 `minsparethreads` - Minimum number of idle threads available to handle
 request spikes. Valid only for worker and event MPMs.
 
+`modules` - A list of initial Apache modules to be loaded inside the
+httpd_service instance. Defaults to Debian standard on 2.2 and 2.4.
+
 `mpm` - The Multi-Processing Module to use for the `httpd_service`
 instance. Values can be 'prefork', 'worker', and 'event'. Defaults to
 'worker' for Apache 2.2 and 'event' for Apache 2.4.
