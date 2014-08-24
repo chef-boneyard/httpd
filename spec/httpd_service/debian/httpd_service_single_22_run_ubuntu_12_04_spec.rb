@@ -10,7 +10,8 @@ describe 'httpd_service::single on ubuntu-12.04' do
 
   context 'when using default parameters' do
     it 'creates httpd_service[default]' do
-      expect(httpd_service_single_22_run_ubuntu_12_04).to create_httpd_service('default').with(
+      expect(httpd_service_single_22_run_ubuntu_12_04).to create_httpd_service('default')
+        .with(
         :parsed_contact => 'webmaster@localhost',
         :parsed_hostname_lookups => 'off',
         :parsed_keepalive => true,

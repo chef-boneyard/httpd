@@ -245,6 +245,25 @@ describe 'httpd_service::single on rhel-6.4' do
         )
     end
 
+    %w(
+      alias autoindex dir
+      env mime negotiation
+      setenvif status auth_basic
+      deflate authz_default
+      authz_user authz_groupfile
+      authn_file authz_host
+      reqtimeout
+    ).each do |mod|
+      it "steps into httpd_service[default] and creates httpd_module[default create #{mod}]" do
+        expect(httpd_service_single_22_run_centos_6_4).to create_httpd_module("default create #{mod}")
+          .with(
+          :module_name => mod,
+          :instance => 'default',
+          :httpd_version => '2.2'
+          )
+      end
+    end
+
     it 'manage service[default create httpd]' do
       expect(httpd_service_single_22_run_centos_6_4).to start_service('default create httpd').with(
         :provider => Chef::Provider::Service::Init::Redhat

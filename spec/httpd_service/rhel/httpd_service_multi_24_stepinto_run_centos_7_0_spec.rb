@@ -454,6 +454,23 @@ describe 'httpd_service::multi on rhel-7.0' do
         )
     end
 
+    %w(
+      authz_core authz_host authn_core
+      auth_basic access_compat authn_file
+      authz_user alias dir autoindex
+      env mime negotiation setenvif
+      filter deflate status
+    ).each do |mod|
+      it "steps into httpd_service[instance-1] and creates httpd_module[instance-1 create #{mod}]" do
+        expect(httpd_service_multi_24_stepinto_run_centos_7_0).to create_httpd_module("instance-1 create #{mod}")
+          .with(
+          :module_name => mod,
+          :instance => 'instance-1',
+          :httpd_version => '2.4'
+          )
+      end
+    end
+
     it 'manages service[instance-1 create httpd-instance-1]' do
       expect(httpd_service_multi_24_stepinto_run_centos_7_0).to start_service('instance-1 create httpd-instance-1').with(
         :provider => Chef::Provider::Service::Init::Systemd
@@ -762,6 +779,23 @@ describe 'httpd_service::multi on rhel-7.0' do
         :mode => '0755',
         :recursive => true
         )
+    end
+
+    %w(
+      authz_core authz_host authn_core
+      auth_basic access_compat authn_file
+      authz_user alias dir autoindex
+      env mime negotiation setenvif
+      filter deflate status
+    ).each do |mod|
+      it "steps into httpd_service[instance-2] and creates httpd_module[instance-2 create #{mod}]" do
+        expect(httpd_service_multi_24_stepinto_run_centos_7_0).to create_httpd_module("instance-2 create #{mod}")
+          .with(
+          :module_name => mod,
+          :instance => 'instance-2',
+          :httpd_version => '2.4'
+          )
+      end
     end
 
     it 'manages service[instance-2 create httpd-instance-2]' do

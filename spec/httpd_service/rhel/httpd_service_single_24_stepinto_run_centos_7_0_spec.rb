@@ -341,6 +341,23 @@ describe 'httpd_service::single on rhel-7.0' do
         )
     end
 
+    %w(
+      authz_core authz_host authn_core
+      auth_basic access_compat authn_file
+      authz_user alias dir autoindex
+      env mime negotiation setenvif
+      filter deflate status
+    ).each do |mod|
+      it "steps into httpd_service[default] and creates httpd_module[default create #{mod}]" do
+        expect(httpd_service_single_24_run_centos_7_0).to create_httpd_module("default create #{mod}")
+          .with(
+          :module_name => mod,
+          :instance => 'default',
+          :httpd_version => '2.4'
+          )
+      end
+    end
+
     it 'manage service[default create httpd]' do
       expect(httpd_service_single_24_run_centos_7_0).to start_service('default create httpd').with(
         :provider => Chef::Provider::Service::Init::Systemd
