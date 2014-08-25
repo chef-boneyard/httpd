@@ -6,8 +6,8 @@ httpd_service 'default' do
   action :create
 end
 
-httpd_config '000-default' do
-  source '000-default.erb'
+httpd_config 'hello' do
+  source 'hello.erb'
   notifies :restart, 'httpd_service[default]'
 end
 
