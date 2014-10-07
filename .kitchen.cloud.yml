@@ -18,7 +18,7 @@ driver_config:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 11.14.2
+  require_chef_omnibus: 11.16.2
 
 platforms:
 - name: debian-7.0
