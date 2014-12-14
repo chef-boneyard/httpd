@@ -55,8 +55,8 @@ class Chef
             group 'root'
             mode '0644'
             variables(
-              :module_name => "#{module_name}_module",
-              :module_path => module_path
+              module_name: "#{module_name}_module",
+              module_path: module_path
               )
             cookbook 'httpd'
             action :create

@@ -9,7 +9,7 @@ module Httpd
 
         def modules(options)
           options[:are].each do |mod|
-            key = options[:for].merge(:module => mod)
+            key = options[:for].merge(module: mod)
 
             package = options[:found_in_package]
             package = package.call(mod) if package.is_a?(Proc)

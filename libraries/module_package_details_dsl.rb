@@ -14,7 +14,7 @@ module Httpd
         end
 
         def after_installing(options)
-          key = options[:on].merge(:package => options[:package])
+          key = options[:on].merge(package: options[:package])
           actions = options[:chef_should]
           module_details_data[key] = actions
         end

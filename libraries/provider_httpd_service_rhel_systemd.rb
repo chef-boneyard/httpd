@@ -17,7 +17,7 @@ class Chef
           action :restart do
             service "#{new_resource.parsed_name} delete #{apache_name}" do
               service_name apache_name
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Systemd
               action :restart
             end
@@ -26,7 +26,7 @@ class Chef
           action :reload do
             service "#{new_resource.parsed_name} reload #{apache_name}" do
               service_name apache_name
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Systemd
               action :reload
             end
@@ -57,7 +57,7 @@ class Chef
               group 'root'
               mode '0644'
               cookbook 'httpd'
-              variables(:apache_name => apache_name)
+              variables(apache_name: apache_name)
               action :create
             end
 
@@ -72,7 +72,7 @@ class Chef
 
             service "#{new_resource.parsed_name} create #{apache_name}" do
               service_name apache_name
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Systemd
               action [:start, :enable]
             end
@@ -80,7 +80,7 @@ class Chef
 
           def delete_service
             service "#{new_resource.parsed_name} delete #{apache_name}" do
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Systemd
               action [:stop, :disable]
             end

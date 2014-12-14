@@ -21,11 +21,11 @@ module Httpd
 
       def package_name_for_module(name, httpd_version, platform, platform_family, platform_version)
         ModuleInfo.find(
-          :module => name,
-          :httpd_version => httpd_version,
-          :platform => platform,
-          :platform_family => platform_family,
-          :platform_version => keyname_for(platform, platform_family, platform_version)
+          module: name,
+          httpd_version: httpd_version,
+          platform: platform,
+          platform_family: platform_family,
+          platform_version: keyname_for(platform, platform_family, platform_version)
           )
       end
 
@@ -35,8 +35,8 @@ module Httpd
         #
         # debian packaging for apache 2.2
         #
-        modules :for => { :platform_family => 'debian', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform_family: 'debian', httpd_version: '2.2' },
+                are: %w(
                   actions alias asis auth_basic auth_digest authn_alias authn_anon
                   authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
                   authz_default authz_groupfile authz_host authz_owner authz_user
@@ -48,10 +48,10 @@ module Httpd
                   speling ssl status substitute suexec unique_id userdir usertrack
                   vhost_alias
                 ),
-                :found_in_package => 'apache2'
+                found_in_package: 'apache2'
 
-        modules :for => { :platform_family => 'debian', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform_family: 'debian', httpd_version: '2.2' },
+                are: %w(
                   apparmor apreq2 auth_cas auth_kerb auth_memcookie auth_mysql
                   auth_ntlm_winbind auth_openid auth_pam auth_pgsql auth_plain
                   auth_pubtkt auth_radius auth_sys_group auth_tkt authn_sasl authn_webid
@@ -64,13 +64,13 @@ module Httpd
                   ruwsgi_dbg scgi shib2 spamhaus speedycgi suphp upload_progress uwsgi
                   uwsgi_dbg vhost_hash_alias vhost_ldap wsgi wsgi_py3 xsendfile
                 ),
-                :found_in_package => ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
+                found_in_package: ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
 
         #
         # debian packaging for apache 2.4
         #
-        modules :for => { :platform_family => 'debian', :httpd_version => '2.4' },
-                :are => %w(
+        modules for: { platform_family: 'debian', httpd_version: '2.4' },
+                are: %w(
                   access_compat actions alias allowmethods asis auth_basic
                   auth_digest auth_form authn_anon authn_core authn_dbd authn_dbm
                   authn_file authn_socache authnz_ldap authz_core authz_dbd authz_dbm
@@ -89,10 +89,10 @@ module Httpd
                   status substitute suexec unique_id userdir usertrack vhost_alias
                   xml2enc
                 ),
-                :found_in_package => 'apache2'
+                found_in_package: 'apache2'
 
-        modules :for => { :platform_family => 'debian', :httpd_version => '2.4' },
-                :are => %w(
+        modules for: { platform_family: 'debian', httpd_version: '2.4' },
+                are: %w(
                   apparmor auth_mysql auth_pgsql auth_plain perl2 perl2_dev
                   perl2_doc php5 python python_doc wsgi reload_perl fastcgi
                   authcassimple_perl authcookie_perl authenntlm_perl apreq2 auth_cas
@@ -108,14 +108,14 @@ module Httpd
                   watchcat webauth webauthldap webkdc wsgi_py3 xsendfile modsecurity
                   mpm_itk request_perl sitecontrol_perl svn webauth webkdc
                 ),
-                :found_in_package => ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
+                found_in_package: ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
 
         #
         # rhel-5
         #
         # shipped in server package
-        modules :for => { :platform_family => 'rhel', :platform_version => '5', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
+                are: %w(
                   actions alias asis auth_basic auth_digest authn_alias authn_anon
                   authn_dbd authn_dbm authn_default authn_file authnz_ldap
                   authz_dbm authz_default authz_groupfile authz_host authz_owner
@@ -127,27 +127,27 @@ module Httpd
                   setenvif speling status substitute suexec unique_id userdir
                   usertrack version vhost_alias
                 ),
-                :found_in_package => 'httpd'
+                found_in_package: 'httpd'
 
         # predictable package naming
-        modules :for => { :platform_family => 'rhel', :platform_version => '5', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
+                are: %w(
                   auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
                   perl python revocator
                 ),
-                :found_in_package => ->(name) { "mod_#{name}" }
+                found_in_package: ->(name) { "mod_#{name}" }
 
         # outliers
-        modules :for => { :platform_family => 'rhel', :platform_version => '5', :httpd_version => '2.2' },
-                :are => %w(authz_svn),
-                :found_in_package => ->(_name) { 'mod_dav_svn' }
+        modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
+                are: %w(authz_svn),
+                found_in_package: ->(_name) { 'mod_dav_svn' }
 
         #
         # rhel-6
         #
         # shipped in server package
-        modules :for => { :platform_family => 'rhel', :platform_version => '6', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform_family: 'rhel', platform_version: '6', httpd_version: '2.2' },
+                are: %w(
                   actions alias asis auth_basic auth_digest authn_alias authn_anon
                   authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
                   authz_default authz_groupfile authz_host authz_owner authz_user
@@ -159,26 +159,26 @@ module Httpd
                   status substitute suexec unique_id userdir usertrack version
                   vhost_alias
                 ),
-                :found_in_package => 'httpd'
+                found_in_package: 'httpd'
 
         # predictable package naming
-        modules :for => { :platform_family => 'rhel', :platform_version => '6', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform_family: 'rhel', platform_version: '6', httpd_version: '2.2' },
+                are: %w(
                   auth_kerb auth_mysql auth_pgsql authz_ldap dav_svn dnssd nss
                   perl revocator ssl wsgi
                 ),
-                :found_in_package => ->(name) { "mod_#{name}" }
+                found_in_package: ->(name) { "mod_#{name}" }
 
         # outliers
-        modules :for => { :platform_family => 'rhel', :platform_version => '6', :httpd_version => '2.2' },
-                :are => %w(authz_svn),
-                :found_in_package => ->(_name) { 'mod_dav_svn' }
+        modules for: { platform_family: 'rhel', platform_version: '6', httpd_version: '2.2' },
+                are: %w(authz_svn),
+                found_in_package: ->(_name) { 'mod_dav_svn' }
 
         #
         # rhel-7
         #
-        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
-                :are => %w(
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(
                   access_compat actions alias allowmethods asis auth_basic
                   auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
                   authn_socache authz_core authz_dbd authz_dbm authz_groupfile
@@ -196,42 +196,42 @@ module Httpd
                   socache_memcache socache_shmcb speling status substitute suexec
                   systemd unique_id unixd userdir usertrack version vhost_alias watchdog
                 ),
-                :found_in_package => 'httpd'
+                found_in_package: 'httpd'
 
         # predictable package naming
-        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
-                :are => %w(
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(
                   auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
                   session ssl wsgi
                 ),
-                :found_in_package => ->(name) { "mod_#{name}" }
+                found_in_package: ->(name) { "mod_#{name}" }
 
         # outliers
-        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
-                :are => %w(authz_svn dontdothat),
-                :found_in_package => ->(_name) { 'mod_dav_svn' }
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(authz_svn dontdothat),
+                found_in_package: ->(_name) { 'mod_dav_svn' }
 
-        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
-                :are => %w(authnz_ldap),
-                :found_in_package => ->(_name) { 'mod_ldap' }
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(authnz_ldap),
+                found_in_package: ->(_name) { 'mod_ldap' }
 
-        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
-                :are => %w(xml2enc),
-                :found_in_package => ->(_name) { 'mod_proxy_html' }
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(xml2enc),
+                found_in_package: ->(_name) { 'mod_proxy_html' }
 
-        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
-                :are => %w(rev),
-                :found_in_package => ->(_name) { 'mod_revocator' }
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(rev),
+                found_in_package: ->(_name) { 'mod_revocator' }
 
-        modules :for => { :platform_family => 'rhel', :platform_version => '7', :httpd_version => '2.4' },
-                :are => %w(auth_form session_cookie session_crypto session_dbd),
-                :found_in_package => ->(_name) { 'mod_session' }
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(auth_form session_cookie session_crypto session_dbd),
+                found_in_package: ->(_name) { 'mod_session' }
 
         #
         # amazon-2014.03
         #
-        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform: 'amazon', platform_version: '2014.03', httpd_version: '2.2' },
+                are: %w(
                   actions alias asis auth_basic auth_digest authn_alias authn_anon
                   authn_dbd authn_dbm authn_default authn_file authnz_ldap authz_dbm
                   authz_default authz_groupfile authz_host authz_owner authz_user
@@ -243,22 +243,22 @@ module Httpd
                   setenvif speling status substitute suexec unique_id userdir
                   usertrack version vhost_alias
                 ),
-                :found_in_package => 'httpd'
+                found_in_package: 'httpd'
 
-        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.2' },
-                :are => %w(
+        modules for: { platform: 'amazon', platform_version: '2014.03', httpd_version: '2.2' },
+                are: %w(
                   perl-devel auth_kerb auth_mysql auth_pgsql
                   authz_ldap dav_svn fcgid geoip nss perl proxy_html python security
                   ssl wsgi
                 ),
-                :found_in_package => ->(name) { "mod_#{name}" }
+                found_in_package: ->(name) { "mod_#{name}" }
 
-        modules :for => { :platform_family => 'amazon', :platform_version => '2014.03', :httpd_version => '2.2' },
-                :are => %w(authz_svn),
-                :found_in_package => ->(_name) { 'mod_dav_svn' }
+        modules for: { platform_family: 'amazon', platform_version: '2014.03', httpd_version: '2.2' },
+                are: %w(authz_svn),
+                found_in_package: ->(_name) { 'mod_dav_svn' }
 
-        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
-                :are => %w(
+        modules for: { platform: 'amazon', platform_version: '2014.03', httpd_version: '2.4' },
+                are: %w(
                   access_compat actions alias allowmethods asis auth_basic
                   auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
                   authn_socache authz_core authz_dbd authz_dbm authz_groupfile
@@ -276,34 +276,34 @@ module Httpd
                   socache_memcache socache_shmcb speling status substitute suexec
                   unique_id unixd userdir usertrack version vhost_alias watchdog
                 ),
-                :found_in_package => 'httpd24'
+                found_in_package: 'httpd24'
 
-        modules :for => { :platform => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
-                :are => %w(
+        modules for: { platform: 'amazon', platform_version: '2014.03', httpd_version: '2.4' },
+                are: %w(
                   auth_kerb fcgid geoip ldap nss perl proxy_html security session
                   ssl wsgi wsgi_py27
                 ),
-                :found_in_package => ->(name) { "mod24_#{name}" }
+                found_in_package: ->(name) { "mod24_#{name}" }
 
-        modules :for => { :platform_family => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
-                :are => %w(authz_svn dontdothat),
-                :found_in_package => ->(_name) { 'mod_dav_svn' }
+        modules for: { platform_family: 'amazon', platform_version: '2014.03', httpd_version: '2.4' },
+                are: %w(authz_svn dontdothat),
+                found_in_package: ->(_name) { 'mod_dav_svn' }
 
-        modules :for => { :platform_family => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
-                :are => %w(authnz_ldap),
-                :found_in_package => ->(_name) { 'mod_ldap' }
+        modules for: { platform_family: 'amazon', platform_version: '2014.03', httpd_version: '2.4' },
+                are: %w(authnz_ldap),
+                found_in_package: ->(_name) { 'mod_ldap' }
 
-        modules :for => { :platform_family => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
-                :are => %w(xml2enc),
-                :found_in_package => ->(_name) { 'mod_proxy_html' }
+        modules for: { platform_family: 'amazon', platform_version: '2014.03', httpd_version: '2.4' },
+                are: %w(xml2enc),
+                found_in_package: ->(_name) { 'mod_proxy_html' }
 
-        modules :for => { :platform_family => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
-                :are => %w(rev),
-                :found_in_package => ->(_name) { 'mod_revocator' }
+        modules for: { platform_family: 'amazon', platform_version: '2014.03', httpd_version: '2.4' },
+                are: %w(rev),
+                found_in_package: ->(_name) { 'mod_revocator' }
 
-        modules :for => { :platform_family => 'amazon', :platform_version => '2014.03', :httpd_version => '2.4' },
-                :are => %w(auth_form session_cookie session_crypto session_dbd),
-                :found_in_package => ->(_name) { 'mod_session' }
+        modules for: { platform_family: 'amazon', platform_version: '2014.03', httpd_version: '2.4' },
+                are: %w(auth_form session_cookie session_crypto session_dbd),
+                found_in_package: ->(_name) { 'mod_session' }
       end
     end
   end

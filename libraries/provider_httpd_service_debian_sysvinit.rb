@@ -17,7 +17,7 @@ class Chef
           action :restart do
             service "#{new_resource.parsed_name} restart #{apache_name}" do
               service_name apache_name
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Debian
               action :restart
             end
@@ -26,7 +26,7 @@ class Chef
           action :reload do
             service "#{new_resource.parsed_name} reload #{apache_name}" do
               service_name apache_name
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Debian
               action :reload
             end
@@ -40,7 +40,7 @@ class Chef
               owner 'root'
               group 'root'
               mode '0755'
-              variables(:apache_name => apache_name)
+              variables(apache_name: apache_name)
               cookbook 'httpd'
               action :create
             end
@@ -48,7 +48,7 @@ class Chef
             # service management
             service "#{new_resource.parsed_name} create #{apache_name}" do
               service_name apache_name
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Debian
               action [:start, :enable]
             end
@@ -73,7 +73,7 @@ class Chef
 
             service "#{new_resource.parsed_name} delete #{apache_name}" do
               service_name apache_name
-              supports :restart => true, :reload => true, :status => true
+              supports restart: true, reload: true, status: true
               provider Chef::Provider::Service::Init::Debian
               action [:disable, :stop]
             end

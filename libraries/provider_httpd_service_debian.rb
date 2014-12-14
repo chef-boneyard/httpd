@@ -199,12 +199,12 @@ class Chef
             group 'root'
             mode '0644'
             variables(
-              :run_user => new_resource.parsed_run_user,
-              :run_group => new_resource.parsed_run_group,
-              :pid_file => pid_file,
-              :run_dir => run_dir,
-              :lock_dir => "/var/lock/#{apache_name}",
-              :log_dir => "/var/log/#{apache_name}"
+              run_user: new_resource.parsed_run_user,
+              run_group: new_resource.parsed_run_group,
+              pid_file: pid_file,
+              run_dir: run_dir,
+              lock_dir: "/var/lock/#{apache_name}",
+              log_dir: "/var/log/#{apache_name}"
               )
             cookbook 'httpd'
             action :create
@@ -277,14 +277,14 @@ class Chef
             group 'root'
             mode '0644'
             variables(
-              :config => new_resource,
-              :server_root => "/etc/#{apache_name}",
-              :error_log => "/var/log/#{apache_name}/error_log",
-              :pid_file => pid_file,
-              :lock_file => lock_file,
-              :mutex => mutex,
-              :includes => includes,
-              :include_optionals => include_optionals
+              config: new_resource,
+              server_root: "/etc/#{apache_name}",
+              error_log: "/var/log/#{apache_name}/error_log",
+              pid_file: pid_file,
+              lock_file: lock_file,
+              mutex: mutex,
+              includes: includes,
+              include_optionals: include_optionals
               )
             cookbook 'httpd'
             notifies :restart, "service[#{new_resource.parsed_name} create #{apache_name}]"
@@ -318,7 +318,7 @@ class Chef
             config_name "mpm_#{new_resource.parsed_mpm}"
             instance new_resource.parsed_instance
             source 'mpm.conf.erb'
-            variables(:config => new_resource)
+            variables(config: new_resource)
             cookbook 'httpd'
             notifies :reload, "service[#{new_resource.parsed_name} create #{apache_name}]"
             action :create

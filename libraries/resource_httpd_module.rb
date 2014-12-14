@@ -9,11 +9,11 @@ class Chef
       actions :create, :delete
       default_action :create
 
-      attribute :filename, :kind_of => String
-      attribute :httpd_version, :kind_of => String
-      attribute :instance, :kind_of => String, :default => 'default'
-      attribute :module_name, :kind_of => String, :name_attribute => true, :required => true
-      attribute :package_name, :kind_of => String
+      attribute :filename, kind_of: String
+      attribute :httpd_version, kind_of: String
+      attribute :instance, kind_of: String, default: 'default'
+      attribute :module_name, kind_of: String, name_attribute: true, required: true
+      attribute :package_name, kind_of: String
 
       include Httpd::Module::Helpers
       include Httpd::Service::Helpers

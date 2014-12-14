@@ -43,7 +43,7 @@ module Httpd
         #
         def config(options)
           options[:are].each do |parameter, value|
-            key = options[:for].merge(:parameter => parameter)
+            key = options[:for].merge(parameter: parameter)
 
             configuration[key] = value
           end
