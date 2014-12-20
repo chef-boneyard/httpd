@@ -14,7 +14,7 @@ class Chef
         end
 
         action :create do
-          include Httpd::Module::Helpers
+          extend Httpd::Module::Helpers
 
           # package_name is set by resource
           package "#{new_resource.parsed_name} create #{new_resource.parsed_package_name}" do
