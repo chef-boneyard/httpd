@@ -2,6 +2,10 @@ httpd Cookbook CHANGELOG
 ========================
 This file is used to list changes made in each version of the httpd cookbook.
 
+v0.1.7 (2014-12-19)
+-------------------
+- Reverting 0.1.6 changes
+
 v0.1.6 (2014-12-19)
 -------------------
 - Using "include" instead of "extend" for helper methods
