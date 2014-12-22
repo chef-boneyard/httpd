@@ -226,7 +226,7 @@ the instance parameter to calculate where the config is dropped off.
 
 License & Authors
 -----------------
-- Author:: Sean OMeara (<someara@opscode.com>)
+- Author:: Sean OMeara (<sean@chef.io>)
 
 ```text
 Copyright:: 2009-2014 Chef Software, Inc
