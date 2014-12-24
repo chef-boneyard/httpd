@@ -296,6 +296,115 @@ module Httpd
                            delete_files: %w( /etc/httpd/conf.modules.d/10-wsgi.conf )
                          }
 
+        # fedora-21
+        after_installing package: 'httpd',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w(
+                             /etc/httpd/conf.d/autoindex.conf
+                             /etc/httpd/conf.d/README
+                             /etc/httpd/conf.d/userdir.conf
+                             /etc/httpd/conf.d/welcome.conf
+                             /etc/httpd/conf.modules.d/00-base.conf
+                             /etc/httpd/conf.modules.d/00-dav.conf
+                             /etc/httpd/conf.modules.d/00-lua.conf
+                             /etc/httpd/conf.modules.d/00-mpm.conf
+                             /etc/httpd/conf.modules.d/00-proxy.conf
+                             /etc/httpd/conf.modules.d/00-systemd.conf
+                             /etc/httpd/conf.modules.d/01-cgi.conf
+                           )
+                         }
+
+        after_installing package: 'mod_auth_kerb',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w( /etc/httpd/conf.modules.d/10-auth_kerb.conf )
+                         }
+
+        after_installing package: 'mod_dav_svn',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w( /etc/httpd/conf.modules.d/10-subversion.conf )
+                         }
+
+        after_installing package: 'mod_fcgid',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w(
+                             /etc/httpd/conf.d/fcgid.conf
+                             /etc/httpd/conf.modules.d/10-fcgid.conf
+                           )
+                         }
+
+        after_installing package: 'mod_ldap',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w( /etc/httpd/conf.modules.d/01-ldap.conf )
+                         }
+
+        after_installing package: 'mod_nss',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w(
+                             /etc/httpd/conf.d/nss.conf
+                             /etc/httpd/conf.modules.d/10-nss.conf
+                           )
+                         }
+
+        after_installing package: 'mod_proxy_html',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w( /etc/httpd/conf.modules.d/00-proxyhtml.conf )
+                         }
+
+        after_installing package: 'mod_revocator',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w(
+                             /etc/httpd/conf.d/revocator.conf
+                             /etc/httpd/conf.modules.d/11-revocator.conf
+                           )
+                         }
+
+        after_installing package: 'mod_security',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w(
+                             /etc/httpd/conf.d/mod_security.conf
+                             /etc/httpd/conf.modules.d/10-mod_security.conf
+                           )
+                         }
+
+        after_installing package: 'mod_session',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w( /etc/httpd/conf.modules.d/01-session.conf )
+                         }
+
+        after_installing package: 'mod_ssl',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w(
+                             /etc/httpd/conf.d/ssl.conf
+                             /etc/httpd/conf.modules.d/00-ssl.conf
+                           )
+                         }
+
+        after_installing package: 'mod_wsgi',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w( /etc/httpd/conf.modules.d/10-wsgi.conf )
+                         }
+
+        after_installing package: 'php',
+                         on: { platform_family: 'fedora', httpd_version: '2.4', platform_version: '21'  },
+                         chef_should: {
+                           delete_files: %w(
+                             /etc/httpd/conf.d/php.conf
+                             /etc/httpd/conf.modules.d/10-php.conf
+                           )
+                         }
+
         # amazon 2.2
         after_installing package: 'httpd',
                          on: { platform: 'amazon', httpd_version: '2.2', platform_version: '2014.03'  },

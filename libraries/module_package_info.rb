@@ -280,6 +280,11 @@ module Httpd
                 are: %w(auth_form session_cookie session_crypto session_dbd),
                 found_in_package: ->(_name) { 'mod_session' }
 
+        # Yeah I don't get it either
+        modules for: { platform_family: 'fedora', platform_version: '21', httpd_version: '2.4' },
+                are: %w(php),
+                found_in_package: ->(_name) { 'php' }
+
         #
         # amazon-2014.03
         #
