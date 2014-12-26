@@ -5,28 +5,27 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: centos-5.10
-  - name: centos-6.5
-  - name: fedora-5.10
+  - name: centos-5.11
+  - name: centos-6.6
+  - name: fedora-21
   - name: ubuntu-10.04
   - name: ubuntu-12.04
-  - name: ubuntu-13.10
+  - name: ubuntu-14.04
   - name: windows-2008R2
 
 suites:
   #
-  # server22-default
+  # server22-single
   #
-  - name: server22-default
+  - name: server22-single
     run_list:
-    - recipe[httpd_test_default::server]
+    - recipe[httpd_service::single]
     includes: [
       'amazon-2014.03',
       'debian-7.2',
       'omnios-151006',
       'centos-5.8',
       'centos-6.5',
-      'centos-latest',
       'smartos-13.4.0',
       'ubuntu-10.04',
       'ubuntu-12.04',
@@ -38,12 +37,12 @@ suites:
   #
   # server24-default
   #
-  - name: server24-default
+  - name: server24-single
     run_list:
-    - recipe[httpd_test_default::server]
+    - recipe[httpd_service::single]
     includes: [
       'amazon-2014.03',
-      'fedora-20',
+      'fedora-21',
       'smartos-13.4.0',
       'ubuntu-14.04',
     ]
