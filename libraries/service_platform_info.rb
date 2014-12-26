@@ -93,6 +93,12 @@ module Httpd
                 '2.4' => {
                   'package_name' => 'httpd'
                 }
+              },
+              '21' => {
+                'default_version' => '2.4',
+                '2.4' => {
+                  'package_name' => 'httpd'
+                }
               }
             },
             'debian' => {

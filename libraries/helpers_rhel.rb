@@ -38,6 +38,10 @@ module Httpd
           elversion = 6
         when 2014
           elversion = 6
+        when 20
+          elversion = 7
+        when 21
+          elversion = 7
         end
         elversion
       end
