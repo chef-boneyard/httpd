@@ -21,10 +21,10 @@ class Chef
       def parsed_filename
         return filename if filename
         # Put all exceptions here
-        if node['platform_family'] == 'rhel'
+        if node['platform_family'] == 'rhel' || node['platform_family'] == 'fedora'
           return 'libmodnss.so' if module_name == 'nss'
           return 'mod_rev.so' if module_name == 'revocator'
-          return 'libphp5.so' if module_name == 'php'
+          return 'libphp5-zts.so' if module_name == 'php5' # XXX problem: need to return 'libphp5.so' if prefork, otherwise the ZTS version
         end
         "mod_#{module_name}.so"
       end
