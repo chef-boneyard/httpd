@@ -201,7 +201,7 @@ module Httpd
         # predictable package naming
         modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
                 are: %w(
-                  auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
+                  auth_kerb dav_svn fcgid ldap nss proxy_html revocator
                   session ssl wsgi
                 ),
                 found_in_package: ->(name) { "mod_#{name}" }
@@ -222,6 +222,10 @@ module Httpd
         modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
                 are: %w(rev),
                 found_in_package: ->(_name) { 'mod_revocator' }
+
+        modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+                are: %w(security2),
+                found_in_package: ->(_name) { 'mod_security' }
 
         modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
                 are: %w(auth_form session_cookie session_crypto session_dbd),
@@ -254,7 +258,7 @@ module Httpd
         # predictable package naming
         modules for: { platform_family: 'fedora', platform_version: '21', httpd_version: '2.4' },
                 are: %w(
-                  auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
+                  auth_kerb dav_svn fcgid ldap nss proxy_html revocator
                   session ssl wsgi
                 ),
                 found_in_package: ->(name) { "mod_#{name}" }
@@ -275,6 +279,10 @@ module Httpd
         modules for: { platform_family: 'fedora', platform_version: '21', httpd_version: '2.4' },
                 are: %w(rev),
                 found_in_package: ->(_name) { 'mod_revocator' }
+
+        modules for: { platform_family: 'fedora', platform_version: '21', httpd_server: '2.4' },
+                are: %w(security2),
+                found_in_package: ->(_name) { 'mod_security' }
 
         modules for: { platform_family: 'fedora', platform_version: '21', httpd_version: '2.4' },
                 are: %w(auth_form session_cookie session_crypto session_dbd),
