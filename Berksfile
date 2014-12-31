@@ -1,4 +1,4 @@
-source 'http://api.berkshelf.com'
+source 'https://supermarket.chef.io'
 
 metadata
 
@@ -8,7 +8,7 @@ group :integration do
   cookbook 'ips-omniti'
 end
 
-cookbook 'httpd_module', path: 'test/fixtures/cookbooks/httpd_module'
-cookbook 'httpd_service', path: 'test/fixtures/cookbooks/httpd_service'
-cookbook 'httpd_config', path: 'test/fixtures/cookbooks/httpd_config'
-cookbook 'hello_world', path: 'test/fixtures/cookbooks/hello_world'
+cookbook 'httpd_config_test', path: 'test/fixtures/cookbooks/httpd_config_test'
+cookbook 'httpd_module_test', path: 'test/fixtures/cookbooks/httpd_module_test'
+cookbook 'httpd_service_test', path: 'test/fixtures/cookbooks/httpd_service_test'
+cookbook 'hello_world_test', path: 'test/fixtures/cookbooks/hello_world_test'

@@ -1,15 +1,9 @@
 HTTPD Cookbook
 =======================
 
-The HTTPD Cookbook is a "Pure Library Cookbook" (Module Cookbook?)
-that provides resource primitives for use in recipes. It is designed
-to be an example to reference for creating highly re-usable cross
-platform cookbooks. 
-
-This cookbook does its best to follow platform native idioms at all
-times. This means things like logs, pid files, sockets, and service
-managers work "as expected" by an administrator familiar with a given
-platform.
+The HTTPD Cookbook is a Library Cookbook that provides resource
+primitives for use in recipes. It is designed to be an example to
+reference for creating highly re-usable cross platform cookbooks. 
 
 Scope
 -----
@@ -20,10 +14,70 @@ other httpd server implementations like Lighttpd, Nginx, or IIS.
 
 Requirements
 ------------
-* Chef 11 or higher
-* Ruby 1.9 or higher (preferably from the Chef full-stack installer)
+- Chef 11 or higher
+- Ruby 1.9 or higher (preferably from the Chef full-stack installer)
+- Network accessible package repositories
 
-Resources
+Platform Support
+----------------
+The following platforms have been tested with Test Kitchen:
+
+```
+|----------------+-----+-----+-----|
+|                | 2.0 | 2.2 | 2.4 |
+|----------------+-----+-----+-----|
+| debian-7       |     | X   |     |
+|----------------+-----+-----+-----|
+| ubuntu-10.04   |     | X   |     |
+|----------------+-----+-----+-----|
+| ubuntu-12.04   |     | X   |     |
+|----------------+-----+-----+-----|
+| ubuntu-14.04   |     |     | X   |
+|----------------+-----+-----+-----|
+| centos-5       |     | X   |     |
+|----------------+-----+-----+-----|
+| centos-6       |     | X   |     |
+|----------------+-----+-----+-----|
+| centos-7       |     |     | X   |
+|----------------+-----+-----+-----|
+| amazon         |     | X   | X   |
+|----------------+-----+-----+-----|
+| fedora-20      |     |     | X   |
+|----------------+-----+-----+-----|
+| suse-11.3      |     |     |     |
+|----------------+-----+-----+-----|
+| omnios-151006  |     |     |     |
+|----------------+-----+-----+-----|
+| smartos-14.3.0 |     |     |     |
+|----------------+-----+-----+-----|
+```
+
+Cookbook Dependencies
+------------
+- none!
+
+Usage
+-----
+Place a dependency on the mysql cookbook in your cookbook's metadata.rb
+```ruby
+depends 'httpd', '~> 0.2'
+```
+
+Then, in a recipe:
+
+```ruby
+httpd_service 'default' do
+  action [:create, :start]
+end
+
+httpd_config 'default' do
+  source 'mysite.cnf.erb'
+  notifies :restart, httpd_service[default]'
+  action :create
+end
+```
+
+Resources Overview
 ---------------------
 ### httpd_service
 
@@ -32,8 +86,15 @@ and running. Its parameters can select and tune the multi-processing
 module, along with a small selection of server-wide configuration
 options such as listen_ports and run_user.
 
-All other configuration options are offloaded to the user, and should
-be dropped off with the `httpd_config` resource.
+The `:create` action handles package installation, support
+directories, socket files, and other operating system level concerns.
+The internal configuration file contains just enough to get the
+service up and running, then loads extra configuration from a conf.d
+directory. Further configurations are managed with the `httpd_config` resource.
+
+The `:start` action starts the service on the machine using the
+appropriate provider for the platform. The `:start` action should be
+omitted when used in recipes designed to build containers.
 
 `httpd_service` supports multiple Apache instances on a single
 machine, enabling advanced Apache configuration in scenarios where
@@ -66,93 +127,96 @@ Most of the parameters on the `httpd_service` resource map to their
 CamelCase equivalents found at
 http://httpd.apache.org/docs/2.4/mod/directives.html
 
-`contact` - The email address rendered into the main configuration file as the ServerAdmin directive.
+- `contact` - The email address rendered into the main configuration file as the ServerAdmin directive.
 
-`hostname_lookups` - Enables DNS lookups on client IP addresses.  Can
-be 'on' 'off' or 'double'. Defaults to 'off'.
+- `hostname_lookups` - Enables DNS lookups on client IP addresses.
+  Can be 'on' 'off' or 'double'. Defaults to 'off'.
 
-`instance` - A string name to identify the `httpd_service` instance.
-By convention, this will result in configuration, log, and support
-directories being created and used in the form '/etc/instance-name',
-'/var/log/instance-name', etc. If set to 'default', the platform
-native defaults are used.
+- `instance` - A string name to identify the `httpd_service`
+ instance. By convention,  this will result in configuration, log, and
+ support directories being created and used in the form
+ '/etc/instance-name', '/var/log/instance-name', etc. If set to
+ 'default', the platform native defaults are used. 
 
-`keepalive` - Enables HTTP persistent connections. Values can be true or false.
+- `keepalive` - Enables HTTP persistent connections. Values can be true or false.
 
-`keepalivetimeout` -  Amount of time the server will wait for
-subsequent requests on a persistent connection. 
+- `keepalivetimeout` -  Amount of time the server will wait for
+  subsequent requests on a persistent connection. 
+  
+- `listen_addresses` - IP addresses that the server listens to.
+  Defaults to ['0.0.0.0'].
+  
+- `listen_ports` - Ports that the server listens to. Defaults to
+  ['80', '443'].  
 
-`listen_addresses` - IP addresses that the server listens
-to. Defaults to ['0.0.0.0'].
+- `log_level` - Controls the verbosity of the ErrorLog. Defaults to 'warn'.
 
-`listen_ports` - Ports that the server listens
-to. Defaults to ['80', '443'].
-
-`log_level` - Controls the verbosity of the ErrorLog. Defaults to 'warn'.
-
-`maxclients` - Maximum number of connections that will be processed
-simultaneously. Valid only with prefork and worker MPMs.
-
-`maxconnectionsperchild` - Limit on the number of connections that an individual child server
-will handle during its life. Valid with Apache 2.4 prefork, worker and event MPMs.
-
-`maxkeepaliverequests` - Number of requests allowed on a persistent
-connection. Defaults to 100.
-
-`maxrequestsperchild` -  The Apache 2.2 version of maxconnectionsperchild. Still supported as of 2.4
+- `maxclients` - Maximum number of connections that will be processed
+  simultaneously. Valid only with prefork and worker MPMs.
+  
+- `maxconnectionsperchild` - Limit on the number of connections that
+  an individual child server will handle during its life. Valid with
+  Apache 2.4 prefork, worker and event MPMs.
+  
+- `maxkeepaliverequests` - Number of requests allowed on a persistent
+  connection. Defaults to 100.
+  
+- `maxrequestsperchild` -  The Apache 2.2 version of
+  maxconnectionsperchild. Still supported as of 2.4  
  
-`maxrequestworkers` - Maximum number of connections that will be
-processed simultaneously. Valid on prefork, worker, and event MPMs.
- 
-`maxspareservers` - Maximum number of idle child server processes.
-Valid only for prefork MPM.
+- `maxrequestworkers` - Maximum number of connections that will be
+  processed simultaneously. Valid on prefork, worker, and event MPMs.
+   
+- `maxspareservers` - Maximum number of idle child server processes.
+  Valid only for prefork MPM.
+  
+- `maxsparethreads` - Maximum number of idle threads. Valid only for
+  worker and event MPMs.
+  
+- `minspareservers` - Minimum number of idle child server processes.
+  Valid only for preform MPM.
+  
+- `minsparethreads` - Minimum number of idle threads available to
+  handle request spikes. Valid only for worker and event MPMs.  
 
-`maxsparethreads` - Maximum number of idle threads. Valid only for
-worker and event MPMs.
+- `modules` - A list of initial Apache modules to be loaded inside the
+  httpd_service instance. Defaults to Debian standard on 2.2 and 2.4.
+  
+- `mpm` - The Multi-Processing Module to use for the `httpd_service`
+  instance. Values can be 'prefork', 'worker', and 'event'. Defaults
+  to 'worker' for Apache 2.2 and 'event' for Apache 2.4.
+  
+- `package_name` - Name of the server package to install on the
+machine using the system package manager. Defaults to 'apache2' on
+Debian and 'httpd' on RHEL.
 
-`minspareservers` - Minimum number of idle child server processes.
-Valid only for preform MPM.
+- `run_group` - System group to start the `httpd_service` as. Defaults
+  to 'www-data' on Debian and 'apache' on RHEL.
+  
+- `run_user` - System user to start the `httpd_service` as. Defaults
+  to 'www-data' on Debian and 'apache' on RHEL.
+  
+- `servername` - Hostname and port that the server uses to identify
+  itself. Syntax: [scheme://]fully-qualified-domain-name[:port].
+  Defaults to node['hostname'].
+  
+- `startservers` - Number of child server processes created at
+  startup. Valid for prefork, worker, and event MPMs. Default value
+  differs from MPM to MPM.
+  
+- `threadlimit` - Sets the upper limit on the configurable number of
+  threads per child process. Valid on worker and event MPMs.
+  
+- `threadsperchild` - Number of threads created by each child process.
+  Valid on worker and event MPMs.  
 
-`minsparethreads` - Minimum number of idle threads available to handle
-request spikes. Valid only for worker and event MPMs.
-
-`modules` - A list of initial Apache modules to be loaded inside the
-httpd_service instance. Defaults to Debian standard on 2.2 and 2.4.
-
-`mpm` - The Multi-Processing Module to use for the `httpd_service`
-instance. Values can be 'prefork', 'worker', and 'event'. Defaults to
-'worker' for Apache 2.2 and 'event' for Apache 2.4.
-
-`package_name` - Name of the server package to install on the machine
-using the system package manager. Defaults to 'apache2' on Debian and
-'httpd' on RHEL.
-
-`run_group` - System group to start the `httpd_service` as. Defaults to
-'www-data' on Debian and 'apache' on RHEL.
-
-`run_user` - System user to start the `httpd_service` as. Defaults to
-'www-data' on Debian and 'apache' on RHEL.
-
-`servername` - Hostname and port that the server uses to identify
-itself. Syntax: [scheme://]fully-qualified-domain-name[:port].
-Defaults to node['hostname'].
-
-`startservers` - Number of child server processes created at startup.
-Valid for prefork, worker, and event MPMs. Default value differs from MPM to MPM.
-
-`threadlimit` - Sets the upper limit on the configurable number of
-threads per child process. Valid on worker and event MPMs.
-
-`threadsperchild` - Number of threads created by each child process.
-Valid on worker and event MPMs.
-
-`timeout` - Amount of time the server will wait for certain events
-before failing a request. Defaults to '400'
-
-`version` - Apache software version to use. Available options are
-'2.2', and '2.4', depending on platform. Defaults to latest available.
-
-
+- `timeout` - Amount of time the server will wait for certain events
+  before failing a request. Defaults to '400'
+  
+- `version` - Apache software version to use. Available options are
+  '2.2', and '2.4', depending on platform. Defaults to latest
+  available.
+  
 ### httpd_module
 The `httpd_module` resource is responsible ensuring that an Apache
 module is installed on the system, as well as ensuring a load configuration
@@ -175,19 +239,20 @@ snippet is dropped off at the appropriate location.
     end
     
 #### Parameters
-`filename` - The filename of the shared object to be rendered into the
-load config snippet. This can usually be omitted, and defaults to a
-generated value looked up in an internal map.
+- `filename` - The filename of the shared object to be rendered into
+  the load config snippet. This can usually be omitted, and defaults
+  to a generated value looked up in an internal map.
 
-`httpd_version` - The version of the `httpd_service` this module is
-meant to be installed for. Useful on platforms that support multiple
-Apache versions. Defaults to the platform default.
+- `httpd_version` - The version of the `httpd_service` this module is
+  meant to be installed for. Useful on platforms that support multiple
+  Apache versions. Defaults to the platform default.
 
-`instance` - The `httpd_service` name to drop the load snippet off
+- `instance` - The `httpd_service` name to drop the load snippet off 
 for. Defaults to 'default'.
 
-`module_name` - The module name to install. Defaults to the
-`httpd_module` name.
+- `module_name` - The module name to install. Defaults to the
+  `httpd_module` name.
+  
 
 `package_name` - The package name the module is found in. By default,
 this is looked up in an internal map.
@@ -212,17 +277,21 @@ the instance parameter to calculate where the config is dropped off.
     end
     
 #### Parameters
-`config_name` - The name of the config on disk
+- `config_name` - The name of the config on disk
 
-`cookbook` - The cookbook that the source template is found in. Defaults to the current cookbook.
+- `cookbook` - The cookbook that the source template is found in.
+  Defaults to the current cookbook.  
 
-`httpd_version` - Used to calculate the configuration's disk path. Defaults to the platform's native Apache version.
+- `httpd_version` - Used to calculate the configuration's disk path.
+  Defaults to the platform's native Apache version.
+  
+- `instance` - The `httpd_service` instance the config is meant for.
+  Defaults to 'default'
+  
+- `source` - The ERB format template source used to render the file.
 
-`instance` - The `httpd_service` instance the config is meant for. Defaults to 'default'
-
-`source` - The ERB format template source used to render the file.
-
-`variables` - A hash of variables passed to the underlying template resource
+- `variables` - A hash of variables passed to the underlying template
+  resource  
 
 License & Authors
 -----------------

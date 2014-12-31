@@ -1,82 +1,53 @@
-module Httpd
+module HttpdCookbook
   module Helpers
     module Rhel
       def apache_name
-        new_resource.parsed_instance == 'default' ? apache_name = 'httpd' : apache_name = "httpd-#{new_resource.parsed_instance}"
-        apache_name
+        "httpd-#{new_resource.instance}"
       end
 
       def libarch
-        case node['kernel']['machine']
-        when 'x86_64'
-          libarch = 'lib64'
-        when 'i686'
-          libarch = 'lib'
-        end
-        libarch
+        return 'lib64' if node['kernel']['machine'] == 'x86_64'
+        return 'lib64' if node['kernel']['machine'] == 'i686'
       end
 
       def module_name
-        module_name = new_resource.parsed_module_name
-        module_name
+        new_resource.module_name
       end
 
       def module_path
-        module_path = "/usr/#{libarch}/httpd/modules/#{new_resource.parsed_filename}"
-        module_path
+        "/usr/#{libarch}/httpd/modules/#{new_resource.parsed_filename}"
       end
 
       def elversion
-        case node['platform_version'].to_i
-        when 5
-          elversion = 5
-        when 6
-          elversion = 6
-        when 7
-          elversion = 7
-        when 2013
-          elversion = 6
-        when 2014
-          elversion = 6
-        when 20
-          elversion = 7
-        when 21
-          elversion = 7
-        end
-        elversion
+        return 6 if node['platform_version'].to_i == 2013
+        return 6 if node['platform_version'].to_i == 2014
+        return 7 if node['platform_version'].to_i == 20
+        return 7 if node['platform_version'].to_i == 21
+        node['platform_version'].to_i
       end
 
       def pid_file
-        # PID file
-        case elversion
-        when 5
-          pid_file = "/var/run/#{apache_name}.pid"
-        when 6
-          pid_file = "/var/run/#{apache_name}/httpd.pid"
-        when 7
-          pid_file = "/var/run/#{apache_name}/httpd.pid"
-        end
-        pid_file
+        return "/var/run/#{apache_name}.pid" if elversion == 5
+        return "/var/run/#{apache_name}/httpd.pid" if elversion == 6
+        return "/var/run/#{apache_name}/httpd.pid" if elversion == 7
       end
 
       def includes
         return unless new_resource.parsed_version.to_f < 2.4
-        includes = [
+        [
           'conf.d/*.conf',
           'conf.d/*.load'
         ]
-        includes
       end
 
       def include_optionals
         return unless new_resource.parsed_version.to_f >= 2.4
-        include_optionals = [
+        [
           'conf.d/*.conf',
           'conf.d/*.load',
           'conf.modules.d/*.conf',
           'conf.modules.d/*.load'
         ]
-        include_optionals
       end
     end
   end

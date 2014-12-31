@@ -2,7 +2,6 @@
 ---
 driver_config:
   digitalocean_client_id: <%= ENV['DIGITAL_OCEAN_CLIENT_ID'] %>
-  digitalocean_api_key: <%= ENV['DIGITAL_OCEAN_API_KEY'] %>
   google_client_email: <%= ENV['GOOGLE_CLIENT_EMAIL'] %>
   google_key_location: <%= ENV['GOOGLE_KEY_LOCATION'] %>
   google_project: <%= ENV['GOOGLE_PROJECT'] %>
@@ -18,9 +17,87 @@ driver_config:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: 11.14.2
+  # require_chef_omnibus: 11.16.4
+  require_chef_omnibus: 12.0.3
 
 platforms:
+- name: centos-5.8
+  driver_plugin: digital_ocean
+  driver_config:
+    size: 2gb
+    image: centos-5-8-x64
+    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+
+- name: centos-6.5
+  driver_plugin: digital_ocean
+  driver_config:
+    size: 2gb
+    image: centos-6-5-x64
+    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+
+- name: centos-7.0
+  driver_plugin: digital_ocean
+  driver_config:
+    size: 2gb
+    image: centos-7-0-x64
+    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+
+- name: amazon-2014.09
+  driver_plugin: ec2
+  driver_config:
+    image_id: ami-9a6ed3f2
+    username: ec2-user
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+
+# - name: redhat-6.5
+#   driver_plugin: ec2
+#   driver_config:
+#     image_id: ami-8d756fe4
+#     username: ec2-user
+#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+#   run_list:
+#   - recipe[selinux::disabled]
+
+# - name: redhat-7.0
+#   driver_plugin: ec2
+#   driver_config:
+#     image_id: ami-a8d369c0
+#     username: ec2-user
+#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+#   run_list:
+#   - recipe[selinux::disabled]
+
+- name: fedora-20
+  driver_plugin: digital_ocean
+  driver_config:
+    size: 2gb
+    image: fedora-20-x64
+    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+
+# - name: fedora-21
+#   driver_plugin: digital_ocean
+#   driver_config:
+#     size: 2gb
+#     image: fedora-21-x64
+#     region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
+#     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+#     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+
+# - name: suse-11.3
+#   driver_plugin: ec2
+#   driver_config:
+#     image_id: ami-e8084981
+#     username: root
+#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+
 - name: debian-7.0
   driver_plugin: gce
   driver_config:
@@ -34,109 +111,61 @@ platforms:
   run_list:
   - recipe[apt]
 
-- name: ubuntu-12.04
-  driver_plugin: digitalocean
+- name: ubuntu-10.04
+  driver_plugin: digital_ocean
   driver_config:
-    image_id: 5588928
-    flavor_id: 63
-    region_id: 8
+    size: 2gb
+    image: ubuntu-10-04-x64
+    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
+    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+  run_list:
+  - recipe[apt]
+
+- name: ubuntu-12.04
+  driver_plugin: digital_ocean
+  driver_config:
+    size: 2gb
+    image: ubuntu-12-04-x64
+    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
 - name: ubuntu-14.04
-  driver_plugin: digitalocean
+  driver_plugin: digital_ocean
   driver_config:
-    image_id: 5141286
-    flavor_id: 63
-    region_id: 8
+    size: 2gb
+    image: ubuntu-14-04-x64
+    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
-- name: centos-5.8
-  driver_plugin: digitalocean
-  driver_config:
-    image_id: 1601
-    flavor_id: 63
-    region_id: 8
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
-
-# selinux-permissive
-- name: centos-6.4
-  driver_plugin: digitalocean
-  driver_config:
-    image_id: 3797680
-    image_id: 562354
-    flavor_id: 63
-    region_id: 8
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[selinux]
-  attributes:
-    selinux:
-      state: disabled
-
-- name: centos-7.0
-  driver_plugin: digitalocean
-  driver_config:
-    image_id: 4856048
-    flavor_id: 63
-    region_id: 8
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[selinux]
-  attributes:
-    selinux:
-      state: disabled
-
-- name: amazon-2014.03
-  driver_plugin: ec2
-  driver_config:
-    image_id: ami-6b726502
-    username: ec2-user
-    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-
-# - name: fedora-20
-#   driver_plugin: digitalocean
+# - name: omnios-151006
+#   driver_plugin: ec2
 #   driver_config:
-#     image_id: 3243145
-#     flavor_id: 63
-#     region_id: 8
-#     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-#     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+#     image_id: ami-35eb835c
+#     flavor_id: m3.large
+#     username: root
+#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+#   run_list:
+#   - recipe[ips-omniti]
 
-# - name: smartos-13.4.0
+# - name: smartos-14.3.0
 #   driver_plugin: joyent
 #   driver_config:
-#     joyent_image_id: ff86eb8a-a069-11e3-ae0e-4f3c8983a91c
+#     joyent_image_id: 62f148f8-6e84-11e4-82c5-efca60348b9f
 #     joyent_flavor_id: g3-standard-4-smartos
 #     username: root
 #     ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
 #   busser:
 #     ruby_bindir: '/opt/local/bin/'
 #   provisioner:
-#     name: chef_zero
 #     sudo: false
 #     chef_omnibus_url: https://raw.github.com/test-kitchen/kitchen-joyent/master/scripts/install-smartos.sh
-
-# - name: omnios-151006
-#   driver_plugin: ec2
-#   driver_config:
-#     availability_zone: us-east-1d
-#     image_id: ami-35eb835c
-#     flavor_id: m3.medium
-#     username: root
-#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-#   provisioner:
-#     name: chef_zero
-#   run_list:
-#   - recipe[ips-omniti]
 
 suites:
   #
@@ -144,14 +173,15 @@ suites:
   #
   - name: service22-single
     run_list:
-    - recipe[httpd_service::single]
+    - recipe[httpd_service_test::single]
     includes: [
-      'amazon-2014.03',
+      'amazon-2014.09',
       'centos-5.8',
-      'centos-6.4',
-      'debian-7.2',
+      'centos-6.5',
+      'debian-7.0',
       'omnios-151006',
       'smartos-13.4.0',
+      'ubuntu-10.04',
       'ubuntu-12.04',
       'ubuntu-13.10',
     ]
@@ -164,12 +194,12 @@ suites:
   #
   - name: service22-multi
     run_list:
-    - recipe[httpd_service::multi]
+    - recipe[httpd_service_test::multi]
     includes: [
       'amazon-2014.03',
       'centos-5.8',
-      'centos-6.4',
-      'debian-7.2',
+      'centos-6.5',
+      'debian-7.0',
       'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-12.04',
@@ -196,11 +226,12 @@ suites:
   #
   - name: service24-single
     run_list:
-    - recipe[httpd_service::single]
+    - recipe[httpd_service_test::single]
     includes: [
-      'amazon-2014.03',
+      'amazon-2014.09',
       'centos-7.0',
       'fedora-20',
+      'fedora-21',
       'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-14.04',
@@ -214,11 +245,12 @@ suites:
   #
   - name: service24-multi
     run_list:
-    - recipe[httpd_service::multi]
+    - recipe[httpd_service_test::multi]
     includes: [
-      'amazon-2014.03',
+      'amazon-2014.09',
       'centos-7.0',
       'fedora-20',
+      'fedora-21',
       'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-14.04',
@@ -245,14 +277,15 @@ suites:
   #
   - name: module22
     run_list:
-    - recipe[httpd_module]
+    - recipe[httpd_module_test]
     includes: [
-      'amazon-2014.03',
+      'amazon-2014.09',
       'centos-5.8',
-      'centos-6.4',
-      'debian-7.2',
+      'centos-6.5',
+      'debian-7.0',
       'omnios-151006',
       'smartos-13.4.0',
+      'ubuntu-10.04',
       'ubuntu-12.04'
     ]
     attributes:
@@ -261,10 +294,12 @@ suites:
 
   - name: module24
     run_list:
-    - recipe[httpd_module]
+    - recipe[httpd_module_test]
     includes: [
-      'amazon-2014.03',
+      'amazon-2014.09',
       'centos-7.0',
+      'fedora-20',
+      'fedora-21',
       'omnios-151006',
       'smartos-13.4.0',
       'ubuntu-14.04',
@@ -278,11 +313,11 @@ suites:
   #
   - name: config
     run_list:
-    - recipe[httpd_config]
+    - recipe[httpd_config_test]
 
   #
-  # hello_world
+  # hello_world_test
   #
-  - name: hello_world
+  - name: hello_world_test
     run_list:
-    - recipe[hello_world]
+    - recipe[hello_world_test]

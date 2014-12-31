@@ -1,8 +1,8 @@
-require_relative '../../libraries/module_package_info.rb'
+require_relative '../../libraries/info_module_packages'
 
 describe 'looking up module package name' do
   before do
-    extend Httpd::Module::Helpers
+    extend HttpdCookbook::Helpers
   end
 
   context 'for apache 2.2 on amazon' do

@@ -19,38 +19,38 @@ LockFile <%= @lock_file %>
 <% if @mutex %>
 Mutex <%= @mutex %>
 <% end %>
-<% if @config.parsed_timeout %>
-Timeout <%= @config.parsed_timeout %>
+<% if @config.timeout %>
+Timeout <%= @config.timeout %>
 <% end %>
 <% if @error_log %>
 ErrorLog <%= @error_log %>
 <% end %>
-<% if @config.parsed_log_level %>
-LogLevel <%= @config.parsed_log_level %>
+<% if @config.log_level %>
+LogLevel <%= @config.log_level %>
 <% end %>
-<% if @config.parsed_keepalive %>
+<% if @config.keepalive %>
 KeepAlive On
 <% else %>
 KeepAlive Off
 <% end %>
-<% if @config.parsed_maxkeepaliverequests %>
-MaxKeepAliveRequests <%= @config.parsed_maxkeepaliverequests %>
+<% if @config.maxkeepaliverequests %>
+MaxKeepAliveRequests <%= @config.maxkeepaliverequests %>
 <% end %>
-<% if @config.parsed_keepalivetimeout %>
-KeepAliveTimeout <%= @config.parsed_keepalivetimeout %>
+<% if @config.keepalivetimeout %>
+KeepAliveTimeout <%= @config.keepalivetimeout %>
 <% end %>
 DefaultType None
-<% if @config.parsed_hostname_lookups %>
-HostnameLookups <%= @config.parsed_hostname_lookups %>
+<% if @config.hostname_lookups %>
+HostnameLookups <%= @config.hostname_lookups %>
 <% end %>
 
-<% if @config.parsed_listen_addresses.nil? %>
-<%   @config.parsed_listen_ports.each do |port| %>
+<% if @config.listen_addresses.nil? %>
+<%   @config.listen_ports.each do |port| %>
 Listen <%= port %>
 <%   end %>
 <% else %>
-<%   @config.parsed_listen_addresses.each do |address| %>
-<%     @config.parsed_listen_ports.each do |port| %>
+<%   @config.listen_addresses.each do |address| %>
+<%     @config.listen_ports.each do |port| %>
 Listen <%= address %>:<%= port %>
 <%     end %>
 <%   end %>
