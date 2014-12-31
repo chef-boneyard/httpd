@@ -1,6 +1,13 @@
 httpd Cookbook CHANGELOG
 ========================
-This file is used to list changes made in each version of the httpd cookbook.
+
+v0.2.0 (2014-12-31)
+-------------------
+- Providers now avoid "system" httpd service for default instance
+- Refactoring helper libraries
+- Refactoring package info and mpm DSLs
+- Adding more platform support
+- Refactoring specs.. removing everything but centos-5 for now
 
 v0.1.7 (2014-12-19)
 -------------------
