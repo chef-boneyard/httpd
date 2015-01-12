@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.1 (2015-01-12)
+-------------------
+- Adding platform support metadata
+
 v0.2.0 (2014-12-31)
 -------------------
 - Providers now avoid "system" httpd service for default instance
