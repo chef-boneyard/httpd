@@ -1,5 +1,9 @@
 name 'httpd'
 version '0.2.1'
+maintainer 'Chef Software, Inc.'
+maintainer_email 'cookbooks@getchef.com'
+license 'Apache 2.0'
+description 'Provides httpd_service, httpd_config, and mysql_module resources'
 
 supports 'amazon'
 supports 'redhat'
