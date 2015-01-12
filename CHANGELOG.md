@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.2 (2015-01-12)
+-------------------
+- Adding license and description metadata
+
 v0.2.1 (2015-01-12)
 -------------------
 - Adding platform support metadata
