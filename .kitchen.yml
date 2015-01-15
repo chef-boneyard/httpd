@@ -19,6 +19,7 @@ suites:
   #
   - name: server22-single
     run_list:
+    - recipe[apt]
     - recipe[httpd_service_test::single]
     includes: [
       'amazon-2014.03',
@@ -39,6 +40,7 @@ suites:
   #
   - name: server24-single
     run_list:
+    - recipe[apt]
     - recipe[httpd_service_test::single]
     includes: [
       'amazon-2014.03',
