@@ -9,8 +9,14 @@ platforms:
   - name: centos-6.6
   - name: fedora-21
   - name: ubuntu-10.04
+    run_list:
+    - recipe[apt]
   - name: ubuntu-12.04
+    run_list:
+    - recipe[apt]
   - name: ubuntu-14.04
+    run_list:
+    - recipe[apt]
   - name: windows-2008R2
 
 suites:
@@ -19,7 +25,6 @@ suites:
   #
   - name: server22-single
     run_list:
-    - recipe[apt]
     - recipe[httpd_service_test::single]
     includes: [
       'amazon-2014.03',
@@ -40,7 +45,6 @@ suites:
   #
   - name: server24-single
     run_list:
-    - recipe[apt]
     - recipe[httpd_service_test::single]
     includes: [
       'amazon-2014.03',
