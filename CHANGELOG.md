@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.3 (2015-01-17)
+-------------------
+- Fixing httpd_module 'php' on rhel family
+
 v0.2.2 (2015-01-12)
 -------------------
 - Adding license and description metadata

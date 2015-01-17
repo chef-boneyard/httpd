@@ -144,6 +144,10 @@ module HttpdCookbook
               are: %w(authz_svn),
               found_in_package: ->(_name) { 'mod_dav_svn' }
 
+      modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
+              are: %w(php),
+              found_in_package: ->(_name) { 'php' }
+
       #
       # rhel-6
       #
@@ -175,6 +179,11 @@ module HttpdCookbook
       modules for: { platform_family: 'rhel', platform_version: '6', httpd_version: '2.2' },
               are: %w(authz_svn),
               found_in_package: ->(_name) { 'mod_dav_svn' }
+
+      # outliers
+      modules for: { platform_family: 'rhel', platform_version: '6', httpd_version: '2.2' },
+              are: %w(php),
+              found_in_package: ->(_name) { 'php' }
 
       #
       # rhel-7
@@ -229,11 +238,15 @@ module HttpdCookbook
               are: %w(auth_form session_cookie session_crypto session_dbd),
               found_in_package: ->(_name) { 'mod_session' }
 
+      modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+              are: %w(php),
+              found_in_package: ->(_name) { 'php' }
+
       #
       # fedora-20
       #
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(
+              are: %w(
                 access_compat actions alias allowmethods asis auth_basic
                 auth_digest authn_anon authn_core authn_dbd authn_dbm authn_file
                 authn_socache authz_core authz_dbd authz_dbm authz_groupfile
@@ -251,42 +264,42 @@ module HttpdCookbook
                 socache_memcache socache_shmcb speling status substitute suexec
                 systemd unique_id unixd userdir usertrack version vhost_alias watchdog
               ),
-      found_in_package: 'httpd'
+              found_in_package: 'httpd'
 
       # predictable package naming
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(
+              are: %w(
                 auth_kerb dav_svn fcgid ldap nss proxy_html revocator security
                 session ssl wsgi
               ),
-      found_in_package: ->(name) { "mod_#{name}" }
+              found_in_package: ->(name) { "mod_#{name}" }
 
       # outliers
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(authz_svn dontdothat),
-      found_in_package: ->(_name) { 'mod_dav_svn' }
+              are: %w(authz_svn dontdothat),
+              found_in_package: ->(_name) { 'mod_dav_svn' }
 
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(authnz_ldap),
-      found_in_package: ->(_name) { 'mod_ldap' }
+              are: %w(authnz_ldap),
+              found_in_package: ->(_name) { 'mod_ldap' }
 
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(xml2enc),
-      found_in_package: ->(_name) { 'mod_proxy_html' }
+              are: %w(xml2enc),
+              found_in_package: ->(_name) { 'mod_proxy_html' }
 
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(rev),
-      found_in_package: ->(_name) { 'mod_revocator' }
+              are: %w(rev),
+              found_in_package: ->(_name) { 'mod_revocator' }
 
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(auth_form session_cookie session_crypto session_dbd),
-      found_in_package: ->(_name) { 'mod_session' }
+              are: %w(auth_form session_cookie session_crypto session_dbd),
+              found_in_package: ->(_name) { 'mod_session' }
 
       # Yeah I don't get it either
       modules for: { platform_family: 'fedora', platform_version: '20', httpd_version: '2.4' },
-      are: %w(php),
-      found_in_package: ->(_name) { 'php' }
-      
+              are: %w(php),
+              found_in_package: ->(_name) { 'php' }
+
       #
       # fedora-21
       #
