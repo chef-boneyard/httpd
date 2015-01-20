@@ -1,16 +1,8 @@
 require 'serverspec'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+set :backend, :exec
 
-property[:os] = backend.check_os
-platform = property[:os][:family]
-platform_version = property[:os][:release]
-
-puts "DEBUG: platform: #{platform}"
-puts "DEBUG: platform_version: #{platform_version}"
-
-if platform =~ /RedHat/ || platform =~ /RedHat7/ || platform =~ /Fedora/
+if os[:family] =~ /RedHat/ || os[:family] =~ /RedHat7/ || os[:family] =~ /Fedora/
   # auth_basic
   describe file('/usr/lib64/httpd/modules/mod_auth_basic.so') do
     it { should be_file }

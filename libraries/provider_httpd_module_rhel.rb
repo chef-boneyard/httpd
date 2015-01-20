@@ -7,21 +7,22 @@ class Chef
       class Rhel < Chef::Provider::HttpdModule
         use_inline_resources if defined?(use_inline_resources)
 
-        include HttpdCookbook::Helpers::Rhel
-
         def whyrun_supported?
           true
         end
 
+        include HttpdCookbook::Helpers
+        include HttpdCookbook::Helpers::Rhel
+
         action :create do
           # package_name is set by resource
-          package "#{new_resource.name} :create #{new_resource.parsed_package_name}" do
-            package_name new_resource.parsed_package_name
+          package "#{new_resource.name} :create #{parsed_module_package_name}" do
+            package_name parsed_module_package_name
             action :install
           end
 
           # 2.2 vs 2.4
-          if new_resource.parsed_httpd_version.to_f < 2.4
+          if parsed_httpd_version.to_f < 2.4
             directory "#{new_resource.name} :create /etc/#{apache_name}/conf.d" do
               path "/etc/#{apache_name}/conf.d"
               owner 'root'
@@ -70,7 +71,7 @@ class Chef
         end
 
         action :delete do
-          if new_resource.parsed_httpd_version.to_f < 2.4
+          if parsed_httpd_version.to_f < 2.4
             file "#{new_resource.name} :delete /etc/#{apache_name}/conf.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.d/#{module_name}.load"
               action :delete

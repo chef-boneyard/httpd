@@ -7,19 +7,20 @@ class Chef
       class Debian < Chef::Provider::HttpdService
         use_inline_resources if defined?(use_inline_resources)
 
-        include HttpdCookbook::Helpers::Debian
-
         def whyrun_supported?
           true
         end
+
+        include HttpdCookbook::Helpers
+        include HttpdCookbook::Helpers::Debian
 
         action :create do
           # We need to dynamically render the resource name into the title in
           # order to ensure uniqueness. This avoids cloning via
           # CHEF-3694 and allows ChefSpec to work properly.
 
-          package "#{new_resource.name} :create #{new_resource.parsed_package_name}" do
-            package_name new_resource.parsed_package_name
+          package "#{new_resource.name} :create #{parsed_service_package_name}" do
+            package_name parsed_service_package_name
             action :install
           end
 
@@ -46,7 +47,7 @@ class Chef
           # The init scripts that ship with 2.2 and 2.4 on
           # debian/ubuntu behave differently. 2.2 places in /var/run/apache-name/,
           # and 2.4 stores pids as /var/run/apache2/apache2-service_name
-          if new_resource.parsed_version.to_f < 2.4
+          if parsed_version.to_f < 2.4
             directory "#{new_resource.name} :create /var/run/#{apache_name}" do
               path "/var/run/#{apache_name}"
               owner 'root'
@@ -101,8 +102,8 @@ class Chef
 
             directory "#{new_resource.name} :create /var/lock/#{apache_name}" do
               path "/var/lock/#{apache_name}"
-              owner new_resource.parsed_run_user
-              group new_resource.parsed_run_group
+              owner parsed_run_user
+              group parsed_run_group
               mode '0755'
               action :create
             end
@@ -148,8 +149,8 @@ class Chef
             group 'root'
             mode '0644'
             variables(
-              run_user: new_resource.parsed_run_user,
-              run_group: new_resource.parsed_run_group,
+              run_user: parsed_run_user,
+              run_group: parsed_run_group,
               pid_file: pid_file,
               run_dir: run_dir,
               lock_dir: "/var/lock/#{apache_name}",
@@ -227,13 +228,16 @@ class Chef
             mode '0644'
             variables(
               config: new_resource,
-              server_root: "/etc/#{apache_name}",
               error_log: "/var/log/#{apache_name}/error_log",
-              pid_file: pid_file,
+              include_optionals: include_optionals,
+              includes: includes,
               lock_file: lock_file,
               mutex: mutex,
-              includes: includes,
-              include_optionals: include_optionals
+              pid_file: pid_file,
+              run_group: parsed_run_group,
+              run_user: parsed_run_user,
+              server_root: "/etc/#{apache_name}",
+              servername: parsed_servername
               )
             cookbook 'httpd'
             action :create
@@ -246,32 +250,45 @@ class Chef
           # others. Therefore, all service instances on debian 7, or
           # ubuntu below 14.04 will need to have the same MPM per
           # machine or container or things can get weird.
-          package "#{new_resource.name} :create apache2-mpm-#{new_resource.parsed_mpm}" do
-            package_name "apache2-mpm-#{new_resource.parsed_mpm}"
+          package "#{new_resource.name} :create apache2-mpm-#{parsed_mpm}" do
+            package_name "apache2-mpm-#{parsed_mpm}"
             action :install
           end
 
           # older apache has mpm statically compiled into binaries
-          unless new_resource.parsed_version.to_f < 2.4
-            httpd_module "#{new_resource.name} :create mpm_#{new_resource.parsed_mpm}" do
-              module_name "mpm_#{new_resource.parsed_mpm}"
+          unless parsed_version.to_f < 2.4
+            httpd_module "#{new_resource.name} :create mpm_#{parsed_mpm}" do
+              module_name "mpm_#{parsed_mpm}"
               instance new_resource.instance
-              httpd_version new_resource.parsed_version
+              httpd_version parsed_version
               action :create
             end
           end
 
-          httpd_config "#{new_resource.name} :create mpm_#{new_resource.parsed_mpm}" do
-            config_name "mpm_#{new_resource.parsed_mpm}"
+          httpd_config "#{new_resource.name} :create mpm_#{parsed_mpm}" do
+            config_name "mpm_#{parsed_mpm}"
             instance new_resource.instance
             source 'mpm.conf.erb'
-            variables(config: new_resource)
+            variables(
+              config: new_resource,
+              startservers: parsed_startservers,
+              minspareservers: parsed_minspareservers,
+              maxspareservers: parsed_maxspareservers,
+              maxclients: parsed_maxclients,
+              maxrequestsperchild: parsed_maxrequestsperchild,
+              minsparethreads: parsed_minsparethreads,
+              maxsparethreads: parsed_maxsparethreads,
+              threadlimit: parsed_threadlimit,
+              threadsperchild: parsed_threadsperchild,
+              maxrequestworkers: parsed_maxrequestworkers,
+              maxconnectionsperchild: parsed_maxconnectionsperchild
+              )
             cookbook 'httpd'
             action :create
           end
 
           # make sure there is only one MPM loaded
-          case new_resource.parsed_mpm
+          case parsed_mpm
           when 'prefork'
             httpd_config "#{new_resource.name} :create mpm_worker" do
               config_name 'mpm_worker'
@@ -311,11 +328,11 @@ class Chef
           end
 
           # Install core modules
-          new_resource.parsed_modules.each do |mod|
+          parsed_modules.each do |mod|
             httpd_module "#{new_resource.name} :create #{mod}" do
               module_name mod
               instance new_resource.instance
-              httpd_version new_resource.parsed_version
+              httpd_version parsed_version
               action :create
             end
           end

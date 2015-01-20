@@ -7,11 +7,12 @@ class Chef
       class Rhel < Chef::Provider::HttpdService
         use_inline_resources if defined?(use_inline_resources)
 
-        include HttpdCookbook::Helpers::Rhel
-
         def whyrun_supported?
           true
         end
+
+        include HttpdCookbook::Helpers
+        include HttpdCookbook::Helpers::Rhel
 
         action :create do
           # FIXME: make into resource parameters
@@ -22,8 +23,8 @@ class Chef
           # Chef resources
           #
           # software installation
-          package "#{new_resource.name} :create #{new_resource.parsed_package_name}" do
-            package_name new_resource.parsed_package_name
+          package "#{new_resource.name} :create #{parsed_service_package_name}" do
+            package_name parsed_service_package_name
             action :install
           end
 
@@ -39,11 +40,11 @@ class Chef
 
           # achieve parity with modules statically compiled into
           # debian and ubuntu
-          if new_resource.parsed_version.to_f < 2.4
+          if parsed_version.to_f < 2.4
             %w( log_config logio ).each do |m|
               httpd_module "#{new_resource.name} :create #{m}" do
                 module_name m
-                httpd_version new_resource.parsed_version
+                httpd_version parsed_version
                 instance new_resource.instance
                 action :create
               end
@@ -52,7 +53,7 @@ class Chef
             %w( log_config logio unixd version watchdog ).each do |m|
               httpd_module "#{new_resource.name} :create #{m}" do
                 module_name m
-                httpd_version new_resource.parsed_version
+                httpd_version parsed_version
                 instance new_resource.instance
                 action :create
               end
@@ -68,7 +69,7 @@ class Chef
           end
 
           # MPM loading
-          if new_resource.parsed_version.to_f < 2.4
+          if parsed_version.to_f < 2.4
             link "#{new_resource.name} :create /usr/sbin/#{apache_name}.worker" do
               target_file "/usr/sbin/#{apache_name}.worker"
               to '/usr/sbin/httpd.worker'
@@ -83,20 +84,32 @@ class Chef
               not_if { apache_name == 'httpd' }
             end
           else
-            httpd_module "#{new_resource.name} :create mpm_#{new_resource.parsed_mpm}" do
-              module_name "mpm_#{new_resource.parsed_mpm}"
-              httpd_version new_resource.parsed_version
+            httpd_module "#{new_resource.name} :create mpm_#{parsed_mpm}" do
+              module_name "mpm_#{parsed_mpm}"
+              httpd_version parsed_version
               instance new_resource.instance
               action :create
             end
           end
 
           # MPM configuration
-          httpd_config "#{new_resource.name} :create mpm_#{new_resource.parsed_mpm}" do
-            config_name "mpm_#{new_resource.parsed_mpm}"
+          httpd_config "#{new_resource.name} :create mpm_#{parsed_mpm}" do
+            config_name "mpm_#{parsed_mpm}"
             instance new_resource.instance
             source 'mpm.conf.erb'
-            variables(config: new_resource)
+            variables(
+              config: new_resource,
+              error_log: "/var/log/#{apache_name}/error_log",
+              include_optionals: include_optionals,
+              includes: includes,
+              lock_file: lock_file,
+              mutex: mutex,
+              pid_file: pid_file,
+              run_group: parsed_run_group,
+              run_user: parsed_run_user,
+              server_root: "/etc/#{apache_name}",
+              servername: parsed_servername
+              )
             cookbook 'httpd'
             action :create
           end
@@ -129,7 +142,7 @@ class Chef
             action :create
           end
 
-          if new_resource.parsed_version.to_f >= 2.4
+          if parsed_version.to_f >= 2.4
             directory "#{new_resource.name} :create /etc/#{apache_name}/conf.modules.d" do
               path "/etc/#{apache_name}/conf.modules.d"
               user 'root'
@@ -214,24 +227,27 @@ class Chef
             mode '0644'
             variables(
               config: new_resource,
-              server_root: "/etc/#{apache_name}",
               error_log: "/var/log/#{apache_name}/error_log",
-              pid_file: pid_file,
+              include_optionals: include_optionals,
+              includes: includes,
               lock_file: lock_file,
               mutex: mutex,
-              includes: includes,
-              include_optionals: include_optionals
+              pid_file: pid_file,
+              run_group: parsed_run_group,
+              run_user: parsed_run_user,
+              server_root: "/etc/#{apache_name}",
+              servername: parsed_servername
               )
             cookbook 'httpd'
             action :create
           end
 
           # Install core modules
-          new_resource.parsed_modules.each do |mod|
+          parsed_modules.each do |mod|
             httpd_module "#{new_resource.name} :create #{mod}" do
               module_name mod
               instance new_resource.instance
-              httpd_version new_resource.parsed_version
+              httpd_version parsed_version
               action :create
             end
           end
@@ -248,7 +264,7 @@ class Chef
           end
 
           # MPM loading
-          if new_resource.parsed_version.to_f < 2.4
+          if parsed_version.to_f < 2.4
             link "#{new_resource.name} :delete /usr/sbin/#{apache_name}.worker" do
               target_file "/usr/sbin/#{apache_name}.worker"
               to '/usr/sbin/httpd.worker'

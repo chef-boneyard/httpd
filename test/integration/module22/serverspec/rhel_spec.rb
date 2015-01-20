@@ -1,12 +1,8 @@
 require 'serverspec'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+set :backend, :exec
 
-property[:os] = backend.check_os
-os = property[:os][:family]
-
-if os =~ /RedHat/ || os =~ /RedHat7/ || os =~ /Fedora/
+if os[:family] =~ /RedHat/ || os[:family] =~ /RedHat7/ || os[:family] =~ /Fedora/
   # auth_basic
   describe file('/usr/lib64/httpd/modules/mod_auth_basic.so') do
     it { should be_file }

@@ -8,16 +8,17 @@ class Chef
         class Sysvinit < Chef::Provider::HttpdService::Rhel
           use_inline_resources if defined?(use_inline_resources)
 
-          include HttpdCookbook::Helpers::Rhel
-
           def whyrun_supported?
             true
           end
 
+          include HttpdCookbook::Helpers
+          include HttpdCookbook::Helpers::Rhel
+
           action :start do
             template "#{new_resource.name} :create /etc/init.d/#{apache_name}" do
               path "/etc/init.d/#{apache_name}"
-              source "#{new_resource.parsed_version}/sysvinit/el-#{elversion}/httpd.erb"
+              source "#{parsed_version}/sysvinit/el-#{elversion}/httpd.erb"
               owner 'root'
               group 'root'
               mode '0755'
@@ -28,13 +29,13 @@ class Chef
 
             template "#{new_resource.name} :create /etc/sysconfig/#{apache_name}" do
               path "/etc/sysconfig/#{apache_name}"
-              source "rhel/sysconfig/httpd-#{new_resource.parsed_version}.erb"
+              source "rhel/sysconfig/httpd-#{parsed_version}.erb"
               owner 'root'
               group 'root'
               mode '0644'
               variables(
                 apache_name: apache_name,
-                mpm: new_resource.parsed_mpm,
+                mpm: parsed_mpm,
                 pid_file: pid_file
                 )
               cookbook 'httpd'

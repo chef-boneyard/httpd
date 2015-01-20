@@ -7,15 +7,16 @@ class Chef
       class Debian < Chef::Provider::HttpdModule
         use_inline_resources if defined?(use_inline_resources)
 
-        include HttpdCookbook::Helpers::Debian
-
         def whyrun_supported?
           true
         end
 
+        include HttpdCookbook::Helpers
+        include HttpdCookbook::Helpers::Debian
+
         action :create do
-          package "#{new_resource.name} :create #{new_resource.parsed_package_name}" do
-            package_name new_resource.parsed_package_name
+          package "#{new_resource.name} :create #{parsed_module_package_name}" do
+            package_name parsed_module_package_name
             action :install
           end
 

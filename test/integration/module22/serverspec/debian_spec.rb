@@ -1,12 +1,10 @@
 require 'serverspec'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+set :backend, :exec
 
-property[:os] = backend.check_os
-os = property[:os][:family]
+puts "os: #{os}"
 
-if os =~ /Debian/ || os =~ /Ubuntu/
+if os[:family]  =~ /Debian/ || os[:family] == 'Ubuntu'
 
   # auth_basic
   describe file('/usr/lib/apache2/modules/mod_auth_basic.so') do

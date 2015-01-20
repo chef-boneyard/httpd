@@ -1,35 +1,35 @@
-<IfModule <%= @config.parsed_mpm %>_module>
-<% if @config.parsed_startservers %>
-  StartServers           <%= @config.parsed_startservers %>
+<IfModule <%= @mpm %>_module>
+<% if @startservers %>
+  StartServers           <%= @startservers %>
 <% end %>
-<% if @config.parsed_minspareservers %>
-  MinSpareServers        <%= @config.parsed_minspareservers %>
+<% if @minspareservers %>
+  MinSpareServers        <%= @minspareservers %>
 <% end %>
-<% if @config.parsed_maxspareservers %>
-  MaxSpareServers        <%= @config.parsed_maxspareservers %>
+<% if @maxspareservers %>
+  MaxSpareServers        <%= @maxspareservers %>
 <% end %>
-<% if @config.parsed_maxclients %>
-  MaxClients             <%= @config.parsed_maxclients %>
+<% if @maxclients %>
+  MaxClients             <%= @maxclients %>
 <% end %>
-<% if @config.parsed_maxrequestsperchild %>
-  MaxRequestsPerChild    <%= @config.parsed_maxrequestsperchild %>
+<% if @maxrequestsperchild %>
+  MaxRequestsPerChild    <%= @maxrequestsperchild %>
 <% end %>
-<% if @config.parsed_minsparethreads %>
-  MinSpareThreads        <%= @config.parsed_minsparethreads %>
+<% if @minsparethreads %>
+  MinSpareThreads        <%= @minsparethreads %>
 <% end %>
-<% if @config.parsed_maxsparethreads %>
-  MaxSpareThreads        <%= @config.parsed_maxsparethreads %>
+<% if @maxsparethreads %>
+  MaxSpareThreads        <%= @maxsparethreads %>
 <% end %>
-<% if @config.parsed_threadlimit %>
-  ThreadLimit            <%= @config.parsed_threadlimit %>
+<% if @threadlimit %>
+  ThreadLimit            <%= @threadlimit %>
 <% end %>
-<% if @config.parsed_threadsperchild %>
-  ThreadsPerChild        <%= @config.parsed_threadsperchild %>
+<% if @threadsperchild %>
+  ThreadsPerChild        <%= @threadsperchild %>
 <% end %>
-<% if @config.parsed_maxrequestworkers %>
-  MaxRequestWorkers      <%= @config.parsed_maxrequestworkers %>
+<% if @maxrequestworkers %>
+  MaxRequestWorkers      <%= @maxrequestworkers %>
 <% end %>
-<% if @config.parsed_maxconnectionsperchild %>
-  MaxConnectionsPerChild <%= @config.parsed_maxconnectionsperchild %>
+<% if @maxconnectionsperchild %>
+  MaxConnectionsPerChild <%= @maxconnectionsperchild %>
 <% end %>
 </IfModule>

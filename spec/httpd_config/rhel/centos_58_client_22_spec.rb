@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'httpd_config_test::default' do
-  let(:centos_58_client_22) do
-    ChefSpec::Runner.new(
+  cached(:centos_58_client_22) do
+    ChefSpec::ServerRunner.new(
       step_into: 'httpd_config',
       platform: 'centos',
       version: '5.8'

@@ -1,13 +1,8 @@
 require 'serverspec'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+set :backend, :exec
 
-property[:os] = backend.check_os
-platform = property[:os][:family]
-platform_version = property[:os][:release]
-
-if platform =~ /Debian/
+if os[:family] =~ /Debian/
   describe file('/etc/apache2/conf.d') do
     it { should be_directory }
     it { should be_mode 755 }
@@ -30,7 +25,7 @@ if platform =~ /Debian/
   end
 end
 
-if platform =~ /Ubuntu/
+if os[:family] =~ /Ubuntu/
   if platform_version =~ /12.04/
     describe file('/etc/apache2/conf.d') do
       it { should be_directory }

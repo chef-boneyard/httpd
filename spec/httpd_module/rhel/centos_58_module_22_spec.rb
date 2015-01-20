@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'httpd_module_test::default' do
-  let(:centos_58_module_22) do
-    ChefSpec::Runner.new(
+  cached(:centos_58_module_22) do
+    ChefSpec::ServerRunner.new(
       step_into: 'httpd_module',
       platform: 'centos',
       version: '5.8'
@@ -11,11 +11,11 @@ describe 'httpd_module_test::default' do
     end.converge('httpd_module_test::default')
   end
 
-  let(:auth_basic_load_content) do
+  cached(:auth_basic_load_content) do
     'LoadModule auth_basic_module /usr/lib64/httpd/modules/mod_auth_basic.so'
   end
 
-  let(:auth_kerb_load_content) do
+  cached(:auth_kerb_load_content) do
     'LoadModule auth_kerb_module /usr/lib64/httpd/modules/mod_auth_kerb.so'
   end
 

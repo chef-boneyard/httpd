@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'httpd_service_test::multi' do
-  let(:centos_58_service_22_multi) do
-    ChefSpec::Runner.new(
+  cached(:centos_58_service_22_multi) do
+    ChefSpec::ServerRunner.new(
       step_into: 'httpd_service',
       platform: 'centos',
       version: '5.8'
@@ -53,22 +53,6 @@ describe 'httpd_service_test::multi' do
         listen_ports: %w(8080 4343),
         log_level: 'warn',
         maxkeepaliverequests: '2001',
-        parsed_maxclients: '150',
-        parsed_maxconnectionsperchild: nil,
-        parsed_maxrequestsperchild: '0',
-        parsed_maxrequestworkers: nil,
-        parsed_maxspareservers: '20',
-        parsed_maxsparethreads: nil,
-        parsed_minspareservers: '10',
-        parsed_minsparethreads: nil,
-        parsed_mpm: 'prefork',
-        parsed_package_name: 'httpd',
-        parsed_run_group: 'alice',
-        parsed_run_user: 'alice',
-        parsed_startservers: '10',
-        parsed_threadlimit: nil,
-        parsed_threadsperchild: nil,
-        parsed_version: '2.2',
         timeout: '4321'
         )
     end
@@ -84,22 +68,6 @@ describe 'httpd_service_test::multi' do
         listen_ports: %w(81 444),
         log_level: 'warn',
         maxkeepaliverequests: '5678',
-        parsed_maxclients: '150',
-        parsed_maxconnectionsperchild: nil,
-        parsed_maxrequestsperchild: '0',
-        parsed_maxrequestworkers: nil,
-        parsed_maxspareservers: '10',
-        parsed_maxsparethreads: nil,
-        parsed_minspareservers: '5',
-        parsed_minsparethreads: nil,
-        parsed_mpm: 'prefork',
-        parsed_package_name: 'httpd',
-        parsed_run_group: 'bob',
-        parsed_run_user: 'bob',
-        parsed_startservers: '5',
-        parsed_threadlimit: nil,
-        parsed_threadsperchild: nil,
-        parsed_version: '2.2',
         timeout: '1234'
         )
     end

@@ -8,16 +8,17 @@ class Chef
         class Systemd < Chef::Provider::HttpdService::Rhel
           use_inline_resources if defined?(use_inline_resources)
 
-          include HttpdCookbook::Helpers::Rhel
-
           def whyrun_supported?
             true
           end
 
+          include HttpdCookbook::Helpers
+          include HttpdCookbook::Helpers::Rhel
+
           action :start do
             httpd_module "#{new_resource.name} :create systemd" do
               module_name 'systemd'
-              httpd_version new_resource.parsed_version
+              httpd_version parsed_version
               instance new_resource.instance
               notifies :reload, "service[#{new_resource.name} :create #{apache_name}]"
               action :create

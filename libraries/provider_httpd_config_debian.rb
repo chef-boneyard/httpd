@@ -7,14 +7,15 @@ class Chef
       class Debian < Chef::Provider::HttpdConfig
         use_inline_resources if defined?(use_inline_resources)
 
-        include HttpdCookbook::Helpers::Debian
-
         def whyrun_supported?
           true
         end
 
+        include HttpdCookbook::Helpers
+        include HttpdCookbook::Helpers::Debian
+
         action :create do
-          if new_resource.parsed_httpd_version.to_f < 2.4
+          if parsed_httpd_version.to_f < 2.4
             directory "#{new_resource.name} :create /etc/#{apache_name}/conf.d" do
               path "/etc/#{apache_name}/conf.d"
               owner 'root'
@@ -73,7 +74,7 @@ class Chef
         end
 
         action :delete do
-          if new_resource.parsed_httpd_version.to_f < 2.4
+          if parsed_httpd_version.to_f < 2.4
             file "#{new_resource.name} :delete /etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
               path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
               action :delete

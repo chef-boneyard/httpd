@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'httpd_service_test::single' do
-  let(:centos_58_service_22_single) do
-    ChefSpec::Runner.new(
+  cached(:centos_58_service_22_single) do
+    ChefSpec::ServerRunner.new(
       step_into: 'httpd_service',
       platform: 'centos',
       version: '5.8'
@@ -23,20 +23,6 @@ describe 'httpd_service_test::single' do
         maxkeepaliverequests: '100',
         maxspareservers: nil,
         minspareservers: nil,
-        parsed_maxclients: '150',
-        parsed_maxconnectionsperchild: nil,
-        parsed_maxrequestsperchild: '0',
-        parsed_maxrequestworkers: nil,
-        parsed_maxsparethreads: '75',
-        parsed_minsparethreads: '25',
-        parsed_mpm: 'worker',
-        parsed_package_name: 'httpd',
-        parsed_run_group: 'apache',
-        parsed_run_user: 'apache',
-        parsed_startservers: '2',
-        parsed_threadlimit: '64',
-        parsed_threadsperchild: '25',
-        parsed_version: '2.2',
         timeout: '400'
         )
     end

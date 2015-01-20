@@ -3,7 +3,7 @@ module HttpdCookbook
     module Debian
       # version
       def apache_version
-        new_resource.parsed_version
+        parsed_version
       end
 
       # support multiple instances
@@ -33,7 +33,7 @@ module HttpdCookbook
       end
 
       def module_path
-        "/usr/lib/apache2/modules/#{new_resource.parsed_filename}"
+        "/usr/lib/apache2/modules/#{parsed_filename}"
       end
 
       # service things

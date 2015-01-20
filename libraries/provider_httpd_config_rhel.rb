@@ -7,11 +7,12 @@ class Chef
       class Rhel < Chef::Provider::HttpdConfig
         use_inline_resources if defined?(use_inline_resources)
 
-        include HttpdCookbook::Helpers::Rhel
-
         def whyrun_supported?
           true
         end
+
+        include HttpdCookbook::Helpers
+        include HttpdCookbook::Helpers::Rhel
 
         action :create do
           directory "#{new_resource.name} :create /etc/#{apache_name}/conf.d" do

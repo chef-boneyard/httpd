@@ -8,11 +8,12 @@ class Chef
         class Sysvinit < Chef::Provider::HttpdService::Debian
           use_inline_resources if defined?(use_inline_resources)
 
-          include HttpdCookbook::Helpers::Debian
-
           def whyrun_supported?
             true
           end
+
+          include HttpdCookbook::Helpers
+          include HttpdCookbook::Helpers::Debian
 
           action :start do
             # init script
@@ -75,8 +76,8 @@ class Chef
           def delete_stop_service
             # Software installation: This is needed to supply the init
             # script that powers the service facility.
-            package "#{new_resource.name} :delete #{new_resource.parsed_package_name}" do
-              package_name new_resource.parsed_package_name
+            package "#{new_resource.name} :delete #{parsed_service_package_name}" do
+              package_name parsed_service_package_name
               action :install
             end
 

@@ -1,5 +1,5 @@
-<% if @config.parsed_servername %>
-ServerName <%= @config.parsed_servername %>
+<% if @servername %>
+ServerName <%= @servername %>
 <% end %>
 <% if @server_root %>
 ServerRoot <%= @server_root %>
@@ -7,11 +7,11 @@ ServerRoot <%= @server_root %>
 <% if @pid_file %>
 PidFile <%= @pid_file %>
 <% end %>
-<% if @config.parsed_run_user %>
-User <%= @config.parsed_run_user %>
+<% if @run_user %>
+User <%= @run_user %>
 <% end %>
-<% if @config.parsed_run_group %>
-Group <%= @config.parsed_run_group %>
+<% if @run_group %>
+Group <%= @run_group %>
 <% end %>
 <% if @lock_file %>
 LockFile <%= @lock_file %>
