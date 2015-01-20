@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.4 (2015-01-19)
+-------------------
+- Refactoring helper methods out of resource classes. Fixing up tests.
+
 v0.2.3 (2015-01-17)
 -------------------
 - Fixing httpd_module 'php' on rhel family
