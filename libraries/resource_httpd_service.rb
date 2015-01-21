@@ -10,7 +10,7 @@ class Chef
       attribute :instance, kind_of: String, name_attribute: true
       attribute :keepalive, kind_of: [TrueClass, FalseClass], default: true
       attribute :keepalivetimeout, kind_of: String, default: '5'
-      attribute :listen_addresses, kind_of: String, default: ['0.0.0.0']
+      attribute :listen_addresses, kind_of: [String, Array], default: ['0.0.0.0']
       attribute :listen_ports, kind_of: [String, Array], default: %w(80)
       attribute :log_level, kind_of: String, default: 'warn'
       attribute :maxclients, kind_of: String, default: nil

@@ -49,7 +49,7 @@ HostnameLookups <%= @config.hostname_lookups %>
 Listen <%= port %>
 <%   end %>
 <% else %>
-<%   @config.listen_addresses.each do |address| %>
+<%   Array(@config.listen_addresses).each do |address| %>
 <%     @config.listen_ports.each do |port| %>
 Listen <%= address %>:<%= port %>
 <%     end %>
