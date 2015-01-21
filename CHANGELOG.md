@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.5 (2015-01-20)
+-------------------
+- Fixing mpm_worker config rendering
+
 v0.2.4 (2015-01-19)
 -------------------
 - Refactoring helper methods out of resource classes. Fixing up tests.
