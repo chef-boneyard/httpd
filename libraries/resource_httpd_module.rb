@@ -10,6 +10,7 @@ class Chef
       attribute :instance, kind_of: String, default: 'default'
       attribute :module_name, kind_of: String, name_attribute: true, required: true
       attribute :package_name, kind_of: String
+      attribute :symbolname, kind_of: String
     end
   end
 end

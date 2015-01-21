@@ -38,7 +38,7 @@ class Chef
               group 'root'
               mode '0644'
               variables(
-                module_name: "#{module_name}_module",
+                module_name: parsed_symbolname,
                 module_path: module_path
                 )
               cookbook 'httpd'
@@ -53,7 +53,6 @@ class Chef
               action :create
             end
 
-            # outliers?
             template "#{new_resource.name} :create /etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
               path "/etc/#{apache_name}/conf.modules.d/#{module_name}.load"
               source 'module_load.erb'
@@ -61,7 +60,7 @@ class Chef
               group 'root'
               mode '0644'
               variables(
-                module_name: "#{module_name}_module",
+                module_name: parsed_symbolname,
                 module_path: module_path
                 )
               cookbook 'httpd'

@@ -148,6 +148,10 @@ module HttpdCookbook
               are: %w(php),
               found_in_package: ->(_name) { 'php' }
 
+      modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
+              are: %w(php-zts),
+              found_in_package: ->(_name) { 'php-zts' }
+
       #
       # rhel-6
       #
@@ -184,6 +188,10 @@ module HttpdCookbook
       modules for: { platform_family: 'rhel', platform_version: '6', httpd_version: '2.2' },
               are: %w(php),
               found_in_package: ->(_name) { 'php' }
+
+      modules for: { platform_family: 'rhel', platform_version: '6', httpd_version: '2.2' },
+              are: %w(php-zts),
+              found_in_package: ->(_name) { 'php-zts' }
 
       #
       # rhel-7

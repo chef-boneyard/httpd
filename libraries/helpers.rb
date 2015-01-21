@@ -32,7 +32,14 @@ module HttpdCookbook
       return '2.4' if node['platform_family'] == 'smartos'
     end
 
-    # FIXME: This is specific to httpd_module.
+    def parsed_symbolname
+      return new_resource.symbolname if new_resource.symbolname
+      # Put all exceptions here
+      return 'php5_module' if module_name == 'php'
+      return 'php5_module' if module_name == 'php-zts'
+      "#{module_name}_module"
+    end
+
     def parsed_filename
       return new_resource.filename if new_resource.filename
       # Put all exceptions here
@@ -40,6 +47,7 @@ module HttpdCookbook
         return 'libmodnss.so' if module_name == 'nss'
         return 'mod_rev.so' if module_name == 'revocator'
         return 'libphp5.so' if module_name == 'php'
+        return 'libphp5-zts.so' if module_name == 'php-zts'
       end
       "mod_#{module_name}.so"
     end

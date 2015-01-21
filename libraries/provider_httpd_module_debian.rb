@@ -45,7 +45,7 @@ class Chef
             group 'root'
             mode '0644'
             variables(
-              module_name: "#{module_name}_module",
+              module_name: parsed_symbolname,
               module_path: module_path
               )
             cookbook 'httpd'
