@@ -11,7 +11,6 @@ class Chef
           true
         end
 
-        include HttpdCookbook::Helpers
         include HttpdCookbook::Helpers::Debian
 
         action :create do
@@ -265,23 +264,24 @@ class Chef
             end
           end
 
+          # MPM configuration
           httpd_config "#{new_resource.name} :create mpm_#{parsed_mpm}" do
             config_name "mpm_#{parsed_mpm}"
             instance new_resource.instance
             source 'mpm.conf.erb'
             variables(
-              config: new_resource,
-              startservers: parsed_startservers,
-              minspareservers: parsed_minspareservers,
-              maxspareservers: parsed_maxspareservers,
               maxclients: parsed_maxclients,
+              maxconnectionsperchild: parsed_maxconnectionsperchild,
               maxrequestsperchild: parsed_maxrequestsperchild,
-              minsparethreads: parsed_minsparethreads,
-              maxsparethreads: parsed_maxsparethreads,
-              threadlimit: parsed_threadlimit,
-              threadsperchild: parsed_threadsperchild,
               maxrequestworkers: parsed_maxrequestworkers,
-              maxconnectionsperchild: parsed_maxconnectionsperchild
+              maxspareservers: parsed_maxspareservers,
+              maxsparethreads: parsed_maxsparethreads,
+              minspareservers: parsed_minspareservers,
+              minsparethreads: parsed_minsparethreads,
+              mpm: parsed_mpm,
+              startservers: parsed_startservers,
+              threadlimit: parsed_threadlimit,
+              threadsperchild: parsed_threadsperchild
               )
             cookbook 'httpd'
             action :create

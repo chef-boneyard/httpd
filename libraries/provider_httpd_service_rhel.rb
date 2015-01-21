@@ -11,7 +11,6 @@ class Chef
           true
         end
 
-        include HttpdCookbook::Helpers
         include HttpdCookbook::Helpers::Rhel
 
         action :create do
@@ -98,17 +97,18 @@ class Chef
             instance new_resource.instance
             source 'mpm.conf.erb'
             variables(
-              config: new_resource,
-              error_log: "/var/log/#{apache_name}/error_log",
-              include_optionals: include_optionals,
-              includes: includes,
-              lock_file: lock_file,
-              mutex: mutex,
-              pid_file: pid_file,
-              run_group: parsed_run_group,
-              run_user: parsed_run_user,
-              server_root: "/etc/#{apache_name}",
-              servername: parsed_servername
+              maxclients: parsed_maxclients,
+              maxconnectionsperchild: parsed_maxconnectionsperchild,
+              maxrequestsperchild: parsed_maxrequestsperchild,
+              maxrequestworkers: parsed_maxrequestworkers,
+              maxspareservers: parsed_maxspareservers,
+              maxsparethreads: parsed_maxsparethreads,
+              minspareservers: parsed_minspareservers,
+              minsparethreads: parsed_minsparethreads,
+              mpm: parsed_mpm,
+              startservers: parsed_startservers,
+              threadlimit: parsed_threadlimit,
+              threadsperchild: parsed_threadsperchild
               )
             cookbook 'httpd'
             action :create

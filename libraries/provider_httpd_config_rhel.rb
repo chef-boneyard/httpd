@@ -1,5 +1,6 @@
 require 'chef/provider/lwrp_base'
 require_relative 'helpers_rhel'
+require_relative 'helpers'
 
 class Chef
   class Provider
