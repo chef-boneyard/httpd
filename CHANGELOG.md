@@ -1,6 +1,11 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.6 (2015-01-20)
+-------------------
+- Fixed type mismatch bug for listen_addresses parameter
+- Fixing up php-zts for el5/6
+
 v0.2.5 (2015-01-20)
 -------------------
 - Fixing mpm_worker config rendering
