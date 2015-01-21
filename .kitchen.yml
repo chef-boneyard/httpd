@@ -55,3 +55,6 @@ suites:
     attributes:
       httpd:
         version: '2.4'
+        listen_addresses: [
+          '0.0.0.0'
+        ]
