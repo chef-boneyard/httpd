@@ -58,7 +58,7 @@ Cookbook Dependencies
 
 Usage
 -----
-Place a dependency on the mysql cookbook in your cookbook's metadata.rb
+Place a dependency on the httpd cookbook in your cookbook's metadata.rb
 ```ruby
 depends 'httpd', '~> 0.2'
 ```
