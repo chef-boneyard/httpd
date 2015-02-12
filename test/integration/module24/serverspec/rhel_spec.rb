@@ -1,8 +1,10 @@
 require 'serverspec'
 
+puts "os[:family] #{os[:family]}"
+
 set :backend, :exec
 
-if os[:family] =~ /RedHat/ || os[:family] =~ /RedHat7/ || os[:family] =~ /Fedora/
+if os[:family] =~ /redhat/ || os[:family] =~ /fedora/
   # auth_basic
   describe file('/usr/lib64/httpd/modules/mod_auth_basic.so') do
     it { should be_file }
@@ -11,14 +13,14 @@ if os[:family] =~ /RedHat/ || os[:family] =~ /RedHat7/ || os[:family] =~ /Fedora
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d') do
+  describe file('/etc/httpd-default/conf.modules.d') do
     it { should be_directory }
     it { should be_mode 755 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d/auth_basic.load') do
+  describe file('/etc/httpd-default/conf.modules.d/auth_basic.load') do
     it { should be_file }
     it { should be_mode 644 }
     it { should be_owned_by 'root' }
@@ -33,14 +35,14 @@ if os[:family] =~ /RedHat/ || os[:family] =~ /RedHat7/ || os[:family] =~ /Fedora
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d') do
+  describe file('/etc/httpd-default/conf.modules.d') do
     it { should be_directory }
     it { should be_mode 755 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.modules.d/auth_kerb.load') do
+  describe file('/etc/httpd-default/conf.modules.d/auth_kerb.load') do
     it { should be_file }
     it { should be_mode 644 }
     it { should be_owned_by 'root' }

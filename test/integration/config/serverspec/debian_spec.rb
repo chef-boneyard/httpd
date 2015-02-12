@@ -1,8 +1,10 @@
 require 'serverspec'
 
+puts "os[:family] #{os[:family]}"
+
 set :backend, :exec
 
-if os[:family] =~ /Debian/
+if os[:family] =~ /debian/
   describe file('/etc/apache2/conf.d') do
     it { should be_directory }
     it { should be_mode 755 }
@@ -25,7 +27,7 @@ if os[:family] =~ /Debian/
   end
 end
 
-if os[:family] =~ /Ubuntu/
+if os[:family] =~ /ubuntu/
   if platform_version =~ /12.04/
     describe file('/etc/apache2/conf.d') do
       it { should be_directory }

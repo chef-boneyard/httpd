@@ -1,8 +1,10 @@
 require 'serverspec'
 
+puts "os[:family] #{os[:family]}"
+
 set :backend, :exec
 
-if os[:family] =~ /Debian/ || os[:family] =~ /Ubuntu/
+if os[:family] =~ /debian/ || os[:family] =~ /ubuntu/
   # auth_basic
   describe file('/usr/lib/apache2/modules/mod_auth_basic.so') do
     it { should be_file }
