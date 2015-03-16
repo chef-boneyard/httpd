@@ -5,6 +5,8 @@ class Chef
       actions :create, :delete, :start, :stop, :restart, :reload
       default_action :create
 
+      provides :httpd_service
+
       attribute :contact, kind_of: String, default: 'webmaster@localhost'
       attribute :hostname_lookups, kind_of: String, default: 'off'
       attribute :instance, kind_of: String, name_attribute: true

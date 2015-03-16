@@ -6,6 +6,9 @@ class Chef
     class HttpdService
       class Debian < Chef::Provider::HttpdService
         class Sysvinit < Chef::Provider::HttpdService::Debian
+          provides :httpd_service, platform_family: 'debian'
+          provides :httpd_service, platform_family: 'ubuntu'
+
           use_inline_resources if defined?(use_inline_resources)
 
           def whyrun_supported?
@@ -76,11 +79,23 @@ class Chef
           def delete_stop_service
             # Software installation: This is needed to supply the init
             # script that powers the service facility.
-            package "#{new_resource.name} :delete #{parsed_service_package_name}" do
-              package_name parsed_service_package_name
-              action :install
-            end
+            # package "#{new_resource.name} :delete #{parsed_service_package_name}" do
+            #   package_name parsed_service_package_name
+            #   action :install
+            # end
 
+            # init script
+            template "#{new_resource.name} :create /etc/init.d/#{apache_name}" do
+              path "/etc/init.d/#{apache_name}"
+              source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
+              owner 'root'
+              group 'root'
+              mode '0755'
+              variables(apache_name: apache_name)
+              cookbook 'httpd'
+              action :create
+            end
+            
             service "#{new_resource.name} :delete #{apache_name}" do
               service_name apache_name
               supports restart: true, reload: true, status: true

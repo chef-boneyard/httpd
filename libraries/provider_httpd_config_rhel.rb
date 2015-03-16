@@ -6,6 +6,10 @@ class Chef
   class Provider
     class HttpdConfig
       class Rhel < Chef::Provider::HttpdConfig
+        provides :httpd_config, platform_family: 'rhel'
+        provides :httpd_config, platform_family: 'fedora'
+        provides :httpd_config, platform_family: 'suse'
+        
         use_inline_resources if defined?(use_inline_resources)
 
         def whyrun_supported?

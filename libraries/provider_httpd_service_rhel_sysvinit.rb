@@ -6,6 +6,14 @@ class Chef
     class HttpdService
       class Rhel
         class Sysvinit < Chef::Provider::HttpdService::Rhel
+          #
+          # Amazon is in the "rhel" platform_family and doesn't play nice.
+          # And so, we have to use platform instead.
+          provides :httpd_service, platform: 'amazon'
+          provides :httpd_service, platform: 'centos'
+          provides :httpd_service, platform: 'redhat'
+          provides :httpd_service, platform: 'suse'
+
           use_inline_resources if defined?(use_inline_resources)
 
           def whyrun_supported?

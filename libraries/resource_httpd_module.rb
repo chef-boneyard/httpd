@@ -5,6 +5,8 @@ class Chef
       actions :create, :delete
       default_action :create
 
+      provides :httpd_module
+
       attribute :filename, kind_of: String
       attribute :httpd_version, kind_of: String
       attribute :instance, kind_of: String, default: 'default'
