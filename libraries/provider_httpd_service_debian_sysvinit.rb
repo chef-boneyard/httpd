@@ -6,8 +6,8 @@ class Chef
     class HttpdService
       class Debian < Chef::Provider::HttpdService
         class Sysvinit < Chef::Provider::HttpdService::Debian
-          provides :httpd_service, platform_family: 'debian'
-          provides :httpd_service, platform_family: 'ubuntu'
+          provides :httpd_service, platform_family: 'debian' if respond_to?(:provides)
+          provides :httpd_service, platform_family: 'ubuntu' if respond_to?(:provides)
 
           use_inline_resources if defined?(use_inline_resources)
 

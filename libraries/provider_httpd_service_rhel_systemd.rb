@@ -9,11 +9,11 @@ class Chef
           #
           # Amazon is in the "rhel" platform_family and doesn't play nice.
           # And so, we have to use platform instead.
-          provides :httpd_service, platform: 'fedora'
-          provides :httpd_service, platform: 'oracle'
+          provides :httpd_service, platform: 'fedora' if respond_to?(:provides)
+          provides :httpd_service, platform: 'oracle' if respond_to?(:provides)
           provides :httpd_service, platform: %w(redhat centos scientific) do |node|
             node[:platform_version].to_f >= 7.0
-          end
+          end if respond_to?(:provides)
 
           use_inline_resources if defined?(use_inline_resources)
 

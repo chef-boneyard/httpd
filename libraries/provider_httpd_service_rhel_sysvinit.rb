@@ -9,10 +9,10 @@ class Chef
           #
           # Amazon is in the "rhel" platform_family and doesn't play nice.
           # And so, we have to use platform instead.
-          provides :httpd_service, platform: 'amazon'
-          provides :httpd_service, platform: 'centos'
-          provides :httpd_service, platform: 'redhat'
-          provides :httpd_service, platform: 'suse'
+          provides :httpd_service, platform: 'amazon' if respond_to?(:provides)
+          provides :httpd_service, platform: 'centos' if respond_to?(:provides)
+          provides :httpd_service, platform: 'redhat' if respond_to?(:provides)
+          provides :httpd_service, platform: 'suse' if respond_to?(:provides)
 
           use_inline_resources if defined?(use_inline_resources)
 
