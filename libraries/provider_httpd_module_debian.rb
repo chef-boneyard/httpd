@@ -7,7 +7,7 @@ class Chef
       class Debian < Chef::Provider::HttpdModule
         provides :httpd_module, platform_family: 'debian'
         provides :httpd_module, platform_family: 'ubuntu'
-        
+
         use_inline_resources if defined?(use_inline_resources)
 
         def whyrun_supported?

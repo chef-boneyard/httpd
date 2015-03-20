@@ -23,46 +23,46 @@ describe 'httpd_config_test::default' do
     it 'creates directory[hello :create /etc/httpd-default/conf.d]' do
       expect(centos_58_client_22).to create_directory('hello :create /etc/httpd-default/conf.d')
         .with(
-        path: '/etc/httpd-default/conf.d',
-        owner: 'root',
-        group: 'root',
-        mode: '0755',
-        recursive: true
+          path: '/etc/httpd-default/conf.d',
+          owner: 'root',
+          group: 'root',
+          mode: '0755',
+          recursive: true
         )
     end
 
     it 'creates template[hello :create /etc/httpd-default/conf.d/hello.conf]' do
       expect(centos_58_client_22).to create_template('hello :create /etc/httpd-default/conf.d/hello.conf')
         .with(
-        path: '/etc/httpd-default/conf.d/hello.conf',
-        owner: 'root',
-        group: 'root',
-        mode: '0644',
-        source: 'hello.conf.erb',
-        cookbook: nil
+          path: '/etc/httpd-default/conf.d/hello.conf',
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          source: 'hello.conf.erb',
+          cookbook: nil
         )
     end
 
     it 'creates directory[hello_again :create /etc/httpd-foo/conf.d]' do
       expect(centos_58_client_22).to create_directory('hello_again :create /etc/httpd-foo/conf.d')
         .with(
-        path: '/etc/httpd-foo/conf.d',
-        owner: 'root',
-        group: 'root',
-        mode: '0755',
-        recursive: true
+          path: '/etc/httpd-foo/conf.d',
+          owner: 'root',
+          group: 'root',
+          mode: '0755',
+          recursive: true
         )
     end
 
     it 'creates template[hello_again :create /etc/httpd-foo/conf.d/hello_again.conf]' do
       expect(centos_58_client_22).to create_template('hello_again :create /etc/httpd-foo/conf.d/hello_again.conf')
         .with(
-        path: '/etc/httpd-foo/conf.d/hello_again.conf',
-        owner: 'root',
-        group: 'root',
-        mode: '0644',
-        source: 'hello.conf.erb',
-        cookbook: nil
+          path: '/etc/httpd-foo/conf.d/hello_again.conf',
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          source: 'hello.conf.erb',
+          cookbook: nil
         )
     end
   end

@@ -11,7 +11,7 @@ class Chef
           # And so, we have to use platform instead.
           provides :httpd_service, platform: 'fedora'
           provides :httpd_service, platform: 'oracle'
-          provides :httpd_service, platform: ['redhat','centos','scientific'] do |node|
+          provides :httpd_service, platform: %w(redhat centos scientific) do |node|
             node[:platform_version].to_f >= 7.0
           end
 

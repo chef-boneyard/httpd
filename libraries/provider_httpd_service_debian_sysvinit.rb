@@ -95,7 +95,7 @@ class Chef
               cookbook 'httpd'
               action :create
             end
-            
+
             service "#{new_resource.name} :delete #{apache_name}" do
               service_name apache_name
               supports restart: true, reload: true, status: true
