@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.8 (2015-03-20)
+-------------------
+- Fixing backwards compatibility with Chef 11
+
 v0.2.7 (2015-03-16)
 -------------------
 - Updating resources and providers to use "provides" keyword instead
