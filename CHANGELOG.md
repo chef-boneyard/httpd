@@ -1,6 +1,11 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.9 (2015-04-04)
+-------------------
+- Adding CONTRIBUTING.md
+- Adding issues and source urls to metadata
+
 v0.2.8 (2015-03-20)
 -------------------
 - Fixing backwards compatibility with Chef 11
