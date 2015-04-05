@@ -44,7 +44,7 @@ class Chef
         action :delete do
           file "#{new_resource.name} :create /etc/#{apache_name}/conf.d/#{new_resource.config_name}" do
             path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
-            action :create
+            action :delete
           end
         end
       end
