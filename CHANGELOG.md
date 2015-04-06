@@ -1,6 +1,11 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.10 (2015-04-06)
+-------------------
+- Various README fixes
+- Fixing action :delete for httpd_config rhel provider
+
 v0.2.9 (2015-04-04)
 -------------------
 - Adding CONTRIBUTING.md
