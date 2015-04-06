@@ -22,7 +22,7 @@ class Chef
           # package_name is set by resource
           package "#{new_resource.name} :create #{parsed_module_package_name}" do
             package_name parsed_module_package_name
-            action :install
+            action ::File.exists?(module_path) ? :nothing : :install
           end
 
           # 2.2 vs 2.4
