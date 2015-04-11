@@ -1,5 +1,5 @@
 name 'httpd'
-version '0.2.10'
+version '0.2.11'
 maintainer 'Chef Software, Inc.'
 maintainer_email 'cookbooks@chef.io'
 license 'Apache 2.0'

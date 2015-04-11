@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.11 (2015-04-11)
+-------------------
+- Fix config file load ordering
+
 v0.2.10 (2015-04-06)
 -------------------
 - Various README fixes
