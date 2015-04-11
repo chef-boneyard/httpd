@@ -43,10 +43,10 @@ module HttpdCookbook
       def include_optionals
         return unless parsed_version.to_f >= 2.4
         [
-          'conf.d/*.conf',
           'conf.d/*.load',
-          'conf.modules.d/*.conf',
-          'conf.modules.d/*.load'
+          'conf.d/*.conf',
+          'conf.modules.d/*.load',
+          'conf.modules.d/*.conf'
         ]
       end
     end
