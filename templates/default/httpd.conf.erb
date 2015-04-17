@@ -58,7 +58,7 @@ Listen <%= address %>:<%= port %>
 
 <% if @extra_options %>
 <%   @extra_options.each do |directive,value| %>
-<%=    directive %> = <%= value %>
+<%=    directive %> <%= value %>
 <%   end %>
 <% end %>
 
