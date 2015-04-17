@@ -35,6 +35,7 @@ class Chef
       attribute :threadsperchild, kind_of: String, default: nil
       attribute :timeout, kind_of: String, default: '400'
       attribute :version, kind_of: String, default: nil
+      attribute :extra_options, kind_of: Hash, default: nil
     end
   end
 end

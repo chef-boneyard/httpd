@@ -213,6 +213,10 @@ Debian and 'httpd' on RHEL.
 - `timeout` - Amount of time the server will wait for certain events
   before failing a request. Defaults to '400'
 
+- `extra_options` - Hash that will be sent directly to the httpd.conf template in
+  the form of `key = value`. This can be used to add additional directives to your
+  configuration.
+
 - `version` - Apache software version to use. Available options are
   '2.2', and '2.4', depending on platform. Defaults to latest
   available.
