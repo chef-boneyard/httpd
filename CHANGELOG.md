@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+v0.2.12 (2015-05-11)
+-------------------
+- Fixing 'provides' bug that was breaking 12.3
+
 v0.2.11 (2015-04-11)
 -------------------
 - Fix config file load ordering
