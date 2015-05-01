@@ -1,7 +1,7 @@
 #<% require 'kitchen-sync' %>
 ---
 driver_config:
-  digitalocean_client_id: <%= ENV['DIGITAL_OCEAN_CLIENT_ID'] %>
+  digitalocean_api_token: <%= ENV['DIGITALOCEAN_API_TOKEN'] %>
   google_client_email: <%= ENV['GOOGLE_CLIENT_EMAIL'] %>
   google_key_location: <%= ENV['GOOGLE_KEY_LOCATION'] %>
   google_project: <%= ENV['GOOGLE_PROJECT'] %>
@@ -18,8 +18,7 @@ driver_config:
 provisioner:
   name: chef_zero
   # require_chef_omnibus: 11.16.4
-  # require_chef_omnibus: 12.0.3
-  require_chef_omnibus: 12.1.1
+  require_chef_omnibus: latest
 
 platforms:
 - name: centos-5.8
@@ -27,27 +26,27 @@ platforms:
   driver_config:
     size: 2gb
     image: centos-5-8-x64
-    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: centos-6.5
   driver_plugin: digital_ocean
   driver_config:
     size: 2gb
     image: centos-6-5-x64
-    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: centos-7.0
   driver_plugin: digital_ocean
   driver_config:
     size: 2gb
     image: centos-7-0-x64
-    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: amazon-2014.09
   driver_plugin: ec2
@@ -74,23 +73,14 @@ platforms:
 #   run_list:
 #   - recipe[selinux::disabled]
 
-- name: fedora-20
+- name: fedora-21
   driver_plugin: digital_ocean
   driver_config:
     size: 2gb
-    image: fedora-20-x64
-    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
-
-# - name: fedora-21
-#   driver_plugin: digital_ocean
-#   driver_config:
-#     size: 2gb
-#     image: fedora-21-x64
-#     region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-#     ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-#     ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    image: fedora-21-x64
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 # - name: suse-11.3
 #   driver_plugin: ec2
@@ -100,37 +90,35 @@ platforms:
 #     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 - name: debian-7.0
-  driver_plugin: gce
-  driver_config:
-    image_name: debian-7-wheezy-v20131120
-    zone: <%= ENV['GCE_ZONE'] %>
-    area: <%= ENV['GCE_AREA'] %>
-    network: <%= ENV['GCE_NETWORK'] %>
-    username: <%= ENV['GCE_USERNAME'] %>
-    public_key_path: <%= ENV['GCE_PUBLIC_KEY_PATH'] %>
-    ssh_key: <%= ENV['GCE_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[apt]
-
-- name: ubuntu-10.04
   driver_plugin: digital_ocean
   driver_config:
     size: 2gb
-    image: ubuntu-10-04-x64
-    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    image: debian-7-0-x64
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
+
+# - name: debian-8
+#   driver_plugin: digital_ocean
+#   driver_config:
+#     size: 2gb
+#     image: debian-8-x64
+#     region: <%= ENV['DIGITALOCEAN_REGION'] %>
+#     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+#     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+#   run_list:
+#   - recipe[apt]
 
 - name: ubuntu-12.04
   driver_plugin: digital_ocean
   driver_config:
     size: 2gb
     image: ubuntu-12-04-x64
-    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
@@ -139,9 +127,20 @@ platforms:
   driver_config:
     size: 2gb
     image: ubuntu-14-04-x64
-    region: <%= ENV['DIGITAL_OCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITAL_OCEAN_SSH_KEY_IDS'] %>
-    ssh_key: <%= ENV['DIGITAL_OCEAN_SSH_KEY_PATH'] %>
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+  run_list:
+  - recipe[apt]
+
+- name: ubuntu-15.04
+  driver_plugin: digital_ocean
+  driver_config:
+    size: 2gb
+    image: ubuntu-15-04-x64
+    region: <%= ENV['DIGITALOCEAN_REGION'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
