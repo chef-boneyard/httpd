@@ -5,7 +5,7 @@ class Chef
       default_action :create
       actions :create, :delete
 
-      provides :httpd_module
+      provides :httpd_config
 
       attribute :config_name, kind_of: String, name_attribute: true, required: true
       attribute :cookbook, kind_of: String, default: nil
