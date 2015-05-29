@@ -45,7 +45,7 @@ module HttpdCookbook
       # Put all exceptions here
       case node['platform_family']
       when 'debian'
-        return 'libphp5.so' if %w(php5 php).include? module_name
+        return 'libphp5.so' if module_name == 'php5'
       when 'rhel'
         return 'libmodnss.so' if module_name == 'nss'
         return 'mod_rev.so' if module_name == 'revocator'
