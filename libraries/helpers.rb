@@ -52,6 +52,9 @@ module HttpdCookbook
         return 'libphp5.so' if module_name == 'php'
         return 'libphp5-zts.so' if module_name == 'php-zts'
       end
+      if node['platform_family'] == 'debian'
+        return 'libphp5.so' if module_name == 'php5'
+      end
       "mod_#{module_name}.so"
     end
 
