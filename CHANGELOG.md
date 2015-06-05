@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.2.14 (2015-06-05)
+-------------------
+- Fixing up mod_php filename for debian based distros
+
 v0.2.12 (2015-05-11)
 -------------------
 - Fixing 'provides' bug that was breaking 12.3
