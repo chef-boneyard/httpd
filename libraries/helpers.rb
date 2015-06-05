@@ -43,7 +43,10 @@ module HttpdCookbook
     def parsed_filename
       return new_resource.filename if new_resource.filename
       # Put all exceptions here
-      if node['platform_family'] == 'rhel'
+      case node['platform_family']
+      when 'debian'
+        return 'libphp5.so' if module_name == 'php5'
+      when 'rhel'
         return 'libmodnss.so' if module_name == 'nss'
         return 'mod_rev.so' if module_name == 'revocator'
         return 'libphp5.so' if module_name == 'php'
