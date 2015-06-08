@@ -236,7 +236,8 @@ class Chef
               run_group: parsed_run_group,
               run_user: parsed_run_user,
               server_root: "/etc/#{apache_name}",
-              servername: parsed_servername
+              servername: parsed_servername,
+              extra_options: new_resource.extra_options
               )
             cookbook 'httpd'
             action :create

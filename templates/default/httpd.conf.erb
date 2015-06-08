@@ -56,6 +56,12 @@ Listen <%= address %>:<%= port %>
 <%   end %>
 <% end %>
 
+<% if @extra_options %>
+<%   @extra_options.each do |directive,value| %>
+<%=    directive %> <%= value %>
+<%   end %>
+<% end %>
+
 <% if @includes %>
 <%  @includes.each do |i| %>
 Include <%= i %>
