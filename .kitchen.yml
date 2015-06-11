@@ -7,6 +7,7 @@ provisioner:
 platforms:
   - name: centos-5.11
   - name: centos-6.6
+  - name: centos-7.0
   - name: fedora-21
   - name: ubuntu-10.04
     run_list:
@@ -48,6 +49,7 @@ suites:
     - recipe[httpd_service_test::single]
     includes: [
       'amazon-2014.03',
+      'centos-7.0',
       'fedora-21',
       'smartos-13.4.0',
       'ubuntu-14.04',
