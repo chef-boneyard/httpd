@@ -35,8 +35,8 @@ module HttpdCookbook
       def includes
         return unless parsed_version.to_f < 2.4
         [
-          'conf.d/*.conf',
-          'conf.d/*.load'
+          'conf.d/*.load',
+          'conf.d/*.conf'
         ]
       end
 
@@ -44,8 +44,8 @@ module HttpdCookbook
         return unless parsed_version.to_f >= 2.4
         [
           'conf.d/*.load',
-          'conf.d/*.conf',
           'conf.modules.d/*.load',
+          'conf.d/*.conf',
           'conf.modules.d/*.conf'
         ]
       end

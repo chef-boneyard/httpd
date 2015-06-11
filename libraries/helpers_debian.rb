@@ -40,8 +40,8 @@ module HttpdCookbook
       def includes
         return unless apache_version.to_f < 2.4
         [
-          'conf.d/*.conf',
           'mods-enabled/*.load',
+          'conf.d/*.conf',
           'mods-enabled/*.conf'
         ]
       end
@@ -49,8 +49,8 @@ module HttpdCookbook
       def include_optionals
         return unless apache_version.to_f >= 2.4
         [
-          'conf-enabled/*.conf',
           'mods-enabled/*.load',
+          'conf-enabled/*.conf',
           'mods-enabled/*.conf',
           'sites-enabled/*.conf'
         ]
