@@ -63,7 +63,7 @@ module HttpdCookbook
         node['platform'],
         node['platform_family'],
         node['platform_version']
-        )
+      )
     end
 
     def parsed_service_package_name
@@ -73,7 +73,7 @@ module HttpdCookbook
         node['platform_family'],
         node['platform_version'],
         parsed_version
-        )
+      )
     end
 
     def parsed_maxclients

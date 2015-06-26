@@ -459,7 +459,7 @@ module HttpdCookbook
         platform: platform,
         platform_family: platform_family,
         platform_version: platform_version_key(platform, platform_family, platform_version)
-        )
+      )
     end
   end
 end

@@ -13,9 +13,6 @@ MethodLength:
 LineLength:
   Enabled: false
 
-# HashSyntax:
-#  EnforcedStyle: hash_rockets
-
 Documentation:
   Enabled: false
 
@@ -31,6 +28,10 @@ Style/FileName:
 Metrics/AbcSize:
   Enabled: false
 
+Metrics/ModuleLength:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'Guardfile'
+

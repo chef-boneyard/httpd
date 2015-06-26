@@ -10,7 +10,7 @@ describe 'package_name_for_service' do
       it 'returns the correct package_name' do
         expect(
           package_name_for_service('centos', 'rhel', '5.8', '2.2')
-          ).to eq('httpd')
+        ).to eq('httpd')
       end
     end
   end
@@ -20,7 +20,7 @@ describe 'package_name_for_service' do
       it 'returns the correct package_name' do
         expect(
           package_name_for_service('centos', 'rhel', '6.4', '2.2')
-          ).to eq('httpd')
+        ).to eq('httpd')
       end
     end
   end
@@ -30,7 +30,7 @@ describe 'package_name_for_service' do
       it 'returns the correct package_name' do
         expect(
           package_name_for_service('centos', 'rhel', '7.0', '2.4')
-          ).to eq('httpd')
+        ).to eq('httpd')
       end
     end
   end

@@ -39,7 +39,7 @@ if os[:family] =~ /debian/ || os[:family] =~ /ubuntu/
     it { should be_mode 777 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
-    it { should be_linked_to '/etc/apache2/mods-available/auth_basic.load' }
+    it { should be_linked_to '../mods-available/auth_basic.load' }
   end
 
   # auth_kerb
@@ -76,6 +76,6 @@ if os[:family] =~ /debian/ || os[:family] =~ /ubuntu/
     it { should be_mode 777 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
-    it { should be_linked_to '/etc/apache2/mods-available/auth_kerb.load' }
+    it { should be_linked_to '../mods-available/auth_kerb.load' }
   end
 end

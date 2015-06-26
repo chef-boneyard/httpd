@@ -14,7 +14,7 @@ class Chef
               super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:redhat)
             end
 
-            def self.supports?(resource, action)
+            def self.supports?(resource, _action)
               Chef::Platform::ServiceHelpers.config_for_service("httpd-#{resource.instance}").include?(:initd)
             end
           end
@@ -50,7 +50,7 @@ class Chef
                 apache_name: apache_name,
                 mpm: parsed_mpm,
                 pid_file: pid_file
-                )
+              )
               cookbook 'httpd'
               notifies :restart, "service[#{new_resource.name} :create #{apache_name}]"
               action :create

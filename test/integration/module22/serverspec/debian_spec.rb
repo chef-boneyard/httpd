@@ -4,7 +4,7 @@ set :backend, :exec
 
 puts "os: #{os}"
 
-if os[:family]  =~ /debian/ || os[:family] == 'ubuntu'
+if os[:family] =~ /debian/ || os[:family] == 'ubuntu'
 
   # auth_basic
   describe file('/usr/lib/apache2/modules/mod_auth_basic.so') do

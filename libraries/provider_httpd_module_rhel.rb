@@ -44,7 +44,7 @@ class Chef
               variables(
                 module_name: parsed_symbolname,
                 module_path: module_path
-                )
+              )
               cookbook 'httpd'
               action :create
             end
@@ -66,7 +66,7 @@ class Chef
               variables(
                 module_name: parsed_symbolname,
                 module_path: module_path
-                )
+              )
               cookbook 'httpd'
               action :create
             end

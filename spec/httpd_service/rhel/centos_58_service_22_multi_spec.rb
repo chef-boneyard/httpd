@@ -6,7 +6,7 @@ describe 'httpd_service_test::multi' do
       step_into: 'httpd_service',
       platform: 'centos',
       version: '5.8'
-      ) do |node|
+    ) do |node|
       node.set['httpd']['contact'] = 'bob@computers.biz'
       node.set['httpd']['version'] = '2.2'
       node.set['httpd']['keepalive'] = false

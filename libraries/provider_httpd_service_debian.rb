@@ -154,7 +154,7 @@ class Chef
               run_dir: run_dir,
               lock_dir: "/var/lock/#{apache_name}",
               log_dir: "/var/log/#{apache_name}"
-              )
+            )
             cookbook 'httpd'
             action :create
           end
@@ -237,7 +237,7 @@ class Chef
               run_user: parsed_run_user,
               server_root: "/etc/#{apache_name}",
               servername: parsed_servername
-              )
+            )
             cookbook 'httpd'
             action :create
           end
@@ -282,7 +282,7 @@ class Chef
               startservers: parsed_startservers,
               threadlimit: parsed_threadlimit,
               threadsperchild: parsed_threadsperchild
-              )
+            )
             cookbook 'httpd'
             action :create
           end

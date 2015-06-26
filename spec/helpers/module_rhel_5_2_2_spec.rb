@@ -28,7 +28,7 @@ describe 'looking up module package name' do
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.2', 'centos', 'rhel', '5.8')
-          ).to eq('httpd')
+        ).to eq('httpd')
       end
     end
 
@@ -36,7 +36,7 @@ describe 'looking up module package name' do
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.2', 'centos', 'rhel', '5.8')
-          ).to eq("mod_#{m}")
+        ).to eq("mod_#{m}")
       end
     end
   end

@@ -47,7 +47,7 @@ module HttpdCookbook
         platform_family: platform_family,
         platform_version: platform_version,
         httpd_version: httpd_version
-        )
+      )
     end
   end
 end

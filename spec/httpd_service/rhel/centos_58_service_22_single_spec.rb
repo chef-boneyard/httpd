@@ -6,7 +6,7 @@ describe 'httpd_service_test::single' do
       step_into: 'httpd_service',
       platform: 'centos',
       version: '5.8'
-      ).converge('httpd_service_test::single')
+    ).converge('httpd_service_test::single')
   end
 
   context 'when compiling the recipe' do

@@ -34,7 +34,7 @@ describe 'looking up module package name' do
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.4', 'amazon', 'rhel', '2014.03')
-          ).to eq('httpd24')
+        ).to eq('httpd24')
       end
     end
 
@@ -42,7 +42,7 @@ describe 'looking up module package name' do
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.4', 'amazon', 'rhel', '2014.03')
-          ).to eq("mod24_#{m}")
+        ).to eq("mod24_#{m}")
       end
     end
   end

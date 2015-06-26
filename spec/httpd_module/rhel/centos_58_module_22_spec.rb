@@ -6,7 +6,7 @@ describe 'httpd_module_test::default' do
       step_into: 'httpd_module',
       platform: 'centos',
       version: '5.8'
-      ) do |node|
+    ) do |node|
       node.set['httpd']['version'] = '2.2'
     end.converge('httpd_module_test::default')
   end

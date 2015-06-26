@@ -6,7 +6,7 @@ describe 'httpd_config_test::default' do
       step_into: 'httpd_config',
       platform: 'centos',
       version: '5.8'
-      ).converge('httpd_config_test::default')
+    ).converge('httpd_config_test::default')
   end
 
   context 'compiling the recipe' do
