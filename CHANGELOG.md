@@ -1,6 +1,11 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.2.16 (2015-06-26)
+-------------------
+- Dropping Chef 11 support
+- fix the priority map dsl method
+
 0.2.15 (2015-06-26)
 -------------------
 - Fixing up provider resolution code to work properly with 12.4
