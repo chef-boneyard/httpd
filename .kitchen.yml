@@ -7,6 +7,7 @@ provisioner:
 platforms:
   - name: centos-5.11
   - name: centos-6.6
+  - name: centos-7.1
   - name: fedora-21
   - name: ubuntu-10.04
     run_list:
@@ -51,6 +52,7 @@ suites:
       'fedora-21',
       'smartos-13.4.0',
       'ubuntu-14.04',
+      'centos-7.1',
     ]
     attributes:
       httpd:

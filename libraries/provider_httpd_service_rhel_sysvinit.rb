@@ -6,13 +6,18 @@ class Chef
     class HttpdService
       class Rhel
         class Sysvinit < Chef::Provider::HttpdService::Rhel
-          #
-          # Amazon is in the "rhel" platform_family and doesn't play nice.
-          # And so, we have to use platform instead.
-          provides :httpd_service, platform: 'amazon' if respond_to?(:provides)
-          provides :httpd_service, platform: 'centos' if respond_to?(:provides)
-          provides :httpd_service, platform: 'redhat' if respond_to?(:provides)
-          provides :httpd_service, platform: 'suse' if respond_to?(:provides)
+          if respond_to?(:provides)
+            # This is Chef-12.0.0 back-compat, it is different from current core chef 12.4.0 declarations
+            provides :httpd_service, platform_family: 'rhel'
+
+            def self.provides?(node, resource)
+              super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:redhat)
+            end
+
+            def self.supports?(resource, action)
+              Chef::Platform::ServiceHelpers.config_for_service("httpd-#{resource.instance}").include?(:initd)
+            end
+          end
 
           use_inline_resources if defined?(use_inline_resources)
 
