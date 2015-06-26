@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.2.15 (2015-06-26)
+-------------------
+- Fixing up provider resolution code to work properly with 12.4
+
 0.2.14 (2015-06-05)
 -------------------
 - Fixing up mod_php filename for debian based distros
