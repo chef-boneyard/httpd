@@ -13,10 +13,6 @@ class Chef
             super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
           end
 
-          def self.supports?(resource, _action)
-            Chef::Platform::ServiceHelpers.config_for_service("httpd-#{resource.instance}").include?(:systemd)
-          end
-
           use_inline_resources
 
           def whyrun_supported?
