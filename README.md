@@ -16,7 +16,7 @@ other httpd server implementations like Lighttpd, Nginx, or IIS.
 
 Requirements
 ------------
-- Chef 11 or higher
+- Chef 12.0.0 or higher
 - Ruby 1.9 or higher (preferably from the Chef full-stack installer)
 - Network accessible package repositories
 

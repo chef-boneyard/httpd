@@ -6,10 +6,10 @@ class Chef
   class Provider
     class HttpdConfig
       class Debian < Chef::Provider::HttpdConfig
-        provides :httpd_config, platform_family: 'debian' if respond_to?(:provides)
-        provides :httpd_config, platform_family: 'ubuntu' if respond_to?(:provides)
+        provides :httpd_config, platform_family: 'debian'
+        provides :httpd_config, platform_family: 'ubuntu'
 
-        use_inline_resources if defined?(use_inline_resources)
+        use_inline_resources
 
         def whyrun_supported?
           true

@@ -6,20 +6,18 @@ class Chef
     class HttpdService
       class Rhel
         class Sysvinit < Chef::Provider::HttpdService::Rhel
-          if respond_to?(:provides)
-            # This is Chef-12.0.0 back-compat, it is different from current core chef 12.4.0 declarations
-            provides :httpd_service, platform_family: 'rhel'
+          # This is Chef-12.0.0 back-compat, it is different from current core chef 12.4.0 declarations
+          provides :httpd_service, platform_family: 'rhel'
 
-            def self.provides?(node, resource)
-              super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:redhat)
-            end
-
-            def self.supports?(resource, _action)
-              Chef::Platform::ServiceHelpers.config_for_service("httpd-#{resource.instance}").include?(:initd)
-            end
+          def self.provides?(node, resource)
+            super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:redhat)
           end
 
-          use_inline_resources if defined?(use_inline_resources)
+          def self.supports?(resource, _action)
+            Chef::Platform::ServiceHelpers.config_for_service("httpd-#{resource.instance}").include?(:initd)
+          end
+
+          use_inline_resources
 
           def whyrun_supported?
             true
