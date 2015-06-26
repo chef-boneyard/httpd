@@ -8,7 +8,7 @@ class Chef
         class Systemd < Chef::Provider::HttpdService::Rhel
           if respond_to?(:provides)
             # This is Chef-12.0.0 back-compat, it is different from current core chef 12.4.0 declarations
-            provides :httpd_service, platform_family: 'rhel'
+            provides :httpd_service, platform_family: ['rhel', 'fedora']
 
             def self.provides?(node, resource)
               super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)

@@ -82,6 +82,8 @@ platforms:
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+  run_list:
+  - recipe[selinux::disabled]
 
 # - name: suse-11.3
 #   driver_plugin: ec2
@@ -134,16 +136,16 @@ platforms:
   run_list:
   - recipe[apt]
 
-- name: ubuntu-15.04
-  driver_plugin: digital_ocean
-  driver_config:
-    size: 2gb
-    image: ubuntu-15-04-x64
-    region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
-  run_list:
-  - recipe[apt]
+# - name: ubuntu-15.04
+#   driver_plugin: digital_ocean
+#   driver_config:
+#     size: 2gb
+#     image: ubuntu-15-04-x64
+#     region: <%= ENV['DIGITALOCEAN_REGION'] %>
+#     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+#     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+#   run_list:
+#   - recipe[apt]
 
 # - name: omnios-151006
 #   driver_plugin: ec2
