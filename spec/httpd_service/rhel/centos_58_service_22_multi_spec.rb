@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe 'httpd_service_test::multi' do
+  before do
+    allow(Chef::Platform::ServiceHelpers).to receive(:service_resource_providers).and_return(
+      [ :redhat ]
+    )
+  end
+
   cached(:centos_58_service_22_multi) do
     ChefSpec::ServerRunner.new(
       step_into: 'httpd_service',
