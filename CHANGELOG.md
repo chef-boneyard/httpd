@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.2.17 (2015-06-28)
+-------------------
+- Fixing IfModule by including .load before .conf
+
 0.2.16 (2015-06-26)
 -------------------
 - Dropping Chef 11 support
