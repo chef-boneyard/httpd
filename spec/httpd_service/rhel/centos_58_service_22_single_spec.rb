@@ -31,7 +31,6 @@ describe 'httpd_service_test::single' do
           minspareservers: nil,
           timeout: '400'
         )
-        pp Chef::Platform::ProviderPriorityMap.instance
     end
   end
 
