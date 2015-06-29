@@ -3,7 +3,7 @@ require_relative 'provider_httpd_service_debian'
 class Chef
   class Provider
     class HttpdServiceDebianSysvinit < Chef::Provider::HttpdServiceDebian
-      provides :httpd_service, platform_family: %w(debian ubuntu)
+      provides :httpd_service, platform_family: 'debian'
 
       action :start do
         # init script
