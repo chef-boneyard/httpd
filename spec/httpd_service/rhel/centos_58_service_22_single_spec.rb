@@ -11,7 +11,7 @@ describe 'httpd_service_test::single' do
 
   before do
     allow(Chef::Platform::ServiceHelpers).to receive(:service_resource_providers).and_return(
-      [ :redhat ]
+      [:redhat]
     )
   end
 

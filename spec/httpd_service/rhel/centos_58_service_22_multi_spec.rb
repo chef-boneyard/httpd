@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'httpd_service_test::multi' do
   before do
     allow(Chef::Platform::ServiceHelpers).to receive(:service_resource_providers).and_return(
-      [ :redhat ]
+      [:redhat]
     )
   end
 
