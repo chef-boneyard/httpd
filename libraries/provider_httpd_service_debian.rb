@@ -1,20 +1,20 @@
+require 'chef/provider/lwrp_base'
 require_relative 'helpers'
 require_relative 'helpers_debian'
 
 class Chef
   class Provider
-    module HttpdServiceDebian
-      # THIS IS A MODULE AND NOT A CLASS THAT INHERITS FROM LWRPBASE BECUASE IT IS
-      # ABSTRACT AND MUST *NOT* BE WIRED UP TO THE DSL DIRECTLY, THIS FILE IS NOT A
-      # COMPLETE LWRP, IT IS JUST A MODULE OF SHARED CODE.
+    class HttpdServiceDebian < Chef::Provider::LWRPBase
       include HttpdCookbook::Helpers
       include HttpdCookbook::Helpers::Debian
+
+      use_inline_resources
 
       def whyrun_supported?
         true
       end
 
-      def action_create
+      action :create do
         # We need to dynamically render the resource name into the title in
         # order to ensure uniqueness. This avoids cloning via
         # CHEF-3694 and allows ChefSpec to work properly.
@@ -339,7 +339,7 @@ class Chef
         end
       end
 
-      def action_delete
+      action :delete do
         delete_stop_service
 
         # support directories

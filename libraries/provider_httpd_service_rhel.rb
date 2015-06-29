@@ -1,20 +1,20 @@
+require 'chef/provider/lwrp_base'
 require_relative 'helpers_rhel'
 require_relative 'helpers'
 
 class Chef
   class Provider
-    module HttpdServiceRhel
-      # THIS IS A MODULE AND NOT A CLASS THAT INHERITS FROM LWRPBASE BECUASE IT IS
-      # ABSTRACT AND MUST *NOT* BE WIRED UP TO THE DSL DIRECTLY, THIS FILE IS NOT A
-      # COMPLETE LWRP, IT IS JUST A MODULE OF SHARED CODE.
+    class HttpdServiceRhel < Chef::Provider::LWRPBase
       include HttpdCookbook::Helpers
       include HttpdCookbook::Helpers::Rhel
+
+      use_inline_resources
 
       def whyrun_supported?
         true
       end
 
-      def action_create
+      action :create do
         # FIXME: make into resource parameters
         lock_file = nil
         mutex = nil
@@ -254,7 +254,7 @@ class Chef
         end
       end
 
-      def action_delete
+      action :delete do
         delete_stop_service
 
         link "#{new_resource.name} :delete /usr/sbin/#{apache_name}" do

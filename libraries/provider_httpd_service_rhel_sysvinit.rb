@@ -1,18 +1,14 @@
-require 'chef/provider/lwrp_base'
 require_relative 'provider_httpd_service_rhel'
 
 class Chef
   class Provider
-    class HttpdServiceRhelSysvinit < Chef::Provider::LWRPBase
-      include Chef::Provider::HttpdServiceRhel
+    class HttpdServiceRhelSysvinit < Chef::Provider::HttpdServiceRhel
       # This is Chef-12.0.0 back-compat, it is different from current core chef 12.4.0 declarations
       provides :httpd_service, platform_family: %w(rhel fedora)
 
       def self.provides?(node, resource)
         super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:redhat)
       end
-
-      use_inline_resources
 
       action :start do
         template "#{new_resource.name} :create /etc/init.d/#{apache_name}" do

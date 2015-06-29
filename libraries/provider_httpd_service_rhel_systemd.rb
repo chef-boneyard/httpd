@@ -3,13 +3,9 @@ require_relative 'provider_httpd_service_rhel'
 
 class Chef
   class Provider
-    class HttpdServiceRhelSystemd < Chef::Provider::LWRPBase
-      include Chef::Provider::HttpdServiceRhel
-
+    class HttpdServiceRhelSystemd < Chef::Provider::HttpdServiceRhel
       # This is Chef-12.0.0 back-compat, it is different from current core chef 12.4.0 declarations
       provides :httpd_service, platform_family: %w(rhel fedora)
-
-      use_inline_resources
 
       def self.provides?(node, resource)
         super && Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
