@@ -60,23 +60,23 @@ class Chef
           action :create
         end
       end
-    end
 
-    action :delete do
-      directory "#{new_resource.name} :delete /etc/#{apache_name}/mods-available" do
-        path "/etc/#{apache_name}/mods-available"
-        recursive true
-        action :delete
-      end
+      action :delete do
+        directory "#{new_resource.name} :delete /etc/#{apache_name}/mods-available" do
+          path "/etc/#{apache_name}/mods-available"
+          recursive true
+          action :delete
+        end
 
-      file "#{new_resource.name} :delete /etc/#{apache_name}/mods-available/#{module_name}.load" do
-        path "/etc/#{apache_name}/mods-available/#{module_name}.load"
-        action :delete
-      end
+        file "#{new_resource.name} :delete /etc/#{apache_name}/mods-available/#{module_name}.load" do
+          path "/etc/#{apache_name}/mods-available/#{module_name}.load"
+          action :delete
+        end
 
-      link "#{new_resource.name} :delete /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
-        target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
-        action :delete
+        link "#{new_resource.name} :delete /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
+          target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
+          action :delete
+        end
       end
     end
   end
