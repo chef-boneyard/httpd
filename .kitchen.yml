@@ -9,16 +9,19 @@ platforms:
   - name: centos-6.6
   - name: centos-7.1
   - name: fedora-21
-  - name: ubuntu-10.04
-    run_list:
-    - recipe[apt]
+  - name: fedora-22
   - name: ubuntu-12.04
     run_list:
     - recipe[apt]
   - name: ubuntu-14.04
     run_list:
     - recipe[apt]
-  - name: windows-2008R2
+  - name: ubuntu-15.04
+    run_list:
+    - recipe[apt]
+  - name: debian-6.0.10
+  - name: debian-7.8
+  - name: debian-8.0
 
 suites:
   #
@@ -28,13 +31,10 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'amazon-2014.03',
-      'debian-7.2',
-      'omnios-151006',
+      'debian-6.0.10',
+      'debian-7.8',
       'centos-5.11',
       'centos-6.6',
-      'smartos-13.4.0',
-      'ubuntu-10.04',
       'ubuntu-12.04',
     ]
     attributes:
@@ -48,10 +48,11 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'amazon-2014.03',
+      'debian-8.0',
       'fedora-21',
-      'smartos-13.4.0',
+      'fedora-22',
       'ubuntu-14.04',
+      'ubuntu-15.04',
       'centos-7.1',
     ]
     attributes:

@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.2.18 (2015-06-30)
+------------------
+- Fixes for correct Provider Resolver behavior and more 12.4.0 fixes
+
 0.2.17 (2015-06-28)
 -------------------
 - Fixing IfModule by including .load before .conf
