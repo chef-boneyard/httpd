@@ -9,6 +9,12 @@ describe 'httpd_service_test::single' do
     ).converge('httpd_service_test::single')
   end
 
+  before do
+    allow(Chef::Platform::ServiceHelpers).to receive(:service_resource_providers).and_return(
+      [:redhat]
+    )
+  end
+
   context 'when compiling the recipe' do
     it 'creates httpd_service[default]' do
       expect(centos_58_service_22_single).to create_httpd_service('default')

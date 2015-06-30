@@ -5,7 +5,7 @@ require_relative 'provider_httpd_service_rhel_sysvinit'
 if defined? Chef::Platform::ProviderPriorityMap
   Chef::Platform::ProviderPriorityMap.instance.priority(
     :httpd_service,
-    [Chef::Provider::HttpdService::Rhel::Systemd,  Chef::Provider::HttpdService::Rhel::Sysvinit],
+    [Chef::Provider::HttpdServiceRhelSystemd,  Chef::Provider::HttpdServiceRhelSysvinit],
     platform_family: 'rhel'
   )
 end
