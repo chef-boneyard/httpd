@@ -1,7 +1,8 @@
 HTTPD Cookbook
 =======================
 
-[![Join the chat at https://gitter.im/chef-cookbooks/httpd](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/chef-cookbooks/httpd?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/chef-cookbooks/httpd.svg?branch=master)](https://travis-ci.org/chef-cookbooks/httpd)
+[![Cookbook Version](https://img.shields.io/cookbook/v/httpd.svg)](https://supermarket.chef.io/cookbooks/httpd)
 
 The HTTPD Cookbook is a Library Cookbook that provides resource
 primitives for use in recipes. It is designed to be an example to
