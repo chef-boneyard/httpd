@@ -6,8 +6,14 @@ provisioner:
 
 platforms:
   - name: centos-5.11
-  - name: centos-6.6
+  - name: centos-6.7
   - name: centos-7.1
+  - name: debian-7.8
+    run_list:
+    - recipe[apt]
+  - name: debian-8.1
+    run_list:
+    - recipe[apt]
   - name: fedora-21
   - name: fedora-22
   - name: ubuntu-12.04
@@ -19,9 +25,6 @@ platforms:
   - name: ubuntu-15.04
     run_list:
     - recipe[apt]
-  - name: debian-6.0.10
-  - name: debian-7.8
-  - name: debian-8.0
 
 suites:
   #
@@ -31,10 +34,9 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'debian-6.0.10',
       'debian-7.8',
       'centos-5.11',
-      'centos-6.6',
+      'centos-6.7',
       'ubuntu-12.04',
     ]
     attributes:
@@ -48,7 +50,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'debian-8.0',
+      'debian-8.1',
       'fedora-21',
       'fedora-22',
       'ubuntu-14.04',
