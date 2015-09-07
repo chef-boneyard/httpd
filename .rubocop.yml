@@ -1,3 +1,8 @@
+AllCops:
+  Exclude:
+    - vendor/**/*
+    - 'Guardfile'
+
 AlignParameters:
   Enabled: false
 
@@ -30,8 +35,3 @@ Metrics/AbcSize:
 
 Metrics/ModuleLength:
   Enabled: false
-
-AllCops:
-  Exclude:
-    - 'Guardfile'
-
