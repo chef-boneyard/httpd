@@ -443,6 +443,10 @@ module HttpdCookbook
       modules for: { platform: 'amazon', httpd_version: '2.4' },
               are: %w(auth_form session_cookie session_crypto session_dbd),
               found_in_package: ->(_name) { 'mod_session' }
+
+      modules for: { platform: 'amazon', platform_version: '2015.03', httpd_version: '2.4' },
+              are: %w(php),
+              found_in_package: ->(_name) { 'php56' }
     end
 
     def platform_version_key(platform, platform_family, platform_version)
