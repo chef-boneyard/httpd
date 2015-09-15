@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.2.19 (2015-09-15)
+------------------
+- Updating for Amazon Linux 2015.03
+
 0.2.18 (2015-06-30)
 ------------------
 - Fixes for correct Provider Resolver behavior and more 12.4.0 fixes
