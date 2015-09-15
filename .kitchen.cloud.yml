@@ -56,6 +56,13 @@ platforms:
     username: ec2-user
     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
+- name: amazon-2015.03
+  driver_plugin: ec2
+  driver_config:
+    image_id: ami-0d4cfd66
+    username: ec2-user
+    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+
 # - name: redhat-6.5
 #   driver_plugin: ec2
 #   driver_config:
@@ -178,7 +185,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'amazon-2014.09',
+      'amazon-2015.03',
       'centos-5.8',
       'centos-6.5',
       'debian-7.0',
@@ -231,7 +238,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'amazon-2014.09',
+      'amazon-2015.03',
       'centos-7.0',
       'fedora-20',
       'fedora-21',
@@ -250,7 +257,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::multi]
     includes: [
-      'amazon-2014.09',
+      'amazon-2015.03',
       'centos-7.0',
       'fedora-20',
       'fedora-21',
@@ -282,7 +289,7 @@ suites:
     run_list:
     - recipe[httpd_module_test]
     includes: [
-      'amazon-2014.09',
+      'amazon-2014.03',
       'centos-5.8',
       'centos-6.5',
       'debian-7.0',
@@ -299,7 +306,7 @@ suites:
     run_list:
     - recipe[httpd_module_test]
     includes: [
-      'amazon-2014.09',
+      'amazon-2015.03',
       'centos-7.0',
       'fedora-20',
       'fedora-21',
