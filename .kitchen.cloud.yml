@@ -7,8 +7,6 @@ driver_config:
   joyent_keyfile: <%= ENV['SDC_CLI_IDENTITY'] %>
   joyent_keyname: <%= ENV['SDC_CLI_KEY_ID'] %>
   joyent_url: <%= ENV['SDC_CLI_URL'] %>
-  aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
-  aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
   instance_type: <%= ENV['EC2_FLAVOR_ID'] %>
   availability_zone: <%= ENV['AWS_AVAILABILITY_ZONE'] %>
