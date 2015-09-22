@@ -66,7 +66,7 @@ module HttpdCookbook
                 ruwsgi_dbg scgi shib2 spamhaus speedycgi suphp upload_progress uwsgi
                 uwsgi_dbg vhost_hash_alias vhost_ldap wsgi wsgi_py3 xsendfile
               ),
-              found_in_package: ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
+              found_in_package: ->(name) { "libapache2-mod-#{name.tr('_', '-')}" }
 
       #
       # debian packaging for apache 2.4
@@ -110,7 +110,7 @@ module HttpdCookbook
                 watchcat webauth webauthldap webkdc wsgi_py3 xsendfile modsecurity
                 mpm_itk request_perl sitecontrol_perl svn webauth webkdc
               ),
-              found_in_package: ->(name) { "libapache2-mod-#{name.gsub('_', '-')}" }
+              found_in_package: ->(name) { "libapache2-mod-#{name.tr('_', '-')}" }
 
       #
       # rhel-5

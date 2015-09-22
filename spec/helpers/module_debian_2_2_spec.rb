@@ -51,7 +51,7 @@ describe 'looking up module package name' do
       it 'returns the proper package name' do
         expect(
           package_name_for_module(m, '2.2', 'debian', 'debian', '7.2')
-        ).to eq("libapache2-mod-#{m.gsub('_', '-')}")
+        ).to eq("libapache2-mod-#{m.tr('_', '-')}")
       end
     end
   end
