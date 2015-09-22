@@ -1,5 +1,5 @@
 driver_config:
-  digitalocean_api_token: <%= ENV['DIGITALOCEAN_API_TOKEN'] %>
+  digitalocean_access_token: <%= ENV['DIGITALOCEAN_API_TOKEN'] %>
   google_client_email: <%= ENV['GOOGLE_CLIENT_EMAIL'] %>
   google_key_location: <%= ENV['GOOGLE_KEY_LOCATION'] %>
   google_project: <%= ENV['GOOGLE_PROJECT'] %>
