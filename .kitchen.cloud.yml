@@ -164,7 +164,7 @@ platforms:
 #   driver_plugin: joyent
 #   driver_config:
 #     joyent_image_id: 62f148f8-6e84-11e4-82c5-efca60348b9f
-#     joyent_instance_type: g3-standard-4-smartos
+#     joyent_flavor_id: g3-standard-4-smartos
 #     username: root
 #     ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
 #   busser:
