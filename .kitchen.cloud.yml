@@ -9,8 +9,8 @@ driver_config:
   joyent_url: <%= ENV['SDC_CLI_URL'] %>
   aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
   aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
-  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
-  flavor_id: <%= ENV['EC2_FLAVOR_ID'] %>
+  aws_transport.ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  instance_type: <%= ENV['EC2_FLAVOR_ID'] %>
   availability_zone: <%= ENV['AWS_AVAILABILITY_ZONE'] %>
 
 provisioner:
@@ -24,8 +24,8 @@ platforms:
     size: 2gb
     image: centos-5-8-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: centos-6.5
   driver:
@@ -34,8 +34,8 @@ platforms:
     size: 2gb
     image: centos-6-5-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: centos-7.0
   driver:
@@ -44,29 +44,29 @@ platforms:
     size: 2gb
     image: centos-7-0-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: amazon-2014.09
   driver_plugin: ec2
   driver_config:
     image_id: ami-9a6ed3f2
-    username: ec2-user
-    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+    transport.username: ec2-user
+    transport.ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 - name: amazon-2015.03
   driver_plugin: ec2
   driver_config:
     image_id: ami-0d4cfd66
-    username: ec2-user
-    ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+    transport.username: ec2-user
+    transport.ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 # - name: redhat-6.5
 #   driver_plugin: ec2
 #   driver_config:
 #     image_id: ami-8d756fe4
-#     username: ec2-user
-#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+#     transport.username: ec2-user
+#     transport.ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 #   run_list:
 #   - recipe[selinux::disabled]
 
@@ -74,8 +74,8 @@ platforms:
 #   driver_plugin: ec2
 #   driver_config:
 #     image_id: ami-a8d369c0
-#     username: ec2-user
-#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+#     transport.username: ec2-user
+#     transport.ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 #   run_list:
 #   - recipe[selinux::disabled]
 
@@ -86,8 +86,8 @@ platforms:
     size: 2gb
     image: fedora-21-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[selinux::disabled]
 
@@ -95,8 +95,8 @@ platforms:
 #   driver_plugin: ec2
 #   driver_config:
 #     image_id: ami-e8084981
-#     username: root
-#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+#     transport.username: root
+#     transport.ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 - name: debian-7.0
   driver:
@@ -105,8 +105,8 @@ platforms:
     size: 2gb
     image: debian-7-0-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
@@ -117,8 +117,8 @@ platforms:
 #     size: 2gb
 #     image: debian-8-x64
 #     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-#     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-#     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+#     transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+#     transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 #   run_list:
 #   - recipe[apt]
 
@@ -129,8 +129,8 @@ platforms:
     size: 2gb
     image: ubuntu-12-04-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
@@ -141,8 +141,8 @@ platforms:
     size: 2gb
     image: ubuntu-14-04-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
@@ -153,8 +153,8 @@ platforms:
 #     size: 2gb
 #     image: ubuntu-15-04-x64
 #     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-#     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-#     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+#     transport.ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+#     transport.ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 #   run_list:
 #   - recipe[apt]
 
@@ -162,9 +162,9 @@ platforms:
 #   driver_plugin: ec2
 #   driver_config:
 #     image_id: ami-35eb835c
-#     flavor_id: m3.large
-#     username: root
-#     ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+#     instance_type: m3.large
+#     transport.username: root
+#     transport.ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 #   run_list:
 #   - recipe[ips-omniti]
 
@@ -172,9 +172,9 @@ platforms:
 #   driver_plugin: joyent
 #   driver_config:
 #     joyent_image_id: 62f148f8-6e84-11e4-82c5-efca60348b9f
-#     joyent_flavor_id: g3-standard-4-smartos
-#     username: root
-#     ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
+#     joyent_instance_type: g3-standard-4-smartos
+#     transport.username: root
+#     transport.ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
 #   busser:
 #     ruby_bindir: '/opt/local/bin/'
 #   provisioner:
