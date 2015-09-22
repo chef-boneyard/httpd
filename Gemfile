@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
+group :rake do
+  gem 'rake'
+  gem 'tomlrb'
+end
+
 group :lint do
-  gem 'foodcritic', '~> 4.0'
+  gem 'foodcritic', '~> 5.0'
   gem 'rubocop', '~> 0.33'
 end
 
@@ -15,11 +20,11 @@ group :kitchen_common do
 end
 
 group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 0.18'
+  gem 'kitchen-vagrant', '~> 0.19'
 end
 
 group :kitchen_cloud do
-  gem 'kitchen-digitalocean', '~> 0.8'
+  gem 'kitchen-digitalocean', '~> 0.9'
   gem 'kitchen-ec2',          '~> 0.8'
   gem 'kitchen-joyent',       '~> 0.1'
   gem 'kitchen-gce',          '~> 0.2'
@@ -34,5 +39,4 @@ group :development do
   gem 'guard-foodcritic'
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'rake'
 end
