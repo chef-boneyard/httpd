@@ -24,9 +24,8 @@ platforms:
     size: 2gb
     image: centos-5-8-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    transport:
-      ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-      ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: centos-6.5
   driver:
@@ -35,9 +34,8 @@ platforms:
     size: 2gb
     image: centos-6-5-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    transport:
-      ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-      ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: centos-7.0
   driver:
@@ -46,9 +44,8 @@ platforms:
     size: 2gb
     image: centos-7-0-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    transport:
-      ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-      ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 
 - name: amazon-2014.09
   driver_plugin: ec2
@@ -93,9 +90,8 @@ platforms:
     size: 2gb
     image: fedora-21-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    transport:
-      ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-      ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[selinux::disabled]
 
@@ -114,9 +110,8 @@ platforms:
     size: 2gb
     image: debian-7-0-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    transport:
-      ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-      ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+    ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+    ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
   - recipe[apt]
 
@@ -127,9 +122,8 @@ platforms:
 #     size: 2gb
 #     image: debian-8-x64
 #     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-#     transport:
-#       ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
-#       ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
+#     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
+#     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
 #   run_list:
 #   - recipe[apt]
 
@@ -140,7 +134,6 @@ platforms:
     size: 2gb
     image: ubuntu-12-04-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    transport:
     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
@@ -153,7 +146,6 @@ platforms:
     size: 2gb
     image: ubuntu-14-04-x64
     region: <%= ENV['DIGITALOCEAN_REGION'] %>
-    transport:
     ssh_key_ids: <%= ENV['DIGITALOCEAN_SSH_KEYS'] %>
     ssh_key: <%= ENV['DIGITALOCEAN_SSH_KEY_PATH'] %>
   run_list:
@@ -175,9 +167,8 @@ platforms:
 #   driver_config:
 #     joyent_image_id: 62f148f8-6e84-11e4-82c5-efca60348b9f
 #     joyent_instance_type: g3-standard-4-smartos
-#     transport:
-#       username: root
-#       ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
+#     username: root
+#     ssh_key: <%= ENV['SDC_CLI_IDENTITY'] %>
 #   busser:
 #     ruby_bindir: '/opt/local/bin/'
 #   provisioner:
@@ -198,7 +189,6 @@ suites:
       'debian-7.0',
       'omnios-151006',
       'smartos-13.4.0',
-      'ubuntu-10.04',
       'ubuntu-12.04',
       'ubuntu-13.10',
     ]
@@ -302,7 +292,6 @@ suites:
       'debian-7.0',
       'omnios-151006',
       'smartos-13.4.0',
-      'ubuntu-10.04',
       'ubuntu-12.04'
     ]
     attributes:
