@@ -256,14 +256,18 @@ for. Defaults to 'default'.
 - `module_name` - The module name to install. Defaults to the
   `httpd_module` name.
 
-
-`package_name` - The package name the module is found in. By default,
+- `package_name` - The package name the module is found in. By default,
 this is looked up in an internal map.
 
 ### httpd_config
-The `httpd_config` resource is a thin wrapper around the core Chef
-template resource. Instead of a path parameter, `httpd_config` uses
-the instance parameter to calculate where the config is dropped off.
+The `httpd_config` resource is responsible for creating and 
+deleting site specific configuration files on the system. There are 
+slight differences in the resource implementation on platforms. The 
+`httpd_config` resource is a thin wrapper around the core Chef template 
+resource. Instead of a path parameter, `httpd_config` uses the instance 
+parameter to calculate where the config is dropped off.
+
+Check the [Apache HTTP Server Project documentation](http://httpd.apache.org/docs/) for configuration specifics based on Apache version. 
 
 #### Examples
 
