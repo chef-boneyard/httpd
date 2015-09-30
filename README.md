@@ -302,11 +302,11 @@ Check the [Apache HTTP Server Project documentation](http://httpd.apache.org/doc
 
 License & Authors
 -----------------
-- Author:: Sean OMeara (<sean@chef.io>)
+**Author:**  Sean OMeara (<sean@chef.io>)
 
-```text
-Copyright:: 2009-2014 Chef Software, Inc
+**Copyright:** 2008-2015, Chef Software, Inc.
 
+```
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
