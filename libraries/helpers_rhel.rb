@@ -7,7 +7,7 @@ module HttpdCookbook
 
       def libarch
         return 'lib64' if node['kernel']['machine'] == 'x86_64'
-        return 'lib64' if node['kernel']['machine'] == 'i686'
+        return 'lib' if node['kernel']['machine'] == 'i686'
       end
 
       def module_name
