@@ -3,12 +3,12 @@ require 'chef_compat/resource'
 module HttpdCookbook
   module Helpers
     def parsed_version
-      return new_resource.version if new_resource.version
+      return version if version
       default_apache_version
     end
 
     def parsed_httpd_version
-      return new_resource.httpd_version if new_resource.httpd_version
+      return httpd_version if httpd_version
       default_apache_version
     end
 
@@ -36,7 +36,7 @@ module HttpdCookbook
     end
 
     def parsed_symbolname
-      return new_resource.symbolname if new_resource.symbolname
+      return symbolname if symbolname
       # Put all exceptions here
       return 'php5_module' if module_name == 'php'
       return 'php5_module' if module_name == 'php-zts'
@@ -44,7 +44,7 @@ module HttpdCookbook
     end
 
     def parsed_filename
-      return new_resource.filename if new_resource.filename
+      return filename if filename
       # Put all exceptions here
       case node['platform_family']
       when 'debian'
@@ -59,7 +59,7 @@ module HttpdCookbook
     end
 
     def parsed_module_package_name
-      return new_resource.package_name if new_resource.package_name
+      return package_name if package_name
       package_name_for_module(
         module_name,
         parsed_httpd_version,
@@ -70,7 +70,7 @@ module HttpdCookbook
     end
 
     def parsed_service_package_name
-      return new_resource.package_name if new_resource.package_name
+      return package_name if package_name
       package_name_for_service(
         node['platform'],
         node['platform_family'],
@@ -80,47 +80,47 @@ module HttpdCookbook
     end
 
     def parsed_maxclients
-      return new_resource.maxclients if new_resource.maxclients
+      return maxclients if maxclients
       default_value_for(parsed_version, parsed_mpm, :maxclients)
     end
 
     def parsed_maxconnectionsperchild
-      return new_resource.maxconnectionsperchild if new_resource.maxconnectionsperchild
+      return maxconnectionsperchild if maxconnectionsperchild
       default_value_for(parsed_version, parsed_mpm, :maxconnectionsperchild)
     end
 
     def parsed_maxrequestsperchild
-      return new_resource.maxrequestsperchild if new_resource.maxrequestsperchild
+      return maxrequestsperchild if maxrequestsperchild
       default_value_for(parsed_version, parsed_mpm, :maxrequestsperchild)
     end
 
     def parsed_maxrequestworkers
-      return new_resource.maxrequestworkers if new_resource.maxrequestworkers
+      return maxrequestworkers if maxrequestworkers
       default_value_for(parsed_version, parsed_mpm, :maxrequestworkers)
     end
 
     def parsed_maxspareservers
-      return new_resource.maxspareservers if new_resource.maxspareservers
+      return maxspareservers if maxspareservers
       default_value_for(parsed_version, parsed_mpm, :maxspareservers)
     end
 
     def parsed_maxsparethreads
-      return new_resource.maxsparethreads if new_resource.maxsparethreads
+      return maxsparethreads if maxsparethreads
       default_value_for(parsed_version, parsed_mpm, :maxsparethreads)
     end
 
     def parsed_minspareservers
-      return new_resource.minspareservers if new_resource.minspareservers
+      return minspareservers if minspareservers
       default_value_for(parsed_version, parsed_mpm, :minspareservers)
     end
 
     def parsed_minsparethreads
-      return new_resource.minsparethreads if new_resource.minsparethreads
+      return minsparethreads if minsparethreads
       default_value_for(parsed_version, parsed_mpm, :minsparethreads)
     end
 
     def parsed_modules
-      return new_resource.modules if new_resource.modules
+      return modules if modules
       return %w(
         alias autoindex dir
         env mime negotiation
@@ -141,37 +141,37 @@ module HttpdCookbook
     end
 
     def parsed_mpm
-      return new_resource.mpm if new_resource.mpm
+      return mpm if mpm
       parsed_version == '2.4' ? 'event' : 'worker'
     end
 
     def parsed_run_group
-      return new_resource.run_group if new_resource.run_group
+      return run_group if run_group
       node['platform_family'] == 'debian' ? 'www-data' : 'apache'
     end
 
     def parsed_run_user
-      return new_resource.run_user if new_resource.run_user
+      return run_user if run_user
       node['platform_family'] == 'debian' ? 'www-data' : 'apache'
     end
 
     def parsed_servername
-      return new_resource.servername if new_resource.servername
+      return servername if servername
       node['hostname']
     end
 
     def parsed_startservers
-      return new_resource.startservers if new_resource.startservers
+      return startservers if startservers
       default_value_for(parsed_version, parsed_mpm, :startservers)
     end
 
     def parsed_threadlimit
-      return new_resource.threadlimit if new_resource.threadlimit
+      return threadlimit if threadlimit
       default_value_for(parsed_version, parsed_mpm, :threadlimit)
     end
 
     def parsed_threadsperchild
-      return new_resource.threadsperchild if new_resource.threadsperchild
+      return threadsperchild if threadsperchild
       default_value_for(parsed_version, parsed_mpm, :threadsperchild)
     end
   end

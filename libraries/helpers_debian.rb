@@ -8,28 +8,28 @@ module HttpdCookbook
 
       # support multiple instances
       def apache_name
-        "apache2-#{new_resource.instance}"
+        "apache2-#{instance}"
       end
 
       def a2enmod_name
-        "a2enmod-#{new_resource.name}"
+        "a2enmod-#{name}"
       end
 
       def a2dismod_name
-        "a2dismod-#{new_resource.name}"
+        "a2dismod-#{name}"
       end
 
       def a2ensite_name
-        "a2ensite-#{new_resource.name}"
+        "a2ensite-#{name}"
       end
 
       def a2dissite_name
-        "a2dissite-#{new_resource.name}"
+        "a2dissite-#{name}"
       end
 
       # module things
       def module_name
-        new_resource.module_name
+        module_name
       end
 
       def module_path

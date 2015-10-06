@@ -2,16 +2,12 @@ module HttpdCookbook
   module Helpers
     module Rhel
       def apache_name
-        "httpd-#{new_resource.instance}"
+        "httpd-#{instance}"
       end
 
       def libarch
         return 'lib64' if node['kernel']['machine'] == 'x86_64'
         return 'lib64' if node['kernel']['machine'] == 'i686'
-      end
-
-      def module_name
-        new_resource.module_name
       end
 
       def module_path
