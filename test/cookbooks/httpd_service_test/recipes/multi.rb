@@ -28,7 +28,6 @@ httpd_service 'instance-1' do
   keepalive false
   maxkeepaliverequests '2001'
   keepalivetimeout '0'
-  listen_addresses nil
   listen_ports %w(8080 4343)
   log_level 'warn'
   version node['httpd']['version']

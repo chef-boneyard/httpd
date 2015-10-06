@@ -262,20 +262,20 @@ suites:
     ]
     attributes:
       httpd:
-        version: '2.4'
-        service_name: 'multi'
-        listen_ports: [ '81', '444' ]
-        run_user: 'bob'
-        run_group: 'bob'
         contact: 'alice@computers.biz'
-        timeout: '1234'
         keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'
-        mpm: 'prefork'
-        startservers: '20'
+        listen_ports: [ '81', '444' ]
         minspareservers: '20'
         minspareservers: '40'
+        mpm: 'prefork'
+        run_group: 'bob'
+        run_user: 'bob'
+        service_name: 'multi'
+        startservers: '20'
+        timeout: '1234'
+        version: '2.4'
 
   #
   # modules
