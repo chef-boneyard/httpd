@@ -29,3 +29,5 @@ Style/ClassAndModuleChildren:
   Enabled: false
 Style/FileName:
   Enabled: false
+Metrics/ModuleLength:
+  Enabled: false

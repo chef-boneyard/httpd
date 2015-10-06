@@ -1,6 +1,5 @@
 module HttpdCookbook
   class HttpdServiceDebian < HttpdService
-
     action :create do
       # We need to dynamically render the resource name into the title in
       # order to ensure uniqueness. This avoids cloning via

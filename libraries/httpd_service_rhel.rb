@@ -1,6 +1,5 @@
 module HttpdCookbook
   class HttpdServiceRhel < HttpdService
-
     action :create do
       # FIXME: make into resource parameters
       lock_file = nil
