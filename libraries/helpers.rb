@@ -35,14 +35,6 @@ module HttpdCookbook
       return '2.4' if node['platform_family'] == 'smartos'
     end
 
-    def parsed_symbolname
-      return symbolname if symbolname
-      # Put all exceptions here
-      return 'php5_module' if module_name == 'php'
-      return 'php5_module' if module_name == 'php-zts'
-      "#{module_name}_module"
-    end
-
     def parsed_filename
       return filename if filename
       # Put all exceptions here
