@@ -9,7 +9,7 @@ module HttpdCookbook
     end
 
     action :start do
-      template "#{new_resource.name} :create /etc/init.d/#{apache_name}" do
+      template "#{name} :create /etc/init.d/#{apache_name}" do
         path "/etc/init.d/#{apache_name}"
         source "#{parsed_version}/sysvinit/el-#{elversion}/httpd.erb"
         owner 'root'
@@ -20,7 +20,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "#{new_resource.name} :create /etc/sysconfig/#{apache_name}" do
+      template "#{name} :create /etc/sysconfig/#{apache_name}" do
         path "/etc/sysconfig/#{apache_name}"
         source "rhel/sysconfig/httpd-#{parsed_version}.erb"
         owner 'root'
@@ -36,7 +36,7 @@ module HttpdCookbook
         action :create
       end
 
-      service "#{new_resource.name} :create #{apache_name}" do
+      service "#{name} :create #{apache_name}" do
         service_name apache_name
         supports status: true
         provider Chef::Provider::Service::Init::Redhat
@@ -45,7 +45,7 @@ module HttpdCookbook
     end
 
     action :stop do
-      service "#{new_resource.name} delete #{apache_name}" do
+      service "#{name} delete #{apache_name}" do
         service_name apache_name
         supports status: true
         provider Chef::Provider::Service::Init::Redhat
@@ -54,7 +54,7 @@ module HttpdCookbook
     end
 
     action :restart do
-      service "#{new_resource.name} delete #{apache_name}" do
+      service "#{name} delete #{apache_name}" do
         service_name apache_name
         supports restart: true
         provider Chef::Provider::Service::Init::Redhat
@@ -63,7 +63,7 @@ module HttpdCookbook
     end
 
     action :reload do
-      service "#{new_resource.name} delete #{apache_name}" do
+      service "#{name} delete #{apache_name}" do
         service_name apache_name
         supports reload: true
         provider Chef::Provider::Service::Init::Redhat
@@ -73,7 +73,7 @@ module HttpdCookbook
 
     action_class.class_eval do
       def create_stop_system_service
-        service "#{new_resource.name} :create httpd" do
+        service "#{name} :create httpd" do
           service_name 'httpd'
           supports status: true
           provider Chef::Provider::Service::Init::Redhat
@@ -82,7 +82,7 @@ module HttpdCookbook
       end
 
       def delete_stop_service
-        service "#{new_resource.name} :delete #{apache_name}" do
+        service "#{name} :delete #{apache_name}" do
           service_name apache_name
           supports status: true
           provider Chef::Provider::Service::Init::Redhat

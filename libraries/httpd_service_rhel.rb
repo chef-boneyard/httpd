@@ -47,7 +47,7 @@ module HttpdCookbook
       end
 
       # httpd binary symlinks
-      link "#{new_resource.name} :create /usr/sbin/#{apache_name}" do
+      link "#{name} :create /usr/sbin/#{apache_name}" do
         target_file "/usr/sbin/#{apache_name}"
         to '/usr/sbin/httpd'
         action :create
@@ -56,14 +56,14 @@ module HttpdCookbook
 
       # MPM loading
       if parsed_version.to_f < 2.4
-        link "#{new_resource.name} :create /usr/sbin/#{apache_name}.worker" do
+        link "#{name} :create /usr/sbin/#{apache_name}.worker" do
           target_file "/usr/sbin/#{apache_name}.worker"
           to '/usr/sbin/httpd.worker'
           action :create
           not_if { apache_name == 'httpd' }
         end
 
-        link "#{new_resource.name} :create /usr/sbin/#{apache_name}.event" do
+        link "#{name} :create /usr/sbin/#{apache_name}.event" do
           target_file "/usr/sbin/#{apache_name}.event"
           to '/usr/sbin/httpd.event'
           action :create
@@ -102,7 +102,7 @@ module HttpdCookbook
       end
 
       # configuration directories
-      directory "#{new_resource.name} :create /etc/#{apache_name}" do
+      directory "#{name} :create /etc/#{apache_name}" do
         path "/etc/#{apache_name}"
         user 'root'
         group 'root'
@@ -111,7 +111,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "#{new_resource.name} :create /etc/#{apache_name}/conf" do
+      directory "#{name} :create /etc/#{apache_name}/conf" do
         path "/etc/#{apache_name}/conf"
         user 'root'
         group 'root'
@@ -120,7 +120,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "#{new_resource.name} :create /etc/#{apache_name}/conf.d" do
+      directory "#{name} :create /etc/#{apache_name}/conf.d" do
         path "/etc/#{apache_name}/conf.d"
         user 'root'
         group 'root'
@@ -130,7 +130,7 @@ module HttpdCookbook
       end
 
       if parsed_version.to_f >= 2.4
-        directory "#{new_resource.name} :create /etc/#{apache_name}/conf.modules.d" do
+        directory "#{name} :create /etc/#{apache_name}/conf.modules.d" do
           path "/etc/#{apache_name}/conf.modules.d"
           user 'root'
           group 'root'
@@ -141,7 +141,7 @@ module HttpdCookbook
       end
 
       # support directories
-      directory "#{new_resource.name} :create /usr/#{libarch}/httpd/modules" do
+      directory "#{name} :create /usr/#{libarch}/httpd/modules" do
         path "/usr/#{libarch}/httpd/modules"
         user 'root'
         group 'root'
@@ -150,7 +150,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "#{new_resource.name} :create /var/log/#{apache_name}" do
+      directory "#{name} :create /var/log/#{apache_name}" do
         path "/var/log/#{apache_name}"
         user 'root'
         group 'root'
@@ -159,13 +159,13 @@ module HttpdCookbook
         action :create
       end
 
-      link "#{new_resource.name} :create /etc/#{apache_name}/logs" do
+      link "#{name} :create /etc/#{apache_name}/logs" do
         target_file "/etc/#{apache_name}/logs"
         to "../../var/log/#{apache_name}"
         action :create
       end
 
-      link "#{new_resource.name} :create /etc/#{apache_name}/modules" do
+      link "#{name} :create /etc/#{apache_name}/modules" do
         target_file "/etc/#{apache_name}/modules"
         to "../../usr/#{libarch}/httpd/modules"
         action :create
@@ -173,7 +173,7 @@ module HttpdCookbook
 
       # /var/run
       if elversion > 5
-        directory "#{new_resource.name} :create /var/run/#{apache_name}" do
+        directory "#{name} :create /var/run/#{apache_name}" do
           path "/var/run/#{apache_name}"
           user 'root'
           group 'root'
@@ -182,13 +182,13 @@ module HttpdCookbook
           action :create
         end
 
-        link "#{new_resource.name} :create /etc/#{apache_name}/run" do
+        link "#{name} :create /etc/#{apache_name}/run" do
           target_file "/etc/#{apache_name}/run"
           to "../../var/run/#{apache_name}"
           action :create
         end
       else
-        link "#{new_resource.name} :create /etc/#{apache_name}/run" do
+        link "#{name} :create /etc/#{apache_name}/run" do
           target_file "/etc/#{apache_name}/run"
           to '../../var/run'
           action :create
@@ -196,7 +196,7 @@ module HttpdCookbook
       end
 
       # configuration files
-      template "#{new_resource.name} :create /etc/#{apache_name}/conf/mime.types" do
+      template "#{name} :create /etc/#{apache_name}/conf/mime.types" do
         path "/etc/#{apache_name}/conf/mime.types"
         source 'magic.erb'
         owner 'root'
@@ -206,7 +206,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "#{new_resource.name} :create /etc/#{apache_name}/conf/httpd.conf" do
+      template "#{name} :create /etc/#{apache_name}/conf/httpd.conf" do
         path "/etc/#{apache_name}/conf/httpd.conf"
         source 'httpd.conf.erb'
         owner 'root'
@@ -243,7 +243,7 @@ module HttpdCookbook
     action :delete do
       delete_stop_service
 
-      link "#{new_resource.name} :delete /usr/sbin/#{apache_name}" do
+      link "#{name} :delete /usr/sbin/#{apache_name}" do
         target_file "/usr/sbin/#{apache_name}"
         to '/usr/sbin/httpd'
         action :delete
@@ -252,14 +252,14 @@ module HttpdCookbook
 
       # MPM loading
       if parsed_version.to_f < 2.4
-        link "#{new_resource.name} :delete /usr/sbin/#{apache_name}.worker" do
+        link "#{name} :delete /usr/sbin/#{apache_name}.worker" do
           target_file "/usr/sbin/#{apache_name}.worker"
           to '/usr/sbin/httpd.worker'
           action :delete
           not_if { apache_name == 'httpd' }
         end
 
-        link "#{new_resource.name} :delete /usr/sbin/#{apache_name}.event" do
+        link "#{name} :delete /usr/sbin/#{apache_name}.event" do
           target_file "/usr/sbin/#{apache_name}.event"
           to '/usr/sbin/httpd.event'
           action :delete
@@ -268,7 +268,7 @@ module HttpdCookbook
       end
 
       # configuration directories
-      directory "#{new_resource.name} :delete /etc/#{apache_name}" do
+      directory "#{name} :delete /etc/#{apache_name}" do
         path "/etc/#{apache_name}"
         owner 'root'
         group 'root'
@@ -278,7 +278,7 @@ module HttpdCookbook
       end
 
       # logs
-      directory "#{new_resource.name} :delete /var/log/#{apache_name}" do
+      directory "#{name} :delete /var/log/#{apache_name}" do
         path "/var/log/#{apache_name}"
         owner 'root'
         group 'root'
@@ -289,7 +289,7 @@ module HttpdCookbook
 
       # /var/run
       if elversion > 5
-        directory "#{new_resource.name} :delete /var/run/#{apache_name}" do
+        directory "#{name} :delete /var/run/#{apache_name}" do
           path "/var/run/#{apache_name}"
           owner 'root'
           group 'root'
@@ -298,12 +298,12 @@ module HttpdCookbook
           action :delete
         end
 
-        link "#{new_resource.name} :delete /etc/#{apache_name}/run" do
+        link "#{name} :delete /etc/#{apache_name}/run" do
           target_file "/etc/#{apache_name}/run"
           action :delete
         end
       else
-        link "#{new_resource.name} :delete /etc/#{apache_name}/run" do
+        link "#{name} :delete /etc/#{apache_name}/run" do
           target_file "/etc/#{apache_name}/run"
           action :delete
         end

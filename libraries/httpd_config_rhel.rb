@@ -4,7 +4,7 @@ module HttpdCookbook
     provides :httpd_config, platform_family: %w(rhel fedora suse)
 
     action :create do
-      directory "#{new_resource.name} :create /etc/#{apache_name}/conf.d" do
+      directory "#{name} :create /etc/#{apache_name}/conf.d" do
         path "/etc/#{apache_name}/conf.d"
         owner 'root'
         group 'root'
@@ -13,7 +13,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "#{new_resource.name} :create /etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
+      template "#{name} :create /etc/#{apache_name}/conf.d/#{config_name}.conf" do
         path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
         owner 'root'
         group 'root'
@@ -26,7 +26,7 @@ module HttpdCookbook
     end
 
     action :delete do
-      file "#{new_resource.name} :create /etc/#{apache_name}/conf.d/#{new_resource.config_name}" do
+      file "#{name} :create /etc/#{apache_name}/conf.d/#{config_name}" do
         path "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf"
         action :delete
       end
