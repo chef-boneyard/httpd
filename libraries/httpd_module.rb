@@ -1,12 +1,12 @@
 module HttpdCookbook
   class HttpdModule < ChefCompat::Resource
-    property :filename, kind_of: String
-    property :httpd_version, kind_of: String
-    property :instance, kind_of: String, default: 'default'
-    property :module_name, kind_of: String, name_property: true, required: true
-    property :package_name, kind_of: String
-    property :symbolname, kind_of: String
+    property :filename, String
+    property :httpd_version, String, default: lazy { default_apache_version }
+    property :instance, String, default: 'default'
+    property :module_name, String, name_property: true, required: true
+    property :package_name, String
+    property :symbolname, String
 
-    declare_action_class.class_eval { include HttpdCookbook::Helpers }
+    include HttpdCookbook::Helpers
   end
 end

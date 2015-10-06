@@ -27,8 +27,8 @@ module HttpdCookbook
     property :threadlimit, [String, nil], default: nil
     property :threadsperchild, [String, nil], default: nil
     property :timeout, [String, nil], default: '400'
-    property :version, [String, nil], default: nil
+    property :version, String, default: lazy { default_apache_version }
 
-    declare_action_class.class_eval { include HttpdCookbook::Helpers }
+    include HttpdCookbook::Helpers
   end
 end

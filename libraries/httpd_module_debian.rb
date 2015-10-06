@@ -67,6 +67,6 @@ module HttpdCookbook
       end
     end
 
-    action_class.class_eval { include HttpdCookbook::Helpers::Debian }
+    include HttpdCookbook::Helpers::Debian
   end
 end

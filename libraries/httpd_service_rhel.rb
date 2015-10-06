@@ -310,6 +310,6 @@ module HttpdCookbook
       end
     end
 
-    action_class.class_eval { include HttpdCookbook::Helpers::Rhel }
+    include HttpdCookbook::Helpers::Rhel
   end
 end
