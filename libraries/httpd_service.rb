@@ -29,6 +29,6 @@ module HttpdCookbook
     property :threadsperchild, String, default: lazy { default_threadsperchild }
     property :timeout, String, default: '400'
 
-    include HttpdCookbook::Helpers::Service
+    include HttpdCookbook::Helpers
   end
 end

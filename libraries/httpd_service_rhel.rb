@@ -9,8 +9,7 @@ module HttpdCookbook
       # Chef resources
       #
       # software installation
-      package "#{name} :create #{package_name}" do
-        package_name new_resource.package_name
+      package "#{package_name}" do
         action :install
       end
 
@@ -19,7 +18,7 @@ module HttpdCookbook
 
       # FIXME: This is needed for serverspec.
       # Move into a serverspec recipe
-      package "#{name} :create net-tools" do
+      package 'net-tools' do
         package_name 'net-tools'
         action :install
       end
@@ -28,8 +27,7 @@ module HttpdCookbook
       # debian and ubuntu
       if version.to_f < 2.4
         %w( log_config logio ).each do |m|
-          httpd_module "#{name} :create #{m}" do
-            module_name m
+          httpd_module "#{m}" do
             version new_resource.version
             instance new_resource.instance
             action :create
@@ -37,8 +35,7 @@ module HttpdCookbook
         end
       else
         %w( log_config logio unixd version watchdog ).each do |m|
-          httpd_module "#{name} :create #{m}" do
-            module_name m
+          httpd_module "#{m}" do
             version new_resource.version
             instance new_resource.instance
             action :create
@@ -47,8 +44,7 @@ module HttpdCookbook
       end
 
       # httpd binary symlinks
-      link "#{name} :create /usr/sbin/#{apache_name}" do
-        target_file "/usr/sbin/#{apache_name}"
+      link "/usr/sbin/#{apache_name}" do
         to '/usr/sbin/httpd'
         action :create
         not_if { apache_name == 'httpd' }
@@ -56,22 +52,19 @@ module HttpdCookbook
 
       # MPM loading
       if version.to_f < 2.4
-        link "#{name} :create /usr/sbin/#{apache_name}.worker" do
-          target_file "/usr/sbin/#{apache_name}.worker"
+        link "/usr/sbin/#{apache_name}.worker" do
           to '/usr/sbin/httpd.worker'
           action :create
           not_if { apache_name == 'httpd' }
         end
 
-        link "#{name} :create /usr/sbin/#{apache_name}.event" do
-          target_file "/usr/sbin/#{apache_name}.event"
+        link "/usr/sbin/#{apache_name}.event" do
           to '/usr/sbin/httpd.event'
           action :create
           not_if { apache_name == 'httpd' }
         end
       else
-        httpd_module "#{name} :create mpm_#{mpm}" do
-          module_name "mpm_#{mpm}"
+        httpd_module "mpm_#{mpm}" do
           version new_resource.version
           instance new_resource.instance
           action :create
@@ -79,8 +72,7 @@ module HttpdCookbook
       end
 
       # MPM configuration
-      httpd_config "#{name} :create mpm_#{mpm}" do
-        config_name "mpm_#{mpm}"
+      httpd_config "mpm_#{mpm}" do
         instance new_resource.instance
         source 'mpm.conf.erb'
         variables(
@@ -102,8 +94,7 @@ module HttpdCookbook
       end
 
       # configuration directories
-      directory "#{name} :create /etc/#{apache_name}" do
-        path "/etc/#{apache_name}"
+      directory "/etc/#{apache_name}" do
         user 'root'
         group 'root'
         mode '0755'
@@ -111,8 +102,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "#{name} :create /etc/#{apache_name}/conf" do
-        path "/etc/#{apache_name}/conf"
+      directory "/etc/#{apache_name}/conf" do
         user 'root'
         group 'root'
         mode '0755'
@@ -120,7 +110,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "#{name} :create /etc/#{apache_name}/conf.d" do
+      directory "/etc/#{apache_name}/conf.d" do
         path "/etc/#{apache_name}/conf.d"
         user 'root'
         group 'root'
@@ -130,8 +120,7 @@ module HttpdCookbook
       end
 
       if version.to_f >= 2.4
-        directory "#{name} :create /etc/#{apache_name}/conf.modules.d" do
-          path "/etc/#{apache_name}/conf.modules.d"
+        directory "/etc/#{apache_name}/conf.modules.d" do
           user 'root'
           group 'root'
           mode '0755'
@@ -141,8 +130,7 @@ module HttpdCookbook
       end
 
       # support directories
-      directory "#{name} :create /usr/#{libarch}/httpd/modules" do
-        path "/usr/#{libarch}/httpd/modules"
+      directory "/usr/#{libarch}/httpd/modules" do
         user 'root'
         group 'root'
         mode '0755'
@@ -150,8 +138,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "#{name} :create /var/log/#{apache_name}" do
-        path "/var/log/#{apache_name}"
+      directory "/var/log/#{apache_name}" do
         user 'root'
         group 'root'
         mode '0755'
@@ -159,22 +146,19 @@ module HttpdCookbook
         action :create
       end
 
-      link "#{name} :create /etc/#{apache_name}/logs" do
-        target_file "/etc/#{apache_name}/logs"
+      link "/etc/#{apache_name}/logs" do
         to "../../var/log/#{apache_name}"
         action :create
       end
 
-      link "#{name} :create /etc/#{apache_name}/modules" do
-        target_file "/etc/#{apache_name}/modules"
+      link "/etc/#{apache_name}/modules" do
         to "../../usr/#{libarch}/httpd/modules"
         action :create
       end
 
       # /var/run
       if elversion > 5
-        directory "#{name} :create /var/run/#{apache_name}" do
-          path "/var/run/#{apache_name}"
+        directory "/var/run/#{apache_name}" do
           user 'root'
           group 'root'
           mode '0755'
@@ -182,22 +166,19 @@ module HttpdCookbook
           action :create
         end
 
-        link "#{name} :create /etc/#{apache_name}/run" do
-          target_file "/etc/#{apache_name}/run"
+        link "/etc/#{apache_name}/run" do
           to "../../var/run/#{apache_name}"
           action :create
         end
       else
-        link "#{name} :create /etc/#{apache_name}/run" do
-          target_file "/etc/#{apache_name}/run"
+        link "/etc/#{apache_name}/run" do
           to '../../var/run'
           action :create
         end
       end
 
       # configuration files
-      template "#{name} :create /etc/#{apache_name}/conf/mime.types" do
-        path "/etc/#{apache_name}/conf/mime.types"
+      template "/etc/#{apache_name}/conf/mime.types" do
         source 'magic.erb'
         owner 'root'
         group 'root'
@@ -206,8 +187,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "#{name} :create /etc/#{apache_name}/conf/httpd.conf" do
-        path "/etc/#{apache_name}/conf/httpd.conf"
+      template "/etc/#{apache_name}/conf/httpd.conf" do
         source 'httpd.conf.erb'
         owner 'root'
         group 'root'
@@ -231,8 +211,7 @@ module HttpdCookbook
 
       # Install core modules
       modules.each do |mod|
-        httpd_module "#{name} :create #{mod}" do
-          module_name mod
+        httpd_module "#{mod}" do
           instance new_resource.instance
           version new_resource.version
           action :create
@@ -243,8 +222,7 @@ module HttpdCookbook
     action :delete do
       delete_stop_service
 
-      link "#{name} :delete /usr/sbin/#{apache_name}" do
-        target_file "/usr/sbin/#{apache_name}"
+      link "/usr/sbin/#{apache_name}" do
         to '/usr/sbin/httpd'
         action :delete
         not_if { apache_name == 'httpd' }
@@ -252,15 +230,13 @@ module HttpdCookbook
 
       # MPM loading
       if version.to_f < 2.4
-        link "#{name} :delete /usr/sbin/#{apache_name}.worker" do
-          target_file "/usr/sbin/#{apache_name}.worker"
+        link "/usr/sbin/#{apache_name}.worker" do
           to '/usr/sbin/httpd.worker'
           action :delete
           not_if { apache_name == 'httpd' }
         end
 
-        link "#{name} :delete /usr/sbin/#{apache_name}.event" do
-          target_file "/usr/sbin/#{apache_name}.event"
+        link "/usr/sbin/#{apache_name}.event" do
           to '/usr/sbin/httpd.event'
           action :delete
           not_if { apache_name == 'httpd' }
@@ -268,8 +244,7 @@ module HttpdCookbook
       end
 
       # configuration directories
-      directory "#{name} :delete /etc/#{apache_name}" do
-        path "/etc/#{apache_name}"
+      directory "/etc/#{apache_name}" do
         owner 'root'
         group 'root'
         mode '0755'
@@ -278,8 +253,7 @@ module HttpdCookbook
       end
 
       # logs
-      directory "#{name} :delete /var/log/#{apache_name}" do
-        path "/var/log/#{apache_name}"
+      directory "/var/log/#{apache_name}" do
         owner 'root'
         group 'root'
         mode '0755'
@@ -289,8 +263,7 @@ module HttpdCookbook
 
       # /var/run
       if elversion > 5
-        directory "#{name} :delete /var/run/#{apache_name}" do
-          path "/var/run/#{apache_name}"
+        directory "/var/run/#{apache_name}" do
           owner 'root'
           group 'root'
           mode '0755'
@@ -298,13 +271,11 @@ module HttpdCookbook
           action :delete
         end
 
-        link "#{name} :delete /etc/#{apache_name}/run" do
-          target_file "/etc/#{apache_name}/run"
+        link "/etc/#{apache_name}/run" do
           action :delete
         end
       else
-        link "#{name} :delete /etc/#{apache_name}/run" do
-          target_file "/etc/#{apache_name}/run"
+        link "/etc/#{apache_name}/run" do
           action :delete
         end
       end

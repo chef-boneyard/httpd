@@ -5,8 +5,7 @@ module HttpdCookbook
 
     action :start do
       # init script
-      template "#{name} :create /etc/init.d/#{apache_name}" do
-        path "/etc/init.d/#{apache_name}"
+      template "/etc/init.d/#{apache_name}" do
         source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
         owner 'root'
         group 'root'
@@ -17,8 +16,7 @@ module HttpdCookbook
       end
 
       # service management
-      service "#{name} :create #{apache_name}" do
-        service_name apache_name
+      service "#{apache_name}" do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action [:start, :enable]
@@ -26,8 +24,7 @@ module HttpdCookbook
     end
 
     action :stop do
-      service "#{name} :stop #{apache_name}" do
-        service_name apache_name
+      service "#{apache_name}" do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action :stop
@@ -35,8 +32,7 @@ module HttpdCookbook
     end
 
     action :restart do
-      service "#{name} :restart #{apache_name}" do
-        service_name apache_name
+      service "#{apache_name}" do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action :restart
@@ -44,8 +40,7 @@ module HttpdCookbook
     end
 
     action :reload do
-      service "#{name} :reload #{apache_name}" do
-        service_name apache_name
+      service "#{apache_name}" do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action :reload
@@ -54,8 +49,7 @@ module HttpdCookbook
 
     action_class.class_eval do
       def create_stop_system_service
-        service "#{name} :create apache2" do
-          service_name 'apache2'
+        service 'apache2' do
           provider Chef::Provider::Service::Init::Debian
           supports restart: true, status: true
           action [:stop, :disable]
@@ -71,8 +65,7 @@ module HttpdCookbook
         # end
 
         # init script
-        template "#{name} :create /etc/init.d/#{apache_name}" do
-          path "/etc/init.d/#{apache_name}"
+        template "/etc/init.d/#{apache_name}" do
           source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
           owner 'root'
           group 'root'
@@ -82,8 +75,7 @@ module HttpdCookbook
           action :create
         end
 
-        service "#{name} :delete #{apache_name}" do
-          service_name apache_name
+        service "#{apache_name}" do
           supports restart: true, reload: true, status: true
           provider Chef::Provider::Service::Init::Debian
           action [:disable, :stop]

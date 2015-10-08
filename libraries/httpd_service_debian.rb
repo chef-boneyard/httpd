@@ -5,8 +5,7 @@ module HttpdCookbook
       # order to ensure uniqueness. This avoids cloning via
       # CHEF-3694 and allows ChefSpec to work properly.
 
-      package "#{name} :create #{package_name}" do
-        package_name new_resource.package_name
+      package "#{package_name}" do
         action :install
       end
 
@@ -14,16 +13,14 @@ module HttpdCookbook
       create_stop_system_service
 
       # support directories
-      directory "#{name} :create /var/cache/#{apache_name}" do
-        path "/var/cache/#{apache_name}"
+      directory "/var/cache/#{apache_name}" do
         owner 'root'
         group 'root'
         mode '0755'
         action :create
       end
 
-      directory "#{name} :create /var/log/#{apache_name}" do
-        path "/var/log/#{apache_name}"
+      directory "/var/log/#{apache_name}" do
         owner 'root'
         group 'adm'
         mode '0755'
@@ -34,16 +31,14 @@ module HttpdCookbook
       # debian/ubuntu behave differently. 2.2 places in /var/run/apache-name/,
       # and 2.4 stores pids as /var/run/apache2/apache2-service_name
       if version.to_f < 2.4
-        directory "#{name} :create /var/run/#{apache_name}" do
-          path "/var/run/#{apache_name}"
+        directory "/var/run/#{apache_name}" do
           owner 'root'
           group 'adm'
           mode '0755'
           action :create
         end
       else
-        directory "#{name} :create /var/run/apache2" do
-          path '/var/run/apache2'
+        directory '/var/run/apache2' do
           owner 'root'
           group 'adm'
           mode '0755'
@@ -52,8 +47,7 @@ module HttpdCookbook
       end
 
       # configuration directories
-      directory "#{name} :create /etc/#{apache_name}" do
-        path "/etc/#{apache_name}"
+      directory "/etc/#{apache_name}" do
         owner 'root'
         group 'root'
         mode '0755'
@@ -62,32 +56,28 @@ module HttpdCookbook
       end
 
       if apache_version.to_f < 2.4
-        directory "#{name} :create /etc/#{apache_name}/conf.d" do
-          path "/etc/#{apache_name}/conf.d"
+        directory "/etc/#{apache_name}/conf.d" do
           owner 'root'
           group 'root'
           mode '0755'
           action :create
         end
       else
-        directory "#{name} :create /etc/#{apache_name}/conf-available" do
-          path "/etc/#{apache_name}/conf-available"
+        directory "/etc/#{apache_name}/conf-available" do
           owner 'root'
           group 'root'
           mode '0755'
           action :create
         end
 
-        directory "#{name} :create /etc/#{apache_name}/conf-enabled" do
-          path "/etc/#{apache_name}/conf-enabled"
+        directory "/etc/#{apache_name}/conf-enabled" do
           owner 'root'
           group 'root'
           mode '0755'
           action :create
         end
 
-        directory "#{name} :create /var/lock/#{apache_name}" do
-          path "/var/lock/#{apache_name}"
+        directory "/var/lock/#{apache_name}" do
           owner run_user
           group run_group
           mode '0755'
@@ -95,32 +85,28 @@ module HttpdCookbook
         end
       end
 
-      directory "#{name} :create /etc/#{apache_name}/mods-available" do
-        path "/etc/#{apache_name}/mods-available"
+      directory "/etc/#{apache_name}/mods-available" do
         owner 'root'
         group 'root'
         mode '0755'
         action :create
       end
 
-      directory "#{name} :create /etc/#{apache_name}/mods-enabled" do
-        path "/etc/#{apache_name}/mods-enabled"
+      directory "/etc/#{apache_name}/mods-enabled" do
         owner 'root'
         group 'root'
         mode '0755'
         action :create
       end
 
-      directory "#{name} :create /etc/#{apache_name}/sites-available" do
-        path "/etc/#{apache_name}/sites-available"
+      directory "/etc/#{apache_name}/sites-available" do
         owner 'root'
         group 'root'
         mode '0755'
         action :create
       end
 
-      directory "#{name} :create /etc/#{apache_name}/sites-enabled" do
-        path "/etc/#{apache_name}/sites-enabled"
+      directory "/etc/#{apache_name}/sites-enabled" do
         owner 'root'
         group 'root'
         mode '0755'
@@ -128,8 +114,7 @@ module HttpdCookbook
       end
 
       # envvars
-      template "#{name} :create /etc/#{apache_name}/envvars" do
-        path "/etc/#{apache_name}/envvars"
+      template "/etc/#{apache_name}/envvars" do
         source 'envvars.erb'
         owner 'root'
         group 'root'
@@ -147,8 +132,7 @@ module HttpdCookbook
       end
 
       # utility scripts
-      template "#{name} :create /usr/sbin/a2enmod" do
-        path '/usr/sbin/a2enmod'
+      template '/usr/sbin/a2enmod' do
         source "#{apache_version}/scripts/a2enmod.erb"
         owner 'root'
         group 'root'
@@ -157,8 +141,7 @@ module HttpdCookbook
         action :create
       end
 
-      link "#{name} :create /usr/sbin/#{a2enmod_name}" do
-        target_file "/usr/sbin/#{a2enmod_name}"
+      link "/usr/sbin/#{a2enmod_name}" do
         to '/usr/sbin/a2enmod'
         owner 'root'
         group 'root'
@@ -166,7 +149,7 @@ module HttpdCookbook
         action :create
       end
 
-      link "#{name} :create /usr/sbin/#{a2dismod_name}" do
+      link "/usr/sbin/#{a2dismod_name}" do
         target_file "/usr/sbin/#{a2dismod_name}"
         to '/usr/sbin/a2enmod'
         owner 'root'
@@ -174,7 +157,7 @@ module HttpdCookbook
         action :create
       end
 
-      link "#{name} :create /usr/sbin/#{a2ensite_name}" do
+      link "/usr/sbin/#{a2ensite_name}" do
         target_file "/usr/sbin/#{a2ensite_name}"
         to '/usr/sbin/a2enmod'
         owner 'root'
@@ -182,7 +165,7 @@ module HttpdCookbook
         action :create
       end
 
-      link "#{name} :create /usr/sbin/#{a2dissite_name}" do
+      link "/usr/sbin/#{a2dissite_name}" do
         target_file "/usr/sbin/#{a2dissite_name}"
         to '/usr/sbin/a2enmod'
         owner 'root'
@@ -191,8 +174,7 @@ module HttpdCookbook
       end
 
       # configuration files
-      template "#{name} :create /etc/#{apache_name}/mime.types" do
-        path "/etc/#{apache_name}/mime.types"
+      template "/etc/#{apache_name}/mime.types" do
         source 'magic.erb'
         owner 'root'
         group 'root'
@@ -201,13 +183,11 @@ module HttpdCookbook
         action :create
       end
 
-      file "#{name} :create /etc/#{apache_name}/ports.conf" do
-        path "/etc/#{apache_name}/ports.conf"
+      file "/etc/#{apache_name}/ports.conf" do
         action :delete
       end
 
-      template "#{name} :create /etc/#{apache_name}/apache2.conf" do
-        path "/etc/#{apache_name}/apache2.conf"
+      template "/etc/#{apache_name}/apache2.conf" do
         source 'httpd.conf.erb'
         owner 'root'
         group 'root'
@@ -236,15 +216,13 @@ module HttpdCookbook
       # others. Therefore, all service instances on debian 7, or
       # ubuntu below 14.04 will need to have the same MPM per
       # machine or container or things can get weird.
-      package "#{name} :create apache2-mpm-#{mpm}" do
-        package_name "apache2-mpm-#{mpm}"
+      package "apache2-mpm-#{mpm}" do
         action :install
       end
 
       # older apache has mpm statically compiled into binaries
       unless version.to_f < 2.4
-        httpd_module "#{name} :create mpm_#{mpm}" do
-          module_name "mpm_#{mpm}"
+        httpd_module "mpm_#{mpm}" do
           instance new_resource.instance
           version new_resource.version
           action :create
@@ -252,8 +230,7 @@ module HttpdCookbook
       end
 
       # MPM configuration
-      httpd_config "#{name} :create mpm_#{mpm}" do
-        config_name "mpm_#{mpm}"
+      httpd_config "mpm_#{mpm}" do
         instance new_resource.instance
         source 'mpm.conf.erb'
         variables(
@@ -277,38 +254,32 @@ module HttpdCookbook
       # make sure there is only one MPM loaded
       case mpm
       when 'prefork'
-        httpd_config "#{name} :create mpm_worker" do
-          config_name 'mpm_worker'
+        httpd_config 'mpm_worker' do
           instance new_resource.instance
           action :delete
         end
 
-        httpd_config "#{name} :create mpm_event" do
-          config_name 'mpm_event'
+        httpd_config 'mpm_event' do
           instance new_resource.instance
           action :delete
         end
       when 'worker'
-        httpd_config "#{name} :create mpm_prefork" do
-          config_name 'mpm_prefork'
+        httpd_config 'mpm_prefork' do
           instance new_resource.instance
           action :delete
         end
 
-        httpd_config "#{name} :create mpm_event" do
-          config_name 'mpm_event'
+        httpd_config 'mpm_event' do
           instance new_resource.instance
           action :delete
         end
       when 'event'
-        httpd_config "#{name} :create mpm_prefork" do
-          config_name 'mpm_prefork'
+        httpd_config 'mpm_prefork' do
           instance new_resource.instance
           action :delete
         end
 
-        httpd_config "#{name} :create mpm_worker" do
-          config_name 'mpm_worker'
+        httpd_config 'mpm_worker' do
           instance new_resource.instance
           action :delete
         end
@@ -316,8 +287,7 @@ module HttpdCookbook
 
       # Install core modules
       modules.each do |mod|
-        httpd_module "#{name} :create #{mod}" do
-          module_name mod
+        httpd_module "#{mod}" do
           instance new_resource.instance
           version new_resource.version
           action :create
@@ -329,20 +299,17 @@ module HttpdCookbook
       delete_stop_service
 
       # support directories
-      directory "#{name} :delete /var/cache/#{apache_name}" do
-        path "/var/cache/#{apache_name}"
+      directory "/var/cache/#{apache_name}" do
         recursive true
         action :delete
       end
 
-      directory "#{name} :delete /var/log/#{apache_name}" do
-        path "/var/log/#{apache_name}"
+      directory "/var/log/#{apache_name}" do
         recursive true
         action :delete
       end
 
-      directory "#{name} :delete /var/run/#{apache_name}" do
-        path "/var/run/#{apache_name}"
+      directory "/var/run/#{apache_name}" do
         recursive true
         not_if { apache_name == 'apache2' }
         action :delete
@@ -350,14 +317,12 @@ module HttpdCookbook
 
       # configuation directories
       if apache_version.to_f < 2.4
-        directory "#{name} :delete /etc/#{apache_name}/conf.d" do
-          path "/etc/#{apache_name}/conf.d"
+        directory "/etc/#{apache_name}/conf.d" do
           recursive true
           action :delete
         end
       else
-        directory "#{name} :delete /etc/#{apache_name}/conf-available" do
-          path "/etc/#{apache_name}/conf-available"
+        directory "/etc/#{apache_name}/conf-available" do
           owner 'root'
           group 'root'
           mode '0755'
@@ -365,71 +330,59 @@ module HttpdCookbook
           action :delete
         end
 
-        directory "#{name} :delete /etc/#{apache_name}/conf-enabled" do
-          path "/etc/#{apache_name}/conf-enabled"
+        directory "/etc/#{apache_name}/conf-enabled" do
           recursive true
           action :delete
         end
 
-        directory "#{name} :delete /var/lock/#{apache_name}" do
-          path "/var/lock/#{apache_name}"
+        directory "/var/lock/#{apache_name}" do
           recursive true
           action :delete
         end
       end
 
-      directory "#{name} :delete /etc/#{apache_name}/mods-available" do
-        path "/etc/#{apache_name}/mods-available"
+      directory "/etc/#{apache_name}/mods-available" do
         recursive true
         action :delete
       end
 
-      directory "#{name} :delete /etc/#{apache_name}/mods-enabled" do
-        path "/etc/#{apache_name}/mods-enabled"
+      directory "/etc/#{apache_name}/mods-enabled" do
         recursive true
         action :delete
       end
 
-      directory "#{name} :delete /etc/#{apache_name}/sites-available" do
-        path "/etc/#{apache_name}/sites-available"
+      directory "/etc/#{apache_name}/sites-available" do
         recursive true
         action :delete
       end
 
-      directory "#{name} :delete /etc/#{apache_name}/sites-enabled" do
-        path "/etc/#{apache_name}/sites-enabled"
+      directory "/etc/#{apache_name}/sites-enabled" do
         recursive true
         action :delete
       end
 
       # utility scripts
-      file "#{name} :delete /usr/sbin/#{a2enmod_name}" do
-        path "/usr/sbin/#{a2enmod_name}"
+      file "/usr/sbin/#{a2enmod_name}" do
         action :delete
       end
 
-      link "#{name} :delete /usr/sbin/#{a2dismod_name}" do
-        target_file "/usr/sbin/#{a2dismod_name}"
+      link "/usr/sbin/#{a2dismod_name}" do
         action :delete
       end
 
-      link "#{name} :delete /usr/sbin/#{a2ensite_name}" do
-        target_file "/usr/sbin/#{a2ensite_name}"
+      link "/usr/sbin/#{a2ensite_name}" do
         action :delete
       end
 
-      link "#{name} :delete /usr/sbin/#{a2dissite_name}" do
-        target_file "/usr/sbin/#{a2dissite_name}"
+      link "/usr/sbin/#{a2dissite_name}" do
         action :delete
       end
 
-      file "#{name} :delete /etc/#{apache_name}/mime.types" do
-        path "/etc/#{apache_name}/mime.types"
+      file "/etc/#{apache_name}/mime.types" do
         action :delete
       end
 
-      file "#{name} :delete /etc/#{apache_name}/ports.conf" do
-        path "/etc/#{apache_name}/ports.conf"
+      file "/etc/#{apache_name}/ports.conf" do
         action :delete
       end
     end

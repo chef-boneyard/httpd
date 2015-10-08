@@ -5,13 +5,11 @@ module HttpdCookbook
     provides :httpd_module, platform_family: 'debian'
 
     action :create do
-      package "#{name} :create #{package_name}" do
-        package_name new_resource.package_name
+      package "#{package_name}" do
         action :install
       end
 
-      directory "#{name} :create /etc/#{apache_name}/mods-available" do
-        path "/etc/#{apache_name}/mods-available"
+      directory "/etc/#{apache_name}/mods-available" do
         owner 'root'
         group 'root'
         mode '0755'
@@ -19,8 +17,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "#{name} :create /etc/#{apache_name}/mods-enabled" do
-        path "/etc/#{apache_name}/mods-enabled"
+      directory "/etc/#{apache_name}/mods-enabled" do
         owner 'root'
         group 'root'
         mode '0755'
@@ -28,8 +25,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "#{name} :create /etc/#{apache_name}/mods-available/#{module_name}.load" do
-        path "/etc/#{apache_name}/mods-available/#{module_name}.load"
+      template "/etc/#{apache_name}/mods-available/#{module_name}.load" do
         source 'module_load.erb'
         owner 'root'
         group 'root'
@@ -42,27 +38,23 @@ module HttpdCookbook
         action :create
       end
 
-      link "#{name} :create /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
-        target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
+      link "/etc/#{apache_name}/mods-enabled/#{module_name}.load" do
         to "/etc/#{apache_name}/mods-available/#{module_name}.load"
         action :create
       end
     end
 
     action :delete do
-      directory "#{name} :delete /etc/#{apache_name}/mods-available" do
-        path "/etc/#{apache_name}/mods-available"
+      directory "/etc/#{apache_name}/mods-available" do
         recursive true
         action :delete
       end
 
-      file "#{name} :delete /etc/#{apache_name}/mods-available/#{module_name}.load" do
-        path "/etc/#{apache_name}/mods-available/#{module_name}.load"
+      file "/etc/#{apache_name}/mods-available/#{module_name}.load" do
         action :delete
       end
 
-      link "#{name} :delete /etc/#{apache_name}/mods-enabled/#{module_name}.load" do
-        target_file "/etc/#{apache_name}/mods-enabled/#{module_name}.load"
+      link "/etc/#{apache_name}/mods-enabled/#{module_name}.load" do
         action :delete
       end
     end

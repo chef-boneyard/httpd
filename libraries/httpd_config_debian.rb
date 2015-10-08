@@ -5,8 +5,7 @@ module HttpdCookbook
 
     action :create do
       if httpd_version.to_f < 2.4
-        directory "#{name} :create /etc/#{apache_name}/conf.d" do
-          path "/etc/#{apache_name}/conf.d"
+        directory "/etc/#{apache_name}/conf.d" do
           owner 'root'
           group 'root'
           mode '0755'
@@ -14,8 +13,7 @@ module HttpdCookbook
           action :create
         end
 
-        template "#{name} :create /etc/#{apache_name}/conf.d/#{config_name}.conf" do
-          path "/etc/#{apache_name}/conf.d/#{config_name}.conf"
+        template "/etc/#{apache_name}/conf.d/#{config_name}.conf" do
           owner 'root'
           group 'root'
           mode '0644'
@@ -25,8 +23,7 @@ module HttpdCookbook
           action :create
         end
       else
-        directory "#{name} :create /etc/#{apache_name}/conf-available" do
-          path "/etc/#{apache_name}/conf-available"
+        directory "/etc/#{apache_name}/conf-available" do
           owner 'root'
           group 'root'
           mode '0755'
@@ -34,8 +31,7 @@ module HttpdCookbook
           action :create
         end
 
-        template "#{name} :create /etc/#{apache_name}/conf-available/#{config_name}.conf" do
-          path "/etc/#{apache_name}/conf-available/#{config_name}.conf"
+        template "/etc/#{apache_name}/conf-available/#{config_name}.conf" do
           owner 'root'
           group 'root'
           mode '0644'
@@ -45,8 +41,7 @@ module HttpdCookbook
           action :create
         end
 
-        directory "#{name} :create /etc/#{apache_name}/conf-enabled" do
-          path "/etc/#{apache_name}/conf-enabled"
+        directory "/etc/#{apache_name}/conf-enabled" do
           owner 'root'
           group 'root'
           mode '0755'
@@ -54,8 +49,7 @@ module HttpdCookbook
           action :create
         end
 
-        link "#{name} :create /etc/#{apache_name}/conf-enabled/#{config_name}.conf" do
-          target_file "/etc/#{apache_name}/conf-enabled/#{config_name}.conf"
+        link "/etc/#{apache_name}/conf-enabled/#{config_name}.conf" do
           to "/etc/#{apache_name}/conf-available/#{config_name}.conf"
           action :create
         end
@@ -64,18 +58,15 @@ module HttpdCookbook
 
     action :delete do
       if httpd_version.to_f < 2.4
-        file "#{name} :delete /etc/#{apache_name}/conf.d/#{config_name}.conf" do
-          path "/etc/#{apache_name}/conf.d/#{config_name}.conf"
+        file "/etc/#{apache_name}/conf.d/#{config_name}.conf" do
           action :delete
         end
       else
-        file "#{name} :delete /etc/#{apache_name}/conf-available/#{config_name}.conf" do
-          path "/etc/#{apache_name}/conf-available/#{config_name}.conf"
+        file "/etc/#{apache_name}/conf-available/#{config_name}.conf" do
           action :delete
         end
 
-        link "#{name} :delete /etc/#{apache_name}/conf-enabled/#{config_name}.conf" do
-          target_file "/etc/#{apache_name}/conf-enabled/#{config_name}.conf"
+        link "/etc/#{apache_name}/conf-enabled/#{config_name}.conf" do
           to "/etc/#{apache_name}/conf-available/#{config_name}.conf"
           action :delete
         end
