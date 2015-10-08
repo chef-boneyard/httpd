@@ -65,8 +65,8 @@ module HttpdCookbook
       def delete_stop_service
         # Software installation: This is needed to supply the init
         # script that powers the service facility.
-        # package "#{new_resource.name} :delete #{parsed_service_package_name}" do
-        #   package_name parsed_service_package_name
+        # package "#{name} :delete #{package_name}" do
+        #   package_name package_name
         #   action :install
         # end
 

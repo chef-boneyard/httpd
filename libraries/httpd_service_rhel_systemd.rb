@@ -10,11 +10,11 @@ module HttpdCookbook
     end
 
     action :start do
-      httpd_module "#{new_resource.name} :create systemd" do
+      httpd_module "#{name} :create systemd" do
         module_name 'systemd'
-        httpd_version parsed_version
+        version new_resource.version
         instance new_resource.instance
-        notifies :reload, "service[#{new_resource.name} :create #{apache_name}]"
+        notifies :reload, "service[#{name} :create #{apache_name}]"
         action :create
       end
 

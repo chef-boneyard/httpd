@@ -9,8 +9,8 @@ module HttpdCookbook
       # Chef resources
       #
       # software installation
-      package "#{new_resource.name} :create #{parsed_service_package_name}" do
-        package_name parsed_service_package_name
+      package "#{name} :create #{package_name}" do
+        package_name new_resource.package_name
         action :install
       end
 
@@ -19,27 +19,27 @@ module HttpdCookbook
 
       # FIXME: This is needed for serverspec.
       # Move into a serverspec recipe
-      package "#{new_resource.name} :create net-tools" do
+      package "#{name} :create net-tools" do
         package_name 'net-tools'
         action :install
       end
 
       # achieve parity with modules statically compiled into
       # debian and ubuntu
-      if parsed_version.to_f < 2.4
+      if version.to_f < 2.4
         %w( log_config logio ).each do |m|
-          httpd_module "#{new_resource.name} :create #{m}" do
+          httpd_module "#{name} :create #{m}" do
             module_name m
-            httpd_version parsed_version
+            version new_resource.version
             instance new_resource.instance
             action :create
           end
         end
       else
         %w( log_config logio unixd version watchdog ).each do |m|
-          httpd_module "#{new_resource.name} :create #{m}" do
+          httpd_module "#{name} :create #{m}" do
             module_name m
-            httpd_version parsed_version
+            version new_resource.version
             instance new_resource.instance
             action :create
           end
@@ -55,7 +55,7 @@ module HttpdCookbook
       end
 
       # MPM loading
-      if parsed_version.to_f < 2.4
+      if version.to_f < 2.4
         link "#{name} :create /usr/sbin/#{apache_name}.worker" do
           target_file "/usr/sbin/#{apache_name}.worker"
           to '/usr/sbin/httpd.worker'
@@ -70,32 +70,32 @@ module HttpdCookbook
           not_if { apache_name == 'httpd' }
         end
       else
-        httpd_module "#{new_resource.name} :create mpm_#{parsed_mpm}" do
-          module_name "mpm_#{parsed_mpm}"
-          httpd_version parsed_version
+        httpd_module "#{name} :create mpm_#{mpm}" do
+          module_name "mpm_#{mpm}"
+          version new_resource.version
           instance new_resource.instance
           action :create
         end
       end
 
       # MPM configuration
-      httpd_config "#{new_resource.name} :create mpm_#{parsed_mpm}" do
-        config_name "mpm_#{parsed_mpm}"
+      httpd_config "#{name} :create mpm_#{mpm}" do
+        config_name "mpm_#{mpm}"
         instance new_resource.instance
         source 'mpm.conf.erb'
         variables(
-          maxclients: parsed_maxclients,
-          maxconnectionsperchild: parsed_maxconnectionsperchild,
-          maxrequestsperchild: parsed_maxrequestsperchild,
-          maxrequestworkers: parsed_maxrequestworkers,
-          maxspareservers: parsed_maxspareservers,
-          maxsparethreads: parsed_maxsparethreads,
-          minspareservers: parsed_minspareservers,
-          minsparethreads: parsed_minsparethreads,
-          mpm: parsed_mpm,
-          startservers: parsed_startservers,
-          threadlimit: parsed_threadlimit,
-          threadsperchild: parsed_threadsperchild
+          maxclients: maxclients,
+          maxconnectionsperchild: maxconnectionsperchild,
+          maxrequestsperchild: maxrequestsperchild,
+          maxrequestworkers: maxrequestworkers,
+          maxspareservers: maxspareservers,
+          maxsparethreads: maxsparethreads,
+          minspareservers: minspareservers,
+          minsparethreads: minsparethreads,
+          mpm: mpm,
+          startservers: startservers,
+          threadlimit: threadlimit,
+          threadsperchild: threadsperchild
         )
         cookbook 'httpd'
         action :create
@@ -129,7 +129,7 @@ module HttpdCookbook
         action :create
       end
 
-      if parsed_version.to_f >= 2.4
+      if version.to_f >= 2.4
         directory "#{name} :create /etc/#{apache_name}/conf.modules.d" do
           path "/etc/#{apache_name}/conf.modules.d"
           user 'root'
@@ -220,21 +220,21 @@ module HttpdCookbook
           lock_file: lock_file,
           mutex: mutex,
           pid_file: pid_file,
-          run_group: parsed_run_group,
-          run_user: parsed_run_user,
+          run_group: run_group,
+          run_user: run_user,
           server_root: "/etc/#{apache_name}",
-          servername: parsed_servername
+          servername: servername
         )
         cookbook 'httpd'
         action :create
       end
 
       # Install core modules
-      parsed_modules.each do |mod|
-        httpd_module "#{new_resource.name} :create #{mod}" do
+      modules.each do |mod|
+        httpd_module "#{name} :create #{mod}" do
           module_name mod
           instance new_resource.instance
-          httpd_version parsed_version
+          version new_resource.version
           action :create
         end
       end
@@ -251,7 +251,7 @@ module HttpdCookbook
       end
 
       # MPM loading
-      if parsed_version.to_f < 2.4
+      if version.to_f < 2.4
         link "#{name} :delete /usr/sbin/#{apache_name}.worker" do
           target_file "/usr/sbin/#{apache_name}.worker"
           to '/usr/sbin/httpd.worker'

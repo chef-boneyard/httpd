@@ -11,7 +11,7 @@ module HttpdCookbook
       end
 
       # 2.2 vs 2.4
-      if parsed_httpd_version.to_f < 2.4
+      if httpd_version.to_f < 2.4
         directory "#{name} :create /etc/#{apache_name}/conf.d" do
           path "/etc/#{apache_name}/conf.d"
           owner 'root'
@@ -59,7 +59,7 @@ module HttpdCookbook
     end
 
     action :delete do
-      if parsed_httpd_version.to_f < 2.4
+      if httpd_version.to_f < 2.4
         file "#{name} :delete /etc/#{apache_name}/conf.d/#{module_name}.load" do
           path "/etc/#{apache_name}/conf.d/#{module_name}.load"
           action :delete

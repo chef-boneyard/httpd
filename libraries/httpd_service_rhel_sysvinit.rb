@@ -11,7 +11,7 @@ module HttpdCookbook
     action :start do
       template "#{name} :create /etc/init.d/#{apache_name}" do
         path "/etc/init.d/#{apache_name}"
-        source "#{parsed_version}/sysvinit/el-#{elversion}/httpd.erb"
+        source "#{version}/sysvinit/el-#{elversion}/httpd.erb"
         owner 'root'
         group 'root'
         mode '0755'
@@ -22,17 +22,17 @@ module HttpdCookbook
 
       template "#{name} :create /etc/sysconfig/#{apache_name}" do
         path "/etc/sysconfig/#{apache_name}"
-        source "rhel/sysconfig/httpd-#{parsed_version}.erb"
+        source "rhel/sysconfig/httpd-#{version}.erb"
         owner 'root'
         group 'root'
         mode '0644'
         variables(
           apache_name: apache_name,
-          mpm: parsed_mpm,
+          mpm: mpm,
           pid_file: pid_file
         )
         cookbook 'httpd'
-        notifies :restart, "service[#{new_resource.name} :create #{apache_name}]"
+        notifies :restart, "service[#{name} :create #{apache_name}]"
         action :create
       end
 

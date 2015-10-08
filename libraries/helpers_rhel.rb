@@ -11,7 +11,7 @@ module HttpdCookbook
       end
 
       def module_path
-        "/usr/#{libarch}/httpd/modules/#{parsed_filename}"
+        "/usr/#{libarch}/httpd/modules/#{filename}"
       end
 
       def elversion
@@ -30,7 +30,7 @@ module HttpdCookbook
       end
 
       def includes
-        return unless parsed_version.to_f < 2.4
+        return unless version.to_f < 2.4
         [
           'conf.d/*.load',
           'conf.d/*.conf'
@@ -38,7 +38,7 @@ module HttpdCookbook
       end
 
       def include_optionals
-        return unless parsed_version.to_f >= 2.4
+        return unless version.to_f >= 2.4
         [
           'conf.d/*.load',
           'conf.modules.d/*.load',

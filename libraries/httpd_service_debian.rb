@@ -5,8 +5,8 @@ module HttpdCookbook
       # order to ensure uniqueness. This avoids cloning via
       # CHEF-3694 and allows ChefSpec to work properly.
 
-      package "#{new_resource.name} :create #{parsed_service_package_name}" do
-        package_name parsed_service_package_name
+      package "#{name} :create #{package_name}" do
+        package_name new_resource.package_name
         action :install
       end
 
@@ -33,7 +33,7 @@ module HttpdCookbook
       # The init scripts that ship with 2.2 and 2.4 on
       # debian/ubuntu behave differently. 2.2 places in /var/run/apache-name/,
       # and 2.4 stores pids as /var/run/apache2/apache2-service_name
-      if parsed_version.to_f < 2.4
+      if version.to_f < 2.4
         directory "#{name} :create /var/run/#{apache_name}" do
           path "/var/run/#{apache_name}"
           owner 'root'
@@ -88,8 +88,8 @@ module HttpdCookbook
 
         directory "#{name} :create /var/lock/#{apache_name}" do
           path "/var/lock/#{apache_name}"
-          owner parsed_run_user
-          group parsed_run_group
+          owner run_user
+          group run_group
           mode '0755'
           action :create
         end
@@ -135,8 +135,8 @@ module HttpdCookbook
         group 'root'
         mode '0644'
         variables(
-          run_user: parsed_run_user,
-          run_group: parsed_run_group,
+          run_user: run_user,
+          run_group: run_group,
           pid_file: pid_file,
           run_dir: run_dir,
           lock_dir: "/var/lock/#{apache_name}",
@@ -220,10 +220,10 @@ module HttpdCookbook
           lock_file: lock_file,
           mutex: mutex,
           pid_file: pid_file,
-          run_group: parsed_run_group,
-          run_user: parsed_run_user,
+          run_group: run_group,
+          run_user: run_user,
           server_root: "/etc/#{apache_name}",
-          servername: parsed_servername
+          servername: servername
         )
         cookbook 'httpd'
         action :create
@@ -236,78 +236,78 @@ module HttpdCookbook
       # others. Therefore, all service instances on debian 7, or
       # ubuntu below 14.04 will need to have the same MPM per
       # machine or container or things can get weird.
-      package "#{new_resource.name} :create apache2-mpm-#{parsed_mpm}" do
-        package_name "apache2-mpm-#{parsed_mpm}"
+      package "#{name} :create apache2-mpm-#{mpm}" do
+        package_name "apache2-mpm-#{mpm}"
         action :install
       end
 
       # older apache has mpm statically compiled into binaries
-      unless parsed_version.to_f < 2.4
-        httpd_module "#{new_resource.name} :create mpm_#{parsed_mpm}" do
-          module_name "mpm_#{parsed_mpm}"
+      unless version.to_f < 2.4
+        httpd_module "#{name} :create mpm_#{mpm}" do
+          module_name "mpm_#{mpm}"
           instance new_resource.instance
-          httpd_version parsed_version
+          version new_resource.version
           action :create
         end
       end
 
       # MPM configuration
-      httpd_config "#{new_resource.name} :create mpm_#{parsed_mpm}" do
-        config_name "mpm_#{parsed_mpm}"
+      httpd_config "#{name} :create mpm_#{mpm}" do
+        config_name "mpm_#{mpm}"
         instance new_resource.instance
         source 'mpm.conf.erb'
         variables(
-          maxclients: parsed_maxclients,
-          maxconnectionsperchild: parsed_maxconnectionsperchild,
-          maxrequestsperchild: parsed_maxrequestsperchild,
-          maxrequestworkers: parsed_maxrequestworkers,
-          maxspareservers: parsed_maxspareservers,
-          maxsparethreads: parsed_maxsparethreads,
-          minspareservers: parsed_minspareservers,
-          minsparethreads: parsed_minsparethreads,
-          mpm: parsed_mpm,
-          startservers: parsed_startservers,
-          threadlimit: parsed_threadlimit,
-          threadsperchild: parsed_threadsperchild
+          maxclients: maxclients,
+          maxconnectionsperchild: maxconnectionsperchild,
+          maxrequestsperchild: maxrequestsperchild,
+          maxrequestworkers: maxrequestworkers,
+          maxspareservers: maxspareservers,
+          maxsparethreads: maxsparethreads,
+          minspareservers: minspareservers,
+          minsparethreads: minsparethreads,
+          mpm: mpm,
+          startservers: startservers,
+          threadlimit: threadlimit,
+          threadsperchild: threadsperchild
         )
         cookbook 'httpd'
         action :create
       end
 
       # make sure there is only one MPM loaded
-      case parsed_mpm
+      case mpm
       when 'prefork'
-        httpd_config "#{new_resource.name} :create mpm_worker" do
+        httpd_config "#{name} :create mpm_worker" do
           config_name 'mpm_worker'
           instance new_resource.instance
           action :delete
         end
 
-        httpd_config "#{new_resource.name} :create mpm_event" do
+        httpd_config "#{name} :create mpm_event" do
           config_name 'mpm_event'
           instance new_resource.instance
           action :delete
         end
       when 'worker'
-        httpd_config "#{new_resource.name} :create mpm_prefork" do
+        httpd_config "#{name} :create mpm_prefork" do
           config_name 'mpm_prefork'
           instance new_resource.instance
           action :delete
         end
 
-        httpd_config "#{new_resource.name} :create mpm_event" do
+        httpd_config "#{name} :create mpm_event" do
           config_name 'mpm_event'
           instance new_resource.instance
           action :delete
         end
       when 'event'
-        httpd_config "#{new_resource.name} :create mpm_prefork" do
+        httpd_config "#{name} :create mpm_prefork" do
           config_name 'mpm_prefork'
           instance new_resource.instance
           action :delete
         end
 
-        httpd_config "#{new_resource.name} :create mpm_worker" do
+        httpd_config "#{name} :create mpm_worker" do
           config_name 'mpm_worker'
           instance new_resource.instance
           action :delete
@@ -315,11 +315,11 @@ module HttpdCookbook
       end
 
       # Install core modules
-      parsed_modules.each do |mod|
-        httpd_module "#{new_resource.name} :create #{mod}" do
+      modules.each do |mod|
+        httpd_module "#{name} :create #{mod}" do
           module_name mod
           instance new_resource.instance
-          httpd_version parsed_version
+          version new_resource.version
           action :create
         end
       end

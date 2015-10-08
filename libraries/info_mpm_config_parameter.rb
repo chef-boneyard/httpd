@@ -1,4 +1,3 @@
-
 # DSL bits
 module HttpdCookbook
   module Helpers
