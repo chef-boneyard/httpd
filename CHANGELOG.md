@@ -1,6 +1,12 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.3.0 (2015-10-08)
+------------------
+- Heavy refactoring, converting to 12.5 resources with 12.x backcompat
+- Removed fugly resource titles, which explodes ChefSpec.
+- Commented out a ton of specs, still getting various clone warnings.
+
 0.2.19 (2015-09-15)
 ------------------
 - Updating for Amazon Linux 2015.03
