@@ -31,15 +31,15 @@ describe 'httpd_module_test::default' do
   end
 
   context 'when stepping into httpd_module' do
-    it 'installs package[auth_basic :create httpd]' do
-      expect(centos_58_module_22).to install_package('auth_basic :create httpd')
+    it 'installs package[httpd]' do
+      expect(centos_58_module_22).to install_package('httpd')
         .with(
           package_name: 'httpd'
         )
     end
 
-    it 'create directory[auth_basic :create /etc/httpd-default/conf.d]' do
-      expect(centos_58_module_22).to create_directory('auth_basic :create /etc/httpd-default/conf.d')
+    it 'create directory[/etc/httpd-default/conf.d]' do
+      expect(centos_58_module_22).to create_directory('/etc/httpd-default/conf.d')
         .with(
           owner: 'root',
           group: 'root',
@@ -48,8 +48,8 @@ describe 'httpd_module_test::default' do
     end
 
     # auth_basic
-    it 'create template[auth_basic :create /etc/httpd-default/conf.d/auth_basic.load]' do
-      expect(centos_58_module_22).to create_template('auth_basic :create /etc/httpd-default/conf.d/auth_basic.load')
+    it 'create template[/etc/httpd-default/conf.d/auth_basic.load]' do
+      expect(centos_58_module_22).to create_template('/etc/httpd-default/conf.d/auth_basic.load')
         .with(
           owner: 'root',
           group: 'root',
@@ -58,30 +58,30 @@ describe 'httpd_module_test::default' do
         )
     end
 
-    it 'renders file[auth_basic :create /etc/httpd-default/conf.d/auth_basic.load]' do
-      expect(centos_58_module_22).to render_file('auth_basic :create /etc/httpd-default/conf.d/auth_basic.load')
+    it 'renders file[/etc/httpd-default/conf.d/auth_basic.load]' do
+      expect(centos_58_module_22).to render_file('/etc/httpd-default/conf.d/auth_basic.load')
         .with_content(
           auth_basic_load_content
         )
     end
 
     # auth_kerb
-    it 'installs package[auth_kerb :create mod_auth_kerb]' do
-      expect(centos_58_module_22).to install_package('auth_kerb :create mod_auth_kerb')
+    it 'installs package[mod_auth_kerb]' do
+      expect(centos_58_module_22).to install_package('mod_auth_kerb')
         .with(
           package_name: 'mod_auth_kerb'
         )
     end
 
-    it 'deletes file[auth_kerb :create /etc/httpd-default/conf.d/auth_kerb.conf]' do
-      expect(centos_58_module_22).to_not delete_file('auth_kerb :create /etc/httpd-default/conf.d/auth_kerb.conf')
+    it 'deletes file[/etc/httpd-default/conf.d/auth_kerb.conf]' do
+      expect(centos_58_module_22).to_not delete_file('/etc/httpd-default/conf.d/auth_kerb.conf')
         .with(
           path: '/etc/httpd-default/conf.d/auth_kerb.conf'
         )
     end
 
-    it 'create directory[auth_kerb :create /etc/httpd-default/conf.d]' do
-      expect(centos_58_module_22).to create_directory('auth_kerb :create /etc/httpd-default/conf.d')
+    it 'create directory[/etc/httpd-default/conf.d]' do
+      expect(centos_58_module_22).to create_directory('/etc/httpd-default/conf.d')
         .with(
           owner: 'root',
           group: 'root',
@@ -89,8 +89,8 @@ describe 'httpd_module_test::default' do
         )
     end
 
-    it 'create template[auth_kerb :create /etc/httpd-default/conf.d/auth_kerb.load]' do
-      expect(centos_58_module_22).to create_template('auth_kerb :create /etc/httpd-default/conf.d/auth_kerb.load')
+    it 'create template[/etc/httpd-default/conf.d/auth_kerb.load]' do
+      expect(centos_58_module_22).to create_template('/etc/httpd-default/conf.d/auth_kerb.load')
         .with(
           owner: 'root',
           group: 'root',
@@ -99,8 +99,8 @@ describe 'httpd_module_test::default' do
         )
     end
 
-    it 'renders file[auth_kerb :create /etc/httpd-default/conf.d/auth_kerb.load]' do
-      expect(centos_58_module_22).to render_file('auth_kerb :create /etc/httpd-default/conf.d/auth_kerb.load')
+    it 'renders file[/etc/httpd-default/conf.d/auth_kerb.load]' do
+      expect(centos_58_module_22).to render_file('/etc/httpd-default/conf.d/auth_kerb.load')
         .with_content(
           auth_kerb_load_content
         )

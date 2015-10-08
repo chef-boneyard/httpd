@@ -35,71 +35,71 @@ describe 'httpd_service_test::single' do
   end
 
   context 'when stepping into httpd_service' do
-    it 'installs package[default :create httpd]' do
-      expect(centos_58_service_22_single).to install_package('default :create httpd')
+    it 'installs package[httpd]' do
+      expect(centos_58_service_22_single).to install_package('httpd')
         .with(
           package_name: 'httpd'
         )
     end
 
-    it 'manage service[default :create httpd-default]' do
-      expect(centos_58_service_22_single).to stop_service('default :create httpd')
+    it 'manage service[httpd-default]' do
+      expect(centos_58_service_22_single).to stop_service('httpd')
         .with(
           provider: Chef::Provider::Service::Init::Redhat
         )
-      expect(centos_58_service_22_single).to disable_service('default :create httpd')
+      expect(centos_58_service_22_single).to disable_service('httpd')
         .with(
           provider: Chef::Provider::Service::Init::Redhat
         )
     end
 
-    it 'installs package[default :create net-tools]' do
-      expect(centos_58_service_22_single).to install_package('default :create net-tools')
+    it 'installs package[net-tools]' do
+      expect(centos_58_service_22_single).to install_package('net-tools')
         .with(
           package_name: 'net-tools'
         )
     end
 
-    it 'creates httpd_module[default :create log_config]' do
-      expect(centos_58_service_22_single).to create_httpd_module('default :create log_config')
+    it 'creates httpd_module[log_config]' do
+      expect(centos_58_service_22_single).to create_httpd_module('log_config')
         .with(
           module_name: 'log_config'
         )
     end
 
-    it 'creates httpd_module[default :create logio]' do
-      expect(centos_58_service_22_single).to create_httpd_module('default :create logio')
+    it 'creates httpd_module[logio]' do
+      expect(centos_58_service_22_single).to create_httpd_module('logio')
         .with(
           module_name: 'logio'
         )
     end
 
-    it 'creates link[default :create /usr/sbin/httpd-default]' do
-      expect(centos_58_service_22_single).to create_link('default :create /usr/sbin/httpd-default')
+    it 'creates link[/usr/sbin/httpd-default]' do
+      expect(centos_58_service_22_single).to create_link('/usr/sbin/httpd-default')
         .with(
           target_file: '/usr/sbin/httpd-default',
           to: '/usr/sbin/httpd'
         )
     end
 
-    it 'creates link[default :create /usr/sbin/httpd-default.worker]' do
-      expect(centos_58_service_22_single).to create_link('default :create /usr/sbin/httpd-default.worker')
+    it 'creates link[/usr/sbin/httpd-default.worker]' do
+      expect(centos_58_service_22_single).to create_link('/usr/sbin/httpd-default.worker')
         .with(
           target_file: '/usr/sbin/httpd-default.worker',
           to: '/usr/sbin/httpd.worker'
         )
     end
 
-    it 'creates link[default :create /usr/sbin/httpd-default.event]' do
-      expect(centos_58_service_22_single).to create_link('default :create /usr/sbin/httpd-default.event')
+    it 'creates link[/usr/sbin/httpd-default.event]' do
+      expect(centos_58_service_22_single).to create_link('/usr/sbin/httpd-default.event')
         .with(
           target_file: '/usr/sbin/httpd-default.event',
           to: '/usr/sbin/httpd.event'
         )
     end
 
-    it 'creates httpd_config[default :create mpm_worker]' do
-      expect(centos_58_service_22_single).to create_httpd_config('default :create mpm_worker')
+    it 'creates httpd_config[mpm_worker]' do
+      expect(centos_58_service_22_single).to create_httpd_config('mpm_worker')
         .with(
           config_name: 'mpm_worker',
           instance: 'default',
@@ -108,8 +108,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates directory[default :create /etc/httpd-default]' do
-      expect(centos_58_service_22_single).to create_directory('default :create /etc/httpd-default')
+    it 'creates directory[/etc/httpd-default]' do
+      expect(centos_58_service_22_single).to create_directory('/etc/httpd-default')
         .with(
           path: '/etc/httpd-default',
           user: 'root',
@@ -119,8 +119,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates directory[default :create /etc/httpd-default/conf]' do
-      expect(centos_58_service_22_single).to create_directory('default :create /etc/httpd-default/conf')
+    it 'creates directory[/etc/httpd-default/conf]' do
+      expect(centos_58_service_22_single).to create_directory('/etc/httpd-default/conf')
         .with(
           path: '/etc/httpd-default/conf',
           user: 'root',
@@ -130,8 +130,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates directory[default :create /etc/httpd-default/conf.d]' do
-      expect(centos_58_service_22_single).to create_directory('default :create /etc/httpd-default/conf.d')
+    it 'creates directory[/etc/httpd-default/conf.d]' do
+      expect(centos_58_service_22_single).to create_directory('/etc/httpd-default/conf.d')
         .with(
           path: '/etc/httpd-default/conf.d',
           user: 'root',
@@ -141,8 +141,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates directory[default :create /usr/lib64/httpd/modules]' do
-      expect(centos_58_service_22_single).to create_directory('default :create /usr/lib64/httpd/modules')
+    it 'creates directory[/usr/lib64/httpd/modules]' do
+      expect(centos_58_service_22_single).to create_directory('/usr/lib64/httpd/modules')
         .with(
           path: '/usr/lib64/httpd/modules',
           user: 'root',
@@ -152,8 +152,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates directory[default :create /var/log/httpd]' do
-      expect(centos_58_service_22_single).to create_directory('default :create /var/log/httpd-default')
+    it 'creates directory[/var/log/httpd]' do
+      expect(centos_58_service_22_single).to create_directory('/var/log/httpd-default')
         .with(
           path: '/var/log/httpd-default',
           user: 'root',
@@ -163,32 +163,32 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates link[default :create /etc/httpd-default/logs]' do
-      expect(centos_58_service_22_single).to create_link('default :create /etc/httpd-default/logs')
+    it 'creates link[/etc/httpd-default/logs]' do
+      expect(centos_58_service_22_single).to create_link('/etc/httpd-default/logs')
         .with(
           target_file: '/etc/httpd-default/logs',
           to: '../../var/log/httpd-default'
         )
     end
 
-    it 'creates link[default :create /etc/httpd-default/modules]' do
-      expect(centos_58_service_22_single).to create_link('default :create /etc/httpd-default/modules')
+    it 'creates link[/etc/httpd-default/modules]' do
+      expect(centos_58_service_22_single).to create_link('/etc/httpd-default/modules')
         .with(
           target_file: '/etc/httpd-default/modules',
           to: '../../usr/lib64/httpd/modules'
         )
     end
 
-    it 'creates link[default :create /etc/httpd-default/run]' do
-      expect(centos_58_service_22_single).to create_link('default :create /etc/httpd-default/run')
+    it 'creates link[/etc/httpd-default/run]' do
+      expect(centos_58_service_22_single).to create_link('/etc/httpd-default/run')
         .with(
           target_file: '/etc/httpd-default/run',
           to: '../../var/run'
         )
     end
 
-    it 'creates template[default :create /etc/httpd-default/conf/mime.types]' do
-      expect(centos_58_service_22_single).to create_template('default :create /etc/httpd-default/conf/mime.types')
+    it 'creates template[/etc/httpd-default/conf/mime.types]' do
+      expect(centos_58_service_22_single).to create_template('/etc/httpd-default/conf/mime.types')
         .with(
           path: '/etc/httpd-default/conf/mime.types',
           source: 'magic.erb',
@@ -199,8 +199,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates template[default :create /etc/httpd-default/conf/httpd.conf]' do
-      expect(centos_58_service_22_single).to create_template('default :create /etc/httpd-default/conf/httpd.conf')
+    it 'creates template[/etc/httpd-default/conf/httpd.conf]' do
+      expect(centos_58_service_22_single).to create_template('/etc/httpd-default/conf/httpd.conf')
         .with(
           path: '/etc/httpd-default/conf/httpd.conf',
           source: 'httpd.conf.erb',
@@ -211,8 +211,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates template[default :create /etc/rc.d/init.d/httpd]' do
-      expect(centos_58_service_22_single).to create_template('default :create /etc/init.d/httpd-default')
+    it 'creates template[/etc/rc.d/init.d/httpd]' do
+      expect(centos_58_service_22_single).to create_template('/etc/init.d/httpd-default')
         .with(
           path: '/etc/init.d/httpd-default',
           source: '2.2/sysvinit/el-5/httpd.erb',
@@ -223,8 +223,8 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'creates template[default :create /etc/sysconfig/httpd-default]' do
-      expect(centos_58_service_22_single).to create_template('default :create /etc/sysconfig/httpd-default')
+    it 'creates template[/etc/sysconfig/httpd-default]' do
+      expect(centos_58_service_22_single).to create_template('/etc/sysconfig/httpd-default')
         .with(
           path: '/etc/sysconfig/httpd-default',
           source: 'rhel/sysconfig/httpd-2.2.erb',
@@ -244,8 +244,8 @@ describe 'httpd_service_test::single' do
       authn_file authz_host
       reqtimeout
     ).each do |mod|
-      it "steps into httpd_service[default] and creates httpd_module[default :create #{mod}]" do
-        expect(centos_58_service_22_single).to create_httpd_module("default :create #{mod}")
+      it "steps into httpd_service[default] and creates httpd_module[#{mod}]" do
+        expect(centos_58_service_22_single).to create_httpd_module("#{mod}")
           .with(
             module_name: mod,
             instance: 'default',
@@ -254,12 +254,12 @@ describe 'httpd_service_test::single' do
       end
     end
 
-    it 'manage service[default :create httpd-default]' do
-      expect(centos_58_service_22_single).to start_service('default :create httpd-default')
+    it 'manage service[httpd-default]' do
+      expect(centos_58_service_22_single).to start_service('httpd-default')
         .with(
           provider: Chef::Provider::Service::Init::Redhat
         )
-      expect(centos_58_service_22_single).to enable_service('default :create httpd-default')
+      expect(centos_58_service_22_single).to enable_service('httpd-default')
         .with(
           provider: Chef::Provider::Service::Init::Redhat
         )

@@ -20,8 +20,8 @@ describe 'httpd_config_test::default' do
   end
 
   context 'stepping into http_config' do
-    it 'creates directory[hello :create /etc/httpd-default/conf.d]' do
-      expect(centos_58_client_22).to create_directory('hello :create /etc/httpd-default/conf.d')
+    it 'creates directory[/etc/httpd-default/conf.d]' do
+      expect(centos_58_client_22).to create_directory('/etc/httpd-default/conf.d')
         .with(
           path: '/etc/httpd-default/conf.d',
           owner: 'root',
@@ -31,8 +31,8 @@ describe 'httpd_config_test::default' do
         )
     end
 
-    it 'creates template[hello :create /etc/httpd-default/conf.d/hello.conf]' do
-      expect(centos_58_client_22).to create_template('hello :create /etc/httpd-default/conf.d/hello.conf')
+    it 'creates template[/etc/httpd-default/conf.d/hello.conf]' do
+      expect(centos_58_client_22).to create_template('/etc/httpd-default/conf.d/hello.conf')
         .with(
           path: '/etc/httpd-default/conf.d/hello.conf',
           owner: 'root',
@@ -43,8 +43,8 @@ describe 'httpd_config_test::default' do
         )
     end
 
-    it 'creates directory[hello_again :create /etc/httpd-foo/conf.d]' do
-      expect(centos_58_client_22).to create_directory('hello_again :create /etc/httpd-foo/conf.d')
+    it 'creates directory[/etc/httpd-foo/conf.d]' do
+      expect(centos_58_client_22).to create_directory('/etc/httpd-foo/conf.d')
         .with(
           path: '/etc/httpd-foo/conf.d',
           owner: 'root',
@@ -54,8 +54,8 @@ describe 'httpd_config_test::default' do
         )
     end
 
-    it 'creates template[hello_again :create /etc/httpd-foo/conf.d/hello_again.conf]' do
-      expect(centos_58_client_22).to create_template('hello_again :create /etc/httpd-foo/conf.d/hello_again.conf')
+    it 'creates template[/etc/httpd-foo/conf.d/hello_again.conf]' do
+      expect(centos_58_client_22).to create_template('/etc/httpd-foo/conf.d/hello_again.conf')
         .with(
           path: '/etc/httpd-foo/conf.d/hello_again.conf',
           owner: 'root',
