@@ -18,6 +18,7 @@ describe 'httpd_service_test::multi' do
       node.set['httpd']['keepalive'] = false
       node.set['httpd']['maxkeepaliverequests'] = '5678'
       node.set['httpd']['keepalivetimeout'] = '8765'
+      node.set['httpd']['listen_addresses'] = ['0.0.0.0']
       node.set['httpd']['listen_ports'] = %w(81 444)
       node.set['httpd']['log_level'] = 'warn'
       node.set['httpd']['run_user'] = 'bob'
