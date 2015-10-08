@@ -27,11 +27,6 @@ module HttpdCookbook
         "a2dissite-#{name}"
       end
 
-      # module things
-      def module_name
-        module_name
-      end
-
       def module_path
         "/usr/lib/apache2/modules/#{parsed_filename}"
       end

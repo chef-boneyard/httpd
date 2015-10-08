@@ -5,8 +5,8 @@ module HttpdCookbook
 
     action :create do
       # package_name is set by resource
-      package "#{new_resource.name} :create #{parsed_module_package_name}" do
-        package_name parsed_module_package_name
+      package "#{name} :create #{package_name}" do
+        package_name new_resource.package_name
         action :install
       end
 

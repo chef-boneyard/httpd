@@ -50,17 +50,6 @@ module HttpdCookbook
       "mod_#{module_name}.so"
     end
 
-    def parsed_module_package_name
-      return package_name if package_name
-      package_name_for_module(
-        module_name,
-        parsed_httpd_version,
-        node['platform'],
-        node['platform_family'],
-        node['platform_version']
-      )
-    end
-
     def parsed_service_package_name
       return package_name if package_name
       package_name_for_service(
