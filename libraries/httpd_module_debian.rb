@@ -5,7 +5,7 @@ module HttpdCookbook
     provides :httpd_module, platform_family: 'debian'
 
     action :create do
-      package "#{package_name}" do
+      package package_name do
         action :install
       end
 
