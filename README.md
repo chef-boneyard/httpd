@@ -1,6 +1,7 @@
 HTTPD Cookbook
 =======================
 
+[![Code Climate](https://codeclimate.com/github/chef-cookbooks/httpd/badges/gpa.svg)](https://codeclimate.com/github/chef-cookbooks/httpd)
 [![Build Status](https://travis-ci.org/chef-cookbooks/httpd.svg?branch=master)](https://travis-ci.org/chef-cookbooks/httpd)
 [![Cookbook Version](https://img.shields.io/cookbook/v/httpd.svg)](https://supermarket.chef.io/cookbooks/httpd)
 
