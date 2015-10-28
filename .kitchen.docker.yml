@@ -1,0 +1,183 @@
+settings:
+  parallel: true
+
+driver:
+  name: docker
+  # privileged is required otherwise the container doesn't boot right
+  privileged: true
+
+platforms:
+- name: centos-5
+  driver:
+    image: centos:5
+    platform: rhel    
+
+- name: centos-6
+  driver:
+    image: centos:6
+    platform: rhel
+
+- name: centos-7
+  driver:
+    image: centos:7
+    platform: rhel
+    run_command: /usr/lib/systemd/systemd
+    provision_command:
+      - /bin/yum install -y initscripts net-tools wget
+
+- name: ubuntu-12.04
+  driver:
+    image: ubuntu-upstart:12.04
+    platform: ubuntu
+    disable_upstart: false
+    run_command: /sbin/init
+    provision_command:
+      - /usr/bin/apt-get update
+      - /usr/bin/apt-get install apt-transport-https net-tools -y
+
+- name: ubuntu-14.04
+  driver:
+    image: ubuntu-upstart:14.04
+    platform: ubuntu
+    disable_upstart: false
+    run_command: /sbin/init
+    provision_command:
+      - /usr/bin/apt-get update
+      - /usr/bin/apt-get install apt-transport-https net-tools -y
+
+suites:
+  #
+  # service22-single
+  #
+  - name: service22-single
+    run_list:
+    - recipe[httpd_service_test::single]
+    includes: [
+      'centos-5',
+      'centos-6',
+      'debian-7',
+      'ubuntu-12.04'
+    ]
+    attributes:
+      httpd:
+        version: '2.2'
+
+  #
+  # service22-multi
+  #
+  - name: service22-multi
+    run_list:
+    - recipe[httpd_service_test::multi]
+    includes: [
+      'centos-5',
+      'centos-6',
+      'debian-7',
+      'ubuntu-12.04'
+    ]
+    attributes:
+      httpd:
+        contact: 'bob@computers.biz'
+        version: '2.2'
+        service_name: 'multi'
+        listen_ports: [ '81', '444' ]
+        run_user: 'bob'
+        run_group: 'bob'
+        timeout: '1234'
+        keepalive: false
+        keepaliverequests: '5678'
+        keepalivetimeout: '8765'
+        mpm: 'prefork'
+        startservers: '20'
+        minspareservers: '20'
+        minspareservers: '40'
+
+  #
+  # service24-single
+  #
+  - name: service24-single
+    run_list:
+    - recipe[httpd_service_test::single]
+    includes: [
+      'centos-7',
+      'fedora-21',
+      'fedora-22',
+      'ubuntu-14.04',
+      'ubuntu-15.10',
+    ]
+    attributes:
+      httpd:
+        version: '2.4'
+
+  #
+  # service24-multi
+  #
+  - name: service24-multi
+    run_list:
+    - recipe[httpd_service_test::multi]
+    includes: [
+      'centos-7',
+      'fedora-22',
+      'ubuntu-14.04',
+      'ubuntu-15.10',
+    ]
+    attributes:
+      httpd:
+        contact: 'alice@computers.biz'
+        keepalive: false
+        keepaliverequests: '5678'
+        keepalivetimeout: '8765'
+        listen_ports: [ '81', '444' ]
+        minspareservers: '20'
+        minspareservers: '40'
+        mpm: 'prefork'
+        run_group: 'bob'
+        run_user: 'bob'
+        service_name: 'multi'
+        startservers: '20'
+        timeout: '1234'
+        version: '2.4'
+
+  #
+  # modules
+  #
+  - name: module22
+    run_list:
+    - recipe[httpd_module_test]
+    includes: [
+      'centos-5',
+      'centos-6',
+      'debian-7',
+      'ubuntu-12.04',
+      'ubuntu-14.04',
+      'ubuntu-15.10'
+    ]
+    attributes:
+      httpd:
+        version: '2.2'
+
+  - name: module24
+    run_list:
+    - recipe[httpd_module_test]
+    includes: [
+      'centos-7',
+      'fedora-22',
+      'ubuntu-14.04',
+      'ubuntu-15.10'
+    ]
+    attributes:
+      httpd:
+        version: '2.4'
+
+  #
+  # config
+  #
+  - name: config
+    run_list:
+    - recipe[httpd_config_test]
+
+  #
+  # hello_world_test
+  #
+  - name: hello_world_test
+    run_list:
+    - recipe[hello_world_test]
