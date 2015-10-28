@@ -1,6 +1,11 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.3.1 (2015-10-08)
+------------------
+- Fixed bug in rhel sysvinit provider
+- style fixes
+
 0.3.0 (2015-10-08)
 ------------------
 - Heavy refactoring, converting to 12.5 resources with 12.x backcompat
