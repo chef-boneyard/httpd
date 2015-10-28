@@ -1,6 +1,20 @@
 module HttpdCookbook
   class HttpdModule < ChefCompat::Resource
-    property :filename, String, default: lazy {
+    #####################
+    # Resource properties
+    #####################
+    property :filename, String, default: lazy { default_filename }
+    property :httpd_version, String, default: lazy { default_apache_version }
+    property :instance, String, default: 'default'
+    property :module_name, String, name_property: true, required: true
+    property :package_name, String, default: lazy { default_package_name }
+    property :symbolname, default: lazy { default_symbolname }
+    include HttpdCookbook::Helpers
+
+    ################
+    # Helper Methods
+    ################
+    def default_filename
       case node['platform_family']
       when 'debian'
         return 'libphp5.so' if module_name == 'php5'
@@ -11,11 +25,9 @@ module HttpdCookbook
         return 'libphp5-zts.so' if module_name == 'php-zts'
       end
       "mod_#{module_name}.so"
-    }
-    property :httpd_version, String, default: lazy { default_apache_version }
-    property :instance, String, default: 'default'
-    property :module_name, String, name_property: true, required: true
-    property :package_name, String, default: lazy {
+    end
+
+    def default_package_name
       package_name_for_module(
         module_name,
         httpd_version,
@@ -23,12 +35,12 @@ module HttpdCookbook
         node['platform_family'],
         node['platform_version']
       )
-    }
-    property :symbolname, default: lazy {
+    end
+
+    def default_symbolname
       return 'php5_module' if module_name == 'php'
       return 'php5_module' if module_name == 'php-zts'
       "#{module_name}_module"
-    }
-    include HttpdCookbook::Helpers
+    end
   end
 end
