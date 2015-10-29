@@ -1,0 +1,4 @@
+# Please either
+# export KITCHEN_YAML=.kitchen.docker.yml
+# or
+# export KITCHEN_YAML=.kitchen.cloud.yml
