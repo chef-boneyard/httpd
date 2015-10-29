@@ -1,2 +1,1 @@
-
-httpd_module 'php'
+# httpd_module 'php5'
