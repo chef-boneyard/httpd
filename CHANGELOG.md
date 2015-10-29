@@ -1,7 +1,11 @@
 httpd Cookbook CHANGELOG
 ========================
 
-0.3.1 (2015-10-08)
+0.3.2 (2015-10-28)
+------------------
+- depending on compat_resource >= 12.5.11
+
+0.3.1 (2015-10-28)
 ------------------
 - Fixed bug in rhel sysvinit provider
 - style fixes
