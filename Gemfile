@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-# gem 'kitchen-dokken', git: 'https://github.com/someara/kitchen-dokken'
-gem 'kitchen-dokken', path: '/Users/someara/src/kitchen-dokken'
+gem 'kitchen-dokken', git: 'https://github.com/someara/kitchen-dokken'
+# gem 'kitchen-dokken', path: '/Users/someara/src/kitchen-dokken'
 gem 'chefspec', github: 'jkeiser/chefspec', branch: 'jk/chefspec-12.5'
 gem 'test-kitchen'
 gem 'berkshelf', '~> 4.0'
