@@ -1,42 +1,8 @@
 source 'https://rubygems.org'
 
-group :rake do
-  gem 'rake'
-  gem 'tomlrb'
-end
-
-group :lint do
-  gem 'foodcritic', '~> 5.0'
-  gem 'rubocop', '~> 0.34'
-end
-
-group :unit do
-  gem 'berkshelf',  '~> 4.0'
-  gem 'chefspec',   '~> 4.4'
-end
-
-group :kitchen_common do
-  gem 'test-kitchen', '~> 1.4'
-end
-
-group :kitchen_vagrant do
-  gem 'kitchen-vagrant', '~> 0.19'
-end
-
-group :kitchen_cloud do
-  gem 'kitchen-digitalocean', '~> 0.9'
-  gem 'kitchen-ec2',          '~> 0.8'
-  gem 'kitchen-joyent',       '~> 0.1'
-  gem 'kitchen-gce',          '~> 0.2'
-end
-
-group :development do
-  gem 'ruby_gntp'
-  gem 'growl'
-  gem 'rb-fsevent'
-  gem 'guard', '~> 2.4'
-  gem 'guard-kitchen'
-  gem 'guard-foodcritic'
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
-end
+gem 'kitchen-dokken', git: 'https://github.com/someara/kitchen-dokken'
+# gem 'kitchen-dokken', path: '/Users/someara/src/kitchen-dokken'
+gem 'chefspec', github: 'jkeiser/chefspec', branch: 'jk/chefspec-12.5'
+gem 'test-kitchen'
+gem 'berkshelf', '~> 4.0'
+gem 'docker-api', require: 'docker'
