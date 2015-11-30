@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.3.3 (2015-11-30)
+------------------
+- bug fix for 32 bit support on RHEL platforms
+
 0.3.2 (2015-10-28)
 ------------------
 - depending on compat_resource >= 12.5.11
