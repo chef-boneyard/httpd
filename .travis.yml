@@ -2,7 +2,6 @@ rvm: 2.2
 
 sudo: required
 
-# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
 addons:
   apt:
     sources:
@@ -10,46 +9,43 @@ addons:
     packages:
       - chefdk
 
+install: echo "skip bundle install"
+
 services: docker
 
 env:
   matrix:
-  - INSTANCE=service22-single-centos-5
-  - INSTANCE=service22-single-centos-6
-  - INSTANCE=service22-single-ubuntu-1204
-  - INSTANCE=service22-multi-centos-5
-  - INSTANCE=service22-multi-centos-6
-  - INSTANCE=service22-multi-ubuntu-1204
-  - INSTANCE=service24-single-centos-7
-  - INSTANCE=service24-single-ubuntu-1404
-  - INSTANCE=service24-multi-centos-7
-  - INSTANCE=service24-multi-ubuntu-1404
-  - INSTANCE=module22-centos-5
-  - INSTANCE=module22-centos-6
-  - INSTANCE=module22-ubuntu-1204
-  - INSTANCE=module22-ubuntu-1404
-  - INSTANCE=module24-centos-7
-  - INSTANCE=module24-ubuntu-1404
-  - INSTANCE=config-centos-5
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
+  - INSTANCE=config-fedora-21
+  - INSTANCE=config-debian-7
   - INSTANCE=config-ubuntu-1204
   - INSTANCE=config-ubuntu-1404
-  - INSTANCE=hello-world-test-centos-5
-  - INSTANCE=hello-world-test-centos-6
-  - INSTANCE=hello-world-test-centos-7
-  - INSTANCE=hello-world-test-ubuntu-1204
-  - INSTANCE=hello-world-test-ubuntu-1404
+  - INSTANCE=module22-centos-6
+  - INSTANCE=module22-debian-7
+  - INSTANCE=module22-ubuntu-1204
+  - INSTANCE=module24-centos-7
+  - INSTANCE=module24-fedora-21
+  - INSTANCE=module24-ubuntu-1404
+  - INSTANCE=service22-single-centos-6
+  - INSTANCE=service22-single-debian-7
+  - INSTANCE=service22-single-ubuntu-1204
+  - INSTANCE=service22-multi-centos-6
+  - INSTANCE=service22-multi-debian-7
+  - INSTANCE=service22-multi-ubuntu-1204
+  - INSTANCE=service24-single-centos-7
+  - INSTANCE=service24-single-fedora-21
+  - INSTANCE=service24-single-ubuntu-1404
+  - INSTANCE=service24-multi-centos-7
+  - INSTANCE=service24-multi-fedora-21
+  - INSTANCE=service24-multi-ubuntu-1404
+  fast_finish: true
 
-# Don't `bundle install`
-install: echo "skip bundle install"
-
-# Ensure we make ChefDK's Ruby the default
 before_script:
-  # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-docker
+  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
+
 script:
   - /opt/chefdk/embedded/bin/chef --version
   - /opt/chefdk/embedded/bin/rubocop --version
@@ -57,4 +53,9 @@ script:
   - /opt/chefdk/embedded/bin/foodcritic --version
   - /opt/chefdk/embedded/bin/foodcritic . --exclude spec
   - /opt/chefdk/embedded/bin/rspec
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+  - KITCHEN_LOCAL_YAML=.kitchen.yml kitchen verify ${INSTANCE}
+
+after_script:
+  - docker images
+  - docker ps -a
+  - cat .kitchen/logs/kitchen.log
