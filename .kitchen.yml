@@ -30,7 +30,7 @@ platforms:
     image: centos:7
     intermediate_instructions:
       - RUN yum clean all
-      - RUN yum -y install net-tools lsof
+      - RUN yum -y install net-tools lsof iproute
     pid_one_command: /usr/lib/systemd/systemd
 
 - name: fedora-21
