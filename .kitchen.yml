@@ -28,6 +28,9 @@ platforms:
 - name: centos-7
   driver:
     image: centos:7
+    intermediate_instructions:
+      - RUN yum clean all
+      - RUN yum -y install net-tools lsof
     pid_one_command: /usr/lib/systemd/systemd
 
 - name: fedora-21
