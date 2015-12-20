@@ -13,13 +13,11 @@ provisioner:
 verifier:
   root_path: '/opt/verifier'
   sudo: false
-#  name: inspec
 
 platforms:
-# someara/chef container does not support centos-5 yet.
-# - name: centos-5
-#   driver:
-#     image: centos:5
+- name: centos-5
+  driver:
+    image: centos:5
 
 - name: centos-6
   driver:
