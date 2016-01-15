@@ -203,24 +203,24 @@ suites:
         startservers: '20'
         minspareservers: '20'
         minspareservers: '40'
-- name: swat
-    driver:
-    run_list:
-    - recipe[httpd_service_test::single]
-    - recipe[sparrow]
-    includes: [
-      'centos-7',
-      'fedora-21',
-      'debian-8',
-      'ubuntu-14.04',
-      'ubuntu-15.04',
-    ]
-    attributes:
-      httpd:
-        version: '2.4'
-        sparrow:
-          plugin:
-            list: [
-                'swat-httpd-cookbook'
-            ]
+ - name: swat
+     driver:
+     run_list:
+     - recipe[httpd_service_test::single]
+     - recipe[sparrow]
+     includes: [
+       'centos-7',
+       'fedora-21',
+       'debian-8',
+       'ubuntu-14.04',
+       'ubuntu-15.04',
+     ]
+     attributes:
+       httpd:
+         version: '2.4'
+         sparrow:
+           plugin:
+             list: [
+                 'swat-httpd-cookbook'
+             ]
 
