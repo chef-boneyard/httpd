@@ -1,6 +1,6 @@
 PATH=$PATH:/usr/local/bin/
 
-which sparrow 1>/dev/null || exit 1
+sparrow 1>/dev/null || exit 1
 
 sparrow project create foo
 
