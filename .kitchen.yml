@@ -209,10 +209,8 @@ suites:
     - recipe[sparrow]
     includes: [
        'centos-7',
-       'fedora-21',
-       'debian-8',
-       'ubuntu-14.04',
-       'ubuntu-15.04',
+       'debian-7',
+       'ubuntu-14.04'
     ]
     attributes:
       httpd:
