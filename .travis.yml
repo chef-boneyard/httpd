@@ -15,6 +15,7 @@ services: docker
 
 env:
   matrix:
+  - INSTANCE=swat-centos-7
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
   - INSTANCE=config-fedora-21
