@@ -217,9 +217,9 @@ suites:
     attributes:
       httpd:
         version: '2.4'
-        sparrow:
-          plugin:
-            list: [
-                'swat-httpd-cookbook'
-            ]
+      sparrow:
+        plugin:
+          list: [
+              'swat-httpd-cookbook'
+          ]
 
