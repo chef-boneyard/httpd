@@ -6,7 +6,7 @@ sparrow project create foo
 
 sparrow check add foo httpd
 
-sparrow check set foo httpd -p swat-httpd-cookbook -u 127.0.0.1
+sparrow check set foo httpd swat-httpd-cookbook 127.0.0.1
 
 match_l=300 \
 prove_options="--color --verbose" \
