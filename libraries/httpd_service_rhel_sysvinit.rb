@@ -10,7 +10,7 @@ module HttpdCookbook
 
     action :start do
       template "/etc/init.d/#{apache_name}" do
-        source "#{version}/sysvinit/el-#{elversion}/httpd.erb"
+        source "#{new_resource.version}/sysvinit/el-#{elversion}/httpd.erb"
         owner 'root'
         group 'root'
         mode '0755'
@@ -20,7 +20,7 @@ module HttpdCookbook
       end
 
       template "/etc/sysconfig/#{apache_name}" do
-        source "rhel/sysconfig/httpd-#{version}.erb"
+        source "rhel/sysconfig/httpd-#{new_resource.version}.erb"
         owner 'root'
         group 'root'
         mode '0644'
