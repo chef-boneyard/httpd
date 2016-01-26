@@ -1,6 +1,10 @@
 httpd Cookbook CHANGELOG
 ========================
 
+0.3.4 (2016-01-26)
+------------------
+- bug fix for #56, ambiguous version method in sysvinit manager
+
 0.3.3 (2015-11-30)
 ------------------
 - bug fix for 32 bit support on RHEL platforms
