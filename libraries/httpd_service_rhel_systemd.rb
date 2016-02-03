@@ -43,6 +43,19 @@ module HttpdCookbook
         action :create
       end
 
+      template "/usr/lib/tmpfiles.d/#{apache_name}.conf" do
+        source 'systemd/httpd.conf.erb'
+        owner 'root'
+        group 'root'
+        mode '0644'
+        cookbook 'httpd'
+        variables(
+          apache_name: apache_name,
+          run_user: run_user,
+          run_group: run_group
+        )
+      end
+
       service "#{apache_name}" do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Systemd
