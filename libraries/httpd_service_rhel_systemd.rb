@@ -49,11 +49,11 @@ module HttpdCookbook
         group 'root'
         mode '0644'
         cookbook 'httpd'
-        variables({
+        variables(
           apache_name: apache_name,
           run_user: run_user,
           run_group: run_group
-          })
+        )
       end
 
       service "#{apache_name}" do
