@@ -224,7 +224,8 @@ module HttpdCookbook
       unless version.to_f < 2.4
         httpd_module "mpm_#{mpm}" do
           instance new_resource.instance
-          version new_resource.version
+          httpd_version new_resource.version
+          package_name new_resource.package_name
           action :create
         end
       end
@@ -289,7 +290,8 @@ module HttpdCookbook
       modules.each do |mod|
         httpd_module "#{mod}" do
           instance new_resource.instance
-          version new_resource.version
+          httpd_version new_resource.version
+          package_name new_resource.package_name
           action :create
         end
       end

@@ -28,16 +28,18 @@ module HttpdCookbook
       if version.to_f < 2.4
         %w( log_config logio ).each do |m|
           httpd_module "#{m}" do
-            version new_resource.version
+            httpd_version new_resource.version
             instance new_resource.instance
+            package_name new_resource.package_name
             action :create
           end
         end
       else
         %w( log_config logio unixd version watchdog ).each do |m|
           httpd_module "#{m}" do
-            version new_resource.version
+            httpd_version new_resource.version
             instance new_resource.instance
+            package_name new_resource.package_name
             action :create
           end
         end
@@ -65,8 +67,9 @@ module HttpdCookbook
         end
       else
         httpd_module "mpm_#{mpm}" do
-          version new_resource.version
+          httpd_version new_resource.version
           instance new_resource.instance
+          package_name new_resource.package_name
           action :create
         end
       end
@@ -213,7 +216,8 @@ module HttpdCookbook
       modules.each do |mod|
         httpd_module "#{mod}" do
           instance new_resource.instance
-          version new_resource.version
+          httpd_version new_resource.version
+          package_name new_resource.package_name
           action :create
         end
       end
