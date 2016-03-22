@@ -9,7 +9,7 @@ module HttpdCookbook
       # Chef resources
       #
       # software installation
-      package "#{package_name}" do
+      package package_name do
         action :install
       end
 
@@ -27,7 +27,7 @@ module HttpdCookbook
       # debian and ubuntu
       if version.to_f < 2.4
         %w( log_config logio ).each do |m|
-          httpd_module "#{m}" do
+          httpd_module m do
             version new_resource.version
             instance new_resource.instance
             action :create
@@ -35,7 +35,7 @@ module HttpdCookbook
         end
       else
         %w( log_config logio unixd version watchdog ).each do |m|
-          httpd_module "#{m}" do
+          httpd_module m do
             version new_resource.version
             instance new_resource.instance
             action :create
@@ -211,7 +211,7 @@ module HttpdCookbook
 
       # Install core modules
       modules.each do |mod|
-        httpd_module "#{mod}" do
+        httpd_module mod do
           instance new_resource.instance
           version new_resource.version
           action :create
@@ -270,14 +270,10 @@ module HttpdCookbook
           recursive true
           action :delete
         end
+      end
 
-        link "/etc/#{apache_name}/run" do
-          action :delete
-        end
-      else
-        link "/etc/#{apache_name}/run" do
-          action :delete
-        end
+      link "/etc/#{apache_name}/run" do
+        action :delete
       end
     end
 

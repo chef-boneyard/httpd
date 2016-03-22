@@ -16,7 +16,7 @@ module HttpdCookbook
       end
 
       # service management
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action [:start, :enable]
@@ -24,7 +24,7 @@ module HttpdCookbook
     end
 
     action :stop do
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action :stop
@@ -32,7 +32,7 @@ module HttpdCookbook
     end
 
     action :restart do
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action :restart
@@ -40,7 +40,7 @@ module HttpdCookbook
     end
 
     action :reload do
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Debian
         action :reload
@@ -75,7 +75,7 @@ module HttpdCookbook
           action :create
         end
 
-        service "#{apache_name}" do
+        service apache_name do
           supports restart: true, reload: true, status: true
           provider Chef::Provider::Service::Init::Debian
           action [:disable, :stop]

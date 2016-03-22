@@ -56,7 +56,7 @@ module HttpdCookbook
         )
       end
 
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Systemd
         action [:start, :enable]
@@ -64,7 +64,7 @@ module HttpdCookbook
     end
 
     action :stop do
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Systemd
         action :stop
@@ -72,7 +72,7 @@ module HttpdCookbook
     end
 
     action :restart do
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Systemd
         action :restart
@@ -80,7 +80,7 @@ module HttpdCookbook
     end
 
     action :reload do
-      service "#{apache_name}" do
+      service apache_name do
         supports restart: true, reload: true, status: true
         provider Chef::Provider::Service::Init::Systemd
         action :reload
@@ -96,7 +96,7 @@ module HttpdCookbook
       end
 
       def delete_stop_service
-        service "#{apache_name}" do
+        service apache_name do
           supports restart: true, reload: true, status: true
           provider Chef::Provider::Service::Init::Systemd
           action [:stop, :disable]

@@ -5,7 +5,7 @@ module HttpdCookbook
       # order to ensure uniqueness. This avoids cloning via
       # CHEF-3694 and allows ChefSpec to work properly.
 
-      package "#{package_name}" do
+      package package_name do
         action :install
       end
 
@@ -287,7 +287,7 @@ module HttpdCookbook
 
       # Install core modules
       modules.each do |mod|
-        httpd_module "#{mod}" do
+        httpd_module mod do
           instance new_resource.instance
           version new_resource.version
           action :create
