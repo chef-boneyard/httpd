@@ -245,7 +245,7 @@ describe 'httpd_service_test::single' do
       reqtimeout
     ).each do |mod|
       it "steps into httpd_service[default] and creates httpd_module[#{mod}]" do
-        expect(centos_58_service_22_single).to create_httpd_module("#{mod}")
+        expect(centos_58_service_22_single).to create_httpd_module(mod)
           .with(
             module_name: mod,
             instance: 'default',
