@@ -1,6 +1,11 @@
 httpd Cookbook CHANGELOG
 ========================
 
+UNRELEASED
+
+------------------
+- fix some of the copious warnings about 'invalid default value' #63 [@cmenning](https://github.com/cmenning)
+
 0.3.5 (2016-03-21) 
 ------------------
 - bug fix for #66, resolving run directories on reboot on rhel family systems using systemd [@gitjoey](https://github.com/gitjoey) and [@odoell](https://github.com/odoell)
