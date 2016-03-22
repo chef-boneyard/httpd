@@ -151,7 +151,7 @@ http://httpd.apache.org/docs/2.4/mod/directives.html
   Defaults to ['0.0.0.0'].
 
 - `listen_ports` - Ports that the server listens to. Defaults to
-  ['80', '443'].  
+  ['80'].  
 
 - `log_level` - Controls the verbosity of the ErrorLog. Defaults to 'warn'.
 
