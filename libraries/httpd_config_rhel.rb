@@ -24,7 +24,7 @@ module HttpdCookbook
     end
 
     action :delete do
-      file "/etc/#{apache_name}/conf.d/#{config_name}" do
+      file "/etc/#{apache_name}/conf.d/#{config_name}.conf" do
         action :delete
       end
     end
