@@ -1,11 +1,12 @@
 httpd Cookbook CHANGELOG
 ========================
 
-UNRELEASED
 
+0.3.6 (2016-04-27)
 ------------------
 - fix some of the copious warnings about 'invalid default value' #63 [@cmenning](https://github.com/cmenning)
 - Added package name to httpd_module and fixed httpd_version to match resource attribute parameter #62 [@ikari7789](https://github.com/ikari7789)
+- Fix delete action for RHEL that was not removing config files correctly #74 [@darrylb-github](https://github.com/darrylb-github)
 
 0.3.5 (2016-03-21) 
 ------------------
