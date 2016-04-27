@@ -27,7 +27,6 @@ module HttpdCookbook
       # debian and ubuntu
       if version.to_f < 2.4
         %w( log_config logio ).each do |m|
-
           httpd_module m do
             httpd_version new_resource.version
             instance new_resource.instance
@@ -37,7 +36,6 @@ module HttpdCookbook
         end
       else
         %w( log_config logio unixd version watchdog ).each do |m|
-
           httpd_module m do
             httpd_version new_resource.version
             instance new_resource.instance
