@@ -4,31 +4,8 @@ puts "os: #{os}"
 
 set :backend, :exec
 
-if os[:family] =~ /debian/
-  describe file('/etc/apache2-default/conf.d') do
-    it { should be_directory }
-    it { should be_mode 755 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into 'root' }
-  end
-
-  describe file('/etc/apache2-default/conf.d/hello.conf') do
-    it { should be_file }
-    it { should be_mode 644 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into 'root' }
-  end
-
-  describe file('/etc/apache2-foo/conf.d/hello_again.conf') do
-    it { should be_file }
-    it { should be_mode 644 }
-    it { should be_owned_by 'root' }
-    it { should be_grouped_into 'root' }
-  end
-end
-
-if os[:family] =~ /ubuntu/
-  if os[:release] =~ /10.04/ || os[:release] =~ /12.04/
+if os[:family] =~ /debian/ || os[:family] =~ /ubuntu/
+  if os[:release] =~ /7/ || os[:release] =~ /12.04/
     describe file('/etc/apache2-default/conf.d') do
       it { should be_directory }
       it { should be_mode 755 }
@@ -49,8 +26,7 @@ if os[:family] =~ /ubuntu/
       it { should be_owned_by 'root' }
       it { should be_grouped_into 'root' }
     end
-
-  elsif os[:release] =~ /14.04/
+  else
     describe file('/etc/apache2-default/conf-available') do
       it { should be_directory }
       it { should be_mode 755 }
