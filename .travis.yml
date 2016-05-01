@@ -1,11 +1,11 @@
-rvm: 2.2
-
 sudo: required
+dist: trusty
 
+# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
 addons:
   apt:
     sources:
-      - chef-stable-precise
+      - chef-current-precise
     packages:
       - chefdk
 
@@ -15,30 +15,42 @@ services: docker
 
 env:
   matrix:
+  - INSTANCE=config-centos-5
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
-  - INSTANCE=config-fedora-21
+  - INSTANCE=config-fedora-23
   - INSTANCE=config-debian-7
+  - INSTANCE=config-debian-8
   - INSTANCE=config-ubuntu-1204
   - INSTANCE=config-ubuntu-1404
+  - INSTANCE=config-ubuntu-1604
+  - INSTANCE=module22-centos-5
   - INSTANCE=module22-centos-6
   - INSTANCE=module22-debian-7
   - INSTANCE=module22-ubuntu-1204
   - INSTANCE=module24-centos-7
-  - INSTANCE=module24-fedora-21
+  - INSTANCE=module24-fedora-23
+  - INSTANCE=module24-debian-8
   - INSTANCE=module24-ubuntu-1404
+  - INSTANCE=module24-ubuntu-1604
+  - INSTANCE=service22-single-centos-5
   - INSTANCE=service22-single-centos-6
   - INSTANCE=service22-single-debian-7
   - INSTANCE=service22-single-ubuntu-1204
+  - INSTANCE=service22-multi-centos-5
   - INSTANCE=service22-multi-centos-6
   - INSTANCE=service22-multi-debian-7
   - INSTANCE=service22-multi-ubuntu-1204
   - INSTANCE=service24-single-centos-7
-  - INSTANCE=service24-single-fedora-21
+  - INSTANCE=service24-single-fedora-23
   - INSTANCE=service24-single-ubuntu-1404
+  - INSTANCE=service24-single-ubuntu-1604
+  - INSTANCE=service24-single-debian-8
   - INSTANCE=service24-multi-centos-7
-  - INSTANCE=service24-multi-fedora-21
+  - INSTANCE=service24-multi-fedora-23
+  - INSTANCE=service24-multi-debian-8
   - INSTANCE=service24-multi-ubuntu-1404
+  - INSTANCE=service24-multi-ubuntu-1604
   fast_finish: true
 
 before_script:
@@ -51,11 +63,6 @@ script:
   - /opt/chefdk/embedded/bin/rubocop --version
   - /opt/chefdk/embedded/bin/rubocop
   - /opt/chefdk/embedded/bin/foodcritic --version
-  - /opt/chefdk/embedded/bin/foodcritic . --exclude spec
+  - /opt/chefdk/embedded/bin/foodcritic . --exclude spec -f any
   - /opt/chefdk/embedded/bin/rspec
-  - KITCHEN_YAML=.kitchen.yml kitchen verify ${INSTANCE}
-
-after_script:
-  - docker images
-  - docker ps -a
-  - cat .kitchen/logs/kitchen.log
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
