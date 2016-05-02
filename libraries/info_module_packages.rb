@@ -527,8 +527,8 @@ module HttpdCookbook
                 remoteip reqtimeout request rewrite sed session session_cookie
                 session_crypto session_dbd setenvif slotmem_plain slotmem_shm
                 socache_dbm socache_memcache socache_shmcb speling ssl status
-                substitute suexec unique_id userdir usertrack version vhost_alias
-                watchdog xml2enc
+                substitute suexec systemd unique_id userdir usertrack version
+                vhost_alias watchdog xml2enc
               ),
               found_in_package: 'apache2'
 
