@@ -23,6 +23,7 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----+-----|
 | debian-7       |     | X   |     |
 |----------------+-----+-----+-----|
+| debian-8       |     |     | X   |
 |----------------+-----+-----+-----|
 | ubuntu-12.04   |     | X   |     |
 |----------------+-----+-----+-----|
@@ -40,20 +41,20 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----+-----|
 | fedora-23      |     |     | X   |
 |----------------+-----+-----+-----|
-| suse-13.2      |     |     | X   |
+| opensuse-13.2  |     |     | X   |
 |----------------+-----+-----+-----|
 ```
 
 ## Cookbook Dependencies
 
-- none!
+- compat_resource
 
 ## Usage
 
 Place a dependency on the httpd cookbook in your cookbook's metadata.rb
 
 ```ruby
-depends 'httpd', '~> 0.2'
+depends 'httpd', '~> 0.3'
 ```
 
 Then, in a recipe:
@@ -84,7 +85,7 @@ The `:start` action starts the service on the machine using the appropriate prov
 
 #### Examples
 
-```
+```ruby
 httpd_service 'default' do
   action :create
 end
@@ -171,7 +172,7 @@ The `httpd_module` resource is responsible ensuring that an Apache module is ins
 
 #### Examples
 
-```
+```ruby
 httpd_module 'ssl' do
   action :create
 end
@@ -207,7 +208,7 @@ Check the [Apache HTTP Server Project documentation](http://httpd.apache.org/doc
 
 #### Examples
 
-```
+```ruby
 httpd_config 'mysite' do
   source 'mysite.erb'
   action :create
