@@ -25,7 +25,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "/usr/lib/systemd/system/#{apache_name}.service" do
+      template "/etc/systemd/system/#{apache_name}.service" do
         source 'systemd/httpd.service.erb'
         owner 'root'
         group 'root'
@@ -35,7 +35,7 @@ module HttpdCookbook
         action :create
       end
 
-      directory "/usr/lib/systemd/system/#{apache_name}.service.d" do
+      directory "/etc/systemd/system/#{apache_name}.service.d" do
         owner 'root'
         group 'root'
         mode '0755'
