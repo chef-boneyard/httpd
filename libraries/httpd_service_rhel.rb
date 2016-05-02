@@ -45,7 +45,7 @@ module HttpdCookbook
 
       # httpd binary symlinks
       link "/usr/sbin/#{apache_name}" do
-        to '/usr/sbin/httpd'
+        to "/usr/sbin/#{http_binary_name}"
         action :create
         not_if { apache_name == 'httpd' }
       end

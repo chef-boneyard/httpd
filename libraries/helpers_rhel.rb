@@ -25,6 +25,10 @@ module HttpdCookbook
                 %w(systemd unixd http so access_compat core mpm_event mpm_prefork mpm_worker).include?(name)
       end
 
+      def http_binary_name
+        platform_family?('suse') ? 'httpd2' : 'httpd'
+      end
+
       def elversion
         return 6 if node['platform_version'].to_i == 2013
         return 6 if node['platform_version'].to_i == 2014
