@@ -86,6 +86,13 @@ platforms:
       - RUN /usr/bin/apt-get update
       - RUN /usr/bin/apt-get install apt-transport-https net-tools -y
 
+- name: opensuse-13.2
+  driver:
+    image: opensuse:13.2
+    pid_one_command: /bin/systemd
+    intermediate_instructions:
+      - RUN zypper refresh
+
 suites:
   #
   # config
@@ -119,6 +126,7 @@ suites:
       'fedora-23',
       'ubuntu-14.04',
       'ubuntu-16.04',
+      'opensuse-13.2'
       ]
     attributes:
       httpd:
@@ -134,7 +142,7 @@ suites:
       'centos-5',
       'centos-6',
       'debian-7',
-      'ubuntu-12.04',
+      'ubuntu-12.04'
       ]
     attributes:
       httpd:
@@ -150,7 +158,7 @@ suites:
       'centos-5',
       'centos-6',
       'debian-7',
-      'ubuntu-12.04',
+      'ubuntu-12.04'
       ]
     attributes:
       httpd:
@@ -182,6 +190,7 @@ suites:
       'debian-8',
       'ubuntu-14.04',
       'ubuntu-16.04',
+      'opensuse-13.2'
       ]
     attributes:
       httpd:
@@ -198,7 +207,8 @@ suites:
       'debian-8',
       'fedora-23',
       'ubuntu-14.04',
-      'ubuntu-16.04'
+      'ubuntu-16.04',
+      'opensuse-13.2'
       ]
     attributes:
       httpd:
