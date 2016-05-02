@@ -22,3 +22,7 @@ end
 group :kitchen_vagrant do
   gem 'kitchen-vagrant', '~> 0.20'
 end
+
+group :kitchen_dokken do
+  gem 'kitchen-dokken'
+end
