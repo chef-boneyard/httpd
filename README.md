@@ -238,7 +238,7 @@ end
 
 ## License & Authors
 
-**Author:** Sean OMeara ([sean@chef.io](mailto:sean@chef.io))
+**Author:** Sean OMeara ([sean@sean.io](mailto:sean@sean.io))
 
 **Copyright:** 2008-2016, Chef Software, Inc.
 
