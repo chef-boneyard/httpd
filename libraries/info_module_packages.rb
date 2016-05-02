@@ -505,6 +505,39 @@ module HttpdCookbook
       modules for: { platform: 'amazon', platform_version: '2015.03', httpd_version: '2.4' },
               are: %w(php),
               found_in_package: ->(_name) { 'php56' }
+
+      #
+      # suse
+      #
+
+      modules for: { platform_family: 'suse', httpd_version: '2.4' },
+              are: %w(
+                actions alias allowmethods asis auth_basic auth_digest auth_form
+                authn_anon authn_core authn_dbd authn_dbm authn_file authn_socache
+                authnz_ldap authz_core authz_dbd authz_dbm authz_groupfile authz_host
+                authz_owner authz_user autoindex bucketeer buffer cache cache_disk
+                cache_socache case_filter case_filter_in charset_lite data dav
+                dav_fs dav_lock dbd deflate dialup dir dumpio echo env expires
+                ext_filter file_cache filter headers heartmonitor imagemap include
+                info lbmethod_bybusyness lbmethod_byrequests lbmethod_bytraffic
+                lbmethod_heartbeat ldap log_config log_debug log_forensic logio
+                lua macro mime mime_magic negotiation proxy proxy_ajp proxy_balancer
+                proxy_connect proxy_express proxy_fcgi proxy_fdpass proxy_ftp
+                proxy_html proxy_http proxy_scgi proxy_wstunnel ratelimit reflector
+                remoteip reqtimeout request rewrite sed session session_cookie
+                session_crypto session_dbd setenvif slotmem_plain slotmem_shm
+                socache_dbm socache_memcache socache_shmcb speling ssl status
+                substitute suexec unique_id userdir usertrack version vhost_alias
+                watchdog xml2enc
+              ),
+              found_in_package: 'apache2'
+
+      modules for: { platform_family: 'suse', httpd_version: '2.4' },
+              are: %w(
+                apparmor ntlm_winbind authn_otp dnssd evasive fcgid jk mono nss
+                perl php5 proxy_uwsgi scgi security2 tidy uwsgi wsgi
+              ),
+              found_in_package: ->(name) { "apache2-mod_#{name}" }
     end
 
     def platform_version_key(platform, platform_family, platform_version)
