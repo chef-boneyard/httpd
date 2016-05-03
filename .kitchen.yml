@@ -47,7 +47,7 @@ suites:
       'centos-6.7',
       'debian-7.10',
       'ubuntu-12.04'
-    ]
+      ]
     attributes:
       httpd:
         version: '2.2'
@@ -64,7 +64,7 @@ suites:
       'freebsd-9.3',
       'freebsd-10.3',
       'opensuse-13.2'
-    ]
+      ]
     attributes:
       httpd:
         version: '2.4'
@@ -79,8 +79,8 @@ suites:
       'centos-5.11',
       'centos-6.7',
       'debian-7.10',
-      'ubuntu-12.04',
-    ]
+      'ubuntu-12.04'
+      ]
     attributes:
       httpd:
         version: '2.2'
@@ -96,7 +96,7 @@ suites:
       'centos-6.7',
       'debian-7.10',
       'ubuntu-12.04'
-    ]
+      ]
     attributes:
       httpd:
         contact: 'bob@computers.biz'
@@ -130,7 +130,7 @@ suites:
       'freebsd-9.3',
       'freebsd-10.3',
       'opensuse-13.2'
-    ]
+      ]
     attributes:
       httpd:
         version: '2.4'
@@ -150,7 +150,7 @@ suites:
       'freebsd-9.3',
       'freebsd-10.3',
       'opensuse-13.2'
-    ]
+      ]
     attributes:
       httpd:
         version: '2.4'
@@ -163,7 +163,7 @@ suites:
         keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'
-        mpm: 'event'
+        mpm: 'worker'
         startservers: '20'
         minspareservers: '20'
         minspareservers: '40'
