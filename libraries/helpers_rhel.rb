@@ -22,7 +22,7 @@ module HttpdCookbook
       # like they're shared modules
       def built_in_module?(name)
         true if platform_family?('suse') &&
-                %w(systemd unixd mpm_prefork http so access_compat core).include?(name)
+                %w(systemd unixd http so access_compat core mpm_event mpm_prefork mpm_worker).include?(name)
       end
 
       def elversion
