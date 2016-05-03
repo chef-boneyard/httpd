@@ -11,7 +11,18 @@ module HttpdCookbook
       end
 
       def module_path
-        "/usr/#{libarch}/httpd/modules/#{filename}"
+        if platform_family?('suse')
+          "/usr/#{libarch}/apache2/#{filename}"
+        else
+          "/usr/#{libarch}/httpd/modules/#{filename}"
+        end
+      end
+
+      # suse compiles in modules and fails to start if you try to load them
+      # like they're shared modules
+      def built_in_module?(name)
+        true if platform_family?('suse') &&
+                %w(systemd unixd mpm_prefork http so access_compat core).include?(name)
       end
 
       def elversion

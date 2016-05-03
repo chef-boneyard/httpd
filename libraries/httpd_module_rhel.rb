@@ -30,7 +30,7 @@ module HttpdCookbook
           cookbook 'httpd'
           action :create
         end
-      else
+      elsif !built_in_module?(module_name) # don't load built-ins on opensuse
         directory "/etc/#{apache_name}/conf.modules.d" do
           owner 'root'
           group 'root'
