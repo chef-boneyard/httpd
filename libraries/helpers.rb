@@ -102,11 +102,25 @@ module HttpdCookbook
     end
 
     def default_run_group
-      node['platform_family'] == 'debian' ? 'www-data' : 'apache'
+      case node['platform_family']
+      when 'debian'
+        'www-data'
+      when 'suse'
+        'www'
+      else
+        'apache'
+      end
     end
 
     def default_run_user
-      node['platform_family'] == 'debian' ? 'www-data' : 'apache'
+      case node['platform_family']
+      when 'debian'
+        'www-data'
+      when 'suse'
+        'wwwrun'
+      else
+        'apache'
+      end
     end
   end
 end
