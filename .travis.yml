@@ -32,6 +32,7 @@ env:
   - INSTANCE=module24-debian-8
   - INSTANCE=module24-ubuntu-1404
   - INSTANCE=module24-ubuntu-1604
+  - INSTANCE=module24-opensuse-132
   - INSTANCE=service22-single-centos-5
   - INSTANCE=service22-single-centos-6
   - INSTANCE=service22-single-debian-7
@@ -45,11 +46,14 @@ env:
   - INSTANCE=service24-single-ubuntu-1404
   - INSTANCE=service24-single-ubuntu-1604
   - INSTANCE=service24-single-debian-8
+  - INSTANCE=service24-single-opensuse-132
   - INSTANCE=service24-multi-centos-7
   - INSTANCE=service24-multi-fedora-23
   - INSTANCE=service24-multi-debian-8
   - INSTANCE=service24-multi-ubuntu-1404
   - INSTANCE=service24-multi-ubuntu-1604
+  - INSTANCE=service24-multi-opensuse-132
+
   fast_finish: true
 
 before_script:
