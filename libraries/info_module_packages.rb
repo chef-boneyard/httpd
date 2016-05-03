@@ -538,6 +538,11 @@ module HttpdCookbook
                 perl php5 proxy_uwsgi scgi security2 tidy uwsgi wsgi
               ),
               found_in_package: ->(name) { "apache2-mod_#{name}" }
+
+      modules for: { platform_family: 'suse', httpd_version: '2.4' },
+              are: %w( mpm_worker mpm_prefork mpm_event
+              ),
+              found_in_package: ->(name) { "apache2-#{name.delete('mpm_')}" }
     end
 
     def platform_version_key(platform, platform_family, platform_version)
