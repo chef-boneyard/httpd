@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe 'httpd_module_test::default' do
-  cached(:centos_58_module_22) do
+  cached(:centos_5_module_22) do
     ChefSpec::ServerRunner.new(
       step_into: 'httpd_module',
       platform: 'centos',
-      version: '5.8'
+      version: '5.11'
     ) do |node|
       node.set['httpd']['version'] = '2.2'
     end.converge('httpd_module_test::default')
@@ -15,31 +15,31 @@ describe 'httpd_module_test::default' do
     'LoadModule auth_basic_module /usr/lib64/httpd/modules/mod_auth_basic.so'
   end
 
-  cached(:auth_kerb_load_content) do
-    'LoadModule auth_kerb_module /usr/lib64/httpd/modules/mod_auth_kerb.so'
+  cached(:expires_load_content) do
+    'LoadModule expires_module /usr/lib64/httpd/modules/mod_expires.so'
   end
 
   # test recipe compilation
   context 'when compiling the recipe' do
     it 'creates httpd_module[auth_basic]' do
-      expect(centos_58_module_22).to create_httpd_module('auth_basic')
+      expect(centos_5_module_22).to create_httpd_module('auth_basic')
     end
 
-    it 'creates httpd_module[auth_kerb]' do
-      expect(centos_58_module_22).to create_httpd_module('auth_kerb')
+    it 'creates httpd_module[expires]' do
+      expect(centos_5_module_22).to create_httpd_module('expires')
     end
   end
 
   context 'when stepping into httpd_module' do
     it 'installs package[httpd]' do
-      expect(centos_58_module_22).to install_package('httpd')
+      expect(centos_5_module_22).to install_package('httpd')
         .with(
           package_name: 'httpd'
         )
     end
 
     it 'create directory[/etc/httpd-default/conf.d]' do
-      expect(centos_58_module_22).to create_directory('/etc/httpd-default/conf.d')
+      expect(centos_5_module_22).to create_directory('/etc/httpd-default/conf.d')
         .with(
           owner: 'root',
           group: 'root',
@@ -49,7 +49,7 @@ describe 'httpd_module_test::default' do
 
     # auth_basic
     it 'create template[/etc/httpd-default/conf.d/auth_basic.load]' do
-      expect(centos_58_module_22).to create_template('/etc/httpd-default/conf.d/auth_basic.load')
+      expect(centos_5_module_22).to create_template('/etc/httpd-default/conf.d/auth_basic.load')
         .with(
           owner: 'root',
           group: 'root',
@@ -59,29 +59,21 @@ describe 'httpd_module_test::default' do
     end
 
     it 'renders file[/etc/httpd-default/conf.d/auth_basic.load]' do
-      expect(centos_58_module_22).to render_file('/etc/httpd-default/conf.d/auth_basic.load')
+      expect(centos_5_module_22).to render_file('/etc/httpd-default/conf.d/auth_basic.load')
         .with_content(
           auth_basic_load_content
         )
     end
 
-    # auth_kerb
-    it 'installs package[mod_auth_kerb]' do
-      expect(centos_58_module_22).to install_package('mod_auth_kerb')
-        .with(
-          package_name: 'mod_auth_kerb'
-        )
-    end
-
     it 'deletes file[/etc/httpd-default/conf.d/auth_kerb.conf]' do
-      expect(centos_58_module_22).to_not delete_file('/etc/httpd-default/conf.d/auth_kerb.conf')
+      expect(centos_5_module_22).to_not delete_file('/etc/httpd-default/conf.d/auth_kerb.conf')
         .with(
           path: '/etc/httpd-default/conf.d/auth_kerb.conf'
         )
     end
 
     it 'create directory[/etc/httpd-default/conf.d]' do
-      expect(centos_58_module_22).to create_directory('/etc/httpd-default/conf.d')
+      expect(centos_5_module_22).to create_directory('/etc/httpd-default/conf.d')
         .with(
           owner: 'root',
           group: 'root',
@@ -89,8 +81,8 @@ describe 'httpd_module_test::default' do
         )
     end
 
-    it 'create template[/etc/httpd-default/conf.d/auth_kerb.load]' do
-      expect(centos_58_module_22).to create_template('/etc/httpd-default/conf.d/auth_kerb.load')
+    it 'create template[/etc/httpd-default/conf.d/expires.load]' do
+      expect(centos_5_module_22).to create_template('/etc/httpd-default/conf.d/expires.load')
         .with(
           owner: 'root',
           group: 'root',
@@ -99,10 +91,10 @@ describe 'httpd_module_test::default' do
         )
     end
 
-    it 'renders file[/etc/httpd-default/conf.d/auth_kerb.load]' do
-      expect(centos_58_module_22).to render_file('/etc/httpd-default/conf.d/auth_kerb.load')
+    it 'renders file[/etc/httpd-default/conf.d/expires.load]' do
+      expect(centos_5_module_22).to render_file('/etc/httpd-default/conf.d/expires.load')
         .with_content(
-          auth_kerb_load_content
+          expires_load_content
         )
     end
   end

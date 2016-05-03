@@ -27,7 +27,7 @@ describe 'looking up module package name' do
     rhel_5_2_2_core.each do |m|
       it 'returns the proper package name' do
         expect(
-          package_name_for_module(m, '2.2', 'centos', 'rhel', '5.8')
+          package_name_for_module(m, '2.2', 'centos', 'rhel', '5.11')
         ).to eq('httpd')
       end
     end
@@ -35,7 +35,7 @@ describe 'looking up module package name' do
     rhel_5_2_2_other.each do |m|
       it 'returns the proper package name' do
         expect(
-          package_name_for_module(m, '2.2', 'centos', 'rhel', '5.8')
+          package_name_for_module(m, '2.2', 'centos', 'rhel', '5.11')
         ).to eq("mod_#{m}")
       end
     end
