@@ -9,15 +9,15 @@ module HttpdCookbook
     property :listen_ports, [String, Array], default: %w(80)
     property :log_level, String, default: 'warn'
     property :version, String, default: lazy { default_apache_version }
-    property :maxclients, String, default: lazy { default_maxclients }
-    property :maxconnectionsperchild, String, default: lazy { default_maxconnectionsperchild }
-    property :maxkeepaliverequests, String, default: '100'
-    property :maxrequestsperchild, String, default: lazy { default_maxrequestsperchild }
-    property :maxrequestworkers, String, default: lazy { default_maxrequestworkers }
-    property :maxspareservers, String, default: lazy { default_maxspareservers }
-    property :maxsparethreads, String, default: lazy { default_maxsparethreads }
-    property :minspareservers, String, default: lazy { default_minspareservers }
-    property :minsparethreads, String, default: lazy { default_minsparethreads }
+    property :maxclients, [String, nil], default: lazy { default_maxclients }
+    property :maxconnectionsperchild, [String, nil], default: lazy { default_maxconnectionsperchild }
+    property :maxkeepaliverequests, [String], default: '100'
+    property :maxrequestsperchild, [String, nil], default: lazy { default_maxrequestsperchild }
+    property :maxrequestworkers, [String, nil], default: lazy { default_maxrequestworkers }
+    property :maxspareservers, [String, nil], default: lazy { default_maxspareservers }
+    property :maxsparethreads, [String, nil], default: lazy { default_maxsparethreads }
+    property :minspareservers, [String, nil], default: lazy { default_minspareservers }
+    property :minsparethreads, [String, nil], default: lazy { default_minsparethreads }
     property :modules, Array, default: lazy { default_modules }
     property :mpm, String, default: lazy { default_mpm }
     property :package_name, String, default: lazy { default_package_name }
@@ -25,8 +25,8 @@ module HttpdCookbook
     property :run_user, String, default: lazy { default_run_user }
     property :servername, String, default: lazy { node['hostname'] }
     property :startservers, String, default: lazy { default_startservers }
-    property :threadlimit, String, default: lazy { default_threadlimit }
-    property :threadsperchild, String, default: lazy { default_threadsperchild }
+    property :threadlimit, [String, nil], default: lazy { default_threadlimit }
+    property :threadsperchild, [String, nil], default: lazy { default_threadsperchild }
     property :timeout, String, default: '400'
 
     include HttpdCookbook::Helpers
