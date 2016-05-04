@@ -38,6 +38,7 @@ module HttpdCookbook
       pkgname for: { platform_family: 'rhel', httpd_version: '2.2' }, is: 'httpd'
       pkgname for: { platform_family: 'rhel', httpd_version: '2.4' }, is: 'httpd'
       pkgname for: { platform_family: 'suse', httpd_version: '2.4' }, is: 'apache2'
+      pkgname for: { platform_family: 'freebsd', httpd_version: '2.4' }, is: 'apache24'
 
       # require 'pry' ; binding.pry
     end
