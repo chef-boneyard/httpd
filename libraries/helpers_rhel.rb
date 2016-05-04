@@ -18,8 +18,8 @@ module HttpdCookbook
         return 6 if node['platform_version'].to_i == 2013
         return 6 if node['platform_version'].to_i == 2014
         return 6 if node['platform_version'].to_i == 2015
-        return 7 if node['platform_version'].to_i == 20
-        return 7 if node['platform_version'].to_i == 21
+        return 6 if node['platform_version'].to_i == 2016
+        return 7 if node['platform_family'] == 'fedora'
         node['platform_version'].to_i
       end
 

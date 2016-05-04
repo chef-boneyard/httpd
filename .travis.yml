@@ -19,7 +19,6 @@ env:
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
   - INSTANCE=config-fedora-23
-  - INSTANCE=config-debian-7
   - INSTANCE=config-debian-8
   - INSTANCE=config-ubuntu-1204
   - INSTANCE=config-ubuntu-1404
