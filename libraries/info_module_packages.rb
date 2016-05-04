@@ -89,7 +89,7 @@ module HttpdCookbook
                 session_cookie session_crypto session_dbd setenvif slotmem_plain
                 slotmem_shm socache_dbm socache_memcache socache_shmcb speling ssl
                 status substitute suexec unique_id userdir usertrack vhost_alias
-                xml2enc
+                xml2enc systemd
               ),
               found_in_package: 'apache2'
 
