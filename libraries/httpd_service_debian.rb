@@ -218,6 +218,7 @@ module HttpdCookbook
       # machine or container or things can get weird.
       package "apache2-mpm-#{mpm}" do
         action :install
+        only_if { requires_mpm_packages? }
       end
 
       # older apache has mpm statically compiled into binaries

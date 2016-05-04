@@ -76,6 +76,10 @@ module HttpdCookbook
         return nil if apache_version.to_f < 2.4
         "file:/var/lock/#{apache_name} default"
       end
+
+      def requires_mpm_packages?
+        platform?('ubuntu') && node['platform_version'].to_f < 16.04 ? true : false
+      end
     end
   end
 end
