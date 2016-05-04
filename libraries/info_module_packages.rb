@@ -542,7 +542,7 @@ module HttpdCookbook
       modules for: { platform_family: 'suse', httpd_version: '2.4' },
               are: %w( mpm_worker mpm_prefork mpm_event
               ),
-              found_in_package: ->(name) { "apache2-#{name.delete('mpm_')}" }
+              found_in_package: ->(name) { "apache2-#{name.gsub('mpm_', '')}" }
     end
 
     def platform_version_key(platform, platform_family, platform_version)
