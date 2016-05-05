@@ -9,7 +9,7 @@ describe 'package_name_for_service' do
     context 'version 5' do
       it 'returns the correct package_name' do
         expect(
-          package_name_for_service('centos', 'rhel', '5.8', '2.2')
+          package_name_for_service('centos', 'rhel', '5.11', '2.2')
         ).to eq('httpd')
       end
     end

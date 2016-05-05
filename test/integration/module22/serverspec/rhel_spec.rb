@@ -26,7 +26,7 @@ if os[:family] =~ /RedHat/ || os[:family] =~ /RedHat7/ || os[:family] =~ /Fedora
   end
 
   # auth_kerb
-  describe file('/usr/lib64/httpd/modules/mod_auth_kerb.so') do
+  describe file('/usr/lib64/httpd/modules/mod_expires.so') do
     it { should be_file }
     it { should be_mode 755 }
     it { should be_owned_by 'root' }
@@ -40,7 +40,7 @@ if os[:family] =~ /RedHat/ || os[:family] =~ /RedHat7/ || os[:family] =~ /Fedora
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.d/auth_kerb.load') do
+  describe file('/etc/httpd/conf.d/expires.load') do
     it { should be_file }
     it { should be_mode 644 }
     it { should be_owned_by 'root' }

@@ -30,7 +30,6 @@ module HttpdCookbook
           httpd_module m do
             httpd_version new_resource.version
             instance new_resource.instance
-            package_name new_resource.package_name
             action :create
           end
         end
@@ -39,7 +38,6 @@ module HttpdCookbook
           httpd_module m do
             httpd_version new_resource.version
             instance new_resource.instance
-            package_name new_resource.package_name
             action :create
           end
         end
@@ -69,7 +67,6 @@ module HttpdCookbook
         httpd_module "mpm_#{mpm}" do
           httpd_version new_resource.version
           instance new_resource.instance
-          package_name new_resource.package_name
           action :create
         end
       end
@@ -217,7 +214,6 @@ module HttpdCookbook
         httpd_module mod do
           instance new_resource.instance
           httpd_version new_resource.version
-          package_name new_resource.package_name
           action :create
         end
       end

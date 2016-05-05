@@ -6,6 +6,7 @@ group :integration do
   cookbook 'yum'
   cookbook 'apt'
   cookbook 'selinux'
+  cookbook 'freebsd'
 end
 
 cookbook 'httpd_config_test', path: 'test/cookbooks/httpd_config_test'

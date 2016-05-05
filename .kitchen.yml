@@ -12,6 +12,10 @@ platforms:
     run_list: apt::default
   - name: debian-8.4
     run_list: apt::default
+  - name: freebsd-9.3
+    run_list: freebsd::portsnap
+  - name: freebsd-10.3
+    run_list: freebsd::portsnap
   - name: fedora-22
     run_list: yum::dnf_yum_compat
   - name: fedora-23
@@ -22,6 +26,7 @@ platforms:
     run_list: apt::default
   - name: ubuntu-16.04
     run_list: apt::default
+  - name: opensuse-13.2
 
 suites:
   #
@@ -42,7 +47,7 @@ suites:
       'centos-6.7',
       'debian-7.10',
       'ubuntu-12.04'
-    ]
+      ]
     attributes:
       httpd:
         version: '2.2'
@@ -56,7 +61,10 @@ suites:
       'fedora-23',
       'ubuntu-14.04',
       'ubuntu-16.04',
-    ]
+      'freebsd-9.3',
+      'freebsd-10.3',
+      'opensuse-13.2'
+      ]
     attributes:
       httpd:
         version: '2.4'
@@ -71,8 +79,8 @@ suites:
       'centos-5.11',
       'centos-6.7',
       'debian-7.10',
-      'ubuntu-12.04',
-    ]
+      'ubuntu-12.04'
+      ]
     attributes:
       httpd:
         version: '2.2'
@@ -87,8 +95,8 @@ suites:
       'centos-5.11',
       'centos-6.7',
       'debian-7.10',
-      'ubuntu-12.04',
-    ]
+      'ubuntu-12.04'
+      ]
     attributes:
       httpd:
         contact: 'bob@computers.biz'
@@ -119,7 +127,10 @@ suites:
       'debian-8.4',
       'ubuntu-14.04',
       'ubuntu-16.04',
-    ]
+      'freebsd-9.3',
+      'freebsd-10.3',
+      'opensuse-13.2'
+      ]
     attributes:
       httpd:
         version: '2.4'
@@ -135,8 +146,11 @@ suites:
       'centos-8.4',
       'fedora-23',
       'ubuntu-14.04',
-      'ubuntu-16.04'
-    ]
+      'ubuntu-16.04',
+      'freebsd-9.3',
+      'freebsd-10.3',
+      'opensuse-13.2'
+      ]
     attributes:
       httpd:
         version: '2.4'
@@ -149,7 +163,7 @@ suites:
         keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'
-        mpm: 'prefork'
+        mpm: 'worker'
         startservers: '20'
         minspareservers: '20'
         minspareservers: '40'
