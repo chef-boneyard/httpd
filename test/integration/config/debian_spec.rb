@@ -1,8 +1,4 @@
-require 'serverspec'
-
 puts "os: #{os}"
-
-set :backend, :exec
 
 if os[:family] =~ /debian/ || os[:family] =~ /ubuntu/
   if os[:release] =~ /7/ || os[:release] =~ /12.04/

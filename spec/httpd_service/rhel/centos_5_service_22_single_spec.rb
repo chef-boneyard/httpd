@@ -53,13 +53,6 @@ describe 'httpd_service_test::single' do
         )
     end
 
-    it 'installs package[net-tools]' do
-      expect(centos_5_service_22_single).to install_package('net-tools')
-        .with(
-          package_name: 'net-tools'
-        )
-    end
-
     it 'creates httpd_module[log_config]' do
       expect(centos_5_service_22_single).to create_httpd_module('log_config')
         .with(

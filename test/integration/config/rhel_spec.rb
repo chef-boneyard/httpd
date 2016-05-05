@@ -1,8 +1,4 @@
-require 'serverspec'
-
-puts "os[:family] #{os[:family]}"
-
-set :backend, :exec
+puts "os: #{os}"
 
 if os[:family] =~ /redhat/ || os[:family] =~ /fedora/
   describe file('/etc/httpd-default/conf.d') do
