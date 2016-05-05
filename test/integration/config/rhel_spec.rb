@@ -1,4 +1,4 @@
-if os[:family] == 'centos' || os[:family] == 'fedora'
+if os[:family] == 'centos' || os[:family] == 'fedora' || os[:family] == 'opensuse'
   describe file('/etc/httpd-default/conf.d') do
     it { should be_directory }
     it { should be_owned_by 'root' }

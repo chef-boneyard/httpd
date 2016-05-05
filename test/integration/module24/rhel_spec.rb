@@ -1,4 +1,4 @@
-if os[:family] == 'centos' || os[:family] == 'fedora'
+if os[:family] == 'centos' || os[:family] == 'fedora' || os[:family] == 'opensuse'
   # auth_basic
   describe file('/usr/lib64/httpd/modules/mod_auth_basic.so') do
     it { should be_file }
@@ -16,7 +16,7 @@ if os[:family] == 'centos' || os[:family] == 'fedora'
 
   describe file('/etc/httpd-default/conf.modules.d/auth_basic.load') do
     it { should be_file }
-    it { should be_mode 644 }
+    its('mode') { should eq 00644 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end
@@ -38,7 +38,7 @@ if os[:family] == 'centos' || os[:family] == 'fedora'
 
   describe file('/etc/httpd-default/conf.modules.d/expires.load') do
     it { should be_file }
-    it { should be_mode 644 }
+    its('mode') { should eq 00644 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end

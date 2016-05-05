@@ -7,14 +7,14 @@ if os[:family] == 'centos' || os[:family] == 'fedora'
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.d') do
+  describe file('/etc/httpd-default/conf.d') do
     it { should be_directory }
     its('mode') { should eq 00755 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.d/auth_basic.load') do
+  describe file('/etc/httpd-default/conf.d/auth_basic.load') do
     it { should be_file }
     its('mode') { should eq 00644 }
     it { should be_owned_by 'root' }
@@ -29,14 +29,14 @@ if os[:family] == 'centos' || os[:family] == 'fedora'
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.d') do
+  describe file('/etc/httpd-default/conf.d') do
     it { should be_directory }
     its('mode') { should eq 00755 }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
   end
 
-  describe file('/etc/httpd/conf.d/expires.load') do
+  describe file('/etc/httpd-default/conf.d/expires.load') do
     it { should be_file }
     its('mode') { should eq 00644 }
     it { should be_owned_by 'root' }
