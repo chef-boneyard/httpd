@@ -16,13 +16,6 @@ module HttpdCookbook
       # Defined in subclass
       create_stop_system_service
 
-      # FIXME: This is needed for serverspec.
-      # Move into a serverspec recipe
-      package 'net-tools' do
-        package_name 'net-tools'
-        action :install
-      end
-
       # achieve parity with modules statically compiled into
       # debian and ubuntu
       if version.to_f < 2.4

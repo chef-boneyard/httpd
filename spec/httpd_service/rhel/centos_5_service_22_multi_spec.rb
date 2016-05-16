@@ -157,13 +157,6 @@ describe 'httpd_service_test::multi' do
     #     )
     # end
 
-    it 'installs package[net-tools]' do
-      expect(centos_5_service_22_multi).to install_package('net-tools')
-        .with(
-          package_name: 'net-tools'
-        )
-    end
-
     # it 'installs httpd_module[log_config]' do
     #   expect(centos_5_service_22_multi).to create_httpd_module('log_config')
     #     .with(
@@ -392,13 +385,6 @@ describe 'httpd_service_test::multi' do
       expect(centos_5_service_22_multi).to disable_service('httpd')
         .with(
           provider: Chef::Provider::Service::Init::Redhat
-        )
-    end
-
-    it 'installs package[net-tools]' do
-      expect(centos_5_service_22_multi).to install_package('net-tools')
-        .with(
-          package_name: 'net-tools'
         )
     end
 
