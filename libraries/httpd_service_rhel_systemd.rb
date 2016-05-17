@@ -31,7 +31,11 @@ module HttpdCookbook
         group 'root'
         mode '0644'
         cookbook 'httpd'
-        variables(apache_name: apache_name)
+        variables(
+          binary_name: apache_name,
+          apache_name: apache_name,
+          config_relative_path: config_file_relative_path
+        )
         action :create
       end
 

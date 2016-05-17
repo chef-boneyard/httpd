@@ -122,5 +122,14 @@ module HttpdCookbook
         'apache'
       end
     end
+
+    def config_file_relative_path
+      case node['platform_family']
+      when 'debian'
+        'apache2.conf'
+      else
+        'conf/httpd.conf'
+      end
+    end
   end
 end
