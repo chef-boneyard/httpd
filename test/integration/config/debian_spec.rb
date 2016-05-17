@@ -47,7 +47,6 @@ if os[:family] == 'debian' || os[:family] == 'ubuntu'
       it { should be_owned_by 'root' }
       it { should be_grouped_into 'root' }
       it { should be_linked_to '/etc/apache2-default/conf-available/hello.conf' }
-      its('mode') { should eq 00777 }
     end
 
     describe file('/etc/apache2-foo/conf-available') do
@@ -76,7 +75,6 @@ if os[:family] == 'debian' || os[:family] == 'ubuntu'
       it { should be_owned_by 'root' }
       it { should be_grouped_into 'root' }
       it { should be_linked_to '/etc/apache2-foo/conf-available/hello_again.conf' }
-      its('mode') { should eq 00777 }
     end
   end
 end
