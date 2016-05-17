@@ -86,7 +86,7 @@ module HttpdCookbook
 
     action_class.class_eval do
       def create_stop_system_service
-        service 'httpd' do
+        service 'apache2' do
           provider Chef::Provider::Service::Init::Systemd
           action [:stop, :disable]
         end
