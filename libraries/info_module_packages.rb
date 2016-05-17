@@ -89,7 +89,7 @@ module HttpdCookbook
                 session_cookie session_crypto session_dbd setenvif slotmem_plain
                 slotmem_shm socache_dbm socache_memcache socache_shmcb speling ssl
                 status substitute suexec unique_id userdir usertrack vhost_alias
-                xml2enc systemd
+                xml2enc
               ),
               found_in_package: 'apache2'
 
@@ -411,7 +411,7 @@ module HttpdCookbook
                 ratelimit reflector remoteip reqtimeout request rewrite sed session
                 session_cookie session_crypto session_dbd setenvif slotmem_plain
                 slotmem_shm so socache_dbm socache_memcache socache_shmcb speling
-                ssl status substitute suexec systemd systemd unique_id unixd userdir
+                ssl status substitute suexec systemd unique_id unixd userdir
                 usertrack version vhost_alias watchdog xml2enc
               ),
               found_in_package: 'apache2'

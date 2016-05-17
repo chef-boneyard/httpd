@@ -10,13 +10,6 @@ module HttpdCookbook
     end
 
     action :start do
-      httpd_module 'systemd' do
-        version new_resource.version
-        instance new_resource.instance
-        notifies :reload, "service[#{apache_name}]"
-        action :create
-      end
-
       directory "/run/#{apache_name}" do
         owner 'root'
         group 'root'
