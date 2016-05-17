@@ -424,8 +424,7 @@ module HttpdCookbook
               found_in_package: ->(name) { "apache2-mod_#{name}" }
 
       modules for: { platform_family: 'suse', httpd_version: '2.4' },
-              are: %w( mpm_worker mpm_prefork mpm_event
-              ),
+              are: %w( mpm_worker mpm_prefork mpm_event),
               found_in_package: ->(name) { "apache2-#{name.gsub('mpm_', '')}" }
     end
 

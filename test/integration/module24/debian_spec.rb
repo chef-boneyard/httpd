@@ -32,7 +32,6 @@ if os[:family] == 'debian' || os[:family] == 'ubuntu'
     it { should be_linked_to '/etc/apache2-default/mods-available/auth_basic.load' }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
-    its('mode') { should eq 00777 }
   end
 
   describe file('/etc/apache2-default/mods-available/expires.load') do
@@ -46,6 +45,5 @@ if os[:family] == 'debian' || os[:family] == 'ubuntu'
     it { should be_linked_to '/etc/apache2-default/mods-available/expires.load' }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
-    its('mode') { should eq 00777 }
   end
 end
