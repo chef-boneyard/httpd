@@ -20,6 +20,7 @@
 - Updated the specs to test on more recent platforms
 - Converted integration tests to inspec
 - Added initial, yet incomplete, support for Debian 8 / Ubuntu 16.04\. Service management is still lacking and will ship in a future release
+- Removed smartos / omnios as tested platforms
 
 ## 0.3.6 (2016-04-27)
 
