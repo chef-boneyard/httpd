@@ -141,7 +141,7 @@ module HttpdCookbook
         action :create
       end
       
-      %w{ a2enmod_name a2dismod_name a2ensite_name a2dissite_name } each do |dir|
+      %w{ a2enmod_name a2dismod_name a2ensite_name a2dissite_name }.each do |dir|
         link "/usr/sbin/#{dir}" do
           to '/usr/sbin/a2enmod'
           owner 'root'
@@ -280,7 +280,7 @@ module HttpdCookbook
       delete_stop_service
 
       # support directories
-      %w{ /var/cache/#{apache_name} /var/log/#{apache_name} } each do |dir|
+      %w{/var/cache/#{apache_name} /var/log/#{apache_name}}.each do |dir|
         directory "/var/cache/#{apache_name}" do
           recursive true
           action :delete

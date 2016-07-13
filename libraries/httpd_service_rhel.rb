@@ -236,7 +236,7 @@ module HttpdCookbook
       end
 
       # configuration directories and logs
-      %w{ /etc/#{apache_name} /var/log/#{apache_name} } each do |dir|
+      %w{ /etc/#{apache_name} /var/log/#{apache_name} }.each do |dir|
         directory dir do
           owner 'root'
           group 'root'

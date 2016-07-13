@@ -2,9 +2,10 @@ module HttpdCookbook
   class HttpdServiceRhelSysvinit < HttpdServiceRhel
     use_automatic_resource_name
     # This is Chef-12.0.0 back-compat, it is different from current core chef 12.4.0 declarations
-    provides :httpd_service, platform_family: %w(rhel fedora suse) do
-      Chef::Platform::ServiceHelpers.service_resource_providers.include?(:redhat)
-      only_if { defined?(provides) }
+    if defined?(provides)
+      provides :httpd_service, platform_family: %w(rhel fedora suse) do
+        Chef::Platform::ServiceHelpers.service_resource_providers.include?(:redhat)
+      end
     end
 
     action :start do
