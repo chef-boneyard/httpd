@@ -140,37 +140,15 @@ module HttpdCookbook
         cookbook 'httpd'
         action :create
       end
-
-      link "/usr/sbin/#{a2enmod_name}" do
-        to '/usr/sbin/a2enmod'
-        owner 'root'
-        group 'root'
-        not_if "test -f /usr/sbin/#{a2enmod_name}"
-        action :create
-      end
-
-      link "/usr/sbin/#{a2dismod_name}" do
-        target_file "/usr/sbin/#{a2dismod_name}"
-        to '/usr/sbin/a2enmod'
-        owner 'root'
-        group 'root'
-        action :create
-      end
-
-      link "/usr/sbin/#{a2ensite_name}" do
-        target_file "/usr/sbin/#{a2ensite_name}"
-        to '/usr/sbin/a2enmod'
-        owner 'root'
-        group 'root'
-        action :create
-      end
-
-      link "/usr/sbin/#{a2dissite_name}" do
-        target_file "/usr/sbin/#{a2dissite_name}"
-        to '/usr/sbin/a2enmod'
-        owner 'root'
-        group 'root'
-        action :create
+      
+      %w{ a2enmod_name a2dismod_name a2ensite_name a2dissite_name } each do |dir|
+        link "/usr/sbin/#{dir}" do
+          to '/usr/sbin/a2enmod'
+          owner 'root'
+          group 'root'
+          not_if "test -f /usr/sbin/#{dir}"
+          action :create
+        end
       end
 
       # configuration files
@@ -222,13 +200,13 @@ module HttpdCookbook
       end
 
       # older apache has mpm statically compiled into binaries
-      unless version.to_f < 2.4
-        httpd_module "mpm_#{mpm}" do
-          instance new_resource.instance
-          httpd_version new_resource.version
-          package_name new_resource.package_name
-          action :create
-        end
+      
+      httpd_module "mpm_#{mpm}" do
+        instance new_resource.instance
+        httpd_version new_resource.version
+        package_name new_resource.package_name
+        not_if { version.to_f < 2.4 }
+        action :create
       end
 
       # MPM configuration
@@ -302,14 +280,11 @@ module HttpdCookbook
       delete_stop_service
 
       # support directories
-      directory "/var/cache/#{apache_name}" do
-        recursive true
-        action :delete
-      end
-
-      directory "/var/log/#{apache_name}" do
-        recursive true
-        action :delete
+      %w{ /var/cache/#{apache_name} /var/log/#{apache_name} } each do |dir|
+        directory "/var/cache/#{apache_name}" do
+          recursive true
+          action :delete
+        end
       end
 
       directory "/var/run/#{apache_name}" do

@@ -112,14 +112,13 @@ module HttpdCookbook
         action :create
       end
 
-      if version.to_f >= 2.4
-        directory "/etc/#{apache_name}/conf.modules.d" do
-          user 'root'
-          group 'root'
-          mode '0755'
-          recursive true
-          action :create
-        end
+      directory "/etc/#{apache_name}/conf.modules.d" do
+        user 'root'
+        group 'root'
+        mode '0755'
+        recursive true
+        only_if { version.to_f >= 2.4 }
+        action :create
       end
 
       # support directories
@@ -236,33 +235,25 @@ module HttpdCookbook
         end
       end
 
-      # configuration directories
-      directory "/etc/#{apache_name}" do
-        owner 'root'
-        group 'root'
-        mode '0755'
-        recursive true
-        action :delete
-      end
-
-      # logs
-      directory "/var/log/#{apache_name}" do
-        owner 'root'
-        group 'root'
-        mode '0755'
-        recursive true
-        action :delete
-      end
-
-      # /var/run
-      if elversion > 5
-        directory "/var/run/#{apache_name}" do
+      # configuration directories and logs
+      %w{ /etc/#{apache_name} /var/log/#{apache_name} } each do |dir|
+        directory dir do
           owner 'root'
           group 'root'
           mode '0755'
           recursive true
           action :delete
         end
+      end
+
+      # /var/run
+      directory "/var/run/#{apache_name}" do
+        owner 'root'
+        group 'root'
+        mode '0755'
+        recursive true
+        only_if { elversion > 5 }
+        action :delete
       end
 
       link "/etc/#{apache_name}/run" do
