@@ -3,7 +3,11 @@ Description=The Apache HTTP Server
 After=network.target remote-fs.target nss-lookup.target
 
 [Service]
+<% if node['platform'] == 'ubuntu' %>
+Type=simple
+<% else %>
 Type=notify
+<% end %>
 Environment=LANG=C
 
 ExecStart=/usr/sbin/<%= @binary_name %> -f /etc/<%= @apache_name %>/<%= @config_relative_path %> -DFOREGROUND
