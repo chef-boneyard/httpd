@@ -63,6 +63,3 @@ elsif os[:family] == 'opensuse'
   end
 
 end
-
-
-
