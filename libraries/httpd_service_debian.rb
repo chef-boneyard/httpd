@@ -140,8 +140,8 @@ module HttpdCookbook
         cookbook 'httpd'
         action :create
       end
-      
-      %w{ a2enmod_name a2dismod_name a2ensite_name a2dissite_name }.each do |dir|
+
+      %w( a2enmod_name a2dismod_name a2ensite_name a2dissite_name ).each do |dir|
         link "/usr/sbin/#{dir}" do
           to '/usr/sbin/a2enmod'
           owner 'root'
@@ -200,7 +200,7 @@ module HttpdCookbook
       end
 
       # older apache has mpm statically compiled into binaries
-      
+
       httpd_module "mpm_#{mpm}" do
         instance new_resource.instance
         httpd_version new_resource.version
@@ -280,8 +280,8 @@ module HttpdCookbook
       delete_stop_service
 
       # support directories
-      %w{/var/cache/#{apache_name} /var/log/#{apache_name}}.each do |dir|
-        directory "/var/cache/#{apache_name}" do
+      %w(/var/cache/#{apache_name} /var/log/#{apache_name}).each do |dir|
+        directory dir do
           recursive true
           action :delete
         end

@@ -5,7 +5,7 @@ module HttpdCookbook
     # core chef 12.4.0 declarations
     if defined?(provides)
       provides :httpd_service, platform_family: %w(rhel fedora suse) do
-      Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
+        Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
       end
     end
 
