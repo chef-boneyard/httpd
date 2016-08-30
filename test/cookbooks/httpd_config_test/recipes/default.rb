@@ -1,4 +1,4 @@
-# an config
+apt_update 'update' if platform_family?('debian')
 
 httpd_config 'hello' do
   instance 'default'
