@@ -53,9 +53,9 @@ platforms:
     intermediate_instructions:
       - RUN yum -y install lsof which net-tools
 
-- name: fedora-23
+- name: fedora-latest
   driver:
-    image: fedora:23
+    image: fedora:latest
     pid_one_command: /usr/lib/systemd/systemd
     intermediate_instructions:
       - RUN dnf -y install yum which net-tools
@@ -88,7 +88,6 @@ platforms:
     image: opensuse:13.2
     pid_one_command: /bin/systemd
     intermediate_instructions:
-      - RUN zypper refresh
       - RUN zypper install -y net-tools
 
 suites:
@@ -121,7 +120,7 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
-      'fedora-23',
+      'fedora-latest',
       'ubuntu-14.04',
       'ubuntu-16.04',
       'opensuse-13.2'
@@ -184,7 +183,7 @@ suites:
     - recipe[httpd_service_test::single]
     includes: [
       'centos-7',
-      'fedora-23',
+      'fedora-latest',
       'debian-8',
       'ubuntu-14.04',
       'ubuntu-16.04',
@@ -203,7 +202,7 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
-      'fedora-23',
+      'fedora-latest',
       'ubuntu-14.04',
       'ubuntu-16.04',
       'opensuse-13.2'

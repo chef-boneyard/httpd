@@ -13,18 +13,18 @@ describe 'httpd_service_test::multi' do
       platform: 'centos',
       version: '5.11'
     ) do |node|
-      node.set['httpd']['contact'] = 'bob@computers.biz'
-      node.set['httpd']['version'] = '2.2'
-      node.set['httpd']['keepalive'] = false
-      node.set['httpd']['maxkeepaliverequests'] = '5678'
-      node.set['httpd']['keepalivetimeout'] = '8765'
-      node.set['httpd']['listen_addresses'] = ['0.0.0.0']
-      node.set['httpd']['listen_ports'] = %w(81 444)
-      node.set['httpd']['log_level'] = 'warn'
-      node.set['httpd']['run_user'] = 'bob'
-      node.set['httpd']['run_group'] = 'bob'
-      node.set['httpd']['timeout'] = '1234'
-      node.set['httpd']['mpm'] = 'prefork'
+      node.normal['httpd']['contact'] = 'bob@computers.biz'
+      node.normal['httpd']['version'] = '2.2'
+      node.normal['httpd']['keepalive'] = false
+      node.normal['httpd']['maxkeepaliverequests'] = '5678'
+      node.normal['httpd']['keepalivetimeout'] = '8765'
+      node.normal['httpd']['listen_addresses'] = ['0.0.0.0']
+      node.normal['httpd']['listen_ports'] = %w(81 444)
+      node.normal['httpd']['log_level'] = 'warn'
+      node.normal['httpd']['run_user'] = 'bob'
+      node.normal['httpd']['run_group'] = 'bob'
+      node.normal['httpd']['timeout'] = '1234'
+      node.normal['httpd']['mpm'] = 'prefork'
     end.converge('httpd_service_test::multi')
   end
 

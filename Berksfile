@@ -4,7 +4,6 @@ metadata
 
 group :integration do
   cookbook 'yum'
-  cookbook 'apt'
   cookbook 'selinux'
   cookbook 'freebsd'
 end
