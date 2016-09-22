@@ -1,5 +1,3 @@
-require 'chef_compat/resource'
-
 module HttpdCookbook
   module Helpers
     def default_apache_version
