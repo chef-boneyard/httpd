@@ -1,5 +1,8 @@
 # httpd Cookbook CHANGELOG
 
+## 0.4.1 (2016-09-23)
+- stop loading unused file
+
 ## 0.4.0 (2016-05-31)
 
 - Removed support for end of life platforms: Ubuntu 10.04, 13.04, 13.10, 14.10 and Suse 12.X
