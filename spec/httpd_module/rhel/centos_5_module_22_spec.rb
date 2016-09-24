@@ -7,7 +7,7 @@ describe 'httpd_module_test::default' do
       platform: 'centos',
       version: '5.11'
     ) do |node|
-      node.set['httpd']['version'] = '2.2'
+      node.default['httpd']['version'] = '2.2'
     end.converge('httpd_module_test::default')
   end
 
