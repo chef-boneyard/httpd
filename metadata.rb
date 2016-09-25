@@ -6,6 +6,7 @@ license 'Apache 2.0'
 description 'Provides httpd_service, httpd_config, and httpd_module resources'
 source_url 'https://github.com/chef-cookbooks/httpd' if respond_to?(:source_url)
 issues_url 'https://github.com/chef-cookbooks/httpd/issues' if respond_to?(:issues_url)
+chef_version '>= 12.1' if respond_to?(:chef_version)
 
 depends 'compat_resource', '>= 12.14.6'
 
