@@ -1,7 +1,14 @@
 # httpd Cookbook CHANGELOG
 
 ## 0.4.1 (2016-09-23)
-- stop loading unused file
+
+- Fix incompatibilities with the new releases of compat_resource
+- Require a more recent compat_resource cookbook to resolve notification issues
+- Switch linting to cookstyle
+- Fix documentation for httpd_config in the README
+- Resolve Foodcritic warnings
+- Fix systemd start timeout on ubuntu 16.04
+- Avoid node.set deprecation notices in the specs
 
 ## 0.4.0 (2016-05-31)
 
