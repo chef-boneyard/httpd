@@ -7,7 +7,7 @@ description 'Provides httpd_service, httpd_config, and httpd_module resources'
 source_url 'https://github.com/chef-cookbooks/httpd' if respond_to?(:source_url)
 issues_url 'https://github.com/chef-cookbooks/httpd/issues' if respond_to?(:issues_url)
 
-depends 'compat_resource', '>= 12.10.4'
+depends 'compat_resource', '>= 12.14.6'
 
 supports 'amazon'
 supports 'redhat'
