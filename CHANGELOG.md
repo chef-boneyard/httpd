@@ -1,5 +1,8 @@
 # httpd Cookbook CHANGELOG
 
+## 0.4.3 (2016-09-27)
+- Explicitly using new_resource.version in guard clause
+
 ## 0.4.2 (2016-09-27)
 - Release reflecting new dep on compat_resource 12.14.6
 
