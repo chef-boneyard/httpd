@@ -205,7 +205,7 @@ module HttpdCookbook
         instance new_resource.instance
         httpd_version new_resource.version
         package_name new_resource.package_name
-        not_if { version.to_f < 2.4 }
+        not_if { new_resource.version.to_f < 2.4 }
         action :create
       end
 
