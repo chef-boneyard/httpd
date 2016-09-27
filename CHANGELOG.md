@@ -1,5 +1,8 @@
 # httpd Cookbook CHANGELOG
 
+## 0.4.2 (2016-09-27)
+- Release reflecting new dep on compat_resource 12.14.6
+
 ## 0.4.1 (2016-09-23)
 
 - Fix incompatibilities with the new releases of compat_resource
