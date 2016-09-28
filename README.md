@@ -1,6 +1,6 @@
 # HTTPD Cookbook
 
-[![Code Climate](https://codeclimate.com/github/chef-cookbooks/httpd/badges/gpa.svg)](https://codeclimate.com/github/chef-cookbooks/httpd) [![Build Status](https://travis-ci.org/chef-cookbooks/httpd.svg?branch=master)](https://travis-ci.org/chef-cookbooks/httpd) [![Cookbook Version](https://img.shields.io/cookbook/v/httpd.svg)](https://supermarket.chef.io/cookbooks/httpd)
+[![Build Status](https://travis-ci.org/chef-cookbooks/httpd.svg?branch=master)](https://travis-ci.org/chef-cookbooks/httpd) [![Cookbook Version](https://img.shields.io/cookbook/v/httpd.svg)](https://supermarket.chef.io/cookbooks/httpd)
 
 The HTTPD Cookbook is a Library Cookbook that provides resource primitives for use in recipes. It is designed to be an example to reference for creating highly re-usable cross platform cookbooks.
 
@@ -33,7 +33,7 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----|
 | centos-7       |     | X   |
 |----------------+-----+-----|
-| fedora-23      |     | X   |
+| fedora-24      |     | X   |
 |----------------+-----+-----|
 | opensuse-13.2  |     | X   |
 |----------------+-----+-----|

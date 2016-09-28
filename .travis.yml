@@ -5,13 +5,16 @@ dist: trusty
 addons:
   apt:
     sources:
-      - chef-current-precise
+      - chef-current-trusty
     packages:
       - chefdk
 
+# Don't `bundle install` which takes about 1.5 mins
+install: echo "skip bundle install"
+
 branches:
   only:
-  - master
+    - master
 
 services: docker
 
@@ -20,7 +23,7 @@ env:
   - INSTANCE=config-centos-5
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
-  - INSTANCE=config-fedora-23
+  - INSTANCE=config-fedora-latest
   - INSTANCE=config-debian-7
   - INSTANCE=config-debian-8
   - INSTANCE=config-ubuntu-1204
@@ -31,7 +34,7 @@ env:
   - INSTANCE=module22-debian-7
   - INSTANCE=module22-ubuntu-1204
   - INSTANCE=module24-centos-7
-  - INSTANCE=module24-fedora-23
+  - INSTANCE=module24-fedora-latest
   - INSTANCE=module24-debian-8
   - INSTANCE=module24-ubuntu-1404
   - INSTANCE=module24-ubuntu-1604
@@ -45,36 +48,31 @@ env:
   - INSTANCE=service22-multi-debian-7
   - INSTANCE=service22-multi-ubuntu-1204
   - INSTANCE=service24-single-centos-7
-  - INSTANCE=service24-single-fedora-23
+  - INSTANCE=service24-single-fedora-latest
   - INSTANCE=service24-single-ubuntu-1404
   - INSTANCE=service24-single-ubuntu-1604
   - INSTANCE=service24-single-debian-8
   - INSTANCE=service24-single-opensuse-132
   - INSTANCE=service24-multi-centos-7
-  - INSTANCE=service24-multi-fedora-23
+  - INSTANCE=service24-multi-fedora-latest
   - INSTANCE=service24-multi-debian-8
   - INSTANCE=service24-multi-ubuntu-1404
   - INSTANCE=service24-multi-ubuntu-1604
   - INSTANCE=service24-multi-opensuse-132
-install: echo "skip bundle install"
 
-# Ensure we make ChefDK's Ruby the default
 before_script:
-  # https://github.com/zuazo/kitchen-in-travis-native/issues/1#issuecomment-142230889
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-  - /opt/chefdk/embedded/bin/chef gem install kitchen-dokken
-  - /opt/chefdk/embedded/bin/chef --version
-  - /opt/chefdk/embedded/bin/cookstyle --version
-  - /opt/chefdk/embedded/bin/foodcritic --version
 
 script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 
 matrix:
   include:
-  - script: /opt/chefdk/embedded/bin/cookstyle
-    env:  COOKSTYLE=1
-  - script: /opt/chefdk/embedded/bin/foodcritic . --exclude spec -f any
-    env:  FOODCRITIC=1
-  - script: /opt/chefdk/embedded/bin/rspec
-    env:  CHEFSPEC=1
+    - before_script:
+      - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+      - /opt/chefdk/embedded/bin/chef --version
+      - /opt/chefdk/embedded/bin/cookstyle --version
+      - /opt/chefdk/embedded/bin/foodcritic --version
+    - script:
+      - /opt/chefdk/bin/chef exec rake
+      env: UNIT_AND_LINT=1
