@@ -117,7 +117,7 @@ module HttpdCookbook
         group 'root'
         mode '0755'
         recursive true
-        only_if { version.to_f >= 2.4 }
+        only_if { new_resource.version.to_f >= 2.4 }
         action :create
       end
 
