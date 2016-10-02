@@ -1,6 +1,4 @@
-#
-# Hello world recipe
-#
+apt_update 'update' if platform_family?('debian')
 
 httpd_service 'default' do
   action [:create, :start]
