@@ -12,8 +12,8 @@ platforms:
   - name: centos-6.8
   - name: centos-7.2
   - name: debian-7.11
-  - name: debian-8.5
-  - name: fedora-24
+  - name: debian-8.6
+  - name: fedora-25
     run_list: yum::dnf_yum_compat
   - name: opensuse-13.2
   - name: opensuse-leap-42.1
@@ -50,8 +50,8 @@ suites:
     - recipe[httpd_module_test]
     includes: [
       'centos-7.2',
-      'debian-8.4',
-      'fedora-24',
+      'debian-8.6',
+      'fedora-25',
       'ubuntu-14.04',
       'ubuntu-16.04',
       'freebsd-9.3',
@@ -116,8 +116,8 @@ suites:
     - recipe[httpd_service_test::single]
     includes: [
       'centos-7.2',
-      'fedora-24',
-      'debian-8.4',
+      'fedora-25',
+      'debian-8.6',
       'ubuntu-14.04',
       'ubuntu-16.04',
       'freebsd-9.3',
@@ -137,7 +137,7 @@ suites:
     includes: [
       'centos-7.2',
       'centos-8.4',
-      'fedora-24',
+      'fedora-25',
       'ubuntu-14.04',
       'ubuntu-16.04',
       'freebsd-9.3',
