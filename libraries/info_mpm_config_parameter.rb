@@ -78,7 +78,7 @@ module HttpdCookbook
                threadlimit: nil,
                threadsperchild: nil,
                maxrequestworkers: nil,
-               maxconnectionsperchild: nil
+               maxconnectionsperchild: nil,
              }
 
       config for: { httpd_version: '2.2', mpm_model: 'worker' },
@@ -93,7 +93,7 @@ module HttpdCookbook
                threadlimit: '64',
                threadsperchild: '25',
                maxrequestworkers: nil,
-               maxconnectionsperchild: nil
+               maxconnectionsperchild: nil,
              }
 
       config for: { httpd_version: '2.2', mpm_model: 'event' },
@@ -108,7 +108,7 @@ module HttpdCookbook
                threadlimit: '64',
                threadsperchild: '25',
                maxrequestworkers: nil,
-               maxconnectionsperchild: nil
+               maxconnectionsperchild: nil,
              }
 
       config for: { httpd_version: '2.4', mpm_model: 'prefork' },
@@ -123,7 +123,7 @@ module HttpdCookbook
                threadlimit: nil,
                threadsperchild: nil,
                maxrequestworkers: '150',
-               maxconnectionsperchild: '0'
+               maxconnectionsperchild: '0',
              }
 
       config for: { httpd_version: '2.4', mpm_model: 'worker' },
@@ -138,7 +138,7 @@ module HttpdCookbook
                threadlimit: '64',
                threadsperchild: '25',
                maxrequestworkers: '150',
-               maxconnectionsperchild: '0'
+               maxconnectionsperchild: '0',
              }
 
       config for: { httpd_version: '2.4', mpm_model: 'event' },
@@ -153,7 +153,7 @@ module HttpdCookbook
                threadlimit: '64',
                threadsperchild: '25',
                maxrequestworkers: '150',
-               maxconnectionsperchild: '0'
+               maxconnectionsperchild: '0',
              }
     end
 

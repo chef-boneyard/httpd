@@ -47,7 +47,7 @@ module HttpdCookbook
         return unless version.to_f < 2.4
         [
           'conf.d/*.load',
-          'conf.d/*.conf'
+          'conf.d/*.conf',
         ]
       end
 
@@ -57,7 +57,7 @@ module HttpdCookbook
           'conf.d/*.load',
           'conf.modules.d/*.load',
           'conf.d/*.conf',
-          'conf.modules.d/*.conf'
+          'conf.modules.d/*.conf',
         ]
       end
     end

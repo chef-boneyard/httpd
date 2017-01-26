@@ -37,7 +37,7 @@ module HttpdCookbook
         [
           'mods-enabled/*.load',
           'conf.d/*.conf',
-          'mods-enabled/*.conf'
+          'mods-enabled/*.conf',
         ]
       end
 
@@ -47,7 +47,7 @@ module HttpdCookbook
           'mods-enabled/*.load',
           'conf-enabled/*.conf',
           'mods-enabled/*.conf',
-          'sites-enabled/*.conf'
+          'sites-enabled/*.conf',
         ]
       end
 
