@@ -4,7 +4,7 @@ maintainer 'Chef Software, Inc.'
 maintainer_email 'cookbooks@chef.io'
 license 'Apache 2.0'
 description 'Provides httpd_service, httpd_config, and httpd_module resources'
-depends 'compat_resource', '>= 12.14.6'
+depends 'compat_resource', '>= 12.16.3'
 
 supports 'amazon'
 supports 'redhat'
