@@ -1,5 +1,8 @@
 # httpd Cookbook CHANGELOG
 
+## 0.4.5 (2017-02-13)
+- Resolve Issue #104 with use of security module on RHEL 7.2
+
 ## 0.4.4 (2016-09-27)
 - Explicitly using new_resource.version in guard clause Centos/RHEL
 - Add net-tools to docker configuration
