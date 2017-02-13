@@ -243,6 +243,10 @@ module HttpdCookbook
               found_in_package: ->(_name) { 'mod_revocator' }
 
       modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
+              are: %w(security2),
+              found_in_package: ->(_name) { 'mod_security' }
+
+      modules for: { platform_family: 'rhel', platform_version: '7', httpd_version: '2.4' },
               are: %w(auth_form session_cookie session_crypto session_dbd),
               found_in_package: ->(_name) { 'mod_session' }
 
