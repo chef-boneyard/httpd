@@ -1,5 +1,7 @@
 driver:
   name: vagrant
+  customize:
+     cableconnected1: 'on'
 
 provisioner:
   name: chef_zero
@@ -112,7 +114,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'centos-7.2',
+      'centos-7.3',
       'fedora-25',
       'debian-8.6',
       'ubuntu-14.04',
@@ -132,7 +134,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::multi]
     includes: [
-      'centos-7.2',
+      'centos-7.3',
       'centos-8.4',
       'fedora-25',
       'ubuntu-14.04',
