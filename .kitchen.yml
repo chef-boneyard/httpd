@@ -105,6 +105,7 @@ suites:
         startservers: '20'
         minspareservers: '20'
         minspareservers: '40'
+        maxkeepaliverequests: '2001'
 
   #
   # service24-single
@@ -148,6 +149,7 @@ suites:
         version: '2.4'
         service_name: 'multi'
         listen_ports: [ '81', '444' ]
+        log_level: 'warn'
         run_user: 'bob'
         run_group: 'bob'
         contact: 'alice@computers.biz'
@@ -158,4 +160,6 @@ suites:
         mpm: 'worker'
         startservers: '20'
         minspareservers: '20'
-        minspareservers: '40'
+        maxspareservers: '40'
+        maxkeepaliverequests: '2001'
+

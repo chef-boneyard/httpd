@@ -47,7 +47,6 @@ httpd_service 'instance-2' do
   keepalive node['httpd']['keepalive']
   maxkeepaliverequests node['httpd']['maxkeepaliverequests']
   keepalivetimeout node['httpd']['keepalivetimeout']
-  listen_addresses node['httpd']['listen_addresses']
   listen_ports node['httpd']['listen_ports']
   log_level node['httpd']['log_level']
   version node['httpd']['version']
