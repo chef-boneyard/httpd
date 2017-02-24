@@ -48,7 +48,7 @@ suites:
     run_list:
     - recipe[httpd_module_test]
     includes: [
-      'centos-7.2',
+      'centos-7.3',
       'debian-8.6',
       'fedora-25',
       'ubuntu-14.04',
