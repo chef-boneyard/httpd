@@ -1,7 +1,6 @@
 sudo: required
 dist: trusty
 
-# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
 addons:
   apt:
     sources:
@@ -34,7 +33,7 @@ env:
   - INSTANCE=module24-debian-8
   - INSTANCE=module24-ubuntu-1404
   - INSTANCE=module24-ubuntu-1604
-  - INSTANCE=module24-opensuse-132
+  - INSTANCE=module24-opensuse-leap
   - INSTANCE=service22-single-centos-6
   - INSTANCE=service22-single-debian-7
   - INSTANCE=service22-multi-centos-6
@@ -44,27 +43,25 @@ env:
   - INSTANCE=service24-single-ubuntu-1404
   - INSTANCE=service24-single-ubuntu-1604
   - INSTANCE=service24-single-debian-8
-  - INSTANCE=service24-single-opensuse-132
+  - INSTANCE=service24-single-opensuse-leap
   - INSTANCE=service24-multi-centos-7
   - INSTANCE=service24-multi-fedora-latest
   - INSTANCE=service24-multi-debian-8
   - INSTANCE=service24-multi-ubuntu-1404
   - INSTANCE=service24-multi-ubuntu-1604
-  - INSTANCE=service24-multi-opensuse-132
+  - INSTANCE=service24-multi-opensuse-leap
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
 
-script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+script: KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 
 matrix:
   include:
-    - before_script:
-      - eval "$(/opt/chefdk/bin/chef shell-init bash)"
-      - /opt/chefdk/embedded/bin/chef --version
-      - /opt/chefdk/embedded/bin/cookstyle --version
-      - /opt/chefdk/embedded/bin/foodcritic --version
     - script:
       - /opt/chefdk/bin/chef exec rake
       env: UNIT_AND_LINT=1

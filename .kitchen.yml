@@ -15,7 +15,8 @@ platforms:
   - name: debian-7.11
   - name: debian-8.6
   - name: fedora-25
-  - name: opensuse-13.2
+  - name: freebsd-10.3
+  - name: freebsd-11.0
   - name: opensuse-leap-42.2
   - name: ubuntu-14.04
   - name: ubuntu-16.04
@@ -53,9 +54,9 @@ suites:
       'fedora-25',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'freebsd-9.3',
       'freebsd-10.3',
-      'opensuse-13.2'
+      'freebsd-11.0',
+      'opensuse-leap-42.2'
       ]
     attributes:
       httpd:
@@ -68,10 +69,8 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'centos-5.11',
       'centos-6.8',
-      'debian-7.11',
-      'ubuntu-12.04'
+      'debian-7.11'
       ]
     attributes:
       httpd:
@@ -84,10 +83,8 @@ suites:
     run_list:
     - recipe[httpd_service_test::multi]
     includes: [
-      'centos-5.11',
       'centos-6.8',
-      'debian-7.11',
-      'ubuntu-12.04'
+      'debian-7.11'
       ]
     attributes:
       httpd:
@@ -103,7 +100,6 @@ suites:
         keepalivetimeout: '8765'
         mpm: 'prefork'
         startservers: '20'
-        minspareservers: '20'
         minspareservers: '40'
         maxkeepaliverequests: '2001'
 
@@ -120,9 +116,9 @@ suites:
       'debian-8.6',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'freebsd-9.3',
       'freebsd-10.3',
-      'opensuse-13.2'
+      'freebsd-11.0',
+      'opensuse-leap-42.2'
       ]
     attributes:
       httpd:
@@ -140,9 +136,9 @@ suites:
       'fedora-25',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'freebsd-9.3',
       'freebsd-10.3',
-      'opensuse-13.2'
+      'freebsd-11.0',
+      'opensuse-leap-42.2'
       ]
     attributes:
       httpd:
@@ -162,4 +158,3 @@ suites:
         minspareservers: '20'
         maxspareservers: '40'
         maxkeepaliverequests: '2001'
-

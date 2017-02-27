@@ -10,7 +10,7 @@ This cookbook is concerned with [The Apache HTTP Server](http://httpd.apache.org
 
 ## Requirements
 
-- Chef 12.5.0 or higher
+- Chef 12.5 or higher
 - Network accessible package repositories
 
 ## Platform Support
@@ -23,11 +23,11 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----|
 | debian-7       | X   |     |
 |----------------+-----+-----|
-| ubuntu-12.04   | X   |     |
+| debian-8       |     | X   |
 |----------------+-----+-----|
 | ubuntu-14.04   |     | X   |
 |----------------+-----+-----|
-| centos-5       | X   |     |
+| ubuntu-16.04   |     | X   |
 |----------------+-----+-----|
 | centos-6       | X   |     |
 |----------------+-----+-----|
@@ -35,20 +35,20 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----|
 | fedora-25      |     | X   |
 |----------------+-----+-----|
-| opensuse-13.2  |     | X   |
+| opensuse-42    |     | X   |
 |----------------+-----+-----|
 ```
 
 ## Cookbook Dependencies
 
-- compat_resource
+- none
 
 ## Usage
 
 Place a dependency on the httpd cookbook in your cookbook's metadata.rb
 
 ```ruby
-depends 'httpd', '~> 0.3'
+depends 'httpd'
 ```
 
 Then, in a recipe:
