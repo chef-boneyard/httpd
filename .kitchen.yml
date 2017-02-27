@@ -37,10 +37,8 @@ suites:
     run_list:
     - recipe[httpd_module_test]
     includes: [
-      'centos-5.11',
       'centos-6.8',
-      'debian-7.11',
-      'ubuntu-12.04'
+      'debian-7.11'
       ]
     attributes:
       httpd:
@@ -101,7 +99,9 @@ suites:
         keepalivetimeout: '8765'
         mpm: 'prefork'
         startservers: '20'
-        minspareservers: '40'
+        minspareservers: '20'
+        maxspareservers: '40'
+        log_level: 'warn'
         maxkeepaliverequests: '2001'
 
   #
@@ -133,7 +133,7 @@ suites:
     - recipe[httpd_service_test::multi]
     includes: [
       'centos-7.3',
-      'centos-8.4',
+      'debian-8.6',
       'fedora-25',
       'ubuntu-14.04',
       'ubuntu-16.04',
@@ -154,7 +154,7 @@ suites:
         keepalive: false
         keepaliverequests: '5678'
         keepalivetimeout: '8765'
-        mpm: 'worker'
+        mpm: 'prefork'
         startservers: '20'
         minspareservers: '20'
         maxspareservers: '40'
