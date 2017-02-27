@@ -1,5 +1,5 @@
 module HttpdCookbook
-  class HttpdService < ChefCompat::Resource
+  class HttpdService < Chef::Resource
     property :contact, String, default: 'webmaster@localhost'
     property :hostname_lookups, String, default: 'off'
     property :instance, String, name_property: true

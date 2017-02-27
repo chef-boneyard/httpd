@@ -1,5 +1,5 @@
 module HttpdCookbook
-  class HttpdModule < ChefCompat::Resource
+  class HttpdModule < Chef::Resource
     #####################
     # Resource properties
     #####################
