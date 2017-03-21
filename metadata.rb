@@ -2,7 +2,7 @@ name 'httpd'
 version '0.4.5'
 maintainer 'Chef Software, Inc.'
 maintainer_email 'cookbooks@chef.io'
-license 'Apache 2.0'
+license 'Apache-2.0'
 description 'Provides httpd_service, httpd_config, and httpd_module resources'
 
 supports 'amazon'
