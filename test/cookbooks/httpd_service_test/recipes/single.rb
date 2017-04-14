@@ -1,4 +1,4 @@
-apt_update 'update' if platform_family?('debian')
+apt_update 'update'
 
 httpd_service node['httpd']['service_name'] do
   action [:create, :start]
