@@ -18,6 +18,7 @@ module HttpdCookbook
       return '2.4' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 2014
       return '2.4' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 2015
       return '2.4' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 2016
+      return '2.4' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 2017
       return '2.4' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 7
       return '2.4' if node['platform_family'] == 'smartos'
     end
