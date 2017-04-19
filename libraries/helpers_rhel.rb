@@ -34,6 +34,7 @@ module HttpdCookbook
         return 6 if node['platform_version'].to_i == 2014
         return 6 if node['platform_version'].to_i == 2015
         return 6 if node['platform_version'].to_i == 2016
+        return 6 if node['platform_version'].to_i == 2017
         return 7 if node['platform_family'] == 'fedora'
         node['platform_version'].to_i
       end
