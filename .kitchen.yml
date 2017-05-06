@@ -14,7 +14,7 @@ platforms:
   - name: centos-6.8
   - name: centos-7.3
   - name: debian-7.11
-  - name: debian-8.6
+  - name: debian-8.7
   - name: fedora-25
   - name: freebsd-10.3
   - name: freebsd-11.0
@@ -49,7 +49,7 @@ suites:
     - recipe[httpd_module_test]
     includes: [
       'centos-7.3',
-      'debian-8.6',
+      'debian-8.7',
       'fedora-25',
       'ubuntu-14.04',
       'ubuntu-16.04',
@@ -114,7 +114,7 @@ suites:
     includes: [
       'centos-7.3',
       'fedora-25',
-      'debian-8.6',
+      'debian-8.7',
       'ubuntu-14.04',
       'ubuntu-16.04',
       'freebsd-10.3',
@@ -133,7 +133,7 @@ suites:
     - recipe[httpd_service_test::multi]
     includes: [
       'centos-7.3',
-      'debian-8.6',
+      'debian-8.7',
       'fedora-25',
       'ubuntu-14.04',
       'ubuntu-16.04',
