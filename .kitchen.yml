@@ -11,7 +11,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: centos-6.8
+  - name: centos-6.9
   - name: centos-7.3
   - name: debian-7.11
   - name: debian-8.7
@@ -37,7 +37,7 @@ suites:
     run_list:
     - recipe[httpd_module_test]
     includes: [
-      'centos-6.8',
+      'centos-6.9',
       'debian-7.11'
       ]
     attributes:
@@ -68,7 +68,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'centos-6.8',
+      'centos-6.9',
       'debian-7.11'
       ]
     attributes:
@@ -82,7 +82,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::multi]
     includes: [
-      'centos-6.8',
+      'centos-6.9',
       'debian-7.11'
       ]
     attributes:
