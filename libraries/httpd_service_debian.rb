@@ -30,7 +30,7 @@ module HttpdCookbook
       # The init scripts that ship with 2.2 and 2.4 on
       # debian/ubuntu behave differently. 2.2 places in /var/run/apache-name/,
       # and 2.4 stores pids as /var/run/apache2/apache2-service_name
-      if version.to_f < 2.4
+      if new_resource.version.to_f < 2.4
         directory "/var/run/#{apache_name}" do
           owner 'root'
           group 'adm'

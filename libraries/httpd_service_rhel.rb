@@ -18,7 +18,7 @@ module HttpdCookbook
 
       # achieve parity with modules statically compiled into
       # debian and ubuntu
-      if version.to_f < 2.4
+      if new_resource.version.to_f < 2.4
         %w( log_config logio ).each do |m|
           httpd_module m do
             httpd_version new_resource.version
