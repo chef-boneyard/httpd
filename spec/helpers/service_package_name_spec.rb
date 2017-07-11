@@ -6,16 +6,6 @@ describe 'package_name_for_service' do
   end
 
   context 'when on centos' do
-    context 'version 5' do
-      it 'returns the correct package_name' do
-        expect(
-          package_name_for_service('centos', 'rhel', '5.11', '2.2')
-        ).to eq('httpd')
-      end
-    end
-  end
-
-  context 'when on centos' do
     context 'version 6' do
       it 'returns the correct package_name' do
         expect(
@@ -26,7 +16,7 @@ describe 'package_name_for_service' do
   end
 
   context 'when on centos' do
-    context 'version 6' do
+    context 'version 7' do
       it 'returns the correct package_name' do
         expect(
           package_name_for_service('centos', 'rhel', '7.0', '2.4')
