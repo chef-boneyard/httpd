@@ -25,7 +25,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "/etc/#{apache_name}/mods-available/#{module_name}.load" do
+      template "/etc/#{apache_name}/mods-available/#{new_resource.module_name}.load" do
         source 'module_load.erb'
         owner 'root'
         group 'root'
@@ -38,8 +38,8 @@ module HttpdCookbook
         action :create
       end
 
-      link "/etc/#{apache_name}/mods-enabled/#{module_name}.load" do
-        to "/etc/#{apache_name}/mods-available/#{module_name}.load"
+      link "/etc/#{apache_name}/mods-enabled/#{new_resource.module_name}.load" do
+        to "/etc/#{apache_name}/mods-available/#{new_resource.module_name}.load"
         action :create
       end
     end
@@ -50,11 +50,11 @@ module HttpdCookbook
         action :delete
       end
 
-      file "/etc/#{apache_name}/mods-available/#{module_name}.load" do
+      file "/etc/#{apache_name}/mods-available/#{new_resource.module_name}.load" do
         action :delete
       end
 
-      link "/etc/#{apache_name}/mods-enabled/#{module_name}.load" do
+      link "/etc/#{apache_name}/mods-enabled/#{new_resource.module_name}.load" do
         action :delete
       end
     end

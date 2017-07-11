@@ -13,7 +13,7 @@ module HttpdCookbook
           action :create
         end
 
-        template "/etc/#{apache_name}/conf.d/#{config_name}.conf" do
+        template "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
           owner 'root'
           group 'root'
           mode '0644'
@@ -31,7 +31,7 @@ module HttpdCookbook
           action :create
         end
 
-        template "/etc/#{apache_name}/conf-available/#{config_name}.conf" do
+        template "/etc/#{apache_name}/conf-available/#{new_resource.config_name}.conf" do
           owner 'root'
           group 'root'
           mode '0644'
@@ -49,8 +49,8 @@ module HttpdCookbook
           action :create
         end
 
-        link "/etc/#{apache_name}/conf-enabled/#{config_name}.conf" do
-          to "/etc/#{apache_name}/conf-available/#{config_name}.conf"
+        link "/etc/#{apache_name}/conf-enabled/#{new_resource.config_name}.conf" do
+          to "/etc/#{apache_name}/conf-available/#{new_resource.config_name}.conf"
           action :create
         end
       end
@@ -58,16 +58,16 @@ module HttpdCookbook
 
     action :delete do
       if httpd_version.to_f < 2.4
-        file "/etc/#{apache_name}/conf.d/#{config_name}.conf" do
+        file "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
           action :delete
         end
       else
-        file "/etc/#{apache_name}/conf-available/#{config_name}.conf" do
+        file "/etc/#{apache_name}/conf-available/#{new_resource.config_name}.conf" do
           action :delete
         end
 
-        link "/etc/#{apache_name}/conf-enabled/#{config_name}.conf" do
-          to "/etc/#{apache_name}/conf-available/#{config_name}.conf"
+        link "/etc/#{apache_name}/conf-enabled/#{new_resource.config_name}.conf" do
+          to "/etc/#{apache_name}/conf-available/#{new_resource.config_name}.conf"
           action :delete
         end
       end

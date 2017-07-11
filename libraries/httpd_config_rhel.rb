@@ -12,7 +12,7 @@ module HttpdCookbook
         action :create
       end
 
-      template "/etc/#{apache_name}/conf.d/#{config_name}.conf" do
+      template "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
         owner 'root'
         group 'root'
         mode '0644'
@@ -24,7 +24,7 @@ module HttpdCookbook
     end
 
     action :delete do
-      file "/etc/#{apache_name}/conf.d/#{config_name}.conf" do
+      file "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
         action :delete
       end
     end

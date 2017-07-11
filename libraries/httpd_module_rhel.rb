@@ -18,7 +18,7 @@ module HttpdCookbook
           action :create
         end
 
-        template "/etc/#{apache_name}/conf.d/#{module_name}.load" do
+        template "/etc/#{apache_name}/conf.d/#{new_resource.module_name}.load" do
           source 'module_load.erb'
           owner 'root'
           group 'root'
@@ -30,7 +30,7 @@ module HttpdCookbook
           cookbook 'httpd'
           action :create
         end
-      elsif !built_in_module?(module_name) # don't load built-ins on opensuse
+      elsif !built_in_module?(new_resource.module_name) # don't load built-ins on opensuse
         directory "/etc/#{apache_name}/conf.modules.d" do
           owner 'root'
           group 'root'
@@ -38,7 +38,7 @@ module HttpdCookbook
           action :create
         end
 
-        template "/etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
+        template "/etc/#{apache_name}/conf.modules.d/#{new_resource.module_name}.load" do
           source 'module_load.erb'
           owner 'root'
           group 'root'
@@ -55,11 +55,11 @@ module HttpdCookbook
 
     action :delete do
       if httpd_version.to_f < 2.4
-        file "/etc/#{apache_name}/conf.d/#{module_name}.load" do
+        file "/etc/#{apache_name}/conf.d/#{new_resource.module_name}.load" do
           action :delete
         end
       else
-        file "/etc/#{apache_name}/conf.modules.d/#{module_name}.load" do
+        file "/etc/#{apache_name}/conf.modules.d/#{new_resource.module_name}.load" do
           action :delete
         end
       end
