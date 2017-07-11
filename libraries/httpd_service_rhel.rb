@@ -9,7 +9,7 @@ module HttpdCookbook
       # Chef resources
       #
       # software installation
-      package package_name do
+      package new_resource.package_name do
         action :install
       end
 

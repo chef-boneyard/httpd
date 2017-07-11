@@ -4,8 +4,7 @@ module HttpdCookbook
     provides :httpd_module, platform_family: %w(rhel fedora suse)
 
     action :create do
-      # package_name is set by resource
-      package package_name do
+      package new_resource.package_name do
         action :install
       end
 
