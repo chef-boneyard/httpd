@@ -5,7 +5,7 @@ module HttpdCookbook
     provides :httpd_module, platform_family: 'debian'
 
     action :create do
-      package package_name do
+      package new_resource.package_name do
         action :install
       end
 
@@ -31,7 +31,7 @@ module HttpdCookbook
         group 'root'
         mode '0644'
         variables(
-          module_name: symbolname,
+          module_name: new_resource.symbolname,
           module_path: module_path
         )
         cookbook 'httpd'

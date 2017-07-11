@@ -23,7 +23,7 @@ module HttpdCookbook
           group 'root'
           mode '0644'
           variables(
-            module_name: symbolname,
+            module_name: new_resource.symbolname,
             module_path: module_path
           )
           cookbook 'httpd'
@@ -43,7 +43,7 @@ module HttpdCookbook
           group 'root'
           mode '0644'
           variables(
-            module_name: symbolname,
+            module_name: new_resource.symbolname,
             module_path: module_path
           )
           cookbook 'httpd'
