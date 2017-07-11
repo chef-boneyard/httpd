@@ -26,7 +26,7 @@ module HttpdCookbook
         mode '0644'
         variables(
           apache_name: apache_name,
-          mpm: mpm,
+          mpm: new_resource.mpm,
           pid_file: pid_file
         )
         cookbook 'httpd'

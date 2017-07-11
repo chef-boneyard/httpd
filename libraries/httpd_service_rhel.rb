@@ -44,7 +44,7 @@ module HttpdCookbook
       end
 
       # MPM loading
-      if version.to_f < 2.4
+      if new_resource.to_f < 2.4
         link "/usr/sbin/#{apache_name}.worker" do
           to '/usr/sbin/httpd.worker'
           action :create
@@ -57,7 +57,7 @@ module HttpdCookbook
           not_if { apache_name == 'httpd' }
         end
       else
-        httpd_module "mpm_#{mpm}" do
+        httpd_module "mpm_#{new_resource.mpm}" do
           httpd_version new_resource.version
           instance new_resource.instance
           action :create
@@ -65,22 +65,22 @@ module HttpdCookbook
       end
 
       # MPM configuration
-      httpd_config "mpm_#{mpm}" do
+      httpd_config "mpm_#{new_resource.mpm}" do
         instance new_resource.instance
         source 'mpm.conf.erb'
         variables(
-          maxclients: maxclients,
-          maxconnectionsperchild: maxconnectionsperchild,
-          maxrequestsperchild: maxrequestsperchild,
-          maxrequestworkers: maxrequestworkers,
-          maxspareservers: maxspareservers,
-          maxsparethreads: maxsparethreads,
-          minspareservers: minspareservers,
-          minsparethreads: minsparethreads,
-          mpm: mpm,
-          startservers: startservers,
-          threadlimit: threadlimit,
-          threadsperchild: threadsperchild
+          maxclients: new_resource.maxclients,
+          maxconnectionsperchild: new_resource.maxconnectionsperchild,
+          maxrequestsperchild: new_resource.maxrequestsperchild,
+          maxrequestworkers: new_resource.maxrequestworkers,
+          maxspareservers: new_resource.maxspareservers,
+          maxsparethreads: new_resource.maxsparethreads,
+          minspareservers: new_resource.minspareservers,
+          minsparethreads: new_resource.minsparethreads,
+          mpm: new_resource.mpm,
+          startservers: new_resource.startservers,
+          threadlimit: new_resource.threadlimit,
+          threadsperchild: new_resource.threadsperchild
         )
         cookbook 'httpd'
         action :create
@@ -193,7 +193,7 @@ module HttpdCookbook
           mutex: mutex,
           pid_file: pid_file,
           run_group: run_group,
-          run_user: run_user,
+          run_user: new_resource.run_user,
           server_root: "/etc/#{apache_name}",
           servername: servername
         )
