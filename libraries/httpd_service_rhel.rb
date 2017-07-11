@@ -44,7 +44,7 @@ module HttpdCookbook
       end
 
       # MPM loading
-      if new_resource.to_f < 2.4
+      if new_resource.version.to_f < 2.4
         link "/usr/sbin/#{apache_name}.worker" do
           to '/usr/sbin/httpd.worker'
           action :create
