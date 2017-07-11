@@ -1,5 +1,5 @@
 if os[:family] == 'debian' || os[:family] == 'ubuntu'
-  if os[:release].to_i == 7 || os[:release].to_f == 12.04
+  if os[:release].to_i == 7
     describe file('/etc/apache2-default/conf.d') do
       it { should be_directory }
       its('mode') { should eq 00755 }
