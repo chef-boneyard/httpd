@@ -10,7 +10,7 @@ module HttpdCookbook
       end
 
       # 2.2 vs 2.4
-      if httpd_version.to_f < 2.4
+      if new_resource.httpd_version.to_f < 2.4
         directory "/etc/#{apache_name}/conf.d" do
           owner 'root'
           group 'root'
@@ -54,7 +54,7 @@ module HttpdCookbook
     end
 
     action :delete do
-      if httpd_version.to_f < 2.4
+      if new_resource.httpd_version.to_f < 2.4
         file "/etc/#{apache_name}/conf.d/#{new_resource.module_name}.load" do
           action :delete
         end

@@ -4,7 +4,7 @@ module HttpdCookbook
     provides :httpd_config, platform_family: 'debian'
 
     action :create do
-      if httpd_version.to_f < 2.4
+      if new_resource.httpd_version.to_f < 2.4
         directory "/etc/#{apache_name}/conf.d" do
           owner 'root'
           group 'root'
@@ -57,7 +57,7 @@ module HttpdCookbook
     end
 
     action :delete do
-      if httpd_version.to_f < 2.4
+      if new_resource.httpd_version.to_f < 2.4
         file "/etc/#{apache_name}/conf.d/#{new_resource.config_name}.conf" do
           action :delete
         end
