@@ -120,8 +120,8 @@ module HttpdCookbook
         group 'root'
         mode '0644'
         variables(
-          run_user: run_user,
-          run_group: run_group,
+          run_user: new_resource.run_user,
+          run_group: new_resource.run_group,
           pid_file: pid_file,
           run_dir: run_dir,
           lock_dir: "/var/lock/#{apache_name}",

@@ -45,8 +45,8 @@ module HttpdCookbook
         cookbook 'httpd'
         variables(
           apache_name: apache_name,
-          run_user: run_user,
-          run_group: run_group
+          run_user: new_resource.run_user,
+          run_group: new_resource.run_group
         )
       end
 
