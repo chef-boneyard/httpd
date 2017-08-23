@@ -214,18 +214,18 @@ module HttpdCookbook
         instance new_resource.instance
         source 'mpm.conf.erb'
         variables(
-          maxclients: maxclients,
-          maxconnectionsperchild: maxconnectionsperchild,
-          maxrequestsperchild: maxrequestsperchild,
-          maxrequestworkers: maxrequestworkers,
-          maxspareservers: maxspareservers,
-          maxsparethreads: maxsparethreads,
-          minspareservers: minspareservers,
-          minsparethreads: minsparethreads,
+          maxclients: new_resource.maxclients,
+          maxconnectionsperchild: new_resource.maxconnectionsperchild,
+          maxrequestsperchild: new_resource.maxrequestsperchild,
+          maxrequestworkers: new_resource.maxrequestworkers,
+          maxspareservers: new_resource.maxspareservers,
+          maxsparethreads: new_resource.maxsparethreads,
+          minspareservers: new_resource.minspareservers,
+          minsparethreads: new_resource.minsparethreads,
           mpm: new_resource.mpm,
-          startservers: startservers,
-          threadlimit: threadlimit,
-          threadsperchild: threadsperchild
+          startservers: new_resource.startservers,
+          threadlimit: new_resource.threadlimit,
+          threadsperchild: new_resource.threadsperchild
         )
         cookbook 'httpd'
         action :create
