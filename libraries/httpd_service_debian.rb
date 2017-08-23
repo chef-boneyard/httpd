@@ -194,14 +194,14 @@ module HttpdCookbook
       # others. Therefore, all service instances on debian 7, or
       # ubuntu below 14.04 will need to have the same MPM per
       # machine or container or things can get weird.
-      package "apache2-mpm-#{mpm}" do
+      package "apache2-mpm-#{new_resource.mpm}" do
         action :install
         only_if { requires_mpm_packages? }
       end
 
       # older apache has mpm statically compiled into binaries
 
-      httpd_module "mpm_#{mpm}" do
+      httpd_module "mpm_#{new_resource.mpm}" do
         instance new_resource.instance
         httpd_version new_resource.version
         package_name new_resource.package_name
@@ -210,7 +210,7 @@ module HttpdCookbook
       end
 
       # MPM configuration
-      httpd_config "mpm_#{mpm}" do
+      httpd_config "mpm_#{new_resource.mpm}" do
         instance new_resource.instance
         source 'mpm.conf.erb'
         variables(
@@ -222,7 +222,7 @@ module HttpdCookbook
           maxsparethreads: maxsparethreads,
           minspareservers: minspareservers,
           minsparethreads: minsparethreads,
-          mpm: mpm,
+          mpm: new_resource.mpm,
           startservers: startservers,
           threadlimit: threadlimit,
           threadsperchild: threadsperchild
