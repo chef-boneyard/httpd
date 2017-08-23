@@ -12,7 +12,6 @@ module HttpdCookbook
       return '2.4' if node['platform_family'] == 'freebsd'
       return '2.4' if node['platform_family'] == 'suse'
       return '2.4' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 7
-      return '2.4' if node['platform_family'] == 'smartos'
       return '2.4' if node['platform'] == 'amazon'
     end
 
