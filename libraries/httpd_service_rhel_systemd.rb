@@ -8,7 +8,7 @@ module HttpdCookbook
 
     action :start do
       httpd_module 'systemd' do
-        version new_resource.version
+        httpd_version new_resource.version
         instance new_resource.instance
         notifies :reload, "service[#{apache_name}]"
         action :create
