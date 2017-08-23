@@ -78,8 +78,8 @@ module HttpdCookbook
         end
 
         directory "/var/lock/#{apache_name}" do
-          owner run_user
-          group run_group
+          owner new_resource.run_user
+          group new_resource.run_group
           mode '0755'
           action :create
         end
@@ -266,7 +266,7 @@ module HttpdCookbook
       end
 
       # Install core modules
-      modules.each do |mod|
+      new_resource.modules.each do |mod|
         httpd_module mod do
           instance new_resource.instance
           httpd_version new_resource.version
