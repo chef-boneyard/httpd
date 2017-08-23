@@ -65,7 +65,7 @@ module HttpdCookbook
       end
     end
 
-    action_class.class_eval do
+    action_class do
       def create_stop_system_service
         service 'httpd' do
           supports status: true
