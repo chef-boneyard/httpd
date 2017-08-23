@@ -2,11 +2,8 @@ module HttpdCookbook
   module Helpers
     def default_apache_version
       return '2.2' if node['platform_family'] == 'debian' && node['platform_version'].to_i == 7
-      return '2.2' if node['platform_family'] == 'debian' && node['platform_version'] == '12.04'
       return '2.2' if node['platform_family'] == 'debian' && node['platform_version'].to_i == 6
       return '2.2' if node['platform_family'] == 'debian' && node['platform_version'].to_i == 7
-      return '2.2' if node['platform_family'] == 'omnios'
-      return '2.2' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 5
       return '2.2' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 6
       return '2.4' if node['platform_family'] == 'debian' && node['platform_version'] == '14.04'
       return '2.4' if node['platform_family'] == 'debian' && node['platform_version'] == '16.04'

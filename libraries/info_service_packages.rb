@@ -28,8 +28,6 @@ module HttpdCookbook
       pkgname for: { platform: 'amazon', httpd_version: '2.2' }, is: 'httpd'
       pkgname for: { platform: 'amazon', httpd_version: '2.4' }, is: 'httpd24'
       pkgname for: { platform: 'fedora', httpd_version: '2.4' }, is: 'httpd'
-      pkgname for: { platform: 'omnios', httpd_version: '2.2' }, is: 'apache22'
-      pkgname for: { platform: 'omnios', httpd_version: '2.4' }, is: 'apache24'
       pkgname for: { platform: 'smartos', httpd_version: '2.0' }, is: 'apache'
       pkgname for: { platform: 'smartos', httpd_version: '2.2' }, is: 'apache'
       pkgname for: { platform: 'smartos', httpd_version: '2.4' }, is: 'apache'
