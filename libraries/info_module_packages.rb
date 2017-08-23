@@ -113,46 +113,6 @@ module HttpdCookbook
               found_in_package: ->(name) { "libapache2-mod-#{name.tr('_', '-')}" }
 
       #
-      # rhel-5
-      #
-      # shipped in server package
-      modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
-              are: %w(
-                actions alias asis auth_basic auth_digest authn_alias authn_anon
-                authn_dbd authn_dbm authn_default authn_file authnz_ldap
-                authz_dbm authz_default authz_groupfile authz_host authz_owner
-                authz_user autoindex cache cern_meta cgi cgid dav dav_fs dbd deflate
-                dir disk_cache dumpio env expires ext_filter file_cache filter
-                headers ident imagemap include info ldap log_config log_forensic
-                logio mem_cache mime mime_magic negotiation proxy proxy proxy_ajp
-                proxy_balancer proxy_connect proxy_ftp proxy_http reqtimeout rewrite
-                setenvif speling status substitute suexec unique_id userdir
-                usertrack version vhost_alias
-              ),
-              found_in_package: 'httpd'
-
-      # predictable package naming
-      modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
-              are: %w(
-                auth_mysql ssl auth_kerb auth_pgsql authz_ldap dav_svn mono nss
-                perl python revocator
-              ),
-              found_in_package: ->(name) { "mod_#{name}" }
-
-      # outliers
-      modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
-              are: %w(authz_svn),
-              found_in_package: ->(_name) { 'mod_dav_svn' }
-
-      modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
-              are: %w(php),
-              found_in_package: ->(_name) { 'php' }
-
-      modules for: { platform_family: 'rhel', platform_version: '5', httpd_version: '2.2' },
-              are: %w(php-zts),
-              found_in_package: ->(_name) { 'php-zts' }
-
-      #
       # rhel-6
       #
       # shipped in server package
