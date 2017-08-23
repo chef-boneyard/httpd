@@ -192,17 +192,17 @@ module HttpdCookbook
           lock_file: lock_file,
           mutex: mutex,
           pid_file: pid_file,
-          run_group: run_group,
+          run_group: new_resource.run_group,
           run_user: new_resource.run_user,
           server_root: "/etc/#{apache_name}",
-          servername: servername
+          servername: new_resource.servername
         )
         cookbook 'httpd'
         action :create
       end
 
       # Install core modules
-      modules.each do |mod|
+      new_resource.modules.each do |mod|
         httpd_module mod do
           instance new_resource.instance
           httpd_version new_resource.version
