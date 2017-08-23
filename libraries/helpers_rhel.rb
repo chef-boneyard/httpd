@@ -36,7 +36,6 @@ module HttpdCookbook
       end
 
       def pid_file
-        return "/var/run/#{apache_name}.pid" if elversion == 5
         "/var/run/#{apache_name}/httpd.pid"
       end
 
