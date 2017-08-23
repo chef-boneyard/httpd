@@ -1,7 +1,7 @@
 module HttpdCookbook
   class HttpdConfigRhel < HttpdConfig
     use_automatic_resource_name
-    provides :httpd_config, platform_family: %w(rhel fedora suse)
+    provides :httpd_config, platform_family: %w(rhel fedora suse amazon)
 
     action :create do
       directory "/etc/#{apache_name}/conf.d" do

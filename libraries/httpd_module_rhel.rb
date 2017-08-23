@@ -1,7 +1,7 @@
 module HttpdCookbook
   class HttpdModuleRhel < HttpdModule
     use_automatic_resource_name
-    provides :httpd_module, platform_family: %w(rhel fedora suse)
+    provides :httpd_module, platform_family: %w(rhel fedora suse amazon)
 
     action :create do
       package new_resource.package_name do
