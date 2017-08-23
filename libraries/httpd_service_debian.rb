@@ -232,7 +232,7 @@ module HttpdCookbook
       end
 
       # make sure there is only one MPM loaded
-      case mpm
+      case new_resource.mpm
       when 'prefork'
         httpd_config 'mpm_worker' do
           instance new_resource.instance
