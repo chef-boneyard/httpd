@@ -149,24 +149,17 @@ module HttpdCookbook
       end
 
       # /var/run
-      if elversion > 5
-        directory "/var/run/#{apache_name}" do
-          user 'root'
-          group 'root'
-          mode '0755'
-          recursive true
-          action :create
-        end
+      directory "/var/run/#{apache_name}" do
+        user 'root'
+        group 'root'
+        mode '0755'
+        recursive true
+        action :create
+      end
 
-        link "/etc/#{apache_name}/run" do
-          to "../../var/run/#{apache_name}"
-          action :create
-        end
-      else
-        link "/etc/#{apache_name}/run" do
-          to '../../var/run'
-          action :create
-        end
+      link "/etc/#{apache_name}/run" do
+        to "../../var/run/#{apache_name}"
+        action :create
       end
 
       # configuration files
@@ -252,7 +245,6 @@ module HttpdCookbook
         group 'root'
         mode '0755'
         recursive true
-        only_if { elversion > 5 }
         action :delete
       end
 
