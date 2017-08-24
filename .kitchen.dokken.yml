@@ -155,6 +155,20 @@ suites:
         maxkeepaliverequests: '2001'
 
   #
+  # service22-actions
+  #
+  - name: service22-actions
+    run_list:
+    - recipe[httpd_service_test::actions]
+    includes: [
+      'centos-6',
+      'debian-7'
+      ]
+    attributes:
+      httpd:
+        version: '2.2'
+
+  #
   # service24-single
   #
   - name: service24-single
@@ -205,3 +219,22 @@ suites:
         minspareservers: '20'
         maxspareservers: '40'
         maxkeepaliverequests: '2001'
+
+  #
+  # service24-actions
+  #
+  - name: service24-actions
+    driver:
+    run_list:
+    - recipe[httpd_service_test::actions]
+    includes: [
+      'centos-7',
+      'debian-8',
+      'fedora-latest',
+      'ubuntu-14.04',
+      'ubuntu-16.04',
+      'opensuse-leap'
+      ]
+    attributes:
+      httpd:
+        version: '2.4'
