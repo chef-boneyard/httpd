@@ -4,17 +4,6 @@ module HttpdCookbook
     provides :httpd_service, platform_family: 'debian'
 
     action :start do
-      # init script
-      template "/etc/init.d/#{apache_name}" do
-        source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
-        owner 'root'
-        group 'root'
-        mode '0755'
-        variables(apache_name: apache_name)
-        cookbook 'httpd'
-        action :create
-      end
-
       # service management
       service apache_name do
         supports restart: true, reload: true, status: true
@@ -53,6 +42,19 @@ module HttpdCookbook
           provider Chef::Provider::Service::Init::Debian
           supports restart: true, status: true
           action [:stop, :disable]
+        end
+      end
+
+      def create_setup_service
+        # init script
+        template "/etc/init.d/#{apache_name}" do
+          source "#{apache_version}/sysvinit/#{platform_and_version}/apache2.erb"
+          owner 'root'
+          group 'root'
+          mode '0755'
+          variables(apache_name: apache_name)
+          cookbook 'httpd'
+          action :create
         end
       end
 

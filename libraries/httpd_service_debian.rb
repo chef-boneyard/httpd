@@ -274,6 +274,9 @@ module HttpdCookbook
           action :create
         end
       end
+
+      # generate the sysvinit or systemd service (defined in subclass)
+      create_setup_service
     end
 
     action :delete do

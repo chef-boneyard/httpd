@@ -19,9 +19,7 @@ describe file("/etc/#{service_create}/#{apache_conf}") do
 end
 
 describe service(service_create) do
-  skip 'action :create is not setting up systemd services' do
-    is_expected.to be_installed
-  end
+  it { is_expected.to be_installed }
   it { is_expected.to_not be_running }
 end
 
