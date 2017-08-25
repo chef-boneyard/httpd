@@ -30,9 +30,7 @@ describe port(8101) do
 end
 
 describe directory("/etc/#{service_delete}/") do
-  pending 'action :delete is leaving cache, config, and logs' do
-    is_expected.to_not exist
-  end
+  it { is_expected.to_not exist }
 end
 
 describe service(service_delete) do
