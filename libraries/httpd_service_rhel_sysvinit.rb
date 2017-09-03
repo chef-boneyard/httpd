@@ -85,7 +85,15 @@ module HttpdCookbook
         service apache_name do
           supports status: true
           provider Chef::Provider::Service::Init::Redhat
+          only_if { ::File.exist?("/etc/init.d/#{apache_name}") }
           action [:stop, :disable]
+        end
+
+        %W(/etc/init.d/#{apache_name}
+           /etc/sysconfig/#{apache_name}).each do |path|
+          file path do
+            action :delete
+          end
         end
       end
     end

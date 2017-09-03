@@ -32,9 +32,7 @@ describe directory("/etc/#{service_delete}/") do
 end
 
 describe service(service_delete) do
-  pending 'action :delete is not removing the service' do
-    is_expected.to_not be_installed
-  end
+  it { is_expected.to_not be_installed }
   it { is_expected.to_not be_running }
 end
 

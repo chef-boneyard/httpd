@@ -97,6 +97,21 @@ module HttpdCookbook
           provider Chef::Provider::Service::Init::Systemd
           action [:stop, :disable]
         end
+
+        %W(/etc/systemd/system/#{apache_name}.service.d
+           /run/#{apache_name}).each do |path|
+          directory path do
+            recursive true
+            action :delete
+          end
+        end
+
+        %W(/usr/lib/tmpfiles.d/#{apache_name}.conf
+           /etc/systemd/system/#{apache_name}.service).each do |path|
+          file path do
+            action :delete
+          end
+        end
       end
     end
   end
