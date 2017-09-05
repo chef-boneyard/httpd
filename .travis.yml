@@ -33,7 +33,7 @@ env:
   - INSTANCE=module24-debian-8
   - INSTANCE=module24-ubuntu-1404
   - INSTANCE=module24-ubuntu-1604
-  - INSTANCE=module24-opensuse-leap
+  #- INSTANCE=module24-opensuse-leap
   - INSTANCE=service22-single-centos-6
   - INSTANCE=service22-single-debian-7
   - INSTANCE=service22-multi-centos-6
@@ -45,19 +45,19 @@ env:
   - INSTANCE=service24-single-ubuntu-1404
   - INSTANCE=service24-single-ubuntu-1604
   - INSTANCE=service24-single-debian-8
-  - INSTANCE=service24-single-opensuse-leap
+  #- INSTANCE=service24-single-opensuse-leap
   - INSTANCE=service24-multi-centos-7
   - INSTANCE=service24-multi-fedora-latest
   - INSTANCE=service24-multi-debian-8
   - INSTANCE=service24-multi-ubuntu-1404
   - INSTANCE=service24-multi-ubuntu-1604
-  - INSTANCE=service24-multi-opensuse-leap
+  #- INSTANCE=service24-multi-opensuse-leap
   - INSTANCE=service24-actions-centos-7
   - INSTANCE=service24-actions-fedora-latest
   - INSTANCE=service24-actions-ubuntu-1404
   - INSTANCE=service24-actions-ubuntu-1604
   - INSTANCE=service24-actions-debian-8
-  - INSTANCE=service24-actions-opensuse-leap
+  #- INSTANCE=service24-actions-opensuse-leap
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
