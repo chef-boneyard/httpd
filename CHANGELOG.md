@@ -1,16 +1,40 @@
 # httpd Cookbook CHANGELOG
 
+This file is used to list changes made in each version of the httpd cookbook.
+
+## 0.5.0 (2017-08-23)
+
+### Breaking changes
+
+- Remove support for OmniOS / SmartOS, which didn't actually work before
+- Remove support for EOL CentOS 5 / Ubuntu 12.04
+- Remove compat_resource and instead require Chef 12.7+
+- Service creation has been moved from the :start action to the :create action to follow user exceptions. Existing cookbooks using the service resource will need to be updated to use the create action in addition to the start action.
+
+### Other Changes
+
+- The service resource have been DRYed up
+- Use a SPDX compliant license string to resolve FoodCritic warnings
+- Switch from Rakefile testing to Delivery local mode
+- Add support for Amazon Linux 2017 and simplify Amazon detection so we don't have to repeat this next year
+- Remove Chef 12.0 compatibility code to simplify init system detection
+- Resolve all CHEF-19 deprecation warnings
+
 ## 0.4.5 (2017-02-13)
+
 - Resolve Issue #104 with use of security module on RHEL 7.2
 
 ## 0.4.4 (2016-09-27)
+
 - Explicitly using new_resource.version in guard clause Centos/RHEL
 - Add net-tools to docker configuration
 
 ## 0.4.3 (2016-09-27)
+
 - Explicitly using new_resource.version in guard clause Ubuntu
 
 ## 0.4.2 (2016-09-27)
+
 - Release reflecting new dep on compat_resource 12.14.6
 
 ## 0.4.1 (2016-09-23)
