@@ -202,54 +202,34 @@ module HttpdCookbook
           action :create
         end
       end
+
+      # generate the sysvinit or systemd service (defined in subclass)
+      create_setup_service
     end
 
     action :delete do
       delete_stop_service
 
-      link "/usr/sbin/#{apache_name}" do
-        to '/usr/sbin/httpd'
-        action :delete
-        not_if { apache_name == 'httpd' }
-      end
+      # NOTE: Users typically provide minimal attributes in a resource block
+      # calling the :delete action.  Do not expect the user to set the version
+      # attribute.  Instead, clean up files created for all possible versions.
 
-      # MPM loading
-      if new_resource.version.to_f < 2.4
-        link "/usr/sbin/#{apache_name}.worker" do
-          to '/usr/sbin/httpd.worker'
+      %W(/usr/sbin/#{apache_name}
+         /usr/sbin/#{apache_name}.worker
+         /usr/sbin/#{apache_name}.event).each do |path|
+        link path do
           action :delete
-          not_if { apache_name == 'httpd' }
-        end
-
-        link "/usr/sbin/#{apache_name}.event" do
-          to '/usr/sbin/httpd.event'
-          action :delete
-          not_if { apache_name == 'httpd' }
         end
       end
 
       # configuration directories and logs
-      %w( /etc/#{apache_name} /var/log/#{apache_name} ).each do |dir|
+      %W(/etc/#{apache_name}
+         /var/log/#{apache_name}
+         /var/run/#{apache_name}).each do |dir|
         directory dir do
-          owner 'root'
-          group 'root'
-          mode '0755'
           recursive true
           action :delete
         end
-      end
-
-      # /var/run
-      directory "/var/run/#{apache_name}" do
-        owner 'root'
-        group 'root'
-        mode '0755'
-        recursive true
-        action :delete
-      end
-
-      link "/etc/#{apache_name}/run" do
-        action :delete
       end
     end
 

@@ -274,94 +274,36 @@ module HttpdCookbook
           action :create
         end
       end
+
+      # generate the sysvinit or systemd service (defined in subclass)
+      create_setup_service
     end
 
     action :delete do
       delete_stop_service
 
-      # support directories
-      %w(/var/cache/#{apache_name} /var/log/#{apache_name}).each do |dir|
+      # NOTE: Users typically provide minimal attributes in a resource block
+      # calling the :delete action.  Do not expect the user to set the version
+      # attribute.  Instead, clean up files created for all possible versions.
+
+      # FIXME: template[/usr/sbin/a2enmod], and directory[/var/run/apache2] are
+      # shared by all httpd_service resources and never get cleaned up.
+
+      [a2enmod_name, a2dismod_name, a2ensite_name, a2dissite_name].each do |dir|
+        link "/usr/sbin/#{dir}" do
+          action :delete
+        end
+      end
+
+      %W(/etc/#{apache_name}
+         /var/cache/#{apache_name}
+         /var/lock/#{apache_name}
+         /var/log/#{apache_name}
+         /var/run/#{apache_name}).each do |dir|
         directory dir do
           recursive true
           action :delete
         end
-      end
-
-      directory "/var/run/#{apache_name}" do
-        recursive true
-        not_if { apache_name == 'apache2' }
-        action :delete
-      end
-
-      # configuation directories
-      if apache_version.to_f < 2.4
-        directory "/etc/#{apache_name}/conf.d" do
-          recursive true
-          action :delete
-        end
-      else
-        directory "/etc/#{apache_name}/conf-available" do
-          owner 'root'
-          group 'root'
-          mode '0755'
-          recursive true
-          action :delete
-        end
-
-        directory "/etc/#{apache_name}/conf-enabled" do
-          recursive true
-          action :delete
-        end
-
-        directory "/var/lock/#{apache_name}" do
-          recursive true
-          action :delete
-        end
-      end
-
-      directory "/etc/#{apache_name}/mods-available" do
-        recursive true
-        action :delete
-      end
-
-      directory "/etc/#{apache_name}/mods-enabled" do
-        recursive true
-        action :delete
-      end
-
-      directory "/etc/#{apache_name}/sites-available" do
-        recursive true
-        action :delete
-      end
-
-      directory "/etc/#{apache_name}/sites-enabled" do
-        recursive true
-        action :delete
-      end
-
-      # utility scripts
-      file "/usr/sbin/#{a2enmod_name}" do
-        action :delete
-      end
-
-      link "/usr/sbin/#{a2dismod_name}" do
-        action :delete
-      end
-
-      link "/usr/sbin/#{a2ensite_name}" do
-        action :delete
-      end
-
-      link "/usr/sbin/#{a2dissite_name}" do
-        action :delete
-      end
-
-      file "/etc/#{apache_name}/mime.types" do
-        action :delete
-      end
-
-      file "/etc/#{apache_name}/ports.conf" do
-        action :delete
       end
     end
 
