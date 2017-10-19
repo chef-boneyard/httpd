@@ -45,11 +45,6 @@ module HttpdCookbook
     end
 
     action :delete do
-      directory "/etc/#{apache_name}/mods-available" do
-        recursive true
-        action :delete
-      end
-
       file "/etc/#{apache_name}/mods-available/#{new_resource.module_name}.load" do
         action :delete
       end
