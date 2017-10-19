@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the httpd cookbook.
 
+## 0.5.1 (2017-10-19)
+
+- Don't delete directory mods-available with delete action.
+
 ## 0.5.0 (2017-08-23)
 
 ### Breaking changes
