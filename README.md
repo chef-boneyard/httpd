@@ -10,7 +10,7 @@ This cookbook is concerned with [The Apache HTTP Server](http://httpd.apache.org
 
 ## Requirements
 
-- Chef 12.7 or higher
+- Chef 12.11 or higher
 - Network accessible package repositories
 
 ## Platform Support
