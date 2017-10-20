@@ -24,6 +24,7 @@ env:
   - INSTANCE=config-fedora-latest
   - INSTANCE=config-debian-7
   - INSTANCE=config-debian-8
+  - INSTANCE=config-debian-9
   - INSTANCE=config-ubuntu-1404
   - INSTANCE=config-ubuntu-1604
   - INSTANCE=module22-centos-6
@@ -31,6 +32,7 @@ env:
   - INSTANCE=module24-centos-7
   - INSTANCE=module24-fedora-latest
   - INSTANCE=module24-debian-8
+  - INSTANCE=module24-debian-9
   - INSTANCE=module24-ubuntu-1404
   - INSTANCE=module24-ubuntu-1604
   #- INSTANCE=module24-opensuse-leap
@@ -45,6 +47,7 @@ env:
   - INSTANCE=service24-single-ubuntu-1404
   - INSTANCE=service24-single-ubuntu-1604
   - INSTANCE=service24-single-debian-8
+  - INSTANCE=service24-single-debian-9
   #- INSTANCE=service24-single-opensuse-leap
   - INSTANCE=service24-multi-centos-7
   - INSTANCE=service24-multi-fedora-latest
@@ -57,6 +60,7 @@ env:
   - INSTANCE=service24-actions-ubuntu-1404
   - INSTANCE=service24-actions-ubuntu-1604
   - INSTANCE=service24-actions-debian-8
+  - INSTANCE=service24-actions-debian-9
   #- INSTANCE=service24-actions-opensuse-leap
 
 before_script:

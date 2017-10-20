@@ -27,6 +27,8 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----|
 | debian-8       |     | X   |
 |----------------+-----+-----|
+| debian-9       |     | X   |
+|----------------+-----+-----|
 | ubuntu-14.04   |     | X   |
 |----------------+-----+-----|
 | ubuntu-16.04   |     | X   |
@@ -73,7 +75,7 @@ The `httpd_service` does minimal configuration to get the service up and running
 
 The `:create` action handles package installation, support directories, socket files, and other operating system level concerns. The internal configuration file contains just enough to get the service up and running, then loads extra configuration from a conf.d directory. Further configurations are managed with the `httpd_config` resource.
 
-The `:start`, `:stop`, `:restart`, and `:reload` actions use the appropriate provider for the platform to respectively start, stop, restart, and reload the service on the machine.  You should omit the `:start` action in recipes designed to build containers.
+The `:start`, `:stop`, `:restart`, and `:reload` actions use the appropriate provider for the platform to respectively start, stop, restart, and reload the service on the machine. You should omit the `:start` action in recipes designed to build containers.
 
 `httpd_service` supports multiple Apache instances on a single machine, enabling advanced Apache configuration in scenarios where multiple servers need different loaded modules and global configurations.
 
