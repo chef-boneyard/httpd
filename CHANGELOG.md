@@ -2,6 +2,15 @@
 
 This file is used to list changes made in each version of the httpd cookbook.
 
+## 0.6.0 (2017-10-20)
+
+- Remove Debian 6 helpers and simplify Ubuntu helper to support non-LTS ubuntu releases like 17.04
+- Remove the platform priority map logic which isn't needed in modern Chef releases
+- Add a missing service name variable in the systemd service resource, which will help us eventually support SUSE systemd setup
+- Remove opensuse from the readme for now since we're not actually testing it and there's still issues
+- Add support / testing for Debian 9
+- Improve debian check logic in the systemd unit file to support derivatives of Debian/Ubuntu
+
 ## 0.5.1 (2017-10-19)
 
 - Don't delete directory mods-available with delete action.
