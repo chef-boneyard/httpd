@@ -35,9 +35,7 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----|
 | centos-7       |     | X   |
 |----------------+-----+-----|
-| fedora-25      |     | X   |
-|----------------+-----+-----|
-| opensuse-42    |     | X   |
+| fedora         |     | X   |
 |----------------+-----+-----|
 ```
 
