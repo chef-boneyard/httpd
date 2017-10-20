@@ -2,17 +2,14 @@ module HttpdCookbook
   module Helpers
     def default_apache_version
       return '2.2' if node['platform_family'] == 'debian' && node['platform_version'].to_i == 7
-      return '2.2' if node['platform_family'] == 'debian' && node['platform_version'].to_i == 6
-      return '2.2' if node['platform_family'] == 'debian' && node['platform_version'].to_i == 7
       return '2.2' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 6
-      return '2.4' if node['platform_family'] == 'debian' && node['platform_version'] == '14.04'
-      return '2.4' if node['platform_family'] == 'debian' && node['platform_version'] == '16.04'
       return '2.4' if node['platform_family'] == 'debian' && node['platform_version'].to_i == 8
       return '2.4' if node['platform_family'] == 'fedora'
       return '2.4' if node['platform_family'] == 'freebsd'
       return '2.4' if node['platform_family'] == 'suse'
       return '2.4' if node['platform_family'] == 'rhel' && node['platform_version'].to_i == 7
       return '2.4' if node['platform'] == 'amazon'
+      return '2.4' if node['platform'] == 'ubuntu'
     end
 
     def default_maxclients
