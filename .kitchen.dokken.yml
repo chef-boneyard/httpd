@@ -102,6 +102,7 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
+      'debian-9',
       'fedora-latest',
       'ubuntu-14.04',
       'ubuntu-16.04',
@@ -179,6 +180,7 @@ suites:
       'centos-7',
       'fedora-latest',
       'debian-8',
+      'debian-9',
       'ubuntu-14.04',
       'ubuntu-16.04',
       'opensuse-leap'
@@ -196,6 +198,7 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
+      'debian-9',
       'fedora-latest',
       'ubuntu-14.04',
       'ubuntu-16.04',
@@ -230,6 +233,7 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
+      'debian-9',
       'fedora-latest',
       'ubuntu-14.04',
       'ubuntu-16.04',
