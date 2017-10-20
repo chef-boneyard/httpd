@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the httpd cookbook.
 
+## 0.6.1 (2017-10-20)
+
+- Fix a failure in the systemd template
+
 ## 0.6.0 (2017-10-20)
 
 - Remove Debian 6 helpers and simplify Ubuntu helper to support non-LTS ubuntu releases like 17.04
