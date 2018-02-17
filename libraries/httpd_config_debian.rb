@@ -20,6 +20,7 @@ module HttpdCookbook
           variables(new_resource.variables)
           source new_resource.source
           cookbook new_resource.cookbook
+          sensitive new_resource.sensitive if new_resource.sensitive
           action :create
         end
       else
@@ -38,6 +39,7 @@ module HttpdCookbook
           variables(new_resource.variables)
           source new_resource.source
           cookbook new_resource.cookbook
+          sensitive new_resource.sensitive if new_resource.sensitive
           action :create
         end
 
