@@ -6,7 +6,7 @@ module HttpdCookbook
     property :filename, String, default: lazy { default_filename }
     property :httpd_version, String, default: lazy { default_apache_version }
     property :instance, String, default: 'default'
-    property :module_name, String, name_property: true, required: true
+    property :module_name, String, name_property: true
     property :package_name, String, default: lazy { default_package_name }
     property :symbolname, default: lazy { default_symbolname }
     include HttpdCookbook::Helpers

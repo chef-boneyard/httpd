@@ -1,6 +1,6 @@
 module HttpdCookbook
   class HttpdConfig < Chef::Resource
-    property :config_name, String, name_property: true, required: true
+    property :config_name, String, name_property: true
     property :cookbook, [String, nil], default: nil
     property :httpd_version, String, default: lazy { default_apache_version }
     property :instance, String, default: 'default'
