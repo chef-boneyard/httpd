@@ -9,9 +9,7 @@ module HttpdCookbook
       # Chef resources
       #
       # software installation
-      package new_resource.package_name do
-        action :install
-      end
+      package new_resource.package_name
 
       # Defined in subclass
       create_stop_system_service

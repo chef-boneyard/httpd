@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the httpd cookbook.
 
+## 0.6.2 (2018-02-16)
+
+- Allow sensitive flag for httpd_config.
+
 ## 0.6.1 (2017-10-20)
 
 - Fix a failure in the systemd template
