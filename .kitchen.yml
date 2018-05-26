@@ -14,15 +14,14 @@ platforms:
       box: mvbcoding/awslinux
   - name: centos-6
   - name: centos-7
-  - name: debian-7
   - name: debian-8
   - name: debian-9
-  - name: fedora-26
-  - name: freebsd-10
+  - name: fedora-28
   - name: freebsd-11
   - name: opensuse-leap-42
   - name: ubuntu-14.04
   - name: ubuntu-16.04
+  - name: ubuntu-18.04
 
 suites:
   #
@@ -39,8 +38,7 @@ suites:
     run_list:
     - recipe[httpd_module_test]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:
@@ -52,10 +50,9 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
-      'fedora-25',
+      'fedora-28',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'freebsd-10',
       'freebsd-11',
       'opensuse-leap-42'
       ]
@@ -70,8 +67,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:
@@ -84,8 +80,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::multi]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:
@@ -113,8 +108,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::actions]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:
@@ -129,11 +123,10 @@ suites:
     - recipe[httpd_service_test::single]
     includes: [
       'centos-7',
-      'fedora-25',
+      'fedora-28',
       'debian-8',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'freebsd-10',
       'freebsd-11',
       'opensuse-leap-42'
       ]
@@ -150,10 +143,9 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
-      'fedora-25',
+      'fedora-28',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'freebsd-10',
       'freebsd-11',
       'opensuse-leap-42'
       ]
@@ -185,10 +177,9 @@ suites:
     includes: [
       'centos-7',
       'debian-8',
-      'fedora-25',
+      'fedora-28',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'freebsd-10',
       'freebsd-11',
       'opensuse-leap-42'
       ]

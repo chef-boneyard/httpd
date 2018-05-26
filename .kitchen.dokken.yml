@@ -19,13 +19,6 @@ platforms:
     image: dokken/amazonlinux
     pid_one_command: /sbin/init
 
-- name: debian-7
-  driver:
-    image: dokken/debian-7
-    pid_one_command: /sbin/init
-    intermediate_instructions:
-      - RUN /usr/bin/apt-get update
-
 - name: debian-8
   driver:
     image: dokken/debian-8
@@ -89,8 +82,7 @@ suites:
     run_list:
     - recipe[httpd_module_test]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:
@@ -119,8 +111,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::single]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:
@@ -133,8 +124,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::multi]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:
@@ -162,8 +152,7 @@ suites:
     run_list:
     - recipe[httpd_service_test::actions]
     includes: [
-      'centos-6',
-      'debian-7'
+      'centos-6'
       ]
     attributes:
       httpd:

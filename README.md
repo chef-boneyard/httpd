@@ -23,8 +23,6 @@ The following platforms have been tested with Test Kitchen:
 |----------------+-----+-----|
 | amazon linux   |     | X   |
 |----------------+-----+-----|
-| debian-7       | X   |     |
-|----------------+-----+-----|
 | debian-8       |     | X   |
 |----------------+-----+-----|
 | debian-9       |     | X   |

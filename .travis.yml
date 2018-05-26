@@ -22,13 +22,11 @@ env:
   - INSTANCE=config-centos-6
   - INSTANCE=config-centos-7
   - INSTANCE=config-fedora-latest
-  - INSTANCE=config-debian-7
   - INSTANCE=config-debian-8
   - INSTANCE=config-debian-9
   - INSTANCE=config-ubuntu-1404
   - INSTANCE=config-ubuntu-1604
   - INSTANCE=module22-centos-6
-  - INSTANCE=module22-debian-7
   - INSTANCE=module24-centos-7
   - INSTANCE=module24-fedora-latest
   - INSTANCE=module24-debian-8
@@ -37,11 +35,8 @@ env:
   - INSTANCE=module24-ubuntu-1604
   #- INSTANCE=module24-opensuse-leap
   - INSTANCE=service22-single-centos-6
-  - INSTANCE=service22-single-debian-7
   - INSTANCE=service22-multi-centos-6
-  - INSTANCE=service22-multi-debian-7
   - INSTANCE=service22-actions-centos-6
-  - INSTANCE=service22-actions-debian-7
   - INSTANCE=service24-single-centos-7
   - INSTANCE=service24-single-fedora-latest
   - INSTANCE=service24-single-ubuntu-1404
