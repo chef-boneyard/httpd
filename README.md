@@ -4,6 +4,10 @@
 
 The HTTPD Cookbook is a Library Cookbook that provides resource primitives for use in recipes. It is designed to be an example to reference for creating highly re-usable cross platform cookbooks.
 
+# DEPRECATED
+
+This cookbook has been deprecated in favor of the traditional apache2 cookbook
+
 ## Scope
 
 This cookbook is concerned with [The Apache HTTP Server](http://httpd.apache.org/), particularly those shipped with F/OSS Unix and Linux distributions. It does not address other httpd server implementations like Lighttpd, Nginx, or IIS.
